@@ -1,14 +1,13 @@
 package APIBeans;
 
 /**
- * Created by George on 29/05/17.
+ * Created by George on 31/05/17.
  */
-public class Search_Freetext_Metadata {
-
+public class Search_Freetext_Destination_MetaData {
 
     private int sortOrder;
-    private Search_Freetext_Data data;
     private String searchType;
+    private Search_Freetext_Destination_Data data;
 
     public int getSortOrder() {
         return sortOrder;
@@ -18,19 +17,19 @@ public class Search_Freetext_Metadata {
         this.sortOrder = sortOrder;
     }
 
-    public Search_Freetext_Data getData() {
-        return data;
-    }
-
-    public void setData(Search_Freetext_Data data) {
-        this.data = data;
-    }
-
     public String getSearchType() {
         return searchType;
     }
 
     public void setSearchType(String searchType) {
         this.searchType = searchType;
+    }
+
+    public Search_Freetext_Destination_Data getData() {
+        return data;
+    }
+
+    public void setData(Search_Freetext_Destination_Data data) {
+        this.data = data;
     }
 }

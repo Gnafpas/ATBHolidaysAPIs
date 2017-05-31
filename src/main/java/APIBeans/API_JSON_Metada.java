@@ -1,9 +1,11 @@
 package APIBeans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 
+/**
+ * Created by George on 29/05/17.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class API_JSON_Metada {
 
@@ -51,7 +53,7 @@ public class API_JSON_Metada {
         return errorCodes;
     }
 
-    public void setErrorCodes(List errorCodes) {
+    public void setErrorCodes(List<String> errorCodes) {
         this.errorCodes = errorCodes;
     }
 

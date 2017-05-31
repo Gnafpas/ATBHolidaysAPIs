@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * Created by George on 29/05/17.
  */
-
 public class Post_To_Search_Freetext {
 
     private String topX;
