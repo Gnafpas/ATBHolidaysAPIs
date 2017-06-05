@@ -38,11 +38,15 @@ public class SearchController {
 
     @RequestMapping("/Destinations")
     public Search_Destinations_JSON destinations(@RequestParam(value="textbox", defaultValue="") String textbox) {
-        Destinations_Taxonomy_APIJSON destinations_taxonomy_APIJSON=new Destinations_Taxonomy_APIJSON();
+        Destinations_Taxonomy_APIJSON destinations_taxonomy_APIJSON;
         Search_Destinations_JSON destinations_JSON=new Search_Destinations_JSON();
         List<String> cities=new ArrayList<>();
         List<String> countries=new ArrayList<>();
         List<String> regions=new ArrayList<>();
+        int max_length_dest_list=5;
+        int cities_counter=0;
+        int countries_counter=0;
+        int regions_counter=0;
         String dest_name_substring;
         if(!textbox.isEmpty() && textbox.length()>=2) {
             Taxonomy taxonomy = new Taxonomy();
@@ -51,18 +55,35 @@ public class SearchController {
                  dest_name_substring=destinations_taxonomy_APIJSON.getData().get(i).getDestinationName();
                  if(textbox.length()<dest_name_substring.length())
                      dest_name_substring=dest_name_substring.substring(0,textbox.length());
-                System.out.println("*****************************************"+dest_name_substring+"*****************");
                  if(textbox.equalsIgnoreCase(dest_name_substring)){
-                    if(destinations_taxonomy_APIJSON.getData().get(i).getDestinationType().equals("CITY"))
+                    if(destinations_taxonomy_APIJSON.getData().get(i).getDestinationType().equals("CITY") && cities_counter<max_length_dest_list) {
                         cities.add(destinations_taxonomy_APIJSON.getData().get(i).getDestinationName());
-                    if(destinations_taxonomy_APIJSON.getData().get(i).getDestinationType().equals("COUNTRY"))
+                        cities_counter++;
+                    }
+                    if(destinations_taxonomy_APIJSON.getData().get(i).getDestinationType().equals("COUNTRY") && countries_counter<max_length_dest_list) {
                         countries.add(destinations_taxonomy_APIJSON.getData().get(i).getDestinationName());
-                    if(destinations_taxonomy_APIJSON.getData().get(i).getDestinationType().equals("REGION"))
+                        countries_counter++;
+                    }
+                    if(destinations_taxonomy_APIJSON.getData().get(i).getDestinationType().equals("REGION") && regions_counter<max_length_dest_list) {
                         regions.add(destinations_taxonomy_APIJSON.getData().get(i).getDestinationName());
+                        regions_counter++;
+                    }
 
-
-                }
+                 }
+                 if(regions_counter>=max_length_dest_list && countries_counter>=max_length_dest_list && cities_counter>=max_length_dest_list)
+                    break;
             }
+            for(int i=0;i<countries.size();i++) {
+                if(cities.size()>0)
+                    cities.remove(cities.size() - 1);
+                if(regions.size()>0)
+                    regions.remove(regions.size() - 1);
+            }
+            for(int i=0;i<cities.size();i++) {
+                if(regions.size()>0)
+                    regions.remove(regions.size() - 1);
+            }
+
             destinations_JSON.setCities(cities);
             destinations_JSON.setCountries(countries);
             destinations_JSON.setRegions(regions);
