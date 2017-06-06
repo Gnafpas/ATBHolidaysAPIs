@@ -6,9 +6,10 @@ import java.util.List;
  * Created by George on 04/06/17.
  */
 public class Search_Destinations_JSON {
+
     private List<String> countries;
-    private List<String> cities;
-    private List<String> regions;
+    private List<City> cities;
+    private List<Region> regions;
 
     public List<String> getCountries() {
         return countries;
@@ -18,19 +19,19 @@ public class Search_Destinations_JSON {
         this.countries = countries;
     }
 
-    public List<String> getCities() {
+    public List<City> getCities() {
         return cities;
     }
 
-    public void setCities(List<String> cities) {
+    public void setCities(List<City> cities) {
         this.cities = cities;
     }
 
-    public List<String> getRegions() {
+    public List<Region> getRegions() {
         return regions;
     }
 
-    public void setRegions(List<String> regions) {
+    public void setRegions(List<Region> regions) {
         this.regions = regions;
     }
 }
