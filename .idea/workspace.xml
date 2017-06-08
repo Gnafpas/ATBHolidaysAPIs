@@ -2,60 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87d201a1-8e1e-40aa-82fe-4b23f4e08dbc" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Attractions_Taxonomy_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Attractions_Taxonomy_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Destination_Search_Freetext_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Destinations_Taxonomy_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Destinations_Taxonomy_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Post_To_Attractions_Taxonomy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product_Search_Freetext_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Search_Freetext_Destination_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Search_Freetext_Destination_MetaData.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Search_Freetext_Product_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Search_Freetext_Product_Metadata.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/Taxonomy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Attractions_Taxonomy_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Attractions_Taxonomy_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Destination_Search_Freetext_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Destinations_Taxonomy_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Destinations_Taxonomy_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Post_To_Attractions_Taxonomy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product_Search_Freetext_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Search_Freetext_Destination_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Search_Freetext_Destination_MetaData.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Search_Freetext_Product_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Search_Freetext_Product_Metadata.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/DAOs/Taxonomy.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Attractions_Search_Freetext_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Attractions_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Attractions_Taxonomy_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Attractions_Taxonomy_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Destination_Search_Freetext_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Destinations_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Destinations_Taxonomy_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Destinations_Taxonomy_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Post_To_Attractions_Taxonomy.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_POST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Post_To_Search_Freetext.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_POST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Search_Freetext_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Products_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext_Attraction_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Attraction_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext_Attraction_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Attraction_MetaData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext_Destination_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Destination_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext_Destination_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Destination_MetaData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext_Product_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Product_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext_Product_Metadata.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Product_Metadata.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/Product_Search.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/Taxonomy.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Attraction.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Attraction_Summary.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Attractions_Search.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Attractions_List.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Destinations_Search.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Destinations_List.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Product.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Product_Summary.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_Search.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Search_Freetext_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Search_Freetext_Suggestions_JSON.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Post_To_Search_Freetext.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Post_To_Search_Freetext.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/City.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/City.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Region.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Region.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/City.class" afterPath="$PROJECT_DIR$/target/classes/WebServicesBeans/City.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Region.class" afterPath="$PROJECT_DIR$/target/classes/WebServicesBeans/Region.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/City.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/City.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Region.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Region.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -69,102 +22,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Product_API_DAO.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Product_API_DAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-719">
               <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Region.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Region.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-              <folding>
-                <element signature="e#201#202#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SearchController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-77">
-              <caret line="159" column="20" lean-forward="false" selection-start-line="159" selection-start-column="20" selection-end-line="159" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Search_Freetext_Suggestions_JSON.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Search_Freetext_Suggestions_JSON.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Taxonomy_API_DAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Products_List.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="45" lean-forward="false" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
-              <folding>
-                <element signature="e#254#255#0" expanded="true" />
-                <element signature="e#285#286#0" expanded="true" />
-                <element signature="e#348#349#0" expanded="true" />
-                <element signature="e#388#389#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Product_Summary.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Product_Summary.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="30" lean-forward="false" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-              <folding>
-                <element signature="e#243#244#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Destinations_List.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Destinations_List.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Attractions_List.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Attractions_List.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="21" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -255,8 +117,8 @@
         <option value="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/City.java" />
         <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Region.java" />
-        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java" />
       </list>
     </option>
   </component>
@@ -1004,7 +866,7 @@
       <workItem from="1496673107511" duration="4233000" />
       <workItem from="1496686829891" duration="28882000" />
       <workItem from="1496866947902" duration="3539000" />
-      <workItem from="1496915523422" duration="9841000" />
+      <workItem from="1496915523422" duration="10242000" />
     </task>
     <task id="LOCAL-00001" summary="Completed /service/search/freetext DAO function.">
       <created>1496268262584</created>
@@ -1041,11 +903,27 @@
       <option name="project" value="LOCAL" />
       <updated>1496908894242</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Top(Suggested) destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.Autocomplete Search functionality COMPLETED.">
+      <created>1496937705630</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1496937705630</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95734000" />
+    <option name="totallyTimeSpent" value="96135000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -1064,14 +942,14 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2746781" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1145,10 +1023,13 @@
     <MESSAGE value="Start developing top destinations for search.updated" />
     <MESSAGE value="Top destinations/Attractions with taxonomy services.It will be changed with search freetext service." />
     <MESSAGE value="Top destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.NOT COMPLITED" />
-    <option name="LAST_COMMIT_MESSAGE" value="Top destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.NOT COMPLITED" />
+    <MESSAGE value="Top(Suggested) destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.Autocomplete Search functionality COMPLETED." />
+    <option name="LAST_COMMIT_MESSAGE" value="Top(Suggested) destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.Autocomplete Search functionality COMPLETED." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1583,26 +1464,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_POST.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-719">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1629,6 +1494,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#254#255#0" expanded="true" />
+            <element signature="e#285#286#0" expanded="true" />
+            <element signature="e#348#349#0" expanded="true" />
+            <element signature="e#388#389#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1661,16 +1547,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="45" lean-forward="false" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
-          <folding>
-            <element signature="e#254#255#0" expanded="true" />
-            <element signature="e#285#286#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
-            <element signature="e#388#389#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-719">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
