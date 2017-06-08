@@ -5,15 +5,15 @@ package WebServicesBeans;
  */
 public class Region {
 
-    private String region;
+    private String name;
     private String country;
 
-    public String getRegion() {
-        return region;
+    public String getName() {
+        return name;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCountry() {

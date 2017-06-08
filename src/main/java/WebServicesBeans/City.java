@@ -5,18 +5,18 @@ package WebServicesBeans;
  */
 public class City {
 
-        private String city;
+        private String name;
         private String country;
 
-        public String getCity() {
-            return city;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setCity(String city) {
-            this.city = city;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public String getCountry() {
+    public String getCountry() {
             return country;
         }
 
