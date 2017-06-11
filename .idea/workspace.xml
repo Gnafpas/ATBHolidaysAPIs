@@ -1,79 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d201a1-8e1e-40aa-82fe-4b23f4e08dbc" name="Default" comment="Completed paging list for freetext search.Beans modifications.Add some todos.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_ageBands.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_productPhotos.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_tourGrades.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_APIJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_Data.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Attraction_Summary.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Attractions_Paging_List_JSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Product_Summary.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Products_Paging_List_JSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Country.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Attraction_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Attraction_MetaData.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Attractions_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Destination_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Destination_MetaData.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Destinations_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_POST.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Product_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Product_Metadata.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/APIBeans/Product/Search_Freetext_Products_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Attraction_Summary.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Attractions_List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/City.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Destinations_List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Product_Summary.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Products_List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Region.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/WebServicesBeans/Search_Freetext_Suggestions_JSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Attraction_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Attraction_MetaData.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Attractions_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Destination_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Destination_MetaData.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Destinations_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_POST.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Product_Data.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Product_Metadata.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/APIBeans/Product/Search_Freetext_Products_APIJSON.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Attraction_Summary.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Attractions_List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/City.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Destinations_List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Product_Summary.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Products_List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Region.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/WebServicesBeans/Search_Freetext_Suggestions_JSON.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Attraction_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Attraction_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_MetaData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Attractions_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attractions_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Destination_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Destination_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_MetaData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Destinations_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destinations_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_POST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Product_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Data.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Product_Metadata.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Metadata.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product/Search_Freetext_Products_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Products_APIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Attraction_Summary.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Attraction.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Attractions_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Attractions_List.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/City.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/City.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Destinations_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Destinations_List.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Product_Summary.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Product.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Products_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Products_List.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Region.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Region.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Search_Freetext_Suggestions_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Search_Freetext_Suggestions_JSON.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/API_DAOs/Product_API_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/target/classes/DAOs/API_DAOs/Product_API_DAO.class" />
+    <list default="true" id="87d201a1-8e1e-40aa-82fe-4b23f4e08dbc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -1057,7 +986,7 @@
       <workItem from="1496686829891" duration="28882000" />
       <workItem from="1496866947902" duration="3539000" />
       <workItem from="1496915523422" duration="14106000" />
-      <workItem from="1497017208824" duration="27809000" />
+      <workItem from="1497017208824" duration="27951000" />
     </task>
     <task id="LOCAL-00001" summary="Completed /service/search/freetext DAO function.">
       <created>1496268262584</created>
@@ -1101,11 +1030,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496937705630</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Completed paging list for freetext search.Beans modifications.Add some todos.">
+      <created>1497202637123</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1497202637123</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127808000" />
+    <option name="totallyTimeSpent" value="127950000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1134,7 +1070,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
