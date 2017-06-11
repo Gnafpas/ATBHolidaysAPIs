@@ -1,9 +1,7 @@
 package DAOs.API_DAOs;
 
-import APIBeans.Product.Search_Freetext_Attractions_APIJSON;
-import APIBeans.Product.Search_Freetext_POST;
-import APIBeans.Product.Search_Freetext_Destinations_APIJSON;
-import APIBeans.Product.Search_Freetext_Products_APIJSON;
+import APIBeans.Search_Freetext.*;
+import APIBeans.Product_Details.Product_Detailed_Info_APIJSON;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
@@ -83,7 +81,7 @@ public class Product_API_DAO {
 
     /**
      *
-     * Retrives Data from /service/search/freetext (Searching for Attractions_List)
+     * Retrives Data from /service/search/freetext (Searching for Suggested_Attractions_List)
      * API's web service and returns them within a JSON Object.If fails to retrieve or
      * something else went wrong it returns the object with property
      * success=false.
@@ -109,5 +107,35 @@ public class Product_API_DAO {
         }
 
         return search_freetext_attractions_APIJSON;
+    }
+
+
+    /**
+     *
+     * Retrives Data from /service/product (Details of a unique product identified by product code)
+     * API's web service and returns them within a JSON Object.If fails to retrieve or
+     * something else went wrong it returns the object with property
+     * success=false.
+     */
+    public Product_Detailed_Info_APIJSON product_detailed_info(String code, String currencyCode, boolean excludeTourGradeAvailability, boolean showUnavailable){
+
+        final String url =Controller.Application.apiURL + "/service/product?" + "code=" + code + "&currencyCode=" + currencyCode +
+                          "&excludeTourGradeAvailability=" + excludeTourGradeAvailability + "&showUnavailable=" + showUnavailable +
+                          "&apiKey=" + Controller.Application.apiKey;
+        Product_Detailed_Info_APIJSON product_detailed_info_APIJSON =new Product_Detailed_Info_APIJSON();
+        product_detailed_info_APIJSON.setSuccess(false);
+        try {
+            restTemplate = new RestTemplate();
+            product_detailed_info_APIJSON = restTemplate.getForObject(url, Product_Detailed_Info_APIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return product_detailed_info_APIJSON;
     }
 }
