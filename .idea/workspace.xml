@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87d201a1-8e1e-40aa-82fe-4b23f4e08dbc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_Attraction_POST.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_DestID_SeoID_APIJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_Destination_POST.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Destination_Category.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/API_DAOs/Product_API_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/target/classes/DAOs/API_DAOs/Product_API_DAO.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -30,8 +19,8 @@
       <file leaf-file-name="SearchController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="25" column="51" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="51" />
+            <state relative-caret-position="361">
+              <caret line="46" column="41" lean-forward="true" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -909,7 +898,7 @@
       <workItem from="1497342422461" duration="3297000" />
       <workItem from="1497369757771" duration="1072000" />
       <workItem from="1497440896003" duration="482000" />
-      <workItem from="1497443015308" duration="879000" />
+      <workItem from="1497443015308" duration="1088000" />
     </task>
     <task id="LOCAL-00001" summary="Completed /service/search/freetext DAO function.">
       <created>1496268262584</created>
@@ -960,11 +949,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497202637123</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Developing Categories from a destination.">
+      <created>1497444109529</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1497444109529</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149054000" />
+    <option name="totallyTimeSpent" value="149263000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -977,6 +973,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1001,7 +998,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33774835" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2353362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2353362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1074,7 +1071,8 @@
     <MESSAGE value="Top destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.NOT COMPLITED" />
     <MESSAGE value="Top(Suggested) destinations/Attractions with search freetext.One function for products/Attractions/Destinations search.Autocomplete Search functionality COMPLETED." />
     <MESSAGE value="Completed paging list for freetext search.Beans modifications.Add some todos." />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed paging list for freetext search.Beans modifications.Add some todos." />
+    <MESSAGE value="Developing Categories from a destination." />
+    <option name="LAST_COMMIT_MESSAGE" value="Developing Categories from a destination." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1409,8 +1407,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="25" column="51" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="51" />
+        <state relative-caret-position="361">
+          <caret line="46" column="41" lean-forward="true" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
           <folding />
         </state>
       </provider>
