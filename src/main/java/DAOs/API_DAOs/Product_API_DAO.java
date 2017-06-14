@@ -1,5 +1,8 @@
 package DAOs.API_DAOs;
 
+import APIBeans.Products_By_DestID_SeoID.Products_By_Attraction_POST;
+import APIBeans.Products_By_DestID_SeoID.Products_By_DestID_SeoID_APIJSON;
+import APIBeans.Products_By_DestID_SeoID.Products_By_Destination_POST;
 import APIBeans.Search_Freetext.*;
 import APIBeans.Product_Details.Product_Detailed_Info_APIJSON;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,6 +19,36 @@ import java.util.List;
 public class Product_API_DAO {
 
     private RestTemplate restTemplate;
+
+    /**
+     *
+     * Retrieves Data from /service/search/freetext (Searching for Products)
+     * API's web service and returns them within a JSON Object.If fails to
+     * retrieve or something else went wrong it returns the object with property
+     * success=false.
+     */
+    public Products_By_DestID_SeoID_APIJSON search_products(Products_By_Destination_POST products_by_destination_POST,Products_By_Attraction_POST products_by_attraction_POST,boolean is_destID_Post){
+
+        final String url =Controller.Application.apiURL+ "/service/search/products?apiKey=" + Controller.Application.apiKey;
+        Products_By_DestID_SeoID_APIJSON products_by_destIDSeoID_APIJSON =new Products_By_DestID_SeoID_APIJSON();
+        products_by_destIDSeoID_APIJSON.setSuccess(false);
+        try {
+            restTemplate = new RestTemplate();
+            if(is_destID_Post)
+                products_by_destIDSeoID_APIJSON = restTemplate.postForObject(url, products_by_destination_POST, Products_By_DestID_SeoID_APIJSON.class);
+            else
+                products_by_destIDSeoID_APIJSON = restTemplate.postForObject(url, products_by_attraction_POST, Products_By_DestID_SeoID_APIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return products_by_destIDSeoID_APIJSON;
+    }
 
     /**
      *
