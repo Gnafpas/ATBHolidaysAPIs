@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d201a1-8e1e-40aa-82fe-4b23f4e08dbc" name="Default" comment="Add Hybernate.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Hibernate_5_2_9_5_2_9.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_6_0_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Product_Details_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXCategoryBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Connection/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Updates/Update.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductXCategoryBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/classes/DAOs/API_DAOs/Product_API_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/target/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/target/classes/DAOs/API_DAOs/Product_API_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/ATBHolidays_Viator_Integration_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/ATBHolidays_Viator_Integration_war_exploded.xml" />
+    <list default="true" id="87d201a1-8e1e-40aa-82fe-4b23f4e08dbc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ATBHolidays_Viator_Integration.iml" afterPath="$PROJECT_DIR$/ATBHolidays_Viator_Integration.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/META-INF/MANIFEST.MF" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -190,8 +169,8 @@
       <file leaf-file-name="ViatorProductXCategoryBean.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXCategoryBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="9" column="70" lean-forward="false" selection-start-line="9" selection-start-column="70" selection-end-line="9" selection-end-column="70" />
+            <state relative-caret-position="525">
+              <caret line="48" column="32" lean-forward="true" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -1091,7 +1070,7 @@
       <workItem from="1497440896003" duration="482000" />
       <workItem from="1497443015308" duration="1088000" />
       <workItem from="1497445530989" duration="10798000" />
-      <workItem from="1497522772399" duration="11260000" />
+      <workItem from="1497522772399" duration="11361000" />
     </task>
     <task id="LOCAL-00001" summary="Completed /service/search/freetext DAO function.">
       <created>1496268262584</created>
@@ -1149,11 +1128,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497444109529</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add Hybernate.">
+      <created>1497535800452</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1497535800452</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="171321000" />
+    <option name="totallyTimeSpent" value="171422000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1673,8 +1659,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXCategoryBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="70" lean-forward="false" selection-start-line="9" selection-start-column="70" selection-end-line="9" selection-end-column="70" />
+        <state relative-caret-position="525">
+          <caret line="48" column="32" lean-forward="true" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
           <folding />
         </state>
       </provider>
