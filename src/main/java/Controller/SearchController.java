@@ -8,6 +8,7 @@ import APIBeans.Product_Details.Product_Detailed_Info_APIJSON;
 import APIBeans.Taxonomy.Taxonomy_Destinations_APIJSON;
 import DAOs.API_DAOs.Product_API_DAO;
 import DAOs.API_DAOs.Taxonomy_API_DAO;
+import DB_Updates.Update;
 import WebServicesBeans.Paging_List.*;
 import WebServicesBeans.Suggestions.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +63,8 @@ public class SearchController {
 
             }
         }
+        Update update=new Update();
+        update.updateProducts();
         return destination_categories;
     }
 
