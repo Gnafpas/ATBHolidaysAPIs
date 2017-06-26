@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DB_Beans.ViatorProductPhotosBean" table="viator_product_photos" schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="productCode" column="product_code"/>
+        <property name="photoUrl" column="photo_URL"/>
+        <property name="caption" column="caption"/>
+        <property name="supplier" column="supplier"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

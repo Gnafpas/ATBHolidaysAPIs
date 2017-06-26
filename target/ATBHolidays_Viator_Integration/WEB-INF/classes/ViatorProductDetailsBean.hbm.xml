@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DB_Beans.ViatorProductDetailsBean" table="viator_product_details" schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="code" column="code"/>
+        <property name="primaryDestinationId" column="primary_destination_id"/>
+        <property name="destinationId" column="destination_id"/>
+        <property name="primaryCategoryId" column="primary_category_id"/>
+        <property name="supplierCode" column="supplier_code"/>
+        <property name="bookingEngineId" column="booking_engine_id"/>
+        <property name="titleEn" column="title_EN"/>
+        <property name="shortTitleEn" column="short_title_EN"/>
+        <property name="highlightsEn" column="highlights_EN"/>
+        <property name="primaryDestinationNameEn" column="primary_destination_name_EN"/>
+        <property name="locationEn" column="location_EN"/>
+        <property name="cityEn" column="city_EN"/>
+        <property name="countryEn" column="country_EN"/>
+        <property name="regionEn" column="region_EN"/>
+        <property name="departurePoint" column="departure_point"/>
+        <property name="operatesEn" column="operates_EN"/>
+        <property name="returnDetails" column="return_details"/>
+        <property name="shortDescriptionEn" column="short_description_EN"/>
+        <property name="descriptionEn" column="description_EN"/>
+        <property name="voucherRequirementsEn" column="voucher_requirements_EN"/>
+        <property name="duration" column="duration"/>
+        <property name="thumbnailUrl" column="thumbnail_URL"/>
+        <property name="thumbnailHiResUrl" column="thumbnail_hi_res_URL"/>
+        <property name="webUrl" column="web_URL"/>
+        <property name="currencyCode" column="currency_code"/>
+        <property name="price" column="price"/>
+        <property name="rrp" column="rrp"/>
+        <property name="merchantNetPriceFrom" column="merchant_net_price_from"/>
+        <property name="savingAmount" column="saving_amount"/>
+        <property name="rating" column="rating"/>
+        <property name="voucherOption" column="voucher_option"/>
+        <property name="departureTimeEn" column="departure_time_EN"/>
+        <property name="departureTimeCommentsEn" column="departure_time_comments_EN"/>
+        <property name="onRequestPeriod" column="on_request_period"/>
+        <property name="supplierName" column="supplier_name"/>
+        <property name="specialReservation" column="special_reservation"/>
+        <property name="specialReservationDetails" column="special_reservation_details"/>
+        <property name="itineraryEn" column="itinerary_EN"/>
+        <property name="termsAndConditionsEn" column="terms_and_conditions_EN"/>
+        <property name="merchantCancellable" column="merchant_cancellable"/>
+        <property name="onSale" column="on_sale"/>
+        <property name="specialOfferAvailable" column="special_offer_available"/>
+        <property name="specialOfferEn" column="special_offer_EN"/>
+        <property name="tourGradesAvailable" column="tour_grades_available"/>
+        <property name="hotelPickup" column="hotel_pickup"/>
+        <property name="videoCount" column="video_count"/>
+        <property name="panoramaCount" column="panorama_count"/>
+        <property name="photoCount" column="photo_count"/>
+        <property name="reviewCount" column="review_count"/>
+        <property name="translationLevel" column="translation_level"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

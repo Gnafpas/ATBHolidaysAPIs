@@ -1,0 +1,35 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-context-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/logback-classic-1.1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-web-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-boot-starter-1.5.3.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/jackson-annotations-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/classmate-1.3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/jboss-logging-3.3.1.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-webmvc-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/validation-api-1.1.0.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-core-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/slf4j-api-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/hibernate-validator-5.3.5.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/log4j-over-slf4j-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-aop-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-boot-1.5.3.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/mysql-connector-java-6.0.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/jcl-over-slf4j-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-beans-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-boot-starter-web-1.5.3.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/snakeyaml-1.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/logback-core-1.1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/jackson-databind-2.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-boot-autoconfigure-1.5.3.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-expression-4.3.8.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/jackson-core-2.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/spring-boot-starter-logging-1.5.3.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/jul-to-slf4j-1.7.25.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DB_Beans.ViatorProductVideosBean" table="viator_product_videos" schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="productCode" column="product_code"/>
+        <property name="videoId" column="video_id"/>
+        <property name="photoUrl" column="photo_URL"/>
+        <property name="caption" column="caption"/>
+        <property name="shortDescriptionEn" column="short_description_EN"/>
+        <property name="titleEn" column="title_EN"/>
+        <property name="productTitleEn" column="product_title_EN"/>
+        <property name="descriptionEn" column="description_EN"/>
+        <property name="thumbnailUrl" column="thumbnail_URL"/>
+        <property name="copyright" column="copyright"/>
+        <property name="photoHiResUrl" column="photo_hi_res_URL"/>
+        <property name="source" column="source"/>
+        <property name="privatE" column="privatE"/>
+        <property name="ownerId" column="owner_id"/>
+        <property name="ownerName" column="owner_name"/>
+        <property name="ownerCountry" column="owner_country"/>
+        <property name="ownerAvatarUrl" column="owner_avatar_URL"/>
+        <property name="sortOrder" column="sort_order"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DB_Beans.ViatorProductReviewsBean" table="viator_product_reviews" schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="productCode" column="product_code"/>
+        <property name="reviewId" column="review_id"/>
+        <property name="rating" column="rating"/>
+        <property name="review" column="review"/>
+        <property name="productTitleEn" column="product_title_EN"/>
+        <property name="viatorFeedback" column="viator_feedback"/>
+        <property name="viatorNotes" column="viator_notes"/>
+        <property name="submissionDate" column="submission_date"/>
+        <property name="publishedDate" column="published_date"/>
+        <property name="ownerId" column="owner_id"/>
+        <property name="ownerName" column="owner_name"/>
+        <property name="ownerCountry" column="owner_country"/>
+        <property name="ownerAvatarUrl" column="owner_avatar_URL"/>
+        <property name="sortOrder" column="sort_order"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

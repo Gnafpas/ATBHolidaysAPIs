@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
+        <mapping class="DB_Beans.ViatorProductDetailsBean"/>
+        <mapping resource="ViatorProductDetailsBean.hbm.xml"/>
+        <mapping resource="ViatorProductXCategoryBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductXCategoryBean"/>
+        <mapping class="DB_Beans.ViatorCategoriesBean"/>
+        <mapping resource="ViatorCategoriesBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorSubcategoriesBean"/>
+        <mapping resource="ViatorSubcategoriesBean.hbm.xml"/>
+        <mapping resource="ViatorProductXSubcategoryBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductXSubcategoryBean"/>
+        <mapping resource="ViatorProductUserPhotosBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductUserPhotosBean"/>
+        <mapping resource="ViatorProductReviewsBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductReviewsBean"/>
+        <mapping resource="ViatorProductAgeBandsBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductAgeBandsBean"/>
+        <mapping resource="ViatorProductSalesPointsBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductSalesPointsBean"/>
+        <mapping resource="ViatorProductDetailsBean.hbm.xml"/>
+        <mapping resource="ViatorProductInclusionsBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductInclusionsBean"/>
+        <mapping resource="ViatorProductAdditionalInfoBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductAdditionalInfoBean"/>
+        <mapping resource="ViatorProductExclusionsBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductExclusionsBean"/>
+        <mapping resource="ViatorProductPhotosBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductPhotosBean"/>
+        <mapping resource="ViatorProductTourGradesBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductTourGradesBean"/>
+        <mapping resource="ViatorProductTourGradeLanguageServicesBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductTourGradeLanguageServicesBean"/>
+        <mapping resource="ViatorProductVideosBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorProductVideosBean"/>
+        <mapping resource="ViatorDestinationsBean.hbm.xml"/>
+        <mapping class="DB_Beans.ViatorDestinationsBean"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
