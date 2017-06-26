@@ -1,6 +1,8 @@
 package APIBeans.Search_Freetext;
 
 
+import java.math.BigDecimal;
+
 /**
  * Created by George on 30/05/17.
  */
@@ -17,8 +19,8 @@ public class Search_Freetext_Destination_Data {
     private int destinationId;
     private String destinationType;
     private String destinationName;
-    private double latitude;
-    private double longitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 
 
     public int getSortOrder() {
@@ -109,19 +111,19 @@ public class Search_Freetext_Destination_Data {
         this.destinationName = destinationName;
     }
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 }

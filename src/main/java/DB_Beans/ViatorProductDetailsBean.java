@@ -1,13 +1,14 @@
 package DB_Beans;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by George on 15/06/2017.
+ * Created by George on 23/06/17.
  */
 @Entity
-@Table(name = "viator_product_details", schema = "develope_viator")
+@Table(name = "viator_product_details", schema = "develope_viator", catalog = "")
 public class ViatorProductDetailsBean {
     private int rid;
     private String code;
@@ -35,31 +36,36 @@ public class ViatorProductDetailsBean {
     private String thumbnailHiResUrl;
     private String webUrl;
     private String currencyCode;
-    private Double price;
-    private Double rrp;
-    private Double merchantNetPriceFrom;
-    private Double savingAmount;
+    private BigDecimal price;
+    private BigDecimal rrp;
+    private BigDecimal merchantNetPriceFrom;
+    private BigDecimal savingAmount;
     private Double rating;
     private String voucherOption;
     private String departureTimeEn;
     private String departureTimeCommentsEn;
     private String onRequestPeriod;
     private String supplierName;
-    private byte specialReservation;
+    private boolean specialReservation;
     private String specialReservationDetails;
     private String itineraryEn;
     private String termsAndConditionsEn;
-    private byte merchantCancellable;
-    private byte onSale;
-    private byte specialOfferAvailable;
+    private boolean merchantCancellable;
+    private boolean onSale;
+    private boolean specialOfferAvailable;
     private String specialOfferEn;
-    private byte tourGradesAvailable;
-    private byte hotelPickup;
+    private boolean tourGradesAvailable;
+    private boolean hotelPickup;
     private Integer videoCount;
     private Integer panoramaCount;
     private Integer photoCount;
     private Integer reviewCount;
     private Integer translationLevel;
+    private Integer rating1Count;
+    private Integer rating2Count;
+    private Integer rating3Count;
+    private Integer rating4Count;
+    private Integer rating5Count;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
@@ -325,41 +331,41 @@ public class ViatorProductDetailsBean {
 
     @Basic
     @Column(name = "price")
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     @Basic
     @Column(name = "rrp")
-    public Double getRrp() {
+    public BigDecimal getRrp() {
         return rrp;
     }
 
-    public void setRrp(Double rrp) {
+    public void setRrp(BigDecimal rrp) {
         this.rrp = rrp;
     }
 
     @Basic
     @Column(name = "merchant_net_price_from")
-    public Double getMerchantNetPriceFrom() {
+    public BigDecimal getMerchantNetPriceFrom() {
         return merchantNetPriceFrom;
     }
 
-    public void setMerchantNetPriceFrom(Double merchantNetPriceFrom) {
+    public void setMerchantNetPriceFrom(BigDecimal merchantNetPriceFrom) {
         this.merchantNetPriceFrom = merchantNetPriceFrom;
     }
 
     @Basic
     @Column(name = "saving_amount")
-    public Double getSavingAmount() {
+    public BigDecimal getSavingAmount() {
         return savingAmount;
     }
 
-    public void setSavingAmount(Double savingAmount) {
+    public void setSavingAmount(BigDecimal savingAmount) {
         this.savingAmount = savingAmount;
     }
 
@@ -425,11 +431,11 @@ public class ViatorProductDetailsBean {
 
     @Basic
     @Column(name = "special_reservation")
-    public byte getSpecialReservation() {
+    public boolean getSpecialReservation() {
         return specialReservation;
     }
 
-    public void setSpecialReservation(byte specialReservation) {
+    public void setSpecialReservation(boolean specialReservation) {
         this.specialReservation = specialReservation;
     }
 
@@ -465,31 +471,31 @@ public class ViatorProductDetailsBean {
 
     @Basic
     @Column(name = "merchant_cancellable")
-    public byte getMerchantCancellable() {
+    public boolean getMerchantCancellable() {
         return merchantCancellable;
     }
 
-    public void setMerchantCancellable(byte merchantCancellable) {
+    public void setMerchantCancellable(boolean merchantCancellable) {
         this.merchantCancellable = merchantCancellable;
     }
 
     @Basic
     @Column(name = "on_sale")
-    public byte getOnSale() {
+    public boolean getOnSale() {
         return onSale;
     }
 
-    public void setOnSale(byte onSale) {
+    public void setOnSale(boolean onSale) {
         this.onSale = onSale;
     }
 
     @Basic
     @Column(name = "special_offer_available")
-    public byte getSpecialOfferAvailable() {
+    public boolean getSpecialOfferAvailable() {
         return specialOfferAvailable;
     }
 
-    public void setSpecialOfferAvailable(byte specialOfferAvailable) {
+    public void setSpecialOfferAvailable(boolean specialOfferAvailable) {
         this.specialOfferAvailable = specialOfferAvailable;
     }
 
@@ -505,21 +511,21 @@ public class ViatorProductDetailsBean {
 
     @Basic
     @Column(name = "tour_grades_available")
-    public byte getTourGradesAvailable() {
+    public boolean getTourGradesAvailable() {
         return tourGradesAvailable;
     }
 
-    public void setTourGradesAvailable(byte tourGradesAvailable) {
+    public void setTourGradesAvailable(boolean tourGradesAvailable) {
         this.tourGradesAvailable = tourGradesAvailable;
     }
 
     @Basic
     @Column(name = "hotel_pickup")
-    public byte getHotelPickup() {
+    public boolean getHotelPickup() {
         return hotelPickup;
     }
 
-    public void setHotelPickup(byte hotelPickup) {
+    public void setHotelPickup(boolean hotelPickup) {
         this.hotelPickup = hotelPickup;
     }
 
@@ -571,6 +577,56 @@ public class ViatorProductDetailsBean {
 
     public void setTranslationLevel(Integer translationLevel) {
         this.translationLevel = translationLevel;
+    }
+
+    @Basic
+    @Column(name = "rating_1_count")
+    public Integer getRating1Count() {
+        return rating1Count;
+    }
+
+    public void setRating1Count(Integer rating1Count) {
+        this.rating1Count = rating1Count;
+    }
+
+    @Basic
+    @Column(name = "rating_2_count")
+    public Integer getRating2Count() {
+        return rating2Count;
+    }
+
+    public void setRating2Count(Integer rating2Count) {
+        this.rating2Count = rating2Count;
+    }
+
+    @Basic
+    @Column(name = "rating_3_count")
+    public Integer getRating3Count() {
+        return rating3Count;
+    }
+
+    public void setRating3Count(Integer rating3Count) {
+        this.rating3Count = rating3Count;
+    }
+
+    @Basic
+    @Column(name = "rating_4_count")
+    public Integer getRating4Count() {
+        return rating4Count;
+    }
+
+    public void setRating4Count(Integer rating4Count) {
+        this.rating4Count = rating4Count;
+    }
+
+    @Basic
+    @Column(name = "rating_5_count")
+    public Integer getRating5Count() {
+        return rating5Count;
+    }
+
+    public void setRating5Count(Integer rating5Count) {
+        this.rating5Count = rating5Count;
     }
 
     @Basic
@@ -671,6 +727,11 @@ public class ViatorProductDetailsBean {
         if (reviewCount != null ? !reviewCount.equals(that.reviewCount) : that.reviewCount != null) return false;
         if (translationLevel != null ? !translationLevel.equals(that.translationLevel) : that.translationLevel != null)
             return false;
+        if (rating1Count != null ? !rating1Count.equals(that.rating1Count) : that.rating1Count != null) return false;
+        if (rating2Count != null ? !rating2Count.equals(that.rating2Count) : that.rating2Count != null) return false;
+        if (rating3Count != null ? !rating3Count.equals(that.rating3Count) : that.rating3Count != null) return false;
+        if (rating4Count != null ? !rating4Count.equals(that.rating4Count) : that.rating4Count != null) return false;
+        if (rating5Count != null ? !rating5Count.equals(that.rating5Count) : that.rating5Count != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
 
@@ -715,23 +776,32 @@ public class ViatorProductDetailsBean {
         result = 31 * result + (departureTimeCommentsEn != null ? departureTimeCommentsEn.hashCode() : 0);
         result = 31 * result + (onRequestPeriod != null ? onRequestPeriod.hashCode() : 0);
         result = 31 * result + (supplierName != null ? supplierName.hashCode() : 0);
-        result = 31 * result + (int) specialReservation;
+        result = 31 * result + help(specialReservation);
         result = 31 * result + (specialReservationDetails != null ? specialReservationDetails.hashCode() : 0);
         result = 31 * result + (itineraryEn != null ? itineraryEn.hashCode() : 0);
         result = 31 * result + (termsAndConditionsEn != null ? termsAndConditionsEn.hashCode() : 0);
-        result = 31 * result + (int) merchantCancellable;
-        result = 31 * result + (int) onSale;
-        result = 31 * result + (int) specialOfferAvailable;
+        result = 31 * result + help(merchantCancellable);
+        result = 31 * result + help(onSale);
+        result = 31 * result + help(specialOfferAvailable);
         result = 31 * result + (specialOfferEn != null ? specialOfferEn.hashCode() : 0);
-        result = 31 * result + (int) tourGradesAvailable;
-        result = 31 * result + (int) hotelPickup;
+        result = 31 * result + help(tourGradesAvailable);
+        result = 31 * result + help(hotelPickup);
         result = 31 * result + (videoCount != null ? videoCount.hashCode() : 0);
         result = 31 * result + (panoramaCount != null ? panoramaCount.hashCode() : 0);
         result = 31 * result + (photoCount != null ? photoCount.hashCode() : 0);
         result = 31 * result + (reviewCount != null ? reviewCount.hashCode() : 0);
         result = 31 * result + (translationLevel != null ? translationLevel.hashCode() : 0);
+        result = 31 * result + (rating1Count != null ? rating1Count.hashCode() : 0);
+        result = 31 * result + (rating2Count != null ? rating2Count.hashCode() : 0);
+        result = 31 * result + (rating3Count != null ? rating3Count.hashCode() : 0);
+        result = 31 * result + (rating4Count != null ? rating4Count.hashCode() : 0);
+        result = 31 * result + (rating5Count != null ? rating5Count.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         return result;
+    }
+
+    private int help(boolean attribute){
+        if(attribute){return 1;}else{return 0;}
     }
 }

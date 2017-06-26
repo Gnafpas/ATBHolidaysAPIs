@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="ATBHolidays_Viator_Integration:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="ATBHolidays_Viator_Integration.war">
-      <element id="artifact" artifact-name="ATBHolidays_Viator_Integration:war exploded" />
-    </root>
-  </artifact>
-</component>

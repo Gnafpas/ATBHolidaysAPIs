@@ -1,5 +1,6 @@
 package APIBeans.Product_Details;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -11,13 +12,13 @@ public class Product_Detail_tourGrades {
     private String currencyCode;
     private HashMap langServices;//todo Put correct type of atribute/
     private String priceFromFormatted;
-    private double priceFrom;
+    private BigDecimal priceFrom;
     private String gradeDepartureTime;
     private String gradeCode;
     private String gradeTitle;
     private String gradeDescription;
     private String defaultLanguageCode;
-    private double merchantNetPriceFrom;
+    private BigDecimal merchantNetPriceFrom;
     private String merchantNetPriceFromFormatted;
 
     public int getSortOrder() {
@@ -52,11 +53,11 @@ public class Product_Detail_tourGrades {
         this.priceFromFormatted = priceFromFormatted;
     }
 
-    public double getPriceFrom() {
+    public BigDecimal getPriceFrom() {
         return priceFrom;
     }
 
-    public void setPriceFrom(double priceFrom) {
+    public void setPriceFrom(BigDecimal priceFrom) {
         this.priceFrom = priceFrom;
     }
 
@@ -100,11 +101,11 @@ public class Product_Detail_tourGrades {
         this.defaultLanguageCode = defaultLanguageCode;
     }
 
-    public double getMerchantNetPriceFrom() {
+    public BigDecimal getMerchantNetPriceFrom() {
         return merchantNetPriceFrom;
     }
 
-    public void setMerchantNetPriceFrom(double merchantNetPriceFrom) {
+    public void setMerchantNetPriceFrom(BigDecimal merchantNetPriceFrom) {
         this.merchantNetPriceFrom = merchantNetPriceFrom;
     }
 

@@ -1,5 +1,6 @@
 package APIBeans.Search_Freetext;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class Search_Freetext_Attraction_Data {
     private boolean editorsPick;
     private String descriptionText;
     private String tabTitle;
-    private double attractionLatitude;
-    private double attractionLongitude;
+    private BigDecimal attractionLatitude;
+    private BigDecimal attractionLongitude;
     private String attractionStreetAddress;
     private String attractionCity;
     private String attractionState;
@@ -203,19 +204,19 @@ public class Search_Freetext_Attraction_Data {
         this.tabTitle = tabTitle;
     }
 
-    public double getAttractionLatitude() {
+    public BigDecimal getAttractionLatitude() {
         return attractionLatitude;
     }
 
-    public void setAttractionLatitude(double attractionLatitude) {
+    public void setAttractionLatitude(BigDecimal attractionLatitude) {
         this.attractionLatitude = attractionLatitude;
     }
 
-    public double getAttractionLongitude() {
+    public BigDecimal getAttractionLongitude() {
         return attractionLongitude;
     }
 
-    public void setAttractionLongitude(double attractionLongitude) {
+    public void setAttractionLongitude(BigDecimal attractionLongitude) {
         this.attractionLongitude = attractionLongitude;
     }
 

@@ -1,5 +1,7 @@
 package APIBeans.Taxonomy;
 
+import java.math.BigDecimal;
+
 /**
  * Created by George on 04/06/17.
  */
@@ -13,8 +15,8 @@ public class Taxonomy_Destinations_Data {
     private int parentId;
     private String timeZone;
     private String iataCode;
-    private double longitude;
-    private double latitude;
+    private BigDecimal longitude;
+    private BigDecimal latitude;
     private int destinationId;
     private String destinationType;
     private String destinationName;
@@ -83,19 +85,19 @@ public class Taxonomy_Destinations_Data {
         this.iataCode = iataCode;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 

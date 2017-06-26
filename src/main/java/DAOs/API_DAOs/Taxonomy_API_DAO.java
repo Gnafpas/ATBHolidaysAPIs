@@ -1,6 +1,7 @@
 package DAOs.API_DAOs;
 
 import APIBeans.Taxonomy.Taxonomy_Attractions_APIJSON;
+import APIBeans.Taxonomy.Taxonomy_Categories_APIJSON;
 import APIBeans.Taxonomy.Taxonomy_Destinations_APIJSON;
 import APIBeans.Taxonomy.Taxonomy_Attractions_POST;
 import org.springframework.web.client.HttpClientErrorException;
@@ -76,5 +77,32 @@ public class Taxonomy_API_DAO {
         }
 
         return taxonomy_attractions_APIJSON;
+    }
+
+    /**
+     *
+     * Retrieves Data from /service/taxonomy/categories (Complete list of all available categories)
+     * API's web service and returns them within a JSON Object.If fails to
+     * retrieve or something else went wrong it returns the object with property
+     * success=false.
+     */
+    public Taxonomy_Categories_APIJSON retrieve_categories(){
+
+        final String url =Controller.Application.apiURL+ "/service/taxonomy/categories?apiKey=" + Controller.Application.apiKey;
+        Taxonomy_Categories_APIJSON taxonomy_categories_APIJSON =new Taxonomy_Categories_APIJSON();
+        taxonomy_categories_APIJSON.setSuccess(false);
+        try {
+            restTemplate = new RestTemplate();
+            taxonomy_categories_APIJSON = restTemplate.getForObject(url,Taxonomy_Categories_APIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return taxonomy_categories_APIJSON;
     }
 }

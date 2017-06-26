@@ -1,5 +1,6 @@
 package WebServicesBeans.Paging_List;
 
+import java.math.BigDecimal;
 import java.net.URL;
 
 /**
@@ -10,24 +11,24 @@ public class Product_Summary {
     private String currencyCode;
     private String title;
     private String shortDescription;
-    private double price;
+    private BigDecimal price;
     private int reviewCount;
     private double rating;
     private String Location;
-    private URL thumbnailURL;
+    private String thumbnailURL;
     private String priceFormatted;
     private boolean specialOfferAvailable;
-    private URL thumbnailHiResURL;
+    private String thumbnailHiResURL;
     private String duration;
     private String code;
-    private double rrp;
+    private BigDecimal rrp;
     private String rrpformatted;
 
-    public double getRrp() {
+    public BigDecimal getRrp() {
         return rrp;
     }
 
-    public void setRrp(double rrp) {
+    public void setRrp(BigDecimal rrp) {
         this.rrp = rrp;
     }
 
@@ -63,11 +64,11 @@ public class Product_Summary {
         this.shortDescription = shortDescription;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -95,11 +96,11 @@ public class Product_Summary {
         Location = location;
     }
 
-    public URL getThumbnailURL() {
+    public String getThumbnailURL() {
         return thumbnailURL;
     }
 
-    public void setThumbnailURL(URL thumbnailURL) {
+    public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
 
@@ -119,11 +120,11 @@ public class Product_Summary {
         this.specialOfferAvailable = specialOfferAvailable;
     }
 
-    public URL getThumbnailHiResURL() {
+    public String getThumbnailHiResURL() {
         return thumbnailHiResURL;
     }
 
-    public void setThumbnailHiResURL(URL thumbnailHiResURL) {
+    public void setThumbnailHiResURL(String thumbnailHiResURL) {
         this.thumbnailHiResURL = thumbnailHiResURL;
     }
 

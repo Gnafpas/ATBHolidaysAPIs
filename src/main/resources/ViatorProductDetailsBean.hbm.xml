@@ -56,6 +56,11 @@
         <property name="photoCount" column="photo_count"/>
         <property name="reviewCount" column="review_count"/>
         <property name="translationLevel" column="translation_level"/>
+        <property name="rating1Count" column="rating_1_count"/>
+        <property name="rating2Count" column="rating_2_count"/>
+        <property name="rating3Count" column="rating_3_count"/>
+        <property name="rating4Count" column="rating_4_count"/>
+        <property name="rating5Count" column="rating_5_count"/>
         <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>

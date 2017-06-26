@@ -7,15 +7,15 @@ import java.net.URL;
  */
 public class Product_Detail_productPhotos {
 
-    private URL photoURL;
+    private String photoURL;
     private String supplier;
     private String caption;
 
-    public URL getPhotoURL() {
+    public String getPhotoURL() {
         return photoURL;
     }
 
-    public void setPhotoURL(URL photoURL) {
+    public void setPhotoURL(String photoURL) {
         this.photoURL = photoURL;
     }
 

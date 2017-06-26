@@ -1,5 +1,6 @@
 package APIBeans.Search_Freetext;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.net.URL;
 
@@ -13,7 +14,7 @@ public class Search_Freetext_Product_Data {
     private String currencyCode;
     private List<Integer> catIds;
     private List<Integer> subCatIds;
-    private URL webURL;
+    private String webURL;
     private String specialReservationDetails;//todo Put correct type of atribute/
     private int panoramaCount;
     private boolean merchantCancellable;
@@ -27,7 +28,7 @@ public class Search_Freetext_Product_Data {
     private String title;
     private String shortDescription;
     private String admission;
-    private double price;
+    private BigDecimal price;
     private String supplierCode;
     private int translationLevel;//todo Put correct type of atribute/
     private int photoCount;
@@ -36,17 +37,17 @@ public class Search_Freetext_Product_Data {
     private double rating;
     private int primaryDestinationId;
     private String primaryDestinationName;
-    private URL thumbnailURL;
+    private String thumbnailURL;
     private String priceFormatted;
-    private double rrp;
+    private BigDecimal rrp;
     private String rrpformatted;
     private boolean onSale;
-    private URL thumbnailHiResURL;
+    private String thumbnailHiResURL;
     private String shortTitle;
     private String uniqueShortDescription;
-    private double merchantNetPriceFrom;
+    private BigDecimal merchantNetPriceFrom;
     private String merchantNetPriceFromFormatted;
-    private int savingAmount;//todo Put correct type of atribute/
+    private BigDecimal savingAmount;//todo Put correct type of atribute/
     private String savingAmountFormated;
     private boolean specialOfferAvailable;
     private String essential;
@@ -70,20 +71,20 @@ public class Search_Freetext_Product_Data {
         this.rating = rating;
     }
 
-    public double getRrp() {
+    public BigDecimal getRrp() {
         return rrp;
     }
 
-    public void setRrp(double rrp) {
+    public void setRrp(BigDecimal rrp) {
         this.rrp = rrp;
     }
 
-    public double getMerchantNetPriceFrom() {
+    public BigDecimal getMerchantNetPriceFrom() {
         return merchantNetPriceFrom;
     }
 
 
-    public void setMerchantNetPriceFrom(double merchantNetPriceFrom) {
+    public void setMerchantNetPriceFrom(BigDecimal merchantNetPriceFrom) {
         this.merchantNetPriceFrom = merchantNetPriceFrom;
     }
 
@@ -127,11 +128,11 @@ public class Search_Freetext_Product_Data {
         this.subCatIds = subCatIds;
     }
 
-    public URL getWebURL() {
+    public String getWebURL() {
         return webURL;
     }
 
-    public void setWebURL(URL webURL) {
+    public void setWebURL(String webURL) {
         this.webURL = webURL;
     }
 
@@ -231,11 +232,11 @@ public class Search_Freetext_Product_Data {
         this.admission = admission;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -295,11 +296,11 @@ public class Search_Freetext_Product_Data {
         this.primaryDestinationName = primaryDestinationName;
     }
 
-    public URL getThumbnailURL() {
+    public String getThumbnailURL() {
         return thumbnailURL;
     }
 
-    public void setThumbnailURL(URL thumbnailURL) {
+    public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
 
@@ -327,11 +328,11 @@ public class Search_Freetext_Product_Data {
         this.onSale = onSale;
     }
 
-    public URL getThumbnailHiResURL() {
+    public String getThumbnailHiResURL() {
         return thumbnailHiResURL;
     }
 
-    public void setThumbnailHiResURL(URL thumbnailHiResURL) {
+    public void setThumbnailHiResURL(String thumbnailHiResURL) {
         this.thumbnailHiResURL = thumbnailHiResURL;
     }
 
@@ -359,11 +360,11 @@ public class Search_Freetext_Product_Data {
         this.merchantNetPriceFromFormatted = merchantNetPriceFromFormatted;
     }
 
-    public int getSavingAmount() {
+    public BigDecimal getSavingAmount() {
         return savingAmount;
     }
 
-    public void setSavingAmount(int savingAmount) {
+    public void setSavingAmount(BigDecimal savingAmount) {
         this.savingAmount = savingAmount;
     }
 

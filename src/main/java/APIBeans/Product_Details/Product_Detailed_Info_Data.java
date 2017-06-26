@@ -1,5 +1,6 @@
 package APIBeans.Product_Details;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -13,31 +14,31 @@ public class Product_Detailed_Info_Data {
     private String currencyCode;
     private List<Integer> catIds;
     private List<Integer> subCatIds;
-    private URL webURL;
-    private Object specialReservationDetails;//todo Put correct type of atribute/
+    private String webURL;
+    private String specialReservationDetails;
     private int panoramaCount;
     private boolean merchantCancellable;
     private String bookingEngineId;
-    private int onRequestPeriod;
+    private String onRequestPeriod;
     private int primaryGroupId;
-    private Object pas;//todo Put correct type of atribute/
+    private Object pas;//todo Put correct type of atribute(Not on documentation)/
     private boolean available;
     private String productUrlName;
     private String primaryDestinationUrlName;
     private String voucherRequirements;
     private boolean tourGradesAvailable;
     private boolean hotelPickup;
-    private Object userPhotos;//todo Put correct type of atribute/
-    private Object reviews;//todo Put correct type of atribute/
-    private Object videos;//todo Put correct type of atribute/
-    private List<Product_Detail_tourGrades> tourGrades;//todo Put correct type of atribute/
-    private List<Product_Detail_ageBands> ageBands;//todo Put correct type of atribute/
-    private List<Object> bookingQuestions;//todo Put correct type of atribute/
-    private Object passengerAttributes;//todo Put correct type of atribute/
-    private Object highlights;//todo Put correct type of atribute/
+    private List<Product_Detail_userPhotos> userPhotos;
+    private List<Product_Detail_reviews> reviews;
+    private List<Product_Detail_videos> videos;
+    private List<Product_Detail_tourGrades> tourGrades;
+    private List<Product_Detail_ageBands> ageBands;
+    private List<Product_Detail_bookingQuestions> bookingQuestions;
+    private Object passengerAttributes;//todo Put correct type of atribute(Not on documentation)/
+    private String highlights;
     private List<String> salesPoints;
-    private HashMap ratingCounts;//todo Put correct type of atribute/
-    private Object termsAndConditions;//todo Put correct type of atribute/
+    private HashMap ratingCounts;//todo Put correct type of atribute(Mayby ok)/
+    private String termsAndConditions;
     private int maxTravellerCount;
     private String operates;
     private boolean allTravellerNamesRequired;
@@ -47,12 +48,12 @@ public class Product_Detailed_Info_Data {
     private List<String> inclusions;
     private String voucherOption;
     private List<String> additionalInfo;
-    private List<Product_Detail_productPhotos> productPhotos;//todo Put correct type of atribute/
+    private List<Product_Detail_productPhotos> productPhotos;
     private String departureTime;
     private String departurePoint;
     private String departureTimeComments;
     private String city;
-    private URL mapURL;
+    private String mapURL;
     private String specialOffer;
     private String returnDetails;
     private List<String> exclusions;
@@ -63,37 +64,37 @@ public class Product_Detailed_Info_Data {
     private String duration;
     private String title;
     private String shortDescription;
-    private double price;
+    private BigDecimal price;
     private String supplierCode;
     private boolean specialReservation;
-    private int translationLevel;//todo Put correct type of atribute/
+    private int translationLevel;
     private String priceFormatted;
-    private double rrp;
+    private BigDecimal rrp;
     private String rrpformatted;
     private boolean onSale;
     private int videoCount;
     private double rating;
-    private URL thumbnailHiResURL;
+    private String thumbnailHiResURL;
     private int photoCount;
     private int reviewCount;
     private int primaryDestinationId;
     private String primaryDestinationName;
-    private URL thumbnailURL;
-    private double merchantNetPriceFrom;
+    private String thumbnailURL;
+    private BigDecimal merchantNetPriceFrom;
     private String merchantNetPriceFromFormatted;
     private String savingAmountFormated;
     private boolean specialOfferAvailable;
-    private Object essential;//todo Put correct type of atribute/
-    private Object admission;//todo Put correct type of atribute/
+    private Object essential;//todo Put correct type of atribute(not on documantation)/
+    private Object admission;//todo Put correct type of atribute(not on documantation)/
     private String shortTitle;
-    private double savingAmount;
+    private BigDecimal savingAmount;
     private String code;
 
-    public Object getSpecialReservationDetails() {
+    public String getSpecialReservationDetails() {
         return specialReservationDetails;
     }
 
-    public void setSpecialReservationDetails(Object specialReservationDetails) {
+    public void setSpecialReservationDetails(String specialReservationDetails) {
         this.specialReservationDetails = specialReservationDetails;
     }
 
@@ -105,27 +106,27 @@ public class Product_Detailed_Info_Data {
         this.pas = pas;
     }
 
-    public Object getUserPhotos() {
+    public List<Product_Detail_userPhotos> getUserPhotos() {
         return userPhotos;
     }
 
-    public void setUserPhotos(Object userPhotos) {
+    public void setUserPhotos(List<Product_Detail_userPhotos> userPhotos) {
         this.userPhotos = userPhotos;
     }
 
-    public Object getReviews() {
+    public List<Product_Detail_reviews> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Object reviews) {
+    public void setReviews(List<Product_Detail_reviews> reviews) {
         this.reviews = reviews;
     }
 
-    public Object getVideos() {
+    public List<Product_Detail_videos> getVideos() {
         return videos;
     }
 
-    public void setVideos(Object videos) {
+    public void setVideos(List<Product_Detail_videos> videos) {
         this.videos = videos;
     }
 
@@ -145,11 +146,11 @@ public class Product_Detailed_Info_Data {
         this.ageBands = ageBands;
     }
 
-    public List<Object> getBookingQuestions() {
+    public List<Product_Detail_bookingQuestions> getBookingQuestions() {
         return bookingQuestions;
     }
 
-    public void setBookingQuestions(List<Object> bookingQuestions) {
+    public void setBookingQuestions(List<Product_Detail_bookingQuestions> bookingQuestions) {
         this.bookingQuestions = bookingQuestions;
     }
 
@@ -161,11 +162,11 @@ public class Product_Detailed_Info_Data {
         this.passengerAttributes = passengerAttributes;
     }
 
-    public Object getHighlights() {
+    public String getHighlights() {
         return highlights;
     }
 
-    public void setHighlights(Object highlights) {
+    public void setHighlights(String highlights) {
         this.highlights = highlights;
     }
 
@@ -177,11 +178,11 @@ public class Product_Detailed_Info_Data {
         this.ratingCounts = ratingCounts;
     }
 
-    public Object getTermsAndConditions() {
+    public String getTermsAndConditions() {
         return termsAndConditions;
     }
 
-    public void setTermsAndConditions(Object termsAndConditions) {
+    public void setTermsAndConditions(String termsAndConditions) {
         this.termsAndConditions = termsAndConditions;
     }
 
@@ -250,11 +251,11 @@ public class Product_Detailed_Info_Data {
     }
 
 
-    public URL getWebURL() {
+    public String getWebURL() {
         return webURL;
     }
 
-    public void setWebURL(URL webURL) {
+    public void setWebURL(String webURL) {
         this.webURL = webURL;
     }
 
@@ -282,11 +283,11 @@ public class Product_Detailed_Info_Data {
         this.bookingEngineId = bookingEngineId;
     }
 
-    public int getOnRequestPeriod() {
+    public String getOnRequestPeriod() {
         return onRequestPeriod;
     }
 
-    public void setOnRequestPeriod(int onRequestPeriod) {
+    public void setOnRequestPeriod(String onRequestPeriod) {
         this.onRequestPeriod = onRequestPeriod;
     }
 
@@ -458,11 +459,11 @@ public class Product_Detailed_Info_Data {
         this.city = city;
     }
 
-    public URL getMapURL() {
+    public String getMapURL() {
         return mapURL;
     }
 
-    public void setMapURL(URL mapURL) {
+    public void setMapURL(String mapURL) {
         this.mapURL = mapURL;
     }
 
@@ -546,11 +547,11 @@ public class Product_Detailed_Info_Data {
         this.shortDescription = shortDescription;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -578,11 +579,11 @@ public class Product_Detailed_Info_Data {
         this.priceFormatted = priceFormatted;
     }
 
-    public double getRrp() {
+    public BigDecimal getRrp() {
         return rrp;
     }
 
-    public void setRrp(double rrp) {
+    public void setRrp(BigDecimal rrp) {
         this.rrp = rrp;
     }
 
@@ -618,11 +619,11 @@ public class Product_Detailed_Info_Data {
         this.rating = rating;
     }
 
-    public URL getThumbnailHiResURL() {
+    public String getThumbnailHiResURL() {
         return thumbnailHiResURL;
     }
 
-    public void setThumbnailHiResURL(URL thumbnailHiResURL) {
+    public void setThumbnailHiResURL(String thumbnailHiResURL) {
         this.thumbnailHiResURL = thumbnailHiResURL;
     }
 
@@ -658,19 +659,19 @@ public class Product_Detailed_Info_Data {
         this.primaryDestinationName = primaryDestinationName;
     }
 
-    public URL getThumbnailURL() {
+    public String getThumbnailURL() {
         return thumbnailURL;
     }
 
-    public void setThumbnailURL(URL thumbnailURL) {
+    public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
 
-    public double getMerchantNetPriceFrom() {
+    public BigDecimal getMerchantNetPriceFrom() {
         return merchantNetPriceFrom;
     }
 
-    public void setMerchantNetPriceFrom(double merchantNetPriceFrom) {
+    public void setMerchantNetPriceFrom(BigDecimal merchantNetPriceFrom) {
         this.merchantNetPriceFrom = merchantNetPriceFrom;
     }
 
@@ -706,11 +707,11 @@ public class Product_Detailed_Info_Data {
         this.shortTitle = shortTitle;
     }
 
-    public double getSavingAmount() {
+    public BigDecimal getSavingAmount() {
         return savingAmount;
     }
 
-    public void setSavingAmount(double savingAmount) {
+    public void setSavingAmount(BigDecimal savingAmount) {
         this.savingAmount = savingAmount;
     }
 
