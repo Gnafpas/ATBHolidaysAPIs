@@ -2,179 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByCodes/ProductsByCodesAPIJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByCodes/ProductsByCodesPOST.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchControllerViatorServices.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductDetailsDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/DeleteExpiredProducts.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/FailedProduct.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/InfoJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/TotalExpiredProducts.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Product_Details_DAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/API_JSON_Metada.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/APIJSONMetada.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_ageBands.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailAgeBands.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_bookingQuestions.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailBookingQuestions.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_productPhotos.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailProductPhotos.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_reviews.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailReviews.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_tourGrades.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailTourGrades.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_userPhotos.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailUserPhotos.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_videos.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailVideos.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailedInfoAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailedInfoData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_Attraction_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByDestIDSeoID/ProductsByAttractionPOST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_DestID_SeoID_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByDestIDSeoID/ProductsByDestIdSeoIdAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_Destination_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByDestIDSeoID/ProductsByDestinationPOST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionMetaData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attractions_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionsAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextDestinationData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextDestinationMetaData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destinations_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextDestinationsAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextPOST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextProductData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Metadata.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextProductMetadata.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Products_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextProductsAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyAttractionsAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyAttractionsData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyAttractionsPOST.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyDestinationsAPIJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyDestinationsData.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Subcategory.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomySubcategory.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/ProductAPIDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/TaxonomyAPIDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Categories_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorCategoriesDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Destinations_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorDestinationsDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductAdditionalInfoDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductAgeBandsDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductExclusionsDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductInclusionsDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductPhotosDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductReviews_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductReviewsDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductSalesPointsDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductTourGradeLanguageServicesDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductTourGradesDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductUserPhotosDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductVideos_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductVideosDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductXCategoryDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductXSubcategoryDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Subcategories_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorSubcategoriesDAO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorCategoriesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorCategoriesBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorDestinationsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorDestinationsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAdditionalInfoBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductAdditionalInfoBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAgeBandsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductAgeBandsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductExclusionsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductExclusionsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductInclusionsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductInclusionsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductPhotosBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductPhotosBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductReviewsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductReviewsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductSalesPointsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductSalesPointsBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradeLanguageServicesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductTourGradeLanguageServicesBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductTourGradesBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductUserPhotosBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductUserPhotosBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductVideosBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductVideosBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXCategoryBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductXCategoryBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXSubcategoryBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductXSubcategoryBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorSubcategoriesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorSubcategoriesBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Connection/HibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/DBConnection/HibernateUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateCategories.java" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateCategories.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateDestinations.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Attraction_Summary.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/AttractionSummary.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Attractions_Paging_List_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/AttractionsPagingListJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Destination_Category.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/DestinationCategory.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Product_Summary.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/ProductSummary.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Products_Paging_List_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/ProductsPagingListJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Search_Freetext_Suggestions_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SearchFreetextSuggestionsJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Attraction.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttraction.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Attractions_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttractionsList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Destinations_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedDestinationsList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Product.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProduct.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Products_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProductsList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/unnamed/unnamed.war" afterPath="$PROJECT_DIR$/out/artifacts/unnamed/unnamed.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/SearchController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/API_DAOs/Product_API_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductReviews_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductReviews_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductVideos_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductVideos_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Product_Details_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Product_Details_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Subcategories_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Subcategories_DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorCategoriesBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorCategoriesBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorDestinationsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorDestinationsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAdditionalInfoBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAdditionalInfoBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAgeBandsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAgeBandsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductDetailsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductDetailsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductExclusionsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductExclusionsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductInclusionsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductInclusionsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductPhotosBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductPhotosBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductReviewsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductReviewsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductSalesPointsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductSalesPointsBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradeLanguageServicesBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradeLanguageServicesBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradesBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradesBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductUserPhotosBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductUserPhotosBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductVideosBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductVideosBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXCategoryBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXCategoryBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXSubcategoryBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXSubcategoryBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateCategories.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateCategories.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateDestinations.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateDestinations.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateProducts.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateProducts.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/352f0c0d-7dfe-4700-96e5-687fce594720.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/352f0c0d-7dfe-4700-96e5-687fce594720.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/5b18374c-0419-4873-bee2-af3d82039ed4.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/5b18374c-0419-4873-bee2-af3d82039ed4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/5c76ddf9-0c28-4cc0-8429-52800807847b.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/5c76ddf9-0c28-4cc0-8429-52800807847b.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/Application.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorCategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorCategoriesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorDestinationsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorDestinationsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductAdditionalInfoBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductAdditionalInfoBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductAgeBandsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductAgeBandsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductExclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductExclusionsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductInclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductInclusionsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductPhotosBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductReviewsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductReviewsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductSalesPointsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductSalesPointsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradeLanguageServicesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradeLanguageServicesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductUserPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductUserPhotosBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductVideosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductVideosBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductXCategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductXCategoryBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductXSubcategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductXSubcategoryBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorSubcategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorSubcategoriesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorCategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorCategoriesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorDestinationsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorDestinationsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAdditionalInfoBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAdditionalInfoBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAgeBandsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAgeBandsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductDetailsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductDetailsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductExclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductExclusionsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductInclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductInclusionsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductPhotosBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductReviewsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductReviewsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductSalesPointsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductSalesPointsBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradeLanguageServicesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradeLanguageServicesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductUserPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductUserPhotosBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductVideosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductVideosBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXCategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXCategoryBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXSubcategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXSubcategoryBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorSubcategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorSubcategoriesBean.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/src/main/target/" />
@@ -1106,7 +934,7 @@
       <workItem from="1498467070593" duration="54008000" />
       <workItem from="1498602596670" duration="49402000" />
       <workItem from="1499085864955" duration="19068000" />
-      <workItem from="1499182722293" duration="8487000" />
+      <workItem from="1499182722293" duration="8783000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -1115,11 +943,18 @@
       <option name="project" value="LOCAL" />
       <updated>1498483006660</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too.">
+      <created>1499195077181</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1499195077181</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="205199000" />
+    <option name="totallyTimeSpent" value="205495000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
