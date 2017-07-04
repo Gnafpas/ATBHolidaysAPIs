@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DB_Beans.ViatorProductAgeBandsBean" table="viator_product_age_bands" schema="develope_viator">
+    <class name="DBBeans.ViatorProductAgeBandsBean" table="viator_product_age_bands" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
         <property name="bandId" column="band_id"/>
@@ -16,7 +16,6 @@
         <property name="pluralDescriptionEn" column="plural_description_EN"/>
         <property name="count" column="count"/>
         <property name="sortOrder" column="sort_order"/>
-        <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>
 </hibernate-mapping>

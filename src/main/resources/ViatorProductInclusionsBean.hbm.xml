@@ -4,11 +4,10 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DB_Beans.ViatorProductInclusionsBean" table="viator_product_inclusions" schema="develope_viator">
+    <class name="DBBeans.ViatorProductInclusionsBean" table="viator_product_inclusions" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
         <property name="inclusion" column="inclusion"/>
-        <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>
 </hibernate-mapping>

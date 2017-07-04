@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DB_Beans.ViatorProductReviewsBean" table="viator_product_reviews" schema="develope_viator">
+    <class name="DBBeans.ViatorProductReviewsBean" table="viator_product_reviews" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
         <property name="reviewId" column="review_id"/>
@@ -20,7 +20,6 @@
         <property name="ownerCountry" column="owner_country"/>
         <property name="ownerAvatarUrl" column="owner_avatar_URL"/>
         <property name="sortOrder" column="sort_order"/>
-        <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>
 </hibernate-mapping>

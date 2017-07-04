@@ -18,7 +18,7 @@ public class Application extends SpringBootServletInitializer {
     public static String apiKey="3491840412405367";
     public static String apiURL="http://prelive.viatorapi.viator.com";
 
-
+//todo change mysql driver
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);

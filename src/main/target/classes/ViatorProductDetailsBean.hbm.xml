@@ -4,12 +4,11 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DB_Beans.ViatorProductDetailsBean" table="viator_product_details" schema="develope_viator">
-        <id name="rid" column="rid"/>
-        <property name="code" column="code"/>
+    <class name="DBBeans.ViatorProductDetailsBean" table="viator_product_details" schema="develope_viator">
+        <id name="code" column="code"/>
         <property name="primaryDestinationId" column="primary_destination_id"/>
         <property name="destinationId" column="destination_id"/>
-        <property name="primaryCategoryId" column="primary_category_id"/>
+        <property name="primaryGroupId" column="primary_group_id"/>
         <property name="supplierCode" column="supplier_code"/>
         <property name="bookingEngineId" column="booking_engine_id"/>
         <property name="titleEn" column="title_EN"/>
@@ -61,7 +60,6 @@
         <property name="rating3Count" column="rating_3_count"/>
         <property name="rating4Count" column="rating_4_count"/>
         <property name="rating5Count" column="rating_5_count"/>
-        <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>
 </hibernate-mapping>

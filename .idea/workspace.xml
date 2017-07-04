@@ -1,68 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="First commit.Dump all products from viator">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_bookingQuestions.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_reviews.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_userPhotos.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_videos.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_APIJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_Data.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Subcategory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Categories_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Destinations_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductReviews_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductVideos_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Subcategories_DAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorCategoriesBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorDestinationsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAdditionalInfoBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAgeBandsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductExclusionsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductInclusionsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductPhotosBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductReviewsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductSalesPointsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradeLanguageServicesBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradesBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductUserPhotosBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductVideosBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXSubcategoryBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorSubcategoriesBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Connection/HibernateUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateCategories.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/main.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorCategoriesBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorDestinationsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductAdditionalInfoBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductAgeBandsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductExclusionsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductInclusionsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductPhotosBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductReviewsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductSalesPointsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradeLanguageServicesBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradesBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductUserPhotosBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductVideosBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductXSubcategoryBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorSubcategoriesBean.hbm.xml" />
+    <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByCodes/ProductsByCodesAPIJSON.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByCodes/ProductsByCodesPOST.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchControllerViatorServices.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductDetailsDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/DeleteExpiredProducts.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/FailedProduct.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/InfoJSON.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/TotalExpiredProducts.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Product_Details_DAO.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/API_JSON_Metada.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/APIJSONMetada.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_ageBands.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailAgeBands.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_bookingQuestions.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailBookingQuestions.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_productPhotos.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailProductPhotos.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_reviews.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailReviews.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_tourGrades.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailTourGrades.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_userPhotos.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailUserPhotos.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_videos.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailVideos.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailedInfoAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailedInfoData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_Attraction_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByDestIDSeoID/ProductsByAttractionPOST.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_DestID_SeoID_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByDestIDSeoID/ProductsByDestIdSeoIdAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Products_By_DestID_SeoID/Products_By_Destination_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/ProductsByDestIDSeoID/ProductsByDestinationPOST.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionMetaData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attractions_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionsAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextDestinationData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_MetaData.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextDestinationMetaData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destinations_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextDestinationsAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextPOST.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextProductData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Metadata.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextProductMetadata.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Products_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextProductsAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyAttractionsAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyAttractionsData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Attractions_POST.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyAttractionsPOST.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_APIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyDestinationsAPIJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_Data.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyDestinationsData.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Subcategory.java" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomySubcategory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Product_API_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/ProductAPIDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/TaxonomyAPIDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Categories_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorCategoriesDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Destinations_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorDestinationsDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductAdditionalInfoDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductAgeBandsDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductExclusionsDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductInclusionsDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductPhotosDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductReviews_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductReviewsDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductSalesPointsDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductTourGradeLanguageServicesDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductTourGradesDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductUserPhotosDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductVideos_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductVideosDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductXCategoryDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductXSubcategoryDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Subcategories_DAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorSubcategoriesDAO.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorCategoriesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorCategoriesBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorDestinationsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorDestinationsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAdditionalInfoBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductAdditionalInfoBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAgeBandsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductAgeBandsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductExclusionsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductExclusionsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductInclusionsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductInclusionsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductPhotosBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductPhotosBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductReviewsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductReviewsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductSalesPointsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductSalesPointsBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradeLanguageServicesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductTourGradeLanguageServicesBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductTourGradesBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductUserPhotosBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductUserPhotosBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductVideosBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductVideosBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXCategoryBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductXCategoryBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductXSubcategoryBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductXSubcategoryBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorSubcategoriesBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorSubcategoriesBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Connection/HibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/DBConnection/HibernateUtil.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateCategories.java" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateCategories.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateDestinations.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Attraction_Summary.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/AttractionSummary.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Attractions_Paging_List_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/AttractionsPagingListJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Destination_Category.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/DestinationCategory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Product_Summary.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/ProductSummary.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Products_Paging_List_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/ProductsPagingListJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Search_Freetext_Suggestions_JSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SearchFreetextSuggestionsJSON.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Attraction.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttraction.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Attractions_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttractionsList.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Destinations_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedDestinationsList.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Product.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProduct.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Suggested_Products_List.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProductsList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/unnamed/unnamed.war" afterPath="$PROJECT_DIR$/out/artifacts/unnamed/unnamed.war" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/SearchController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/SearchController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/API_DAOs/Product_API_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/API_DAOs/Product_API_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductReviews_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductReviews_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductVideos_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductVideos_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Product_Details_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Product_Details_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Subcategories_DAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/DB_DAOs/Viator_Subcategories_DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorCategoriesBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorCategoriesBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorDestinationsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorDestinationsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAdditionalInfoBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAdditionalInfoBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAgeBandsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductAgeBandsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductDetailsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductDetailsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductExclusionsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductExclusionsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductInclusionsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductInclusionsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductPhotosBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductPhotosBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductReviewsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductReviewsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductSalesPointsBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductSalesPointsBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradeLanguageServicesBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradeLanguageServicesBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradesBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductTourGradesBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductUserPhotosBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductUserPhotosBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductVideosBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductVideosBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXCategoryBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXCategoryBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXSubcategoryBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Beans/ViatorProductXSubcategoryBean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateCategories.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateCategories.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateDestinations.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateDestinations.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateProducts.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateProducts.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/352f0c0d-7dfe-4700-96e5-687fce594720.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/352f0c0d-7dfe-4700-96e5-687fce594720.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/5b18374c-0419-4873-bee2-af3d82039ed4.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/5b18374c-0419-4873-bee2-af3d82039ed4.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/5c76ddf9-0c28-4cc0-8429-52800807847b.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/5c76ddf9-0c28-4cc0-8429-52800807847b.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/Application.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/Application.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorCategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorCategoriesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorDestinationsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorDestinationsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductAdditionalInfoBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductAdditionalInfoBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductAgeBandsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductAgeBandsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductExclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductExclusionsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductInclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductInclusionsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductPhotosBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductReviewsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductReviewsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductSalesPointsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductSalesPointsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradeLanguageServicesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradeLanguageServicesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductUserPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductUserPhotosBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductVideosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductVideosBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductXCategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductXCategoryBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorProductXSubcategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorProductXSubcategoryBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ViatorSubcategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/ViatorSubcategoriesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorCategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorCategoriesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorDestinationsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorDestinationsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAdditionalInfoBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAdditionalInfoBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAgeBandsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductAgeBandsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductDetailsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductDetailsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductExclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductExclusionsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductInclusionsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductInclusionsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductPhotosBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductReviewsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductReviewsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductSalesPointsBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductSalesPointsBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradeLanguageServicesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradeLanguageServicesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductTourGradesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductUserPhotosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductUserPhotosBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductVideosBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductVideosBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXCategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXCategoryBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXSubcategoryBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorProductXSubcategoryBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ViatorSubcategoriesBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ViatorSubcategoriesBean.hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/src/main/target/" />
@@ -81,15 +193,64 @@
     <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="hibernate.cfg.xml/Hibernate" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="hibernate.cfg.xml/Hibernate" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="develope_viator" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="ATBHolidays_Viator_Integration" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UpdateCategories.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateCategories.java">
+      <file leaf-file-name="SearchController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="33" column="16" lean-forward="false" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+            <state relative-caret-position="140">
+              <caret line="21" column="97" lean-forward="false" selection-start-line="21" selection-start-column="89" selection-end-line="21" selection-end-column="97" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViatorSubcategoriesBean.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DBBeans/ViatorSubcategoriesBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="77" lean-forward="false" selection-start-line="8" selection-start-column="77" selection-end-line="8" selection-end-column="77" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViatorDestinationsDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorDestinationsDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="46" column="53" lean-forward="true" selection-start-line="46" selection-start-column="53" selection-end-line="46" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -106,15 +267,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getonr</find>
-      <find>onreque</find>
-      <find>geton</find>
-      <find>Specialre</find>
-      <find>voucherre</find>
-      <find>suppliern</find>
-      <find>termsand</find>
-      <find>excl</find>
-      <find>hig</find>
       <find>mapUrl</find>
       <find>List&lt;String&gt;</find>
       <find>user</find>
@@ -122,7 +274,6 @@
       <find>pic</find>
       <find>availab</find>
       <find>destinationI</find>
-      <find>primary</find>
       <find>savingAmount</find>
       <find>onsale</find>
       <find>onSale</find>
@@ -131,10 +282,31 @@
       <find>Integer</find>
       <find>pas</find>
       <find>break</find>
+      <find>additionalInfo</find>
+      <find>Panhandl</find>
+      <find>productCount</find>
+      <find>thumbnailHiResUrl</find>
+      <find>viator_productvideos_DAO</find>
+      <find>FailedProducts</find>
+      <find>UpdateProductsInfoJSON</find>
+      <find>updateProductsInfoJSON.setViatorError</find>
+      <find>infoJason.setDbCommError(false);</find>
+      <find>_DAO</find>
+      <find>_</find>
+      <find>onRequestPeriod</find>
+      <find>destIdToStopRetrieveProducts</find>
+      <find>primary</find>
+      <find>code</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Gnafpas &lt;george@skamnos.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -144,57 +316,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_ratingCounts.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_bookingQuestions.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Updates/Update.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Product_Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Destination_Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Search_Freetext/Search_Freetext_Attraction_Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Paging_List/Product_Summary.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_APIJSON.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/API_DAOs/Taxonomy_API_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXSubcategory_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_userPhotos.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductUserPhotosBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductReviews_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_reviews.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductReviewsBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAgeBandsBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Product_Details_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_productPhotos.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradesBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_tourGrades.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_videos.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductVideos_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductVideosBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorDestinationsBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java" />
-        <option value="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" />
-        <option value="$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateCategories.class" />
+        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorCategoriesBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorCategoriesDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateDestinations.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorDestinationsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductAdditionalInfoBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductAdditionalInfoDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductAgeBandsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductAgeBandsBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductExclusionsBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductExclusionsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductInclusionsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductPhotosBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductReviewsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductSalesPointsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductTourGradeLanguageServicesBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductTourGradesBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductUserPhotosBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductVideosBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductXCategoryBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductXSubcategoryBean.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductInclusionsBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductPhotosBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductReviewsBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductSalesPointsBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradeLanguageServicesBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductTourGradesBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductUserPhotosBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductVideosBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductXCategoryBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductXSubcategoryBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorSubcategoriesDAO.java" />
         <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Destinations_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Subcategories_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Categories_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Subcategory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DB_Updates/UpdateCategories.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductXCategoryDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomySubcategory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateCategories.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsBean.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java" />
+        <option value="$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsMeta.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsMeta_.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductDetailsDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorDestinationsDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SearchFreetextSuggestionsJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedDestinationsList.java" />
+        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttractionsList.java" />
+        <option value="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProductsList.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/SearchControllerViatorServices.java" />
       </list>
     </option>
   </component>
@@ -231,6 +403,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -256,6 +429,10 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebServicesBeans" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -271,19 +448,94 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="DB_Updates" />
+              <option name="myItemId" value="WebServicesBeans" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Suggestions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ATBHolidays_Viator_Integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ATBHolidays_Viator_Integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DAOs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DBDAOs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ATBHolidays_Viator_Integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DAOs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ATBHolidays_Viator_Integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -293,14 +545,20 @@
     <property name="JPA.DatabaseSchemaImportDialog" value="5c76ddf9-0c28-4cc0-8429-52800807847b" />
     <property name="FullScreen" value="true" />
     <property name="SearchEverywhereHistoryKey" value="Integer.parse&#9;null&#9;null" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="APIBeans.Products_By_Codes" />
+      <recent name="APIBeans.Products_By_DestID_SeoID" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="ImportMappingsDialog.RecentPackages">
-      <recent name="DB_Beans" />
+      <recent name="DBBeans" />
       <recent name="" />
+      <recent name="DB_Beans" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources" />
@@ -845,7 +1103,10 @@
       <workItem from="1498401644179" duration="181000" />
       <workItem from="1498403574443" duration="3844000" />
       <workItem from="1498431857866" duration="553000" />
-      <workItem from="1498467070593" duration="10194000" />
+      <workItem from="1498467070593" duration="54008000" />
+      <workItem from="1498602596670" duration="49402000" />
+      <workItem from="1499085864955" duration="19068000" />
+      <workItem from="1499182722293" duration="8487000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -858,7 +1119,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84428000" />
+    <option name="totallyTimeSpent" value="205199000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -887,19 +1148,20 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32285115" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35220125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24114774" sideWeight="0.5417957" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24114774" sideWeight="0.45820433" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2832723" sideWeight="0.55501616" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2863248" sideWeight="0.4449838" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -907,7 +1169,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -928,21 +1189,21 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32285115" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3385744" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24114774" sideWeight="0.5417957" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24114774" sideWeight="0.45820433" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2802198" sideWeight="0.54833597" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2802198" sideWeight="0.45166403" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
@@ -955,10 +1216,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit.Dump all products from viator" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit.Dump all products from viator" />
+    <MESSAGE value="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too." />
+    <option name="LAST_COMMIT_MESSAGE" value="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -966,252 +1230,250 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBUpdates/UpdateDestinations.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5205">
-          <caret line="347" column="33" lean-forward="false" selection-start-line="347" selection-start-column="33" selection-end-line="347" selection-end-column="33" />
+        <state relative-caret-position="585">
+          <caret line="46" column="87" lean-forward="false" selection-start-line="46" selection-start-column="87" selection-end-line="46" selection-end-column="87" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_additional_info">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java">
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_age_bands">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_booking_questions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_exclusions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_inclusions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_photos">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_reviews">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_sales_points">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_tour_grade_language_services">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_tour_grades">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_videos">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_user_photos">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_x_category">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_subcategories">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_x_subcategory">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailedInfoData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="101" lean-forward="false" selection-start-line="42" selection-start-column="101" selection-end-line="42" selection-end-column="101" />
+        <state relative-caret-position="345">
+          <caret line="25" column="26" lean-forward="false" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="9" lean-forward="false" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/AdminController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="38" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="38" />
+        <state relative-caret-position="600">
+          <caret line="230" column="62" lean-forward="false" selection-start-line="230" selection-start-column="62" selection-end-line="230" selection-end-column="62" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBUpdates/UpdateCategories.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5205">
-          <caret line="347" column="33" lean-forward="false" selection-start-line="347" selection-start-column="33" selection-end-line="347" selection-end-column="33" />
+        <state relative-caret-position="489">
+          <caret line="61" column="75" lean-forward="false" selection-start-line="61" selection-start-column="75" selection-end-line="61" selection-end-column="75" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_categories">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/TaxonomyAPIDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1935">
-          <caret line="129" column="27" lean-forward="true" selection-start-line="129" selection-start-column="27" selection-end-line="129" selection-end-column="27" />
+        <state relative-caret-position="337">
+          <caret line="108" column="24" lean-forward="false" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductAgeBandsBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="188" column="43" lean-forward="false" selection-start-line="188" selection-start-column="31" selection-end-line="188" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Product_Details_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="16" column="45" lean-forward="false" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAgeBands_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="36" column="5" lean-forward="false" selection-start-line="14" selection-start-column="3" selection-end-line="36" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detailed_Info_Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-724">
-          <caret line="23" column="22" lean-forward="false" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductUserPhotos_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductPhotos_DAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+          <caret line="16" column="19" lean-forward="true" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGrades_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductInclusions_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductExclusions_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductAdditionalInfo_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="43" lean-forward="false" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_productPhotos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductTourGradesBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1230">
-          <caret line="122" column="50" lean-forward="false" selection-start-line="122" selection-start-column="50" selection-end-line="122" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/src.zip!/java/lang/String.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductTourGradeLanguageServices_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="59" lean-forward="false" selection-start-line="2" selection-start-column="59" selection-end-line="2" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductVideos_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="40" lean-forward="false" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_videos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="33" lean-forward="false" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_APIJSON.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/TaxonomyCategoriesAPIJSON.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/src.zip!/java/lang/Double.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Destinations_Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="91" column="39" lean-forward="false" selection-start-line="91" selection-start-column="39" selection-end-line="91" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductSalesPoints_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="14" column="1" lean-forward="false" selection-start-line="14" selection-start-column="1" selection-end-line="36" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Product_Details/Product_Detail_tourGrades.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductVideosBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="169" column="34" lean-forward="false" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="72" column="50" lean-forward="false" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_ProductXCategory_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="35" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Connection/HibernateUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1219,143 +1481,393 @@
     <entry file="file://$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="116" lean-forward="false" selection-start-line="10" selection-start-column="116" selection-end-line="10" selection-end-column="116" />
+          <caret line="10" column="111" lean-forward="true" selection-start-line="10" selection-start-column="111" selection-end-line="10" selection-end-column="111" />
           <folding>
-            <element signature="e#649#654#0" expanded="false" />
+            <element signature="e#649#654#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/AdminController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/SearchFreetext/SearchFreetextAttractionData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="36" />
+        <state relative-caret-position="205">
+          <caret line="22" column="36" lean-forward="false" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/5c76ddf9-0c28-4cc0-8429-52800807847b">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>5c76ddf9-0c28-4cc0-8429-52800807847b</OriginalElement>
+          <nodes>
+            <node x="4240.0" y="1662.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_reviews</node>
+            <node x="255.0" y="1750.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_tour_grade_language_services</node>
+            <node x="2835.0" y="1618.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_videos</node>
+            <node x="2280.0" y="1629.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_user_photos</node>
+            <node x="1295.0" y="256.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details</node>
+            <node x="1140.0" y="1794.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_additional_info</node>
+            <node x="0.0" y="1794.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_x_category</node>
+            <node x="0.0" y="2133.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_pricing_matrix</node>
+            <node x="600.0" y="2133.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_pickup_hotels</node>
+            <node x="4735.0" y="1794.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_x_subcategory</node>
+            <node x="4786.75" y="817.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_subcategories</node>
+            <node x="1673.0" y="2133.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_availability_dates</node>
+            <node x="891.9748528590765" y="1795.7437132147693">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_exclusions</node>
+            <node x="2301.6111111111113" y="0.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_categories</node>
+            <node x="3825.0" y="1706.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_tour_grades</node>
+            <node x="1395.0" y="1794.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_inclusions</node>
+            <node x="3410.0" y="1706.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_age_bands</node>
+            <node x="590.0" y="1772.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_photos</node>
+            <node x="1650.0" y="1794.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_sales_points</node>
+            <node x="1905.0" y="1728.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_booking_questions</node>
+            <node x="1120.0" y="2133.0">5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_destinations</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_x_subcategory" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_subcategories">
+              <point x="58.75" y="-59.0" />
+              <point x="0.0" y="70.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_x_category" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="58.75" y="-59.0" />
+              <point x="176.25" y="1538.0" />
+              <point x="1340.0" y="1538.0" />
+              <point x="-585.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_videos" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-235.0" />
+              <point x="3112.5" y="1578.0" />
+              <point x="2150.0" y="1578.0" />
+              <point x="225.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_exclusions" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-59.0" />
+              <point x="1002.5" y="1568.0" />
+              <point x="1610.0" y="1568.0" />
+              <point x="-315.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_booking_questions" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-125.0" />
+              <point x="2082.5" y="1598.0" />
+              <point x="1970.0" y="1598.0" />
+              <point x="45.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_x_subcategory" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="-58.75" y="-59.0" />
+              <point x="4793.75" y="1538.0" />
+              <point x="2510.0" y="1538.0" />
+              <point x="585.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_sales_points" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-59.0" />
+              <point x="1767.5" y="1598.0" />
+              <point x="1880.0" y="1598.0" />
+              <point x="-45.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_x_category" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_categories">
+              <point x="-58.75" y="-59.0" />
+              <point x="58.75" y="231.0" />
+              <point x="2378.8611111111113" y="231.0" />
+              <point x="-77.25" y="103.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_subcategories" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_categories">
+              <point x="0.0" y="-70.0" />
+              <point x="4911.25" y="231.0" />
+              <point x="2533.3611111111113" y="231.0" />
+              <point x="77.25" y="103.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_photos" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-81.0" />
+              <point x="727.5" y="1558.0" />
+              <point x="1520.0" y="1558.0" />
+              <point x="-405.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_reviews" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-191.0" />
+              <point x="4477.5" y="1548.0" />
+              <point x="2420.0" y="1548.0" />
+              <point x="495.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_user_photos" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-224.0" />
+              <point x="2547.5" y="1588.0" />
+              <point x="2060.0" y="1588.0" />
+              <point x="135.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_age_bands" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-147.0" />
+              <point x="3607.5" y="1568.0" />
+              <point x="2240.0" y="1568.0" />
+              <point x="315.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_additional_info" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-59.0" />
+              <point x="1257.5" y="1578.0" />
+              <point x="1700.0" y="1578.0" />
+              <point x="-225.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_inclusions" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-59.0" />
+              <point x="1512.5" y="1588.0" />
+              <point x="1790.0" y="1588.0" />
+              <point x="-135.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_tour_grades" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-147.0" />
+              <point x="4022.5" y="1558.0" />
+              <point x="2330.0" y="1558.0" />
+              <point x="405.0" y="631.0" />
+            </edge>
+            <edge source="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_tour_grade_language_services" target="5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_details">
+              <point x="0.0" y="-103.0" />
+              <point x="412.5" y="1548.0" />
+              <point x="1430.0" y="1548.0" />
+              <point x="-495.0" y="631.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.5734888005264175" x="408.0" y="1172.0" />
+          <SelectedNodes>
+            <node>5c76ddf9-0c28-4cc0-8429-52800807847b.TABLE:develope_viator.viator_product_exclusions</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Columns</Category>
+            <Category>Key columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ViatorProductDetailsBean.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="61" lean-forward="false" selection-start-line="10" selection-start-column="61" selection-end-line="10" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductXSubcategoryDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorCategoriesDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="54" column="9" lean-forward="false" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsMeta_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_product_details">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="45" column="58" lean-forward="false" selection-start-line="45" selection-start-column="58" selection-end-line="45" selection-end-column="58" />
+        <state relative-caret-position="60">
+          <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="24" />
+          <folding>
+            <element signature="e#649#654#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateProducts.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductDetailsDAO.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="80" column="4" lean-forward="true" selection-start-line="80" selection-start-column="4" selection-end-line="100" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/c1347bbe/5c76ddf9-0c28-4cc0-8429-52800807847b/develope_viator.viator_destinations">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32770#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/target/classes/DB_Updates/UpdateCategories.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="59" column="15" lean-forward="true" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Destinations_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="37" column="36" lean-forward="true" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorDestinationsBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorCategoriesBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="18" lean-forward="false" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Categories_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="39" column="33" lean-forward="false" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Categories_Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/Taxonomy/Taxonomy_Subcategory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
-          <folding>
-            <element signature="e#1030#1031#0" expanded="true" />
-            <element signature="e#1063#1064#0" expanded="true" />
-            <element signature="e#1086#1087#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateProducts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="42" column="101" lean-forward="false" selection-start-line="42" selection-start-column="101" selection-end-line="42" selection-end-column="101" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorProductDetailsBean.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="10" column="79" lean-forward="false" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DB_DAOs/Viator_Subcategories_DAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/ProductAPIDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="41" column="25" lean-forward="false" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
+        <state relative-caret-position="-2124">
+          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Beans/ViatorSubcategoriesBean.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIBeans/ProductDetails/ProductDetailedInfoAPIJSON.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="18" />
+        <state relative-caret-position="105">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateDestinations.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/InfoJSON.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="30" column="15" lean-forward="true" selection-start-line="30" selection-start-column="15" selection-end-line="30" selection-end-column="15" />
+        <state relative-caret-position="150">
+          <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DB_Updates/UpdateCategories.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProductsList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
-          <caret line="33" column="16" lean-forward="false" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#448#449#0" expanded="true" />
+            <element signature="e#482#483#0" expanded="true" />
+            <element signature="e#537#538#0" expanded="true" />
+            <element signature="e#583#584#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttraction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/Region.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProduct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SearchFreetextSuggestionsJSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="31" />
+          <folding>
+            <element signature="e#984#985#0" expanded="true" />
+            <element signature="e#1018#1019#0" expanded="true" />
+            <element signature="e#1073#1074#0" expanded="true" />
+            <element signature="e#1119#1120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedDestinationsList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="31" />
+          <folding>
+            <element signature="e#808#809#0" expanded="true" />
+            <element signature="e#842#843#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedAttractionsList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="20" column="36" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+          <folding>
+            <element signature="e#509#510#0" expanded="true" />
+            <element signature="e#564#565#0" expanded="true" />
+            <element signature="e#610#611#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchControllerViatorServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="20" column="9" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="439" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorDestinationsDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="46" column="53" lean-forward="true" selection-start-line="46" selection-start-column="53" selection-end-line="46" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/SearchController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="21" column="97" lean-forward="false" selection-start-line="21" selection-start-column="89" selection-end-line="21" selection-end-column="97" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBBeans/ViatorSubcategoriesBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="77" lean-forward="false" selection-start-line="8" selection-start-column="77" selection-end-line="8" selection-end-column="77" />
           <folding />
         </state>
       </provider>

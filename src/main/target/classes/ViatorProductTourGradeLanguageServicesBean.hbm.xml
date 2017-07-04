@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DB_Beans.ViatorProductTourGradeLanguageServicesBean"
+    <class name="DBBeans.ViatorProductTourGradeLanguageServicesBean"
            table="viator_product_tour_grade_language_services" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
@@ -13,7 +13,6 @@
         <property name="languageCode" column="language_code"/>
         <property name="languageService" column="language_service"/>
         <property name="languageServiceDescription" column="language_service_description"/>
-        <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>
 </hibernate-mapping>
