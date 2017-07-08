@@ -55,6 +55,17 @@
         <mapping resource="ViatorProductDetailsBean.hbm.xml"/>
         <mapping resource="ViatorSubcategoriesBean.hbm.xml"/>
         <mapping resource="ViatorSubcategoriesBean.hbm.xml"/>
+        <mapping resource="ViatorAvailabilityDatesBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorAvailabilityDatesBean"/>
+        <mapping resource="ViatorUpdateFailedAvailDatesBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorUpdateFailedAvailDatesBean"/>
+        <mapping class="DBBeans.ViatorUpdateFailedDestinationsBean"/>
+        <mapping resource="ViatorUpdateFailedDestinationsBean.hbm.xml"/>
+        <mapping resource="ViatorUpdateFailedProductsBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorUpdateFailedProductsBean"/>
+        <mapping resource="ViatorUpdateProductsInfoBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorUpdateProductsInfoBean"/>
+        <mapping resource="ViatorUpdateFailedDestinationsBean.hbm.xml"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

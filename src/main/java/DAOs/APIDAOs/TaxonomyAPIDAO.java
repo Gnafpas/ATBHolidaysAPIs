@@ -25,7 +25,7 @@ public class TaxonomyAPIDAO {
      */
     public TaxonomyDestinationsAPIJSON retrieveDestinations(){
 
-        final String url =Controller.Application.apiURL+ "/service/taxonomy/destinations?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/taxonomy/destinations?apiKey=" + Helper.ProjectProperties.apiKey;
         TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON =new TaxonomyDestinationsAPIJSON();
         taxonomyDestinationsAPIJSON.setSuccess(false);
         try {
@@ -62,7 +62,7 @@ public class TaxonomyAPIDAO {
      */
     public TaxonomyAttractionsAPIJSON retrieveAttractions(int destinationId, String topX, String sortOrder){
 
-        final String url =Controller.Application.apiURL+ "/service/taxonomy/attractions?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/taxonomy/attractions?apiKey=" + Helper.ProjectProperties.apiKey;
         TaxonomyAttractionsPOST taxonomyAttractionsPOST =new TaxonomyAttractionsPOST();
         taxonomyAttractionsPOST.setDestId(destinationId);
         taxonomyAttractionsPOST.setSortOrder(sortOrder);
@@ -97,7 +97,7 @@ public class TaxonomyAPIDAO {
      */
     public TaxonomyCategoriesAPIJSON retrieve_categories(){
 
-        final String url =Controller.Application.apiURL+ "/service/taxonomy/categories?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/taxonomy/categories?apiKey=" + Helper.ProjectProperties.apiKey;
         TaxonomyCategoriesAPIJSON taxonomyCategoriesAPIJSON =new TaxonomyCategoriesAPIJSON();
         taxonomyCategoriesAPIJSON.setSuccess(false);
         try {

@@ -1,11 +1,13 @@
 package DBUpdates;
 
+import APIBeans.Bookings.AvailabilityDatesAPIJSON;
 import APIBeans.ProductDetails.*;
 import APIBeans.ProductsByDestIDSeoID.ProductsByAttractionPOST;
 import APIBeans.ProductsByDestIDSeoID.ProductsByDestIdSeoIdAPIJSON;
 import APIBeans.ProductsByDestIDSeoID.ProductsByDestinationPOST;
 import APIBeans.Taxonomy.TaxonomyDestinationsAPIJSON;
 import APIBeans.Taxonomy.TaxonomyDestinationsData;
+import DAOs.APIDAOs.BookingsAPIDAO;
 import DAOs.APIDAOs.ProductAPIDAO;
 import DAOs.APIDAOs.TaxonomyAPIDAO;
 import DAOs.DBDAOs.*;
@@ -34,6 +36,8 @@ public class UpdateProducts {
         ProductsByDestinationPOST productsByDestinationPOST = new ProductsByDestinationPOST();
         TaxonomyAPIDAO taxonomy=new TaxonomyAPIDAO();
         TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON;
+        AvailabilityDatesAPIJSON availabilityDatesAPIJSON;
+        BookingsAPIDAO bookingsAPIDAO=new BookingsAPIDAO();
         ViatorProductDetailsBean productDetailsBean = new ViatorProductDetailsBean();
         ViatorProductDetailsDAO viatorProductDetailsDAO = new ViatorProductDetailsDAO();
         ViatorProductXCategoryDAO viatorProductXcategoryDAO=new ViatorProductXCategoryDAO();
@@ -62,6 +66,17 @@ public class UpdateProducts {
         ViatorProductVideosDAO viatorProductVideosDAO=new ViatorProductVideosDAO();
         ViatorProductTourGradeLanguageServicesBean vProductTourGradeLangServBean=new ViatorProductTourGradeLanguageServicesBean();
         ViatorProductTourGradeLanguageServicesDAO vProductTourGradeLangServDAO=new ViatorProductTourGradeLanguageServicesDAO();
+        ViatorAvailabilityDatesDAO  availabilityDatesDAO=new ViatorAvailabilityDatesDAO();
+        ViatorAvailabilityDatesBean availabilityDatesBean=new ViatorAvailabilityDatesBean();
+        ViatorUpdateFailedAvailDatesBean viatorUpdateFailedAvailDatesBean=new ViatorUpdateFailedAvailDatesBean();
+        ViatorUpdateFailedDestinationsBean viatorUpdateFailedDestinationsBean=new ViatorUpdateFailedDestinationsBean();
+        ViatorUpdateFailedProductsBean viatorUpdateFailedProductsBean=new ViatorUpdateFailedProductsBean();
+        ViatorUpdateProductsInfoBean viatorUpdateProductsInfoBean=new ViatorUpdateProductsInfoBean();
+        ViatorUpdateProductsInfoDAO viatorUpdateProductsInfoDAO=new ViatorUpdateProductsInfoDAO();
+        int viatorUpdateProductsInfoRid=0;
+        ViatorUpdateFailedProductsDAO viatorUpdateFailedProductsDAO=new ViatorUpdateFailedProductsDAO();
+        ViatorUpdateFailedDestinationsDAO viatorUpdateFailedDestinationsDAO=new ViatorUpdateFailedDestinationsDAO();
+        ViatorUpdateFailedAvailDatesDAO viatorUpdateFailedAvailDatesDAO=new ViatorUpdateFailedAvailDatesDAO();
 
         /**
          * Declare from which point in the destinations list start to retrieving destination's products and at which destination to stop.If  destIdToStartRetrieveProducts
@@ -442,6 +457,62 @@ public class UpdateProducts {
                                     }
                                 }
 
+                                /**
+                                 * Process may sleep for an amount of time to stay in the limits.
+                                 */
+                                timeElapsed = System.currentTimeMillis() - timeElapsed;
+                                if (670 - timeElapsed > 0) {//todo change time elapsed when go out live
+                                    try {
+                                        Thread.sleep(670 - timeElapsed);
+                                        updateProductsInfoJSON.setTotalProcessSleep(updateProductsInfoJSON.getTotalProcessSleep()+ 670 - timeElapsed);
+                                    } catch (InterruptedException ex) {
+                                        Thread.currentThread().interrupt();
+                                    }
+                                }
+                                String[] splitYearMonth;
+                                List days;
+                                /**
+                                 * Requesting viator for availability dates of product to add them to availability dates DB table.
+                                 */
+                                availabilityDatesAPIJSON=bookingsAPIDAO.productDetailedInfo(productDetailedInfoAPIJSON.getData().getCode());
+                                timeElapsed = System.currentTimeMillis();
+                                if(availabilityDatesAPIJSON.isSuccess() && availabilityDatesAPIJSON.getData()!=null) {
+
+
+                                    availabilityDatesBean.setProductCode(productDetailedInfoAPIJSON.getData().getCode());
+                                    for (String key : availabilityDatesAPIJSON.getData().keySet()) {
+                                        splitYearMonth = key.split("-");
+                                        if(splitYearMonth!=null && splitYearMonth.length==2) {
+                                            availabilityDatesBean.setYear(Integer.parseInt(splitYearMonth[0]));
+                                            availabilityDatesBean.setMonth(Integer.parseInt(splitYearMonth[1]));
+                                        }
+                                        days = availabilityDatesAPIJSON.getData().get(key);
+                                        if(days!=null) {
+                                            for (Object day : days) {
+                                                availabilityDatesBean.setDay(((int) day));
+                                                availabilityDatesBean.setUpdatedAt(ZonedDateTime.now());
+                                                if(availabilityDatesDAO.addAvailabilityDate(availabilityDatesBean)) {
+                                                    updateProductsInfoJSON.setDbCommErrorCounter(updateProductsInfoJSON.getDbCommErrorCounter() + 1);
+                                                    updateProductsInfoJSON.setDbCommError(true);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }else{
+                                    boolean productexists=false;
+                                    for(String code: updateProductsInfoJSON.getProductsWithFailedAvailDates()){
+                                        if(code.equals(productDetailedInfoAPIJSON.getData().getCode()))
+                                            productexists=true;
+                                    }
+                                    if(!productexists) {
+                                        updateProductsInfoJSON.getProductsWithFailedAvailDates().add(productDetailedInfoAPIJSON.getData().getCode());
+                                        updateProductsInfoJSON.setViatorErrorInfo("Update completed but some Products did not added correctly to DB or " +
+                                                "not updated.Check Failed Destinations/Failed Products List and" +
+                                                " ProductsWithFailedAvailDates list.");
+                                    }
+                                }
+
+
                                 if (productDetailedInfoAPIJSON.getData().getProductPhotos() != null) {
                                     for (ProductDetailProductPhotos prodphoto : productDetailedInfoAPIJSON.getData().getProductPhotos()) {
                                         if (prodphoto.getPhotoURL() == null)
@@ -531,7 +602,7 @@ public class UpdateProducts {
                                 failedProduct.setProductCode(productDetailsBean.getCode());
                                 failedProducts.add(failedProduct);
                                 updateProductsInfoJSON.setViatorError(true);
-                                updateProductsInfoJSON.setViatorErrorInfo("Update completed but some products did not added to DB or not updated.Check Failed Destinations/Failed Products List.");
+                                updateProductsInfoJSON.setViatorErrorInfo("Update completed but some Products did not added correctly to DB or not updated.Check Failed Destinations/Failed Products List and ProductsWithFailedAvailDates list.");
                             }
                         }
                     }
@@ -539,7 +610,7 @@ public class UpdateProducts {
                 }else{
                     failedDestinations.add(dest.getDestinationId());
                     updateProductsInfoJSON.setViatorError(true);
-                    updateProductsInfoJSON.setViatorErrorInfo("Update completed but some Products did not added to DB or not updated.Check Failed Destinations/Failed Products List.");
+                    updateProductsInfoJSON.setViatorErrorInfo("Update completed but some Products did not added correctly to DB or not updated.Check Failed Destinations/Failed Products List and ProductsWithFailedAvailDates list.");
                 }
             }
 
@@ -567,6 +638,38 @@ public class UpdateProducts {
             System.out.println("**********************     "+" Failed Product code/Dest Id: "+ updateProductsInfoJSON.getFailedProducts().get(i).getProductCode()
                                                               +","+ updateProductsInfoJSON.getFailedProducts().get(i).getDestId());
         }
+
+        /**
+         * Add update info to Database
+         */
+        viatorUpdateProductsInfoBean.setEndDateTime(updateProductsInfoJSON.getEndDateTime());
+        viatorUpdateProductsInfoBean.setLastLeaDestid(updateProductsInfoJSON.getLastLeafDestid());
+        viatorUpdateProductsInfoBean.setStartDateTime(updateProductsInfoJSON.getStartDateTime());
+        viatorUpdateProductsInfoBean.setTotalExpiredProducts(updateProductsInfoJSON.getTotalExpiredProducts().getTotalExpiredProducts());//todo change DBtable
+        viatorUpdateProductsInfoBean.setTotalLeafNodes(updateProductsInfoJSON.getTotalLeafNodes());//todo see if must print something for db communication error
+        viatorUpdateProductsInfoBean.setTotalProducts(updateProductsInfoJSON.getTotalProducts());//todo test failed X tables
+        viatorUpdateProductsInfoBean.setTotalRocessSleep(updateProductsInfoJSON.getTotalProcessSleep());
+        viatorUpdateProductsInfoRid=viatorUpdateProductsInfoDAO.addViatorUpdateProductsInfo(viatorUpdateProductsInfoBean);
+
+        for(FailedProduct failedProd:updateProductsInfoJSON.getFailedProducts()){
+            viatorUpdateFailedProductsBean.setFailedProductCode(failedProd.getProductCode());
+            viatorUpdateFailedProductsBean.setFailedProductDestid(failedProd.getDestId());
+            viatorUpdateFailedProductsBean.setUpdateRid(viatorUpdateProductsInfoRid);
+            viatorUpdateFailedProductsDAO.addViatorUpdateFailedProduct(viatorUpdateFailedProductsBean);
+        }
+
+        for(int failedDest:updateProductsInfoJSON.getFailedDestinations()){
+            viatorUpdateFailedDestinationsBean.setFailedDestination(failedDest);
+            viatorUpdateFailedDestinationsBean.setUpdateRid(viatorUpdateProductsInfoRid);
+            viatorUpdateFailedDestinationsDAO.addViatorUpdateFailedDestination(viatorUpdateFailedDestinationsBean);
+        }
+
+        for(String prod:updateProductsInfoJSON.getProductsWithFailedAvailDates()){
+            viatorUpdateFailedAvailDatesBean.setProductWithFailedAvailDates(prod);
+            viatorUpdateFailedAvailDatesBean.setUpdateRid(viatorUpdateProductsInfoRid);
+            viatorUpdateFailedAvailDatesDAO.addViatorUpdateFailedAvailDates(viatorUpdateFailedAvailDatesBean);
+        }
+
         return updateProductsInfoJSON;
     }
 }

@@ -11,12 +11,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
-    /**
-     *
-     * Project Properties variables.
-     */
-    public static String apiKey="3491840412405367";
-    public static String apiURL="http://prelive.viatorapi.viator.com";
+
 
 //todo change mysql driver
     @Override

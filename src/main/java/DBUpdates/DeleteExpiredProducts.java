@@ -59,7 +59,7 @@ public class DeleteExpiredProducts {
              */
             for (int j = 0; j < products.size(); j++) {
                 chunk.add(products.get(j));
-                if (chunk.size() > 1000 || j == products.size() - 1) {
+                if (chunk.size() > 500 || j == products.size() - 1) {
                     /**
                      * Call viator service to check if any products of it's chunk are expired.A product is considered expired
                      * if the service of viator returns product code=null

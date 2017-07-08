@@ -32,7 +32,7 @@ public class ProductAPIDAO {
      */
     public ProductsByDestIdSeoIdAPIJSON searchProducts(ProductsByDestinationPOST productsByDestinationPOST, ProductsByAttractionPOST productsByAttractionPOST, boolean isDestIdPost){
 
-        final String url =Controller.Application.apiURL+ "/service/search/products?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/search/products?apiKey=" + Helper.ProjectProperties.apiKey;
         ProductsByDestIdSeoIdAPIJSON productsByDestIdSeoIdAPIJSON =new ProductsByDestIdSeoIdAPIJSON();
         productsByDestIdSeoIdAPIJSON.setSuccess(false);
         try {
@@ -66,7 +66,7 @@ public class ProductAPIDAO {
      */
     public SearchFreetextProductsAPIJSON searchFreeTextProduct(SearchFreetextPOST searchFreetextPOST){
 
-        final String url =Controller.Application.apiURL+ "/service/search/freetext?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/search/freetext?apiKey=" + Helper.ProjectProperties.apiKey;
         SearchFreetextProductsAPIJSON searchFreetextProductsAPIJSON =new SearchFreetextProductsAPIJSON();
         searchFreetextProductsAPIJSON.setSuccess(false);
         List<String> searchtypes=new ArrayList<>();
@@ -101,7 +101,7 @@ public class ProductAPIDAO {
      */
     public SearchFreetextDestinationsAPIJSON searchFreeTextDestination(SearchFreetextPOST searchFreetextPOST){
 
-        final String url =Controller.Application.apiURL+ "/service/search/freetext?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/search/freetext?apiKey=" + Helper.ProjectProperties.apiKey;
         SearchFreetextDestinationsAPIJSON searchFreetextDestinationsAPIJSON =new SearchFreetextDestinationsAPIJSON();
         searchFreetextDestinationsAPIJSON.setSuccess(false);
         List<String> searchtypes=new ArrayList<>();
@@ -136,7 +136,7 @@ public class ProductAPIDAO {
      */
     public SearchFreetextAttractionsAPIJSON searchFreeTextAttraction(SearchFreetextPOST searchFreetextPOST){
 
-        final String url =Controller.Application.apiURL+ "/service/search/freetext?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL+ "/service/search/freetext?apiKey=" + Helper.ProjectProperties.apiKey;
         SearchFreetextAttractionsAPIJSON searcFreetextAttractionsAPIJSON =new SearchFreetextAttractionsAPIJSON();
         searcFreetextAttractionsAPIJSON.setSuccess(false);
         List<String> searchtypes=new ArrayList<>();
@@ -171,9 +171,9 @@ public class ProductAPIDAO {
      */
     public ProductDetailedInfoAPIJSON productDetailedInfo(String code, String currencyCode, boolean excludeTourGradeAvailability, boolean showUnavailable){
 
-        final String url =Controller.Application.apiURL + "/service/product?" + "code=" + code + "&currencyCode=" + currencyCode +
+        final String url =Helper.ProjectProperties.apiURL + "/service/product?" + "code=" + code + "&currencyCode=" + currencyCode +
                           "&excludeTourGradeAvailability=" + excludeTourGradeAvailability + "&showUnavailable=" + showUnavailable +
-                          "&apiKey=" + Controller.Application.apiKey;
+                          "&apiKey=" + Helper.ProjectProperties.apiKey;
         ProductDetailedInfoAPIJSON productDetailedInfoAPIJSON =new ProductDetailedInfoAPIJSON();
         productDetailedInfoAPIJSON.setSuccess(false);
         try {
@@ -202,14 +202,14 @@ public class ProductAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public ProductsByCodesAPIJSON getproductsByCodes(ProductsByCodesPOST productsByCcdesPOST){
+    public ProductsByCodesAPIJSON getproductsByCodes(ProductsByCodesPOST productsByCodesPOST){
 
-        final String url =Controller.Application.apiURL + "/service/search/products/codes?apiKey=" + Controller.Application.apiKey;
+        final String url =Helper.ProjectProperties.apiURL + "/service/search/products/codes?apiKey=" + Helper.ProjectProperties.apiKey;
         ProductsByCodesAPIJSON productsByCodesAPIJSON =new ProductsByCodesAPIJSON();
         productsByCodesAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
-            productsByCodesAPIJSON = restTemplate.postForObject(url, productsByCcdesPOST, ProductsByCodesAPIJSON.class);
+            productsByCodesAPIJSON = restTemplate.postForObject(url, productsByCodesPOST, ProductsByCodesAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
             System.out.println("*****************"+e.getStatusCode()+"*****************");

@@ -12,12 +12,21 @@ public class UpdateProductsInfoJSON extends InfoJSON {
     private int totalLeafNodes=0;
     private int totalProducts=0;
     private int lastLeafDestid=0;
-    private TotalExpiredProducts totalExpiredProducts;
+    private TotalExpiredProducts totalExpiredProducts=new TotalExpiredProducts();
     private ZonedDateTime startDateTime;
     private ZonedDateTime endDateTime;
     private List<Integer> failedDestinations=new ArrayList<>();
+    private List<String> productsWithFailedAvailDates=new ArrayList<>();
     private List<FailedProduct> failedProducts=new ArrayList<>();
     private long totalProcessSleep;/**Idle time of update process due to viator request limit.*/
+
+    public List<String> getProductsWithFailedAvailDates() {
+        return productsWithFailedAvailDates;
+    }
+
+    public void setProductsWithFailedAvailDates(List<String> productsWithFailedAvailDates) {
+        this.productsWithFailedAvailDates = productsWithFailedAvailDates;
+    }
 
     public long getTotalProcessSleep() {
         return totalProcessSleep;

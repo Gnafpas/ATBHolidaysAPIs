@@ -1,5 +1,6 @@
 package WebServicesBeans.UpdateDBJSONs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  */
 public class TotalExpiredProducts {
     private int totalExpiredProducts=0;
-    private List<String> totalExpiredProductsList;
+    private List<String> totalExpiredProductsList=new ArrayList<>();
     private boolean viatorError;
     private String viatorErrorInfo;
     private boolean dbCommError;

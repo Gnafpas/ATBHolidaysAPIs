@@ -1,12 +1,13 @@
 package WebServicesBeans.Suggestions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by George on 07/06/17.
  */
 public class SuggestedProductsList {
-    private List<SuggestedProduct> products;
+    private List<SuggestedProduct> products= new ArrayList<>();
     private boolean dbCommError=false;
 
     public List<SuggestedProduct> getProducts() {

@@ -35,7 +35,7 @@ public class ViatorProductDetailsBean {
     private String thumbnailUrl;
     private String thumbnailHiResUrl;
     private String webUrl;
-    private String currencyCode;
+    private String currencyCode;//todo add table to DB for different curencies
     private BigDecimal price;
     private BigDecimal rrp;
     private BigDecimal merchantNetPriceFrom;
@@ -66,7 +66,7 @@ public class ViatorProductDetailsBean {
     private Integer rating3Count;
     private Integer rating4Count;
     private Integer rating5Count;
-    private ZonedDateTime updatedAt;
+    private ZonedDateTime updatedAt;//todo Too many information with type ZonedDateTime.Look forward to change it
 
     @Id
     @Column(name = "code")
