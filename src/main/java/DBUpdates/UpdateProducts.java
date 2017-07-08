@@ -137,7 +137,7 @@ public class UpdateProducts {
         /**
          * Clear Database from expired products.
          */
-        DeleteExpiredProducts delete=new DeleteExpiredProducts();
+        DeleteExpiredProducts delete=new DeleteExpiredProducts(); 
         updateProductsInfoJSON.setTotalExpiredProducts(delete.deleteExpiredProducts());
 
         /**

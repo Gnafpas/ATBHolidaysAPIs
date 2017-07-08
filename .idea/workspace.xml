@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/APIBeans/Bookings/AvailabilityDatesAPIJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Controller/ListingPageController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/BookingsAPIDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorAvailabilityDatesDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorUpdateFailedAvailDatesDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorUpdateFailedDestinationsDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorUpdateFailedProductsDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorUpdateProductsInfoDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorAvailabilityDatesBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorUpdateFailedAvailDatesBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorUpdateFailedDestinationsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorUpdateFailedProductsBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorUpdateProductsInfoBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Helper/SortOrderType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/PagingList/GetProductsControllerParams.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorAvailabilityDatesBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorUpdateFailedAvailDatesBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorUpdateFailedDestinationsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorUpdateFailedProductsBean.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/ViatorUpdateProductsInfoBean.hbm.xml" />
+    <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="Complete searchbox.Complete function for getting products at listing page and presentation page of a product.Added timer to products update.Store update info to database.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/unnamed/unnamed.war" afterPath="$PROJECT_DIR$/out/artifacts/unnamed/unnamed.war" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/Application.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/Application.class" />
@@ -34,23 +13,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DBUpdates/UpdateProducts.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DBUpdates/UpdateProducts.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/WebServicesBeans/Suggestions/SuggestedProductsList.class" afterPath="$PROJECT_DIR$/src/main/target/classes/WebServicesBeans/Suggestions/SuggestedProductsList.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.class" afterPath="$PROJECT_DIR$/src/main/target/classes/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/352f0c0d-7dfe-4700-96e5-687fce594720.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/352f0c0d-7dfe-4700-96e5-687fce594720.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/5b18374c-0419-4873-bee2-af3d82039ed4.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/5b18374c-0419-4873-bee2-af3d82039ed4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/5c76ddf9-0c28-4cc0-8429-52800807847b.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/5c76ddf9-0c28-4cc0-8429-52800807847b.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/Application.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/ProductAPIDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/ProductAPIDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/TaxonomyAPIDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/APIDAOs/TaxonomyAPIDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductDetailsDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/DBDAOs/ViatorProductDetailsDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsBean.java" afterPath="$PROJECT_DIR$/src/main/java/DBBeans/ViatorProductDetailsBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DBUpdates/DeleteExpiredProducts.java" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/DeleteExpiredProducts.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java" afterPath="$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProductsList.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/Suggestions/SuggestedProductsList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/TotalExpiredProducts.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/TotalExpiredProducts.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.java" afterPath="$PROJECT_DIR$/src/main/java/WebServicesBeans/UpdateDBJSONs/UpdateProductsInfoJSON.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -81,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="389">
-              <caret line="139" column="65" lean-forward="true" selection-start-line="139" selection-start-column="65" selection-end-line="139" selection-end-column="65" />
+              <caret line="139" column="66" lean-forward="false" selection-start-line="139" selection-start-column="66" selection-end-line="139" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -939,7 +903,7 @@
       <workItem from="1498467070593" duration="54008000" />
       <workItem from="1498602596670" duration="49402000" />
       <workItem from="1499085864955" duration="19068000" />
-      <workItem from="1499182722293" duration="85634000" />
+      <workItem from="1499182722293" duration="85812000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -955,11 +919,18 @@
       <option name="project" value="LOCAL" />
       <updated>1499195077181</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Complete searchbox.Complete function for getting products at listing page and presentation page of a product.Added timer to products update.Store update info to database.">
+      <created>1499472615788</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1499472615788</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="282346000" />
+    <option name="totallyTimeSpent" value="282524000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1057,7 +1028,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit.Dump all products from viator" />
     <MESSAGE value="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too." />
-    <option name="LAST_COMMIT_MESSAGE" value="Database update from viator API completed.Timer thread to run every day remains to be added.Early development of freetext search too." />
+    <MESSAGE value="Complete searchbox.Complete function for getting products at listing page and presentation page of a product.Added timer to products update.Store update info to database." />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete searchbox.Complete function for getting products at listing page and presentation page of a product.Added timer to products update.Store update info to database." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1524,7 +1496,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/DBUpdates/UpdateProducts.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="389">
-          <caret line="139" column="65" lean-forward="true" selection-start-line="139" selection-start-column="65" selection-end-line="139" selection-end-column="65" />
+          <caret line="139" column="66" lean-forward="false" selection-start-line="139" selection-start-column="66" selection-end-line="139" selection-end-column="66" />
           <folding />
         </state>
       </provider>
