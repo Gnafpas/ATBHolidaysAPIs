@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by George on 20/06/17.
  */
@@ -54,5 +56,26 @@ public class ViatorProductAgeBandsDAO {
             e.printStackTrace();
         }
         return err;
+    }
+
+    public List<ViatorProductAgeBandsBean> getAgeBandsByProductCode(String productCode){
+
+        List<ViatorProductAgeBandsBean> ageBands=null;
+        String hql ="Select ageBands FROM ViatorProductAgeBandsBean ageBands " +
+                                    "WHERE ageBands.productCode like :productCode " +
+                                    "order by ageBands.sortOrder";
+        try{
+            session = helper.getSession();
+            session.beginTransaction();
+            ageBands=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return ageBands;
     }
 }

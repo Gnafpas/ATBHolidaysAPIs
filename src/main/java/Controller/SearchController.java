@@ -1,11 +1,14 @@
 package Controller;
 
+import DAOs.DBDAOs.ViatorAttractionsDAO;
 import DAOs.DBDAOs.ViatorDestinationsDAO;
 import DAOs.DBDAOs.ViatorProductDetailsDAO;
+import DBBeans.ViatorAttractionsBean;
 import DBBeans.ViatorDestinationsBean;
 import DBBeans.ViatorProductDetailsBean;
 import Helper.SortOrderType;
-import WebServicesBeans.PagingList.GetProductsControllerParams;
+import WebServicesBeans.ListingPage.GetAttractionsDAOParams;
+import WebServicesBeans.ListingPage.GetProductsDAOParams;
 import WebServicesBeans.Suggestions.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +29,16 @@ public class SearchController {
     @RequestMapping("/getFreeTextSuggestions")
     public SearchFreetextSuggestionsJSON getFreeTextSuggestions(@RequestParam(value="text", defaultValue="") String text,
                                                                 @RequestParam(value="topXdest", defaultValue="5") Integer topXdest,
-                                                                @RequestParam(value="topXproducts", defaultValue="5") Integer topXproducts) {
+                                                                @RequestParam(value="topXproducts", defaultValue="5") Integer topXproducts,
+                                                                @RequestParam(value="topXattractions", defaultValue="5") Integer topXattractions) {
 
         SearchFreetextSuggestionsJSON searchFreetextSuggestionsJSON =new SearchFreetextSuggestionsJSON();
         searchFreetextSuggestionsJSON.setDestinations(getSuggestedDestinations(text,topXdest));
         searchFreetextSuggestionsJSON.setProducts(getSuggestedProducts(text,topXproducts));
+        searchFreetextSuggestionsJSON.setAttractionsList(getSuggestedAttractions(text,topXattractions));
 
         if(searchFreetextSuggestionsJSON.getDestinations().isDbCommError() || searchFreetextSuggestionsJSON.getProducts().isDbCommError())
-            searchFreetextSuggestionsJSON.setDbCommError(true);
+            searchFreetextSuggestionsJSON.setDBError(true);
 
         return searchFreetextSuggestionsJSON;
     }
@@ -123,9 +128,11 @@ public class SearchController {
         SuggestedProductsList suggestedProducts=new SuggestedProductsList();
         List<ViatorProductDetailsBean> products;
         SuggestedProduct suggestedProduct;
-        List<Integer> cat=new ArrayList<>();
-        List<Integer> subcat=new ArrayList<>();
-        products=productsDao.getProducts("",text,"","","",0,0, SortOrderType.popularity,0,topXproducts,cat,subcat,null,null);
+        GetProductsDAOParams parameters=new GetProductsDAOParams();
+        parameters.setTitle(text);
+        parameters.setLastProduct(topXproducts);
+        parameters.setSortOrder(SortOrderType.popularity);
+        products=productsDao.getProducts(parameters);
         if(products==null)
             suggestedProducts.setDbCommError(true);
         else{
@@ -140,5 +147,33 @@ public class SearchController {
         }
 
         return suggestedProducts;
+    }
+
+
+    public SuggestedAttractionsList getSuggestedAttractions( String text,int topXproducts){
+        ViatorAttractionsDAO attractionsDAO=new ViatorAttractionsDAO();
+        SuggestedAttractionsList suggestedAttractions=new SuggestedAttractionsList();
+        List<ViatorAttractionsBean> attractions;
+        SuggestedAttraction suggestedAttraction;
+        GetAttractionsDAOParams parameters=new GetAttractionsDAOParams();
+        parameters.setTitle(text);
+        parameters.setLastAttraction(topXproducts);
+        parameters.setSortOrder(SortOrderType.avgRatingD);
+        attractions=attractionsDAO.getAttractions(parameters);
+        if(attractions==null)
+            suggestedAttractions.setDbCommError(true);
+        else{
+            for(ViatorAttractionsBean attraction:attractions) {
+                suggestedAttraction = new SuggestedAttraction();
+                suggestedAttraction.setSeoId(attraction.getSeoId());
+                suggestedAttraction.setCity(attraction.getAttractionCity());
+                suggestedAttraction.setState(attraction.getAttractionState());
+                suggestedAttraction.setRating(attraction.getRating());
+                suggestedAttraction.setTitle(attraction.getTitle());
+                suggestedAttractions.getAtractions().add(suggestedAttraction);
+            }
+        }
+
+        return suggestedAttractions;
     }
 }

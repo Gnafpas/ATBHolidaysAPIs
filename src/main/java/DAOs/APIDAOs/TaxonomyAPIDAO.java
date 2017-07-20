@@ -4,10 +4,13 @@ import APIBeans.Taxonomy.TaxonomyAttractionsAPIJSON;
 import APIBeans.Taxonomy.TaxonomyCategoriesAPIJSON;
 import APIBeans.Taxonomy.TaxonomyDestinationsAPIJSON;
 import APIBeans.Taxonomy.TaxonomyAttractionsPOST;
+import Helper.ProjectProperties;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+
 
 /**
  * Created by George on 04/06/17.
@@ -30,6 +33,8 @@ public class TaxonomyAPIDAO {
         taxonomyDestinationsAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             taxonomyDestinationsAPIJSON = restTemplate.getForObject(url,TaxonomyDestinationsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
@@ -71,6 +76,8 @@ public class TaxonomyAPIDAO {
         taxonomyAttractionsAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             taxonomyAttractionsAPIJSON = restTemplate.postForObject(url, taxonomyAttractionsPOST,TaxonomyAttractionsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
@@ -102,6 +109,8 @@ public class TaxonomyAPIDAO {
         taxonomyCategoriesAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             taxonomyCategoriesAPIJSON = restTemplate.getForObject(url,TaxonomyCategoriesAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {

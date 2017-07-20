@@ -1,7 +1,7 @@
 package DBBeans;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
+import java.sql.Timestamp;
 
 /**
  * Created by George on 23/06/17.
@@ -28,7 +28,7 @@ public class ViatorProductVideosBean {
     private String ownerCountry;
     private String ownerAvatarUrl;
     private Integer sortOrder;
-    private ZonedDateTime updatedAt;
+    private Timestamp updatedAt;
 
     @Id
     @Column(name = "rid")
@@ -222,11 +222,11 @@ public class ViatorProductVideosBean {
 
     @Basic
     @Column(name = "updated_at")
-    public ZonedDateTime getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

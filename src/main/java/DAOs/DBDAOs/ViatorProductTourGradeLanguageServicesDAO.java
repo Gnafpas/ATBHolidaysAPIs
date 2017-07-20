@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by George on 23/06/17.
  */
@@ -53,5 +55,28 @@ public class ViatorProductTourGradeLanguageServicesDAO {
             e.printStackTrace();
         }
         return err;
+    }
+
+    public List<ViatorProductTourGradeLanguageServicesBean> getLanguageServicesByProductCodeAndTourGrade(String productCode,String tourGrade){
+
+        List<ViatorProductTourGradeLanguageServicesBean> tourGradeLanguageServices=null;
+        String hql ="Select tourGradeLanguageServices FROM ViatorProductTourGradeLanguageServicesBean tourGradeLanguageServices " +
+                                                     "WHERE tourGradeLanguageServices.productCode like :productCode " +
+                                                     "AND  tourGradeLanguageServices.gradeCode like :tourGrade";
+        try{
+            session = helper.getSession();
+            session.beginTransaction();
+            tourGradeLanguageServices=session.createQuery(hql).setParameter("productCode", productCode )
+                                                              .setParameter("tourGrade", tourGrade)
+                                                              .getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return tourGradeLanguageServices;
     }
 }

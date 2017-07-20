@@ -7,7 +7,7 @@ public  class SortOrderType {
     public static String popularity="POPULARITY";
     public static String alphabetical="ALPHABETICAL";
     public static String avgRatingD="AVG_RATING_D";
-    public static String avgRatingA="REVIEW_AVG_RATING_A";
+    public static String avgRatingA="AVG_RATING_A";
     public static String priceD="PRICE_D";
     public static String priceA="PRICE_A";
     public static String durationD="DURATION_D";

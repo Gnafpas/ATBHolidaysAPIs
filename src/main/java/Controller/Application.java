@@ -10,17 +10,10 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  */
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
-
-
-
-//todo change mysql driver
+//todo change mysql driver and configure mysql for connection pooling
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
     }
 }
 

@@ -51,7 +51,7 @@ public class DeleteExpiredProducts {
          */
         products=viatorProductDetailsDAO.getAllProductsCodes();
         if(products==null){
-            totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+            totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
             totalExpiredProducts.setDbCommError(true);
         }else {
             /**
@@ -73,59 +73,59 @@ public class DeleteExpiredProducts {
                         for (int i = 0; i < productsByCodesAPIJSON.getData().size(); i++) {
                             if (productsByCodesAPIJSON.getData().get(i).getCode() == null) {
                                 if(viatorProductDetailsDAO.deleteProduct(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductAgeBandsDAO.deleteProductAgeBands(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductExclusionsDAO.deleteProductExlusions(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductInclusionsDAO.deleteProductInclusions(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductPhotosDAO.deleteProductPhotos(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductReviewsDAO.deleteProductReviews(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductSalesPointsDAO.deleteProductSalesPoints(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductTourGradesDAO.deleteProductTourGrades(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductUserPhotosDAO.deleteProductUserPhotos(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductVideosDAO.deleteProductVideos(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductXCategoryDAO.deleteProductXCategory(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 if(viatorProductXSubcategoryDAO.deleteProductXSubctegory(chunk.get(i))){
-                                    totalExpiredProducts.setDbCommErrorCounter(totalExpiredProducts.getDbCommErrorCounter()+1);
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
                                 System.out.println("********************** Deleting expired product with code: "+chunk.get(i)+" **********************");

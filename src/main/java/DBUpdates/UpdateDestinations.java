@@ -5,7 +5,10 @@ import DAOs.APIDAOs.TaxonomyAPIDAO;
 import DAOs.DBDAOs.ViatorDestinationsDAO;
 import DBBeans.ViatorDestinationsBean;
 import WebServicesBeans.UpdateDBJSONs.InfoJSON;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
+import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
@@ -20,6 +23,7 @@ public class UpdateDestinations {
         TaxonomyAPIDAO taxonomyAPIDAO = new TaxonomyAPIDAO();
         TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON= taxonomyAPIDAO.retrieveDestinations();
         ViatorDestinationsDAO viatorDestinationsDAO = new ViatorDestinationsDAO();
+        DateTime dateTime;
 
         /**
          * Statistic Values/Information/Results in JSON for Admin.
@@ -27,7 +31,7 @@ public class UpdateDestinations {
         InfoJSON infoJason=new InfoJSON();
         infoJason.setViatorError(false);
         infoJason.setDbCommError(false);
-        infoJason.setDbCommErrorCounter(0);
+        infoJason.setDbCommErrorsCounter(0);
 
         if (taxonomyDestinationsAPIJSON.isSuccess() && taxonomyDestinationsAPIJSON.getData()!=null){
             for(TaxonomyDestinationsData dest:taxonomyDestinationsAPIJSON.getData()) {
@@ -44,14 +48,17 @@ public class UpdateDestinations {
                 viatorDestinationsBean.setSelectable(dest.isSelectable());
                 viatorDestinationsBean.setSortOrder(dest.getSortOrder());
                 viatorDestinationsBean.setTimeZone(dest.getTimeZone());
-                viatorDestinationsBean.setUpdatedAt(ZonedDateTime.now(ZoneOffset.UTC));
+                dateTime =new DateTime( DateTimeZone.UTC);
+                viatorDestinationsBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                    dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                    dateTime.getHourOfDay(),dateTime.getMinuteOfHour())) );
 
                 if(viatorDestinationsDAO.deleteDestination(viatorDestinationsBean.getDestinationId())){
-                    infoJason.setDbCommErrorCounter(infoJason.getDbCommErrorCounter()+1);
+                    infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
                 if(viatorDestinationsDAO.adddestination(viatorDestinationsBean)){
-                    infoJason.setDbCommErrorCounter(infoJason.getDbCommErrorCounter()+1);
+                    infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
             }

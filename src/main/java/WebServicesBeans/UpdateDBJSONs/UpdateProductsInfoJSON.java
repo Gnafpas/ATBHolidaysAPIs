@@ -1,7 +1,7 @@
 package WebServicesBeans.UpdateDBJSONs;
 
 
-import java.time.ZonedDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +13,25 @@ public class UpdateProductsInfoJSON extends InfoJSON {
     private int totalProducts=0;
     private int lastLeafDestid=0;
     private TotalExpiredProducts totalExpiredProducts=new TotalExpiredProducts();
-    private ZonedDateTime startDateTime;
-    private ZonedDateTime endDateTime;
+    private Timestamp startDateTime;
+    private Timestamp endDateTime;
     private List<Integer> failedDestinations=new ArrayList<>();
     private List<String> productsWithFailedAvailDates=new ArrayList<>();
+    private List<String> productsWithFailedPickupHotels=new ArrayList<>();
     private List<FailedProduct> failedProducts=new ArrayList<>();
-    private long totalProcessSleep;/**Idle time of update process due to viator request limit.*/
+    private long totalProcessSleep;
+
+    public List<String> getProductsWithFailedPickupHotels() {
+        return productsWithFailedPickupHotels;
+    }
+
+    public void setProductsWithFailedPickupHotels(List<String> productsWithFailedPickupHotels) {
+        this.productsWithFailedPickupHotels = productsWithFailedPickupHotels;
+    }
+
+    /**Idle time of update process due to viator request limit.*/
+
+
 
     public List<String> getProductsWithFailedAvailDates() {
         return productsWithFailedAvailDates;
@@ -68,19 +81,19 @@ public class UpdateProductsInfoJSON extends InfoJSON {
         this.lastLeafDestid = lastLeafDestid;
     }
 
-    public ZonedDateTime getStartDateTime() {
+    public Timestamp getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(ZonedDateTime startDateTime) {
+    public void setStartDateTime(Timestamp startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public ZonedDateTime getEndDateTime() {
+    public Timestamp getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(ZonedDateTime endDateTime) {
+    public void setEndDateTime(Timestamp endDateTime) {
         this.endDateTime = endDateTime;
     }
 

@@ -17,7 +17,7 @@ public class TaxonomyAttractionsData {
     private String attractionCity;
     private String attractionState;
     private int destinationId;
-    private int seoId;
+    private int seoId=0;
     private int productCount;
     private int photoCount;
     private int primaryDestinationId;

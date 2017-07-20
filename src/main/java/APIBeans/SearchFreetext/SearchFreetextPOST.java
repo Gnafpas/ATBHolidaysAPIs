@@ -1,5 +1,7 @@
 package APIBeans.SearchFreetext;
 
+import Helper.ProjectProperties;
+
 import java.util.List;
 
 /**
@@ -7,9 +9,9 @@ import java.util.List;
  */
 public class SearchFreetextPOST {
 
-    private String topX;
+    private String topX="";
     private int destId;
-    private String currencyCode;
+    private String currencyCode= ProjectProperties.defaultCurrencyCode;
     private List<String> searchTypes;
     private String  text;
 

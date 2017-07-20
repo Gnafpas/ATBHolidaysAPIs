@@ -1,35 +1,28 @@
 package Controller;
 
+import DBUpdates.UpdateAttractions;
 import DBUpdates.UpdateCategories;
 import DBUpdates.UpdateDestinations;
-import DBUpdates.UpdateProducts;
+import Helper.ProjectProperties;
+import DBUpdates.UpdateDBTimerTask;
 import WebServicesBeans.UpdateDBJSONs.InfoJSON;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 /**
  * Created by George on 29/05/17.
  */
 @RestController
-public class AdminController extends TimerTask {
+public class AdminController {
 
-    private int StartingDestId;
-    private int StopDesId;
     private Timer timer;
-    private boolean timerRuns = false;//todo figure out how to parse these parameters
-
-
-    @Override
-    public void run() {
-        timerRuns=true;
-        UpdateProducts updateProducts =new UpdateProducts();
-        updateProducts.updateProducts(28612,28612);//todo figure out how to parse these parameters
-
-    }
+    private boolean timerRuns = false;
 
 
     /**
@@ -44,27 +37,31 @@ public class AdminController extends TimerTask {
      */
     @RequestMapping("/startUpdateProducts")
     public String startUpdateProducts(@RequestParam(value="StartingDestId", defaultValue="0") Integer StartingDestId,
-                                                 @RequestParam(value="StopDestId", defaultValue="0") Integer StopDestId) {
-        this.StartingDestId=StartingDestId;
-        this.StopDesId=StopDestId;
-        /**
-         * Update products with timer every 24 hours.
-         */
-        TimerTask timerTask = new AdminController();
-        timer = new Timer(true);
-        timer.scheduleAtFixedRate(timerTask, 0, 60 * 60 * 24 * 1000);
-        return "Update timer started";
+                                      @RequestParam(value="StopDestId", defaultValue="0") Integer StopDestId) {
+        if(!timerRuns) {
+            /**
+             * Update products with timer every 24 hours.
+             */
+            TimerTask timerTask = new UpdateDBTimerTask(StartingDestId,StopDestId);
+            timer = new Timer(true);
+            timer.scheduleAtFixedRate(timerTask, 0, Helper.ProjectProperties.runDBUpdateEveryXMillisecs);
+            timerRuns=true;
+            return "Update timer task started.Runs every "+ ProjectProperties.runDBUpdateEveryXMillisecs /60 /60 /1000+" hours." ;
+        }
+        else
+            return "Update timer task runs already.";
     }
 
     @RequestMapping("/stopUpdateProducts")
+    @Secured("USER")
     public String stopUpdateProducts(){
         if(timerRuns) {
             timer.cancel();
             timer.purge();
             timerRuns = false;
-            return "Update timer stopped. ";
+            return "Update timer task  stopped. ";
         }else
-            return "Update timer isn't running. ";
+            return "Update timer task isn't running. ";
 
     }
 
@@ -80,4 +77,12 @@ public class AdminController extends TimerTask {
         return updateDestinations.updateDestinations();
     }
 
+    @RequestMapping("/updateAttractions")
+    public InfoJSON updateAttractions(@RequestParam(value="StartingDestId", defaultValue="0") Integer StartingDestId,
+                                      @RequestParam(value="StopDestId", defaultValue="0") Integer StopDestId) {
+        UpdateAttractions updateAttractions=new UpdateAttractions();
+        return updateAttractions.UpdateAttractions(StartingDestId,StopDestId);
+    }
+
 }
+//todo organize System.out.printlns tou error/info files

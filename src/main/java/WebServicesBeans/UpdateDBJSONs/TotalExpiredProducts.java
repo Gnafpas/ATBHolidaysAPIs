@@ -12,7 +12,7 @@ public class TotalExpiredProducts {
     private boolean viatorError;
     private String viatorErrorInfo;
     private boolean dbCommError;
-    private int dbCommErrorCounter;
+    private int dbCommErrorsCounter;
 
     public boolean isViatorError() {
         return viatorError;
@@ -38,12 +38,12 @@ public class TotalExpiredProducts {
         this.dbCommError = dbCommError;
     }
 
-    public int getDbCommErrorCounter() {
-        return dbCommErrorCounter;
+    public int getDbCommErrorsCounter() {
+        return dbCommErrorsCounter;
     }
 
-    public void setDbCommErrorCounter(int dbCommErrorCounter) {
-        this.dbCommErrorCounter = dbCommErrorCounter;
+    public void setDbCommErrorsCounter(int dbCommErrorsCounter) {
+        this.dbCommErrorsCounter = dbCommErrorsCounter;
     }
 
     public int getTotalExpiredProducts() {

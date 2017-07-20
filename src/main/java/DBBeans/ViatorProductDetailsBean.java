@@ -1,9 +1,11 @@
 package DBBeans;
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
+
 
 /**
  * Created by George on 03/07/2017.
@@ -66,7 +68,7 @@ public class ViatorProductDetailsBean {
     private Integer rating3Count;
     private Integer rating4Count;
     private Integer rating5Count;
-    private ZonedDateTime updatedAt;//todo Too many information with type ZonedDateTime.Look forward to change it
+    private Timestamp updatedAt;
 
     @Id
     @Column(name = "code")
@@ -620,11 +622,11 @@ public class ViatorProductDetailsBean {
 
     @Basic
     @Column(name = "updated_at")
-    public ZonedDateTime getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

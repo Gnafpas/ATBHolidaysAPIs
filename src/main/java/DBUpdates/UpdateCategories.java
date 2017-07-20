@@ -9,7 +9,10 @@ import DAOs.DBDAOs.ViatorSubcategoriesDAO;
 import DBBeans.ViatorCategoriesBean;
 import DBBeans.ViatorSubcategoriesBean;
 import WebServicesBeans.UpdateDBJSONs.InfoJSON;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
+import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
@@ -20,13 +23,14 @@ import java.time.ZonedDateTime;
 public class UpdateCategories {
 
     public InfoJSON updateCategories() {
-
+        //todo the categories id are chenging be aware of dublications of ids in database
         ViatorCategoriesBean viatorCategoriesBean=new ViatorCategoriesBean();
         ViatorSubcategoriesBean viatorsubcategoriesBean=new ViatorSubcategoriesBean();
         TaxonomyAPIDAO taxonomyAPIDAO = new TaxonomyAPIDAO();
         TaxonomyCategoriesAPIJSON taxonomyCategoriesAPIJSON= taxonomyAPIDAO.retrieve_categories();
         ViatorCategoriesDAO viatorCategoriesDAO = new ViatorCategoriesDAO();
         ViatorSubcategoriesDAO viatorSubcategoriesDAO=new ViatorSubcategoriesDAO();
+        DateTime dateTime;
 
         /**
          * Statistic Values/Information/Results in JSON for Admin.
@@ -34,7 +38,7 @@ public class UpdateCategories {
         InfoJSON infoJason=new InfoJSON();
         infoJason.setViatorError(false);
         infoJason.setDbCommError(false);
-        infoJason.setDbCommErrorCounter(0);
+        infoJason.setDbCommErrorsCounter(0);
 
         if (taxonomyCategoriesAPIJSON.isSuccess() && taxonomyCategoriesAPIJSON.getData()!=null){
             for(TaxonomyCategoriesData cat:taxonomyCategoriesAPIJSON.getData()) {
@@ -45,15 +49,18 @@ public class UpdateCategories {
                 viatorCategoriesBean.setSortOrder(cat.getSortOrder());
                 viatorCategoriesBean.setThumbnailHiResUrl(cat.getThumbnailHiResURL());
                 viatorCategoriesBean.setThumbnailUrl(cat.getThumbnailURL());
-                viatorCategoriesBean.setUpdatedAt(ZonedDateTime.now(ZoneOffset.UTC));
+                dateTime =new DateTime( DateTimeZone.UTC);
+                viatorCategoriesBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                  dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                  dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
                 if(viatorCategoriesDAO.deleteCategory(viatorCategoriesBean.getId())){
-                    infoJason.setDbCommErrorCounter(infoJason.getDbCommErrorCounter()+1);
+                    infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
 
                 if(viatorCategoriesDAO.addcategory(viatorCategoriesBean)){
-                    infoJason.setDbCommErrorCounter(infoJason.getDbCommErrorCounter()+1);
+                    infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
 
@@ -66,13 +73,13 @@ public class UpdateCategories {
 
 
                     if(viatorSubcategoriesDAO.deleteSubcategory(viatorsubcategoriesBean.getId(),viatorsubcategoriesBean.getCategoryId())){
-                        infoJason.setDbCommErrorCounter(infoJason.getDbCommErrorCounter()+1);
+                        infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                         infoJason.setDbCommError(true);
                     }
 
 
                     if(viatorSubcategoriesDAO.addsubcategory(viatorsubcategoriesBean)){
-                        infoJason.setDbCommErrorCounter(infoJason.getDbCommErrorCounter()+1);
+                        infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                         infoJason.setDbCommError(true);
                     }
                 }

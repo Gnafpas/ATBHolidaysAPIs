@@ -7,9 +7,9 @@ import java.util.List;
  */
 public class InfoJSON {
     private boolean viatorError=false;
-    private String viatorErrorInfo;
+    private String viatorErrorInfo="";
     private boolean dbCommError;
-    private int dbCommErrorCounter;
+    private int dbCommErrorsCounter;
 
     public boolean isDbCommError() {
         return dbCommError;
@@ -19,12 +19,12 @@ public class InfoJSON {
         this.dbCommError = dbCommError;
     }
 
-    public int getDbCommErrorCounter() {
-        return dbCommErrorCounter;
+    public int getDbCommErrorsCounter() {
+        return dbCommErrorsCounter;
     }
 
-    public void setDbCommErrorCounter(int dbCommErrorCounter) {
-        this.dbCommErrorCounter = dbCommErrorCounter;
+    public void setDbCommErrorsCounter(int dbCommErrorsCounter) {
+        this.dbCommErrorsCounter = dbCommErrorsCounter;
     }
 
     public boolean isViatorError() {

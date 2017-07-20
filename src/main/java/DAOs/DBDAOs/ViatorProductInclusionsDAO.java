@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by George on 23/06/17.
  */
@@ -53,5 +55,25 @@ public class ViatorProductInclusionsDAO {
             e.printStackTrace();
         }
         return err;
+    }
+
+    public List<ViatorProductInclusionsBean> getInclusionsByProductCode(String productCode){
+
+        List<ViatorProductInclusionsBean> inclusions=null;
+        String hql ="Select inclusions FROM ViatorProductInclusionsBean inclusions " +
+                                      "WHERE inclusions.productCode like :productCode ";
+        try{
+            session = helper.getSession();
+            session.beginTransaction();
+            inclusions=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return inclusions;
     }
 }

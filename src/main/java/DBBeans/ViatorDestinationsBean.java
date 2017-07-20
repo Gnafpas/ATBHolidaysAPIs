@@ -24,7 +24,7 @@ public class ViatorDestinationsBean {
     private boolean selectable;
     private Integer sortOrder;
     private String destinationUrlName;
-    private ZonedDateTime updatedAt;
+    private Timestamp updatedAt;
 
     @Id
     @Column(name = "destination_id")
@@ -158,11 +158,11 @@ public class ViatorDestinationsBean {
 
     @Basic
     @Column(name = "updated_at")
-    public ZonedDateTime getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -4,10 +4,12 @@ package DAOs.DBDAOs;
 import DBBeans.ViatorProductDetailsBean;
 import DBConnection.HibernateUtil;
 import Helper.SortOrderType;
+import WebServicesBeans.ListingPage.GetProductsDAOParams;
 import org.hibernate.Session;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -18,14 +20,14 @@ public class ViatorProductDetailsDAO {
     private HibernateUtil helper;
     private Session session;
 
-    public boolean addproduct(ViatorProductDetailsBean bid){
+    public boolean addproduct(ViatorProductDetailsBean product){
 
         Transaction tx;
         boolean err=false;
         try{
             session = helper.getSession();
             tx=session.beginTransaction();
-            session.save(bid);
+            session.save(product);
             tx.commit();
             session.close();
         }catch (HibernateException e) {
@@ -82,15 +84,7 @@ public class ViatorProductDetailsDAO {
      * a combination of those attributes.Capability of filtering by categories and sort by REVIEW_AVG_RATING_D,
      * REVIEW_AVG_RATING_A, POPULARITY, PRICE_D, PRICE_a, DURATION_D, DURATION_A.Also filtering by dates.
      */
-    public List <ViatorProductDetailsBean> getProducts(String code, String title, String country,
-                                                       String city, String region, int destId,
-                                                       int primaryDestId, String sortOrder,
-                                                       int firstProduct,
-                                                       int lastProduct,
-                                                       List<Integer> categories,
-                                                       List<Integer> subcategories,
-                                                       ZonedDateTime startDate,
-                                                       ZonedDateTime endDate){
+    public List <ViatorProductDetailsBean> getProducts(GetProductsDAOParams params){
 
         List <ViatorProductDetailsBean> products=null;
         int i;
@@ -100,59 +94,65 @@ public class ViatorProductDetailsDAO {
         /**
          * Categories filter hql tables
          */
-        if(categories!=null && categories.size()!=0) {
-            hql = hql + " ,DBBeans.ViatorCategoriesBean categories,"
-                      + " DBBeans.ViatorProductXCategoryBean prodHasCategory";
+        if(params.getCategories()!=null && params.getCategories().size()!=0) {
+            hql = hql + ", DBBeans.ViatorProductXCategoryBean prodHasCategory";
         }
-        if(subcategories!=null && subcategories.size()!=0) {
-            hql = hql + ", DBBeans.ViatorSubcategoriesBean subcategories,"
-                      + " DBBeans.ViatorProductXSubcategoryBean prodHasSubcategory";
+        if(params.getSubcategories()!=null && params.getSubcategories().size()!=0) {
+            hql = hql + ",  DBBeans.ViatorProductXSubcategoryBean prodHasSubcategory";
         }
 
         /**
          * Dates filter hql tables
          */
-        if(startDate!=null && endDate!=null){
-            hql = hql + " ,DBBeans.ViatorAvailabilityDatesBean";
+        if(params.getStartDate()!=null && params.getEndDate()!=null){
+            hql = hql + " ,DBBeans.ViatorNoneAvailableDatesBean";
         }
 
-        hql=hql + " where productDetails.code LIKE :code "
-                + " and productDetails.titleEn LIKE :title "
+        /**
+         * Filters
+         */
+        hql=hql + " where productDetails.titleEn LIKE :title "
                 + " and productDetails.cityEn LIKE :city "
                 + " and productDetails.regionEn LIKE :region "
                 + " and productDetails.countryEn LIKE :country ";
-        if(destId!=0)
+        if(!params.getCode().equals(""))
+            hql=hql + " and productDetails.code LIKE :code ";
+        if(params.getDestId()!=0)
             hql=hql + " and productDetails.destinationId = :destId ";
-        if(primaryDestId!=0)
+        if(params.getPrimaryDestId()!=0)
             hql=hql + " and productDetails.primaryDestinationId = :primaryDestId ";
+        if(params.getPriceFrom()!=0)
+            hql=hql + " and productDetails.price >= :priceFrom ";
+        if(params.getPriceTo()!=0)
+            hql=hql + " and productDetails.price <= :priceTo ";
+        if(params.isDiscount())
+            hql=hql + " and productDetails.specialOfferAvailable = 1 ";
 
         /**
          * Categories filter hql restrictions
          */
-        if(categories!=null && categories.size()!=0) {
+        if(params.getCategories()!=null && params.getCategories().size()!=0) {
             hql = hql+ " and productDetails.code=prodHasCategory.productCode "
-                     + " and categories.id=prodHasCategory.categoryId ";
-            hql = hql+ " and categories.id in :categories";
+                     + " and prodHasCategory.categoryId in :categories";
         }
 
-        if(subcategories!=null && subcategories.size()!=0) {
+        if(params.getSubcategories()!=null && params.getSubcategories().size()!=0) {
             hql = hql+ " and productDetails.code=prodHasSubcategory.productCode "
-                     + " and subcategories.id=prodHasSubcategory.subcategoryId ";
-            hql = hql+ " and subcategories.id in :subcategories";
+                     + " and prodHasSubcategory.subcategoryId in :subcategories";
         }
 
         /**
          * Dates filter hql restrictions
          */
-        if(startDate!=null && endDate!=null){
+        if(params.getStartDate()!=null && params.getEndDate()!=null){
             i=0;
-            for (ZonedDateTime date = startDate; date.isBefore(endDate); date = date.plusDays(1))
+            for (ZonedDateTime date = params.getStartDate(); date.isBefore(params.getEndDate().plusDays(1)); date = date.plusDays(1))
             {
-                hql = hql + " and exists (select date from DBBeans.ViatorAvailabilityDatesBean date " +
-                                                    " where date.day = :day" + i +
-                                                    " and date.month = :month" + i +
-                                                    " and date.year = :year" + i +
-                                                    " and date.productCode LIKE productDetails.code)";
+                hql = hql + " and not exists (select date from DBBeans.ViatorNoneAvailableDatesBean date " +
+                                                        " where date.day = :day" + i +
+                                                        " and date.month = :month" + i +
+                                                        " and date.year = :year" + i +
+                                                        " and date.productCode LIKE productDetails.code)";
                 i++;
             }
 
@@ -161,23 +161,23 @@ public class ViatorProductDetailsDAO {
         /**
          * Sort order hql code
          */
-        if(sortOrder.equals(SortOrderType.alphabetical)){
+        if(params.getSortOrder().equals(SortOrderType.alphabetical)){
             hql = hql + " order by productDetails.titleEn";
-        }else if(sortOrder.equals(SortOrderType.avgRatingD)){
+        }else if(params.getSortOrder().equals(SortOrderType.avgRatingD)){
             hql = hql + " order by productDetails.rating DESC";
-        }else if(sortOrder.equals(SortOrderType.avgRatingA)){
+        }else if(params.getSortOrder().equals(SortOrderType.avgRatingA)){
             hql = hql + " order by productDetails.rating ASC";
-        }else if(sortOrder.equals(SortOrderType.popularity)) {
+        }else if(params.getSortOrder().equals(SortOrderType.popularity)) {
             hql = hql + " order by productDetails.reviewCount + productDetails.rating1Count " +
                     " +   productDetails.rating2Count + productDetails.rating3Count " +
                     " +   productDetails.rating4Count + productDetails.rating5Count DESC ";
-        }else if(sortOrder.equals(SortOrderType.priceD)) {
+        }else if(params.getSortOrder().equals(SortOrderType.priceD)) {
             hql = hql + " order by productDetails.price DESC";
-        }else if(sortOrder.equals(SortOrderType.priceA)) {
+        }else if(params.getSortOrder().equals(SortOrderType.priceA)) {
             hql = hql + " order by productDetails.price ASC";
-        }else if(sortOrder.equals(SortOrderType.durationD)) {
+        }else if(params.getSortOrder().equals(SortOrderType.durationD)) {
             hql = hql + " order by productDetails.duration DESC";
-        }else if(sortOrder.equals(SortOrderType.durationA)) {
+        }else if(params.getSortOrder().equals(SortOrderType.durationA)) {
             hql = hql + " order by productDetails.duration ASC";
         }
 
@@ -186,25 +186,30 @@ public class ViatorProductDetailsDAO {
             session = helper.getSession();
             tx=session.beginTransaction();
             Query query= session.createQuery(hql)
-                    .setParameter("code", "%" + code + "%")
-                    .setParameter("title", "%" + title + "%")
-                    .setParameter("city", "%" + city + "%")
-                    .setParameter("region", "%" + region + "%")
-                    .setParameter("country", "%" + country + "%");
+                    .setParameter("title", "%" + params.getTitle() + "%")
+                    .setParameter("city", "%" + params.getCity() + "%")
+                    .setParameter("region", "%" + params.getRegion() + "%")
+                    .setParameter("country", "%" + params.getCountry() + "%");
 
-            if(destId!=0)
-                query.setParameter("destId",  destId );
-            if(primaryDestId!=0)
-                query.setParameter("primaryDestId",  primaryDestId );
+            if(!params.getCode().equals(""))
+                query.setParameter("code", params.getCode());
+            if(params.getDestId()!=0)
+                query.setParameter("destId",  params.getDestId() );
+            if(params.getPrimaryDestId()!=0)
+                query.setParameter("primaryDestId",  params.getPrimaryDestId() );
+            if(params.getPriceFrom()!=0)
+                query.setParameter("priceFrom",   new BigDecimal(Integer.toString(params.getPriceFrom())));
+            if(params.getPriceTo()!=0)
+                query.setParameter("priceTo",  new BigDecimal(Integer.toString(params.getPriceTo())));
 
-            if(categories!=null && categories.size()!=0)
-                query.setParameter("categories",  categories );
-            if(subcategories!=null && subcategories.size()!=0)
-                query.setParameter("subcategories",  subcategories );
+            if(params.getCategories()!=null && params.getCategories().size()!=0)
+                query.setParameter("categories",  params.getCategories() );
+            if(params.getSubcategories()!=null && params.getSubcategories().size()!=0)
+                query.setParameter("subcategories",  params.getSubcategories() );
 
-            if(startDate!=null && endDate!=null){
+            if(params.getStartDate()!=null && params.getEndDate()!=null){
                 i=0;
-                for (ZonedDateTime date = startDate; date.isBefore(endDate); date = date.plusDays(1))
+                for (ZonedDateTime date = params.getStartDate(); date.isBefore(params.getEndDate().plusDays(1)); date = date.plusDays(1))
                 {
                     query.setParameter("day"+i,date.getDayOfMonth());
                     query.setParameter("month"+i,date.getMonthValue());
@@ -214,10 +219,10 @@ public class ViatorProductDetailsDAO {
             }
 
             /**Decreasing by 1 because the first product is at position 0.*/
-            if(firstProduct!=0)
-                query.setFirstResult(firstProduct-1);
-            if(lastProduct!=0)
-                query.setMaxResults(lastProduct);
+            if(params.getFirstProduct()!=0)
+                query.setFirstResult(params.getFirstProduct()-1);
+            if(params.getLastProduct()!=0)
+                query.setMaxResults(params.getLastProduct());
 
             products=query.getResultList();
             session.close();

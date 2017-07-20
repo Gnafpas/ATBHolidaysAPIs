@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DBBeans.ViatorPickupHotelsBean" table="viator_pickup_hotels" schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="productCode" column="product_code"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="destinationId" column="destination_id"/>
+        <property name="hotelName" column="hotel_name"/>
+        <property name="brand" column="brand"/>
+        <property name="hotelString" column="hotel_string"/>
+        <property name="address" column="address"/>
+        <property name="postCode" column="post_code"/>
+        <property name="cityName" column="city_name"/>
+        <property name="latitude" column="latitude"/>
+        <property name="longitude" column="longitude"/>
+        <property name="phone" column="phone"/>
+        <property name="notes" column="notes"/>
+        <property name="sortOrder" column="sort_order"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

@@ -1,5 +1,7 @@
 package DAOs.DBDAOs;
 
+import DBBeans.ViatorCategoriesBean;
+import DBBeans.ViatorProductVideosBean;
 import DBBeans.ViatorProductXCategoryBean;
 import DBConnection.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -8,6 +10,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 /**
  * Created by George on 10/06/17.
@@ -57,6 +60,28 @@ public class ViatorProductXCategoryDAO {
             e.printStackTrace();
         }
         return err;
+    }
+
+    public List<ViatorCategoriesBean> getProductCategoriesByProductCode(String productCode){
+
+        List<ViatorCategoriesBean> category=null;
+        String hql ="Select category FROM ViatorProductXCategoryBean productXCategory ,ViatorCategoriesBean  category " +
+                                    "WHERE productXCategory.productCode like :productCode " +
+                                    "AND   category.id=productXCategory.categoryId " +
+                                    "order by category.sortOrder ";
+        try{
+            session = helper.getSession();
+            session.beginTransaction();
+            category=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return category;
     }
 
 }

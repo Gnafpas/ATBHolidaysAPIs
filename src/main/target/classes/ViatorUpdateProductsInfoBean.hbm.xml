@@ -13,5 +13,9 @@
         <property name="totalRocessSleep" column="total_rocess_sleep"/>
         <property name="startDateTime" column="start_date_time"/>
         <property name="endDateTime" column="end_date_time"/>
+        <property name="viatorError" column="viator_error"/>
+        <property name="viatoErrorInfo" column="viato_error_Info"/>
+        <property name="dbCommError" column="db_comm_error"/>
+        <property name="dbCommErrorsCounter" column="db_comm_errors_Counter"/>
     </class>
 </hibernate-mapping>

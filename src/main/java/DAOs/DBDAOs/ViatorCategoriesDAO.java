@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by George on 19/06/17.
  */
@@ -54,6 +56,23 @@ public class ViatorCategoriesDAO {
             e.printStackTrace();
         }
         return err;
+    }
+
+    public List<ViatorCategoriesBean> getAllCategories(){
+        List <ViatorCategoriesBean> categories=null;
+        String hql = "select categories from ViatorCategoriesBean categories";
+        try{
+            session = helper.getSession();
+            session.beginTransaction();
+            categories=session.createQuery(hql).list();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 
 }

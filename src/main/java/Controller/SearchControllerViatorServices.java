@@ -8,7 +8,7 @@
 //import APIBeans.Taxonomy.TaxonomyDestinationsAPIJSON;
 //import DAOs.APIDAOs.ProductAPIDAO;
 //import DAOs.APIDAOs.TaxonomyAPIDAO;
-//import WebServicesBeans.PagingList.*;
+//import WebServicesBeans.ListingPage.*;
 //import WebServicesBeans.Suggestions.*;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -68,7 +68,7 @@
 //
 //
 //    @RequestMapping("/getProductsByDestIdSeoId")
-//    public ProductsPagingListJSON getProductsByDestIdSeoId(@RequestParam(value="destId", defaultValue="0") Integer destId,
+//    public ProductsSummaryPagingListJSON getProductsByDestIdSeoId(@RequestParam(value="destId", defaultValue="0") Integer destId,
 //                                                               @RequestParam(value="topX", defaultValue="") String topX,
 //                                                               @RequestParam(value="currencyCode", defaultValue="EUR") String currencyCode,
 //                                                               @RequestParam(value="startDate", defaultValue="") String startDate,
@@ -79,7 +79,7 @@
 //                                                               @RequestParam(value="sortOrder", defaultValue="TOP_SELLERS") String sortOrder,
 //                                                               @RequestParam(value="seoId", defaultValue="0") Integer seoId){
 //
-//        ProductsPagingListJSON products =new ProductsPagingListJSON();
+//        ProductsSummaryPagingListJSON products =new ProductsSummaryPagingListJSON();
 //        ProductsByDestIdSeoIdAPIJSON productsByDestIdSeoIdAPIJSON;
 //        ProductAPIDAO product_APIDAO = new ProductAPIDAO();
 //        ProductsByAttractionPOST productByAttractionPOST=new ProductsByAttractionPOST();
@@ -160,11 +160,11 @@
 //     * Viator_error will be set to true.
 //     */                                               //todo Return also results from isolated words of textbox
 //    @RequestMapping("/getSearchboxProductsResults")//todo Put also language parameter
-//    public ProductsPagingListJSON getSearchboxProductsResults(@RequestParam(value="textbox", defaultValue="") String textbox,
+//    public ProductsSummaryPagingListJSON getSearchboxProductsResults(@RequestParam(value="textbox", defaultValue="") String textbox,
 //                                                                 @RequestParam(value="topX", defaultValue="") String topX,
 //                                                                 @RequestParam(value="currencyCode", defaultValue="EUR") String currencyCode) {
 //
-//        ProductsPagingListJSON products =new ProductsPagingListJSON();
+//        ProductsSummaryPagingListJSON products =new ProductsSummaryPagingListJSON();
 //        if(!textbox.isEmpty()) {
 //            ProductAPIDAO product_APIDAO = new ProductAPIDAO();
 //            SearchFreetextPOST searchFreetextPOST = new SearchFreetextPOST();
@@ -227,7 +227,7 @@
 //    public AttractionsPagingListJSON getSearchboxAttractionsResults(@RequestParam(value="textbox", defaultValue="") String textbox,
 //                                                                       @RequestParam(value="topX", defaultValue="") String topX) {
 //
-//        AttractionsPagingListJSON attractions =new AttractionsPagingListJSON();
+//        AttractionsSummaryPagingListJSON attractions =new AttractionsSummaryPagingListJSON();
 //        if(!textbox.isEmpty()) {
 //            ProductAPIDAO productAPIDAO = new ProductAPIDAO();
 //            SearchFreetextPOST searchFreetextPOST = new SearchFreetextPOST();

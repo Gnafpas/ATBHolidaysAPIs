@@ -8,7 +8,15 @@ public class SearchFreetextSuggestionsJSON {
     private SuggestedProductsList products;
     private SuggestedAttractionsList attractionsList;
     private SuggestedDestinationsList destinations;
-    private boolean dbCommError=false;
+    private boolean DBError=false;
+
+    public boolean isDBError() {
+        return DBError;
+    }
+
+    public void setDBError(boolean DBError) {
+        this.DBError = DBError;
+    }
 
     public SuggestedProductsList getProducts() {
         return products;
@@ -34,11 +42,4 @@ public class SearchFreetextSuggestionsJSON {
         this.destinations = destinations;
     }
 
-    public boolean isDbCommError() {
-        return dbCommError;
-    }
-
-    public void setDbCommError(boolean dbCommError) {
-        this.dbCommError = dbCommError;
-    }
 }

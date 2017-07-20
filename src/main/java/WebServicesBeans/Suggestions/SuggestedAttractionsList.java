@@ -1,5 +1,6 @@
 package WebServicesBeans.Suggestions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  */
 public class SuggestedAttractionsList {
 
-    private List<SuggestedAttraction> atractions;
+    private List<SuggestedAttraction> atractions= new ArrayList<>();;
     private boolean dbCommError=false;
 
     public List<SuggestedAttraction> getAtractions() {

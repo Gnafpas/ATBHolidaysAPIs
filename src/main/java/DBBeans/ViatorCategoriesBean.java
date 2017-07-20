@@ -17,7 +17,7 @@ public class ViatorCategoriesBean {
     private int productCount;
     private String groupUrlname;
     private String thumbnailHiResUrl;
-    private ZonedDateTime updatedAt;
+    private Timestamp updatedAt;
 
     @Id
     @Column(name = "id")
@@ -91,11 +91,11 @@ public class ViatorCategoriesBean {
 
     @Basic
     @Column(name = "updated_at")
-    public ZonedDateTime getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

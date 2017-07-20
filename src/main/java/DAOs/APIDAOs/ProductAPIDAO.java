@@ -7,6 +7,8 @@ import APIBeans.ProductsByDestIDSeoID.ProductsByDestIdSeoIdAPIJSON;
 import APIBeans.ProductsByDestIDSeoID.ProductsByDestinationPOST;
 import APIBeans.SearchFreetext.*;
 import APIBeans.ProductDetails.ProductDetailedInfoAPIJSON;
+import Helper.ProjectProperties;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
@@ -37,6 +39,8 @@ public class ProductAPIDAO {
         productsByDestIdSeoIdAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             if(isDestIdPost)
                 productsByDestIdSeoIdAPIJSON = restTemplate.postForObject(url, productsByDestinationPOST, ProductsByDestIdSeoIdAPIJSON.class);
             else
@@ -74,6 +78,8 @@ public class ProductAPIDAO {
         searchFreetextPOST.setSearchTypes(searchtypes);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             searchFreetextProductsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextProductsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
@@ -109,6 +115,8 @@ public class ProductAPIDAO {
         searchFreetextPOST.setSearchTypes(searchtypes);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             searchFreetextDestinationsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextDestinationsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
@@ -144,6 +152,8 @@ public class ProductAPIDAO {
         searchFreetextPOST.setSearchTypes(searchtypes);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             searcFreetextAttractionsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextAttractionsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
@@ -178,6 +188,8 @@ public class ProductAPIDAO {
         productDetailedInfoAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             productDetailedInfoAPIJSON = restTemplate.getForObject(url, ProductDetailedInfoAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
@@ -209,6 +221,8 @@ public class ProductAPIDAO {
         productsByCodesAPIJSON.setSuccess(false);
         try {
             restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             productsByCodesAPIJSON = restTemplate.postForObject(url, productsByCodesPOST, ProductsByCodesAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {

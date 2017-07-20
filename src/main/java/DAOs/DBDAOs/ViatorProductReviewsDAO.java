@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by George on 20/06/17.
  */
@@ -54,6 +56,27 @@ public class ViatorProductReviewsDAO {
             e.printStackTrace();
         }
         return err;
+    }
+
+    public List<ViatorProductReviewsBean> getReviewsByProductCode(String productCode){
+
+        List<ViatorProductReviewsBean> productReviewsBean=null;
+        String hql ="Select reviews FROM ViatorProductReviewsBean reviews " +
+                                   "WHERE reviews.productCode like :productCode " +
+                                   "order by reviews.sortOrder " ;
+        try{
+            session = helper.getSession();
+            session.beginTransaction();
+            productReviewsBean=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return productReviewsBean;
     }
 
 }

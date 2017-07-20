@@ -80,4 +80,28 @@ public class ViatorDestinationsDAO {
 
         return destinations;
     }
+
+    public List<ViatorDestinationsBean> getAllDestinations() {
+        List<ViatorDestinationsBean> destinations = null;
+
+        String hql = " select DISTINCT(i) "
+                   + " from DBBeans.ViatorDestinationsBean i ";
+        Transaction tx = null;
+        try {
+            session = helper.getSession();
+            tx = session.beginTransaction();
+            destinations = session.createQuery(hql) .list();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        } catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+
+        return destinations;
+    }
+
+
+
 }

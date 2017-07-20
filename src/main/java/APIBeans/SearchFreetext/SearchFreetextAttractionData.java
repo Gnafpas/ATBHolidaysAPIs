@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class SearchFreetextAttractionData {
     private int sortOrder;
-    private URL webURL;
+    private String webURL;
     private String pageUrlName;
     private String primaryDestinationUrlName;
     private String publishedDate;
@@ -34,15 +34,15 @@ public class SearchFreetextAttractionData {
     private String attractionCity;
     private String attractionState;
     private int destinationId;
-    private int seoId;
+    private int seoId=0;
     private int productCount;
     private int photoCount;
     private int primaryDestinationId;
     private double rating;
     private String primaryDestinationName;
-    private URL thumbnailURL;
-    private URL thumbnailHiResURL;
-    private String title;
+    private String thumbnailURL;
+    private String thumbnailHiResURL;
+    private String title=null;
 
     public int getSortOrder() {
         return sortOrder;
@@ -52,11 +52,11 @@ public class SearchFreetextAttractionData {
         this.sortOrder = sortOrder;
     }
 
-    public URL getWebURL() {
+    public String getWebURL() {
         return webURL;
     }
 
-    public void setWebURL(URL webURL) {
+    public void setWebURL(String webURL) {
         this.webURL = webURL;
     }
 
@@ -300,19 +300,19 @@ public class SearchFreetextAttractionData {
         this.primaryDestinationName = primaryDestinationName;
     }
 
-    public URL getThumbnailURL() {
+    public String getThumbnailURL() {
         return thumbnailURL;
     }
 
-    public void setThumbnailURL(URL thumbnailURL) {
+    public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
 
-    public URL getThumbnailHiResURL() {
+    public String getThumbnailHiResURL() {
         return thumbnailHiResURL;
     }
 
-    public void setThumbnailHiResURL(URL thumbnailHiResURL) {
+    public void setThumbnailHiResURL(String thumbnailHiResURL) {
         this.thumbnailHiResURL = thumbnailHiResURL;
     }
 

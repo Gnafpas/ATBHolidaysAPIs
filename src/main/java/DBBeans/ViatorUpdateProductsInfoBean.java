@@ -2,10 +2,9 @@ package DBBeans;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 
 /**
- * Created by George on 08/07/2017.
+ * Created by George on 10/07/2017.
  */
 @Entity
 @Table(name = "viator_update_products_info", schema = "develope_viator", catalog = "")
@@ -16,8 +15,12 @@ public class ViatorUpdateProductsInfoBean {
     private Integer lastLeaDestid;
     private Integer totalExpiredProducts;
     private Long totalRocessSleep;
-    private ZonedDateTime startDateTime;
-    private ZonedDateTime endDateTime;
+    private Timestamp startDateTime;
+    private Timestamp endDateTime;
+    private boolean viatorError;
+    private String viatoErrorInfo;
+    private boolean dbCommError;
+    private Integer dbCommErrorsCounter;
 
     @Id
     @Column(name = "rid")
@@ -81,22 +84,62 @@ public class ViatorUpdateProductsInfoBean {
 
     @Basic
     @Column(name = "start_date_time")
-    public ZonedDateTime getStartDateTime() {
+    public Timestamp getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(ZonedDateTime startDateTime) {
+    public void setStartDateTime(Timestamp startDateTime) {
         this.startDateTime = startDateTime;
     }
 
     @Basic
     @Column(name = "end_date_time")
-    public ZonedDateTime getEndDateTime() {
+    public Timestamp getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(ZonedDateTime endDateTime) {
+    public void setEndDateTime(Timestamp endDateTime) {
         this.endDateTime = endDateTime;
+    }
+
+    @Basic
+    @Column(name = "viator_error")
+    public boolean getViatorError() {
+        return viatorError;
+    }
+
+    public void setViatorError(boolean viatorError) {
+        this.viatorError = viatorError;
+    }
+
+    @Basic
+    @Column(name = "viato_error_Info")
+    public String getViatoErrorInfo() {
+        return viatoErrorInfo;
+    }
+
+    public void setViatoErrorInfo(String viatoErrorInfo) {
+        this.viatoErrorInfo = viatoErrorInfo;
+    }
+
+    @Basic
+    @Column(name = "db_comm_error")
+    public boolean getDbCommError() {
+        return dbCommError;
+    }
+
+    public void setDbCommError(boolean dbCommError) {
+        this.dbCommError = dbCommError;
+    }
+
+    @Basic
+    @Column(name = "db_comm_errors_Counter")
+    public Integer getDbCommErrorsCounter() {
+        return dbCommErrorsCounter;
+    }
+
+    public void setDbCommErrorsCounter(Integer dbCommErrorsCounter) {
+        this.dbCommErrorsCounter = dbCommErrorsCounter;
     }
 
     @Override
@@ -120,6 +163,12 @@ public class ViatorUpdateProductsInfoBean {
         if (startDateTime != null ? !startDateTime.equals(that.startDateTime) : that.startDateTime != null)
             return false;
         if (endDateTime != null ? !endDateTime.equals(that.endDateTime) : that.endDateTime != null) return false;
+        if (viatorError != that.viatorError) return false;
+        if (viatoErrorInfo != null ? !viatoErrorInfo.equals(that.viatoErrorInfo) : that.viatoErrorInfo != null)
+            return false;
+        if (dbCommError != that.dbCommError) return false;
+        if (dbCommErrorsCounter != null ? !dbCommErrorsCounter.equals(that.dbCommErrorsCounter) : that.dbCommErrorsCounter != null)
+            return false;
 
         return true;
     }
@@ -134,6 +183,14 @@ public class ViatorUpdateProductsInfoBean {
         result = 31 * result + (totalRocessSleep != null ? totalRocessSleep.hashCode() : 0);
         result = 31 * result + (startDateTime != null ? startDateTime.hashCode() : 0);
         result = 31 * result + (endDateTime != null ? endDateTime.hashCode() : 0);
+        result = 31 * result + help(viatorError);
+        result = 31 * result + (viatoErrorInfo != null ? viatoErrorInfo.hashCode() : 0);
+        result = 31 * result + help(dbCommError);
+        result = 31 * result + (dbCommErrorsCounter != null ? dbCommErrorsCounter.hashCode() : 0);
         return result;
+    }
+
+    private int help(boolean attribute){
+        if(attribute){return 1;}else{return 0;}
     }
 }
