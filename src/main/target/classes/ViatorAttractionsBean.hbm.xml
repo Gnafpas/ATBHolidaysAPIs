@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DBBeans.ViatorAttractionsBean" table="viator_attractions" schema="develope_viator">
+        <id name="seoId" column="seo_id"/>
+        <property name="webUrl" column="web_URL"/>
+        <property name="pageUrlName" column="page_Url_Name"/>
+        <property name="primaryDestinationUrlName" column="primary_Destination_Url_Name"/>
+        <property name="publishedDate" column="published_Date"/>
+        <property name="userName" column="user_Name"/>
+        <property name="pageTitle" column="page_Title"/>
+        <property name="editorsPick" column="editors_Pick"/>
+        <property name="descriptionIntro" column="description_Intro"/>
+        <property name="descriptionText" column="description_Text"/>
+        <property name="overviewSummary" column="overview_Summary"/>
+        <property name="pagePrimaryLanguage" column="page_Primary_Language"/>
+        <property name="destinationId" column="destination_Id"/>
+        <property name="primaryDestinationId" column="primary_Destination_Id"/>
+        <property name="thumbnailHiResUrl" column="thumbnail_HiRes_URL"/>
+        <property name="primaryDestinationName" column="primary_Destination_Name"/>
+        <property name="thumbnailUrl" column="thumbnail_URL"/>
+        <property name="productCount" column="product_Count"/>
+        <property name="rating" column="rating"/>
+        <property name="attractionLatitude" column="attraction_Latitude"/>
+        <property name="attractionLongitude" column="attraction_Longitude"/>
+        <property name="attractionStreetAddress" column="attraction_Street_Address"/>
+        <property name="attractionCity" column="attraction_City"/>
+        <property name="attractionState" column="attraction_State"/>
+        <property name="title" column="title"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>
