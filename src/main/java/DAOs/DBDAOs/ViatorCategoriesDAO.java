@@ -13,15 +13,13 @@ import java.util.List;
  */
 public class ViatorCategoriesDAO {
 
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addcategory(ViatorCategoriesBean viatorcategoriesBean){
+    public static boolean addcategory(ViatorCategoriesBean viatorcategoriesBean){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorcategoriesBean);
             tx.commit();
@@ -37,12 +35,12 @@ public class ViatorCategoriesDAO {
         return err;
     }
 
-    public boolean deleteCategory(int catId){
+    public static boolean deleteCategory(int catId){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("delete from ViatorCategoriesBean WHERE id='"+catId+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,11 +56,11 @@ public class ViatorCategoriesDAO {
         return err;
     }
 
-    public List<ViatorCategoriesBean> getAllCategories(){
+    public static List<ViatorCategoriesBean> getAllCategories(){
+        Session session = HibernateUtil.getSession();
         List <ViatorCategoriesBean> categories=null;
         String hql = "select categories from ViatorCategoriesBean categories";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             categories=session.createQuery(hql).list();
             session.close();

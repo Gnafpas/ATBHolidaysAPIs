@@ -17,6 +17,7 @@ public class UpdateProductsInfoJSON extends InfoJSON {
     private Timestamp endDateTime;
     private List<Integer> failedDestinations=new ArrayList<>();
     private List<String> productsWithFailedAvailDates=new ArrayList<>();
+    private List<String> productsWithFailedPricingMatrixes=new ArrayList<>();
     private List<String> productsWithFailedPickupHotels=new ArrayList<>();
     private List<FailedProduct> failedProducts=new ArrayList<>();
     private long totalProcessSleep;
@@ -111,6 +112,14 @@ public class UpdateProductsInfoJSON extends InfoJSON {
 
     public void setFailedProducts(List<FailedProduct> failedProducts) {
         this.failedProducts = failedProducts;
+    }
+
+    public List<String> getProductsWithFailedPricingMatrixes() {
+        return productsWithFailedPricingMatrixes;
+    }
+
+    public void setProductsWithFailedPricingMatrixes(List<String> productsWithFailedPricingMatrixes) {
+        this.productsWithFailedPricingMatrixes = productsWithFailedPricingMatrixes;
     }
 }
 

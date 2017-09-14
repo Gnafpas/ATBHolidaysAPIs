@@ -13,15 +13,13 @@ import java.util.List;
  * Created by George on 23/06/17.
  */
 public class ViatorProductTourGradesDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproducttourgrades(ViatorProductTourGradesBean viatorproducttourgradesBean ){
+    public static boolean addproducttourgrades(ViatorProductTourGradesBean viatorproducttourgradesBean ){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproducttourgradesBean);
             tx.commit();
@@ -37,12 +35,12 @@ public class ViatorProductTourGradesDAO {
         return err;
     }
 
-    public boolean deleteProductTourGrades(String productCode){
+    public static boolean deleteProductTourGrades(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductTourGradesBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,14 +56,14 @@ public class ViatorProductTourGradesDAO {
         return err;
     }
 
-    public List<ViatorProductTourGradesBean> getTourGradesByProductCode(String productCode){
+    public static List<ViatorProductTourGradesBean> getTourGradesByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductTourGradesBean> tourGrades=null;
         String hql ="Select tourGrades FROM ViatorProductTourGradesBean tourGrades " +
                                       "WHERE tourGrades.productCode like :productCode " +
                                       "order by tourGrades.sortOrder ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             tourGrades=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

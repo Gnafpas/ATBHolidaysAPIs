@@ -13,15 +13,13 @@ import java.util.List;
  */
 public class ViatorProductAgeBandsDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addproductagebandsBean(ViatorProductAgeBandsBean viatorproductagebandsBean){
 
-    public boolean addproductagebandsBean(ViatorProductAgeBandsBean viatorproductagebandsBean){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
+
             tx=session.beginTransaction();
             session.save(viatorproductagebandsBean);
             tx.commit();
@@ -37,12 +35,12 @@ public class ViatorProductAgeBandsDAO {
         return err;
     }
 
-    public boolean deleteProductAgeBands(String productCode){
+    public static boolean deleteProductAgeBands(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductAgeBandsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,14 +56,14 @@ public class ViatorProductAgeBandsDAO {
         return err;
     }
 
-    public List<ViatorProductAgeBandsBean> getAgeBandsByProductCode(String productCode){
+    public static List<ViatorProductAgeBandsBean> getAgeBandsByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductAgeBandsBean> ageBands=null;
         String hql ="Select ageBands FROM ViatorProductAgeBandsBean ageBands " +
                                     "WHERE ageBands.productCode like :productCode " +
                                     "order by ageBands.sortOrder";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             ageBands=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

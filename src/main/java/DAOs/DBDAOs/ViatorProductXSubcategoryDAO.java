@@ -15,15 +15,12 @@ import java.util.List;
  */
 public class ViatorProductXSubcategoryDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addprodactXsubcategory(ViatorProductXSubcategoryBean viatorproductxsubcategoryBean ){
 
-    public boolean addprodactXsubcategory(ViatorProductXSubcategoryBean viatorproductxsubcategoryBean ){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproductxsubcategoryBean);
             tx.commit();
@@ -39,12 +36,12 @@ public class ViatorProductXSubcategoryDAO {
         return err;
     }
 
-    public boolean deleteProductXSubctegory(String productCode){
+    public static boolean deleteProductXSubctegory(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductXSubcategoryBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -60,8 +57,9 @@ public class ViatorProductXSubcategoryDAO {
         return err;
     }
 
-    public List<ViatorSubcategoriesBean> getProductSubcategoriesByProductCode(String productCode,int categoryId){
+    public static List<ViatorSubcategoriesBean> getProductSubcategoriesByProductCode(String productCode,int categoryId){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorSubcategoriesBean> subcategory=null;
         String hql ="Select subcategory FROM ViatorProductXSubcategoryBean productXSubcategory ,ViatorCategoriesBean category ,ViatorSubcategoriesBean subcategory " +
                                        "WHERE productXSubcategory.productCode like :productCode " +
@@ -70,7 +68,6 @@ public class ViatorProductXSubcategoryDAO {
                                        "AND   category.id = :categoryId " +
                                        "order by subcategory.sortOrder ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             subcategory=session.createQuery(hql).setParameter("productCode",   productCode )
                                                 .setParameter("categoryId",   categoryId )

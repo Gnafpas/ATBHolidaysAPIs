@@ -3,26 +3,25 @@ package DBUpdates;
 import APIBeans.Taxonomy.*;
 import DAOs.APIDAOs.TaxonomyAPIDAO;
 import DAOs.DBDAOs.ViatorDestinationsDAO;
+import DAOs.DBDAOs.ViatorUpdateDestinationsInfoDAO;
 import DBBeans.ViatorDestinationsBean;
+import DBBeans.ViatorUpdateDestinationsInfoBean;
 import WebServicesBeans.UpdateDBJSONs.InfoJSON;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-
 import java.sql.Timestamp;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+
 
 /**
  * Created by George on 23/06/17.
  */
 public class UpdateDestinations {
 
-    public InfoJSON updateDestinations() {
+    public static InfoJSON updateDestinations() {
 
         ViatorDestinationsBean viatorDestinationsBean=new ViatorDestinationsBean();
-        TaxonomyAPIDAO taxonomyAPIDAO = new TaxonomyAPIDAO();
-        TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON= taxonomyAPIDAO.retrieveDestinations();
-        ViatorDestinationsDAO viatorDestinationsDAO = new ViatorDestinationsDAO();
+        TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON= TaxonomyAPIDAO.retrieveDestinations();
+        ViatorUpdateDestinationsInfoBean viatorUpdateDestinationsInfoBean=new ViatorUpdateDestinationsInfoBean();
         DateTime dateTime;
 
         /**
@@ -53,11 +52,11 @@ public class UpdateDestinations {
                                                     dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                     dateTime.getHourOfDay(),dateTime.getMinuteOfHour())) );
 
-                if(viatorDestinationsDAO.deleteDestination(viatorDestinationsBean.getDestinationId())){
+                if(ViatorDestinationsDAO.deleteDestination(viatorDestinationsBean.getDestinationId())){
                     infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
-                if(viatorDestinationsDAO.adddestination(viatorDestinationsBean)){
+                if(ViatorDestinationsDAO.adddestination(viatorDestinationsBean)){
                     infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
@@ -67,6 +66,17 @@ public class UpdateDestinations {
             infoJason.setViatorErrorInfo("Communication ERROR.Did not received Destinations");
             infoJason.setViatorError(true);
         }
+
+        dateTime =new DateTime( DateTimeZone.UTC);
+        viatorUpdateDestinationsInfoBean.setDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
+        viatorUpdateDestinationsInfoBean.setDbCommError(infoJason.isDbCommError());
+        viatorUpdateDestinationsInfoBean.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter());
+        viatorUpdateDestinationsInfoBean.setViatoErrorInfo(infoJason.getViatorErrorInfo());
+        viatorUpdateDestinationsInfoBean.setViatorError(infoJason.isViatorError());
+        ViatorUpdateDestinationsInfoDAO.addViatorUpdateDestinationsInfo(viatorUpdateDestinationsInfoBean);
+
         return infoJason;
 
     }

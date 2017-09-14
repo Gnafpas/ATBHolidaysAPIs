@@ -16,15 +16,12 @@ import java.util.List;
  */
 public class ViatorNoneAvailableDatesDAO {
 
-    private HibernateUtil helper;
-    private Session session;
-
-    public boolean addNoneAvailabilityDate(ViatorNoneAvailableDatesBean availabilityDatesBean){
-
+    public static boolean addNoneAvailabilityDate(ViatorNoneAvailableDatesBean availabilityDatesBean){
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
+
             tx=session.beginTransaction();
             session.save(availabilityDatesBean);
             tx.commit();
@@ -40,12 +37,12 @@ public class ViatorNoneAvailableDatesDAO {
         return err;
     }
 
-    public boolean deleteProductNoneAvailDates(String productCode){
+    public static boolean deleteProductNoneAvailDates(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("delete from ViatorNoneAvailableDatesBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -61,11 +58,12 @@ public class ViatorNoneAvailableDatesDAO {
         return err;
     }
 
-    public List<CustomDate> getNoneAvailDatesOfProducts(List<ViatorProductDetailsBean> productsDetails){
+    public static List<ViatorNoneAvailableDatesBean> getNoneAvailDatesOfProducts(List<ViatorProductDetailsBean> productsDetails){
 
-        List<CustomDate> nonAvailDates=null;
+        Session session = HibernateUtil.getSession();
+        List<ViatorNoneAvailableDatesBean> nonAvailDates=null;
         String hql=  " select  DISTINCT(nonAvailDates)" +
-                     " from DBBeans.ViatorNoneAvailableDatesBean nonAvailDates";
+                     " from DBBeans.ViatorNoneAvailableDatesBean nonAvailDates ";
         int i=0;
         for(ViatorProductDetailsBean productDetails:productsDetails){
             if(i==0)
@@ -74,9 +72,8 @@ public class ViatorNoneAvailableDatesDAO {
               hql= hql + " or nonAvailDates.productCode= :code" + i;
             i++;
         }
-
+        hql= hql + " order by nonAvailDates.year asc,nonAvailDates.month asc,nonAvailDates.day asc";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             Query query=session.createQuery(hql);
             i=0;

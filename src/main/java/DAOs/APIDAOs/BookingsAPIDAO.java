@@ -1,20 +1,36 @@
 package DAOs.APIDAOs;
 
-import APIBeans.Bookings.AvailabilityDatesAPIJSON;
-import APIBeans.Bookings.PickupHotelsAPIJSON;
+import APIBeans.Bookings.*;
+import APIBeans.Bookings.AvailabilityAndPricingMatrix.AvailabilityAndPricingMatrixAPIJSON;
+import APIBeans.Bookings.AvailabilityAndPricingMatrix.AvailabilityAndPricingMatrixPOST;
+import APIBeans.Bookings.Book.BookAPIJSON;
+import APIBeans.Bookings.Book.BookPOST;
+import APIBeans.Bookings.CalculatePrice.CalculatePriceAPIJSON;
+import APIBeans.Bookings.CalculatePrice.CalculatePricePOST;
+import APIBeans.Bookings.Cancel.CancelAPIJSON;
+import APIBeans.Bookings.Cancel.CancelPOST;
+import APIBeans.Bookings.PastBooking.PastBookingAPIJSON;
+import APIBeans.Bookings.PickupHotel.PickupHotelsAPIJSON;
 import Helper.ProjectProperties;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.SSLContext;
+
 /**
  * Created by George on 07/07/2017.
  */
 public class BookingsAPIDAO {
-
-    private RestTemplate restTemplate;
 
     /**
      *
@@ -23,14 +39,14 @@ public class BookingsAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public AvailabilityDatesAPIJSON productAvailabilityDates(String productCode){
+    public static AvailabilityDatesAPIJSON productAvailabilityDates(String productCode){
 
         final String url =Helper.ProjectProperties.apiURL + "/service/booking/availability/dates?" + "productCode=" + productCode
                                                           + "&apiKey=" + Helper.ProjectProperties.apiKey;
         AvailabilityDatesAPIJSON availabilityDatesAPIJSON =new AvailabilityDatesAPIJSON();
         availabilityDatesAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             availabilityDatesAPIJSON = restTemplate.getForObject(url, AvailabilityDatesAPIJSON.class);
@@ -57,14 +73,14 @@ public class BookingsAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public PickupHotelsAPIJSON productPickupHotels(String product_code){
+    public static PickupHotelsAPIJSON productPickupHotels(String product_code){
 
         final String url =Helper.ProjectProperties.apiURL + "/service/booking/hotels?" + "productCode=" + product_code
                 + "&apiKey=" + Helper.ProjectProperties.apiKey;
         PickupHotelsAPIJSON pickupHotelsAPIJSON =new PickupHotelsAPIJSON();
         pickupHotelsAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             pickupHotelsAPIJSON = restTemplate.getForObject(url, PickupHotelsAPIJSON.class);
@@ -83,4 +99,175 @@ public class BookingsAPIDAO {
 
         return pickupHotelsAPIJSON;
     }
+
+    /**
+     *
+     * Retrives Data from /service/booking/availability/tourgrades/pricingmatrix (Pickup Hotels for product with given productCode)
+     * API's web service and returns them within a JSON Object.If fails to retrieve or
+     * something else went wrong it returns the object with property
+     * success=false.
+     */
+    public static AvailabilityAndPricingMatrixAPIJSON productAvailabilityAndPricingMatrix(String product_code, String month, String year){
+
+        final String url =Helper.ProjectProperties.apiURL + "/service/booking/availability/tourgrades/pricingmatrix?apiKey=" + Helper.ProjectProperties.apiKey;
+        AvailabilityAndPricingMatrixAPIJSON availabilityAndPricingMatrixAPIJSON =new AvailabilityAndPricingMatrixAPIJSON();
+        AvailabilityAndPricingMatrixPOST availabilityAndPricingMatrixPOST=new AvailabilityAndPricingMatrixPOST();
+        availabilityAndPricingMatrixPOST.setProductCode(product_code);
+        availabilityAndPricingMatrixPOST.setMonth(month);
+        availabilityAndPricingMatrixPOST.setYear(year);
+        availabilityAndPricingMatrixAPIJSON.setSuccess(false);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
+            availabilityAndPricingMatrixAPIJSON = restTemplate.postForObject(url, availabilityAndPricingMatrixPOST, AvailabilityAndPricingMatrixAPIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch ( HttpServerErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return availabilityAndPricingMatrixAPIJSON;
+    }
+
+
+    /**
+     *
+     * Executes a book , receives the response Data from /service/booking/book
+     * API's web service and returns them within a JSON Object.If fails to retrieve or
+     * something else went wrong it returns the object with property
+     * success=false.
+     */
+    public static BookAPIJSON book(BookPOST bookPOST){
+
+        final String url =Helper.ProjectProperties.apiURL + "/service/booking/book?apiKey=" + Helper.ProjectProperties.apiKey;
+        BookAPIJSON bookAPIJSON =new BookAPIJSON();
+        bookAPIJSON.setSuccess(false);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
+            bookAPIJSON = restTemplate.postForObject(url, bookPOST, BookAPIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch ( HttpServerErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return bookAPIJSON;
+    }
+
+    /**
+     *
+     * Retrives Data from from /service/booking/calculateprice
+     * API's web service and returns them within a JSON Object.If fails to retrieve or
+     * something else went wrong it returns the object with property
+     * success=false.
+     */
+    public static CalculatePriceAPIJSON calculateprice(CalculatePricePOST calculatePricePOST){
+
+        final String url =Helper.ProjectProperties.apiURL + "/service/booking/calculateprice?apiKey=" + Helper.ProjectProperties.apiKey;
+        CalculatePriceAPIJSON calculatePriceAPIJSON =new CalculatePriceAPIJSON();
+        calculatePriceAPIJSON.setSuccess(false);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
+            calculatePriceAPIJSON = restTemplate.postForObject(url, calculatePricePOST, CalculatePriceAPIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch ( HttpServerErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return calculatePriceAPIJSON;
+    }
+
+    /**
+     *
+     * Retrives Data from from /service/merchant/cancellation
+     * API's web service and returns them within a JSON Object.If fails to retrieve or
+     * something else went wrong it returns the object with property
+     * success=false.
+     */
+    public static CancelAPIJSON cancellation(CancelPOST cancelPOST){
+
+        final String url =Helper.ProjectProperties.apiURL + "/service/merchant/cancellation?apiKey=" + Helper.ProjectProperties.apiKey;
+        CancelAPIJSON cancelAPIJSON =new CancelAPIJSON();
+        cancelAPIJSON.setSuccess(false);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
+            cancelAPIJSON = restTemplate.postForObject(url, cancelPOST, CancelAPIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch ( HttpServerErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return cancelAPIJSON;
+    }
+
+    /**
+     *
+     * Retrives Data from from /service/booking/pastbooking
+     * API's web service and returns them within a JSON Object.If fails to retrieve or
+     * something else went wrong it returns the object with property
+     * success=false.
+     */
+    public static PastBookingAPIJSON pastbooking(String email,int itineraryId){
+
+        final String url =Helper.ProjectProperties.apiURL + "/service/booking/pastbooking?email="+email+"&itineraryId="+itineraryId+"&apiKey=" + Helper.ProjectProperties.apiKey;
+        PastBookingAPIJSON pastBookingAPIJSON =new PastBookingAPIJSON();
+        pastBookingAPIJSON.setSuccess(false);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
+            pastBookingAPIJSON = restTemplate.getForObject(url, PastBookingAPIJSON.class);
+        }
+        catch ( HttpClientErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch ( HttpServerErrorException e) {
+            System.out.println("*****************"+e.getStatusCode()+"*****************");
+            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+        }
+        catch( ResourceAccessException e2) {
+            System.out.println("*****************"+e2.getMessage()+"*****************");
+        }
+
+        return pastBookingAPIJSON;
+    }
+
 }

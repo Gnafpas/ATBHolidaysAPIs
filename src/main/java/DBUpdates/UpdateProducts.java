@@ -1,8 +1,10 @@
 package DBUpdates;
 
+import APIBeans.Bookings.AvailabilityAndPricingMatrix.AvailabilityAndPricingMatrixAPIJSON;
+import APIBeans.Bookings.AvailabilityAndPricingMatrix.AvailabilityAndPricingMatrixPOST;
 import APIBeans.Bookings.AvailabilityDatesAPIJSON;
-import APIBeans.Bookings.PickupHotel;
-import APIBeans.Bookings.PickupHotelsAPIJSON;
+import APIBeans.Bookings.PickupHotel.PickupHotel;
+import APIBeans.Bookings.PickupHotel.PickupHotelsAPIJSON;
 import APIBeans.ProductDetails.*;
 import APIBeans.ProductsByDestIDSeoID.ProductsByAttractionPOST;
 import APIBeans.ProductsByDestIDSeoID.ProductsByDestIdSeoIdAPIJSON;
@@ -32,61 +34,40 @@ import java.util.*;
  */
 public class UpdateProducts {
 
-
-
-    public UpdateProductsInfoJSON updateProducts(int destIdToStartRetrieveProducts, int destIdToStopRetrieveProducts) {
+    public static UpdateProductsInfoJSON updateProducts(int destIdToStartRetrieveProducts, int destIdToStopRetrieveProducts) {
 
         ProductsByDestIdSeoIdAPIJSON productsByDestIdSeoIdAPIJSON;
         ProductDetailedInfoAPIJSON productDetailedInfoAPIJSON;
-        ProductAPIDAO productAPIDAO = new ProductAPIDAO();
         ProductsByAttractionPOST productsByAttractionPOST = new ProductsByAttractionPOST();
         ProductsByDestinationPOST productsByDestinationPOST = new ProductsByDestinationPOST();
-        TaxonomyAPIDAO taxonomy=new TaxonomyAPIDAO();
         TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON;
         AvailabilityDatesAPIJSON availabilityDatesAPIJSON;
+        AvailabilityAndPricingMatrixAPIJSON availabilityAndPricingMatrixAPIJSON;
         PickupHotelsAPIJSON pickupHotelsAPIJSON;
-        BookingsAPIDAO bookingsAPIDAO=new BookingsAPIDAO();
         ViatorProductDetailsBean productDetailsBean = new ViatorProductDetailsBean();
-        ViatorProductDetailsDAO viatorProductDetailsDAO = new ViatorProductDetailsDAO();
-        ViatorProductXCategoryDAO viatorProductXcategoryDAO=new ViatorProductXCategoryDAO();
         ViatorProductXCategoryBean viatorProductXCategoryBean=new ViatorProductXCategoryBean();
         ViatorProductXSubcategoryBean viatorProductXSubcategoryBean=new ViatorProductXSubcategoryBean();
-        ViatorProductXSubcategoryDAO viatorProductXsubcategoryDAO=new ViatorProductXSubcategoryDAO();
-        ViatorProductUserPhotosDAO viatorProductuserphotosDAO=new ViatorProductUserPhotosDAO();
         ViatorProductUserPhotosBean viatorProductUserPhotosBean=new ViatorProductUserPhotosBean();
-        ViatorProductReviewsDAO viatorProductReviewsDAO=new ViatorProductReviewsDAO();
         ViatorProductReviewsBean viatorProductReviewsBean=new ViatorProductReviewsBean();
-        ViatorProductAgeBandsDAO viatorProductAgebandsDAO=new ViatorProductAgeBandsDAO();
         ViatorProductAgeBandsBean viatorProductAgebandsBean=new ViatorProductAgeBandsBean();
-        ViatorProductSalesPointsDAO viatorProductSalesPointsDAO=new ViatorProductSalesPointsDAO();
         ViatorProductSalesPointsBean viatorProductSalesPointsBean=new ViatorProductSalesPointsBean();
         ViatorProductInclusionsBean viatorProductInclusionsBean=new ViatorProductInclusionsBean();
-        ViatorProductInclusionsDAO viatorProductInclusionsDAO=new ViatorProductInclusionsDAO();
         ViatorProductAdditionalInfoBean viatorProductAdditionalInfoBean=new ViatorProductAdditionalInfoBean();
-        ViatorProductAdditionalInfoDAO viatorProductAdditionalInfoDAO=new ViatorProductAdditionalInfoDAO();
         ViatorProductExclusionsBean viatorProductExclusionsBean=new ViatorProductExclusionsBean();
-        ViatorProductExclusionsDAO viatorProductExclusionsDAO=new ViatorProductExclusionsDAO();
         ViatorProductPhotosBean viatorProductPhotosBean=new ViatorProductPhotosBean();
-        ViatorProductPhotosDAO viatorProductPhotosDAO=new ViatorProductPhotosDAO();
         ViatorProductTourGradesBean viatorProductTourGradesBean=new ViatorProductTourGradesBean();
-        ViatorProductTourGradesDAO viatorProductTourGradesDAO=new ViatorProductTourGradesDAO();
         ViatorProductVideosBean viatorProductVideosBean=new ViatorProductVideosBean();
-        ViatorProductVideosDAO viatorProductVideosDAO=new ViatorProductVideosDAO();
         ViatorProductTourGradeLanguageServicesBean vProductTourGradeLangServBean=new ViatorProductTourGradeLanguageServicesBean();
-        ViatorProductTourGradeLanguageServicesDAO vProductTourGradeLangServDAO=new ViatorProductTourGradeLanguageServicesDAO();
-        ViatorNoneAvailableDatesDAO noneAvailableDatesDAO=new ViatorNoneAvailableDatesDAO();
         ViatorNoneAvailableDatesBean noneAvailableDatesBean=new ViatorNoneAvailableDatesBean();
-        ViatorPickupHotelsDAO pickupHotelsDAO=new ViatorPickupHotelsDAO();
+        ViatorPricingMatrixBean pricingMatrixBean=new ViatorPricingMatrixBean();
         ViatorPickupHotelsBean pickupHotelsBean=new ViatorPickupHotelsBean();
         ViatorUpdateFailedAvailDatesBean viatorUpdateFailedAvailDatesBean=new ViatorUpdateFailedAvailDatesBean();
+        ViatorUpdateFailedPricematrixesBean viatorUpdateFailedPricematrixesBean=new ViatorUpdateFailedPricematrixesBean();
         ViatorUpdateFailedDestinationsBean viatorUpdateFailedDestinationsBean=new ViatorUpdateFailedDestinationsBean();
         ViatorUpdateFailedProductsBean viatorUpdateFailedProductsBean=new ViatorUpdateFailedProductsBean();
         ViatorUpdateProductsInfoBean viatorUpdateProductsInfoBean=new ViatorUpdateProductsInfoBean();
-        ViatorUpdateProductsInfoDAO viatorUpdateProductsInfoDAO=new ViatorUpdateProductsInfoDAO();
+        ViatorProductBookingQuestionsBean viatorProductBookingQuestionsBean=new ViatorProductBookingQuestionsBean();
         int viatorUpdateProductsInfoRid=0;
-        ViatorUpdateFailedProductsDAO viatorUpdateFailedProductsDAO=new ViatorUpdateFailedProductsDAO();
-        ViatorUpdateFailedDestinationsDAO viatorUpdateFailedDestinationsDAO=new ViatorUpdateFailedDestinationsDAO();
-        ViatorUpdateFailedAvailDatesDAO viatorUpdateFailedAvailDatesDAO=new ViatorUpdateFailedAvailDatesDAO();
 
         DateTime dateTime;
 
@@ -165,18 +146,17 @@ public class UpdateProducts {
         /**
          * Clear Database from expired products.
          */
-        DeleteExpiredProducts delete=new DeleteExpiredProducts();
-        updateProductsInfoJSON.setTotalExpiredProducts(delete.deleteExpiredProducts());
+        updateProductsInfoJSON.setTotalExpiredProducts(DeleteExpiredProducts.deleteExpiredProducts());
 
         /**
          * Search all Destinations.
          */
-         taxonomyDestinationsAPIJSON=taxonomy.retrieveDestinations();
+        taxonomyDestinationsAPIJSON=TaxonomyAPIDAO.retrieveDestinations();
 
         /**
          * If couldn't retrieve destinations cancel the update.//todo make an extra call of updateprodact function before cancel the update
          */
-         if(!taxonomyDestinationsAPIJSON.isSuccess() || taxonomyDestinationsAPIJSON.getData()==null) {
+        if(!taxonomyDestinationsAPIJSON.isSuccess() || taxonomyDestinationsAPIJSON.getData()==null) {
             System.out.println("********************** Communication ERROR.Did not received Destinations **********************");
             updateProductsInfoJSON.setViatorError(true);
             updateProductsInfoJSON.setViatorErrorInfo("Communication ERROR.Did not received Destinations");
@@ -232,7 +212,7 @@ public class UpdateProducts {
                 }
                 /** Get product summary*/
                 productsByDestinationPOST.setDestId(dest.getDestinationId());
-                productsByDestIdSeoIdAPIJSON = productAPIDAO.searchProducts(productsByDestinationPOST, productsByAttractionPOST, true);
+                productsByDestIdSeoIdAPIJSON = ProductAPIDAO.searchProducts(productsByDestinationPOST, productsByAttractionPOST, true);
                 timeElapsed=System.currentTimeMillis();
 
                 if (productsByDestIdSeoIdAPIJSON.isSuccess() && productsByDestIdSeoIdAPIJSON.getData()!=null) {
@@ -258,7 +238,7 @@ public class UpdateProducts {
                                 }
                             }
                             /** Get product's details*/
-                            productDetailedInfoAPIJSON = productAPIDAO.productDetailedInfo(productDetailsBean.getCode(), "EUR", false, false);
+                            productDetailedInfoAPIJSON = ProductAPIDAO.productDetailedInfo(productDetailsBean.getCode(), "EUR", false, false);
                             timeElapsed = System.currentTimeMillis();
 
                             dateTime =new DateTime( DateTimeZone.UTC);//todo  see if it can be used the same object(not new every time).also at updatedestinations and updatecategories
@@ -321,17 +301,18 @@ public class UpdateProducts {
                                 productDetailsBean.setRating5Count(Integer.parseInt(productDetailedInfoAPIJSON.getData().getRatingCounts().get("5").toString()));
                                 productDetailsBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
                                         dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
-                                if(viatorProductDetailsDAO.deleteProduct(productDetailsBean.getCode())){
+                                if(ViatorProductDetailsDAO.deleteProduct(productDetailsBean.getCode())){
                                     updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                     updateProductsInfoJSON.setDbCommError(true);
                                 }
-                                if(viatorProductDetailsDAO.addproduct(productDetailsBean)){
+                                if(ViatorProductDetailsDAO.addproduct(productDetailsBean)){
                                     updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                     updateProductsInfoJSON.setDbCommError(true);
                                 }else {
                                     updateProductsInfoJSON.setTotalProducts(updateProductsInfoJSON.getTotalProducts() + 1);
                                     if (productDetailedInfoAPIJSON.getData().getCode() != null)
-                                        System.out.println("      ****************     Product code : " + productDetailedInfoAPIJSON.getData().getCode() + " . Product count :" + updateProductsInfoJSON.getTotalProducts() + "     ****************      ");
+                                        System.out.println("      ****************     Product code : " + productDetailedInfoAPIJSON.getData().getCode() +
+                                                           " . Product count :" + updateProductsInfoJSON.getTotalProducts() + "     ****************      ");
                                 }
 
                                 if (productDetailedInfoAPIJSON.getData().getCatIds() != null) {
@@ -342,7 +323,7 @@ public class UpdateProducts {
                                                                                 dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                 dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductXcategoryDAO.addprodactXcategory(viatorProductXCategoryBean)){
+                                        if(ViatorProductXCategoryDAO.addprodactXcategory(viatorProductXCategoryBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -357,7 +338,7 @@ public class UpdateProducts {
                                                                                    dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                    dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductXsubcategoryDAO.addprodactXsubcategory(viatorProductXSubcategoryBean)){
+                                        if(ViatorProductXSubcategoryDAO.addprodactXsubcategory(viatorProductXSubcategoryBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -388,7 +369,7 @@ public class UpdateProducts {
                                                                                  dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                  dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductuserphotosDAO.addproductuserphotos(viatorProductUserPhotosBean)){
+                                        if(ViatorProductUserPhotosDAO.addproductuserphotos(viatorProductUserPhotosBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -411,7 +392,7 @@ public class UpdateProducts {
                                 /**
                                  * Requesting viator for pickup Hotels of a product to add them to Pickup Hotels DB table.
                                  */
-                                pickupHotelsAPIJSON=bookingsAPIDAO.productPickupHotels(productDetailedInfoAPIJSON.getData().getCode());
+                                pickupHotelsAPIJSON=BookingsAPIDAO.productPickupHotels(productDetailedInfoAPIJSON.getData().getCode());
                                 timeElapsed = System.currentTimeMillis();
                                 if(pickupHotelsAPIJSON.isSuccess() && pickupHotelsAPIJSON.getData()!=null) {
 
@@ -434,7 +415,7 @@ public class UpdateProducts {
                                                                       dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                       dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(pickupHotelsDAO.addPickupHotel(pickupHotelsBean)) {
+                                        if(ViatorPickupHotelsDAO.addPickupHotel(pickupHotelsBean)) {
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -473,7 +454,7 @@ public class UpdateProducts {
                                                                               dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                               dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductReviewsDAO.addproductreviews(viatorProductReviewsBean)){
+                                        if(ViatorProductReviewsDAO.addproductreviews(viatorProductReviewsBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -496,7 +477,7 @@ public class UpdateProducts {
                                                                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductAgebandsDAO.addproductagebandsBean(viatorProductAgebandsBean)){
+                                        if(ViatorProductAgeBandsDAO.addproductagebandsBean(viatorProductAgebandsBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -511,7 +492,7 @@ public class UpdateProducts {
                                                                                   dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                   dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductSalesPointsDAO.addproductsalespointsBean(viatorProductSalesPointsBean)){
+                                        if(ViatorProductSalesPointsDAO.addproductsalespointsBean(viatorProductSalesPointsBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -526,7 +507,7 @@ public class UpdateProducts {
                                                                                  dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                  dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductInclusionsDAO.addproductinclusions(viatorProductInclusionsBean)){
+                                        if(ViatorProductInclusionsDAO.addproductinclusions(viatorProductInclusionsBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -541,7 +522,7 @@ public class UpdateProducts {
                                                                                  dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                  dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductExclusionsDAO.addproductexclusions(viatorProductExclusionsBean)){
+                                        if(ViatorProductExclusionsDAO.addproductexclusions(viatorProductExclusionsBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -556,7 +537,7 @@ public class UpdateProducts {
                                                                                      dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                      dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductAdditionalInfoDAO.addproductadditionalinfo(viatorProductAdditionalInfoBean)){
+                                        if(ViatorProductAdditionalInfoDAO.addproductadditionalinfo(viatorProductAdditionalInfoBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -578,7 +559,7 @@ public class UpdateProducts {
                                 /**
                                  * Requesting viator for availability dates of product.
                                  */
-                                availabilityDatesAPIJSON=bookingsAPIDAO.productAvailabilityDates(productDetailedInfoAPIJSON.getData().getCode());
+                                availabilityDatesAPIJSON=BookingsAPIDAO.productAvailabilityDates(productDetailedInfoAPIJSON.getData().getCode());
                                 timeElapsed = System.currentTimeMillis();
 
                                 /**
@@ -627,9 +608,9 @@ public class UpdateProducts {
                                         noneAvailableDatesBean.setMonth(cDate.getMonth());
                                         noneAvailableDatesBean.setYear(cDate.getYear());
                                         noneAvailableDatesBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                                                                           dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                                                                           dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
-                                        if (noneAvailableDatesDAO.addNoneAvailabilityDate(noneAvailableDatesBean)) {
+                                                                            dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                                            dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
+                                        if (ViatorNoneAvailableDatesDAO.addNoneAvailabilityDate(noneAvailableDatesBean)) {
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -649,6 +630,107 @@ public class UpdateProducts {
                                     }
                                 }
 
+                                if (productDetailedInfoAPIJSON.getData().getBookingQuestions() != null) {
+                                    for (ProductDetailBookingQuestions bookingQuestion : productDetailedInfoAPIJSON.getData().getBookingQuestions()) {
+                                        viatorProductBookingQuestionsBean.setMessage(bookingQuestion.getMessage());
+                                        viatorProductBookingQuestionsBean.setProductCode(productDetailedInfoAPIJSON.getData().getCode());
+                                        viatorProductBookingQuestionsBean.setQuestionId(bookingQuestion.getQuestionId());
+                                        viatorProductBookingQuestionsBean.setRequired(bookingQuestion.isRequired());
+                                        viatorProductBookingQuestionsBean.setSortOrder(bookingQuestion.getSortOrder());
+                                        viatorProductBookingQuestionsBean.setStringQuestionId(bookingQuestion.getStringQuestionId());
+                                        viatorProductBookingQuestionsBean.setSubTitleEn(bookingQuestion.getSubTitle());
+                                        viatorProductBookingQuestionsBean.setTitleEn(bookingQuestion.getTitle());
+                                        viatorProductBookingQuestionsBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                                                       dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                                                       dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
+
+                                        if(ViatorProductBookingQuestionsDAO.addBookingQuestion(viatorProductBookingQuestionsBean)){
+                                            updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
+                                            updateProductsInfoJSON.setDbCommError(true);
+                                        }
+                                    }
+                                }
+
+
+
+                                /**
+                                 * Process may sleep for an amount of time to stay in the limits.
+                                 */
+                                timeElapsed = System.currentTimeMillis() - timeElapsed;
+                                if (ProjectProperties.minElapsedTimeBetweenViatorRequests - timeElapsed > 0) {
+                                    try {
+                                        Thread.sleep(ProjectProperties.minElapsedTimeBetweenViatorRequests - timeElapsed);
+                                        updateProductsInfoJSON.setTotalProcessSleep(updateProductsInfoJSON.getTotalProcessSleep()+ ProjectProperties.minElapsedTimeBetweenViatorRequests - timeElapsed);
+                                    } catch (InterruptedException ex) {
+                                        Thread.currentThread().interrupt();
+                                    }
+                                }
+                                /**
+                                 * Requesting viator for pricingmatrix of product.
+                                 */
+                                availabilityAndPricingMatrixAPIJSON=BookingsAPIDAO.productAvailabilityAndPricingMatrix(productDetailedInfoAPIJSON.getData().getCode(),
+                                                                                                                       Integer.toString(dateTime.getMonthOfYear()),
+                                                                                                                       Integer.toString(dateTime.getYear()));
+                                timeElapsed = System.currentTimeMillis();
+
+                                if(availabilityAndPricingMatrixAPIJSON.isSuccess() && availabilityAndPricingMatrixAPIJSON.getData()!=null
+                                    && availabilityAndPricingMatrixAPIJSON.getData().getDates()!=null  && availabilityAndPricingMatrixAPIJSON.getData().getDates().size()>0) {
+
+                                    pricingMatrixBean.setSortOrderOfDate(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getSortOrder());
+                                    pricingMatrixBean.setBookingDate(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getBookingDate());
+                                    pricingMatrixBean.setCallForLastMinAvailability(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).isCallForLastMinAvailability());
+
+                                    for(int j=0;j<availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().size();j++) {
+                                        pricingMatrixBean.setSortOrderOfTourGrade(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getSortOrder());
+                                        pricingMatrixBean.setTourGradeCode(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getGradeCode());
+                                        pricingMatrixBean.setTourGradeTitle(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getGradeTitle());
+                                        for(int x=0;x<availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().size();x++) {
+                                            pricingMatrixBean.setSortOrderOfPricing(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getSortOrder());
+                                            pricingMatrixBean.setPricingUnit(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getPricingUnit());
+                                            for(int y=0;y<availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().size();y++) {
+                                                pricingMatrixBean.setSortOrderOfAgeBand(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getSortOrder());
+                                                pricingMatrixBean.setBandId(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getBandId());
+                                                if(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getMaximumCountRequired()!=null)
+                                                    pricingMatrixBean.setMaximumCountRequired((int)availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getMaximumCountRequired());
+                                                pricingMatrixBean.setMinimumCountRequired((int) availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getMinimumCountRequired());
+                                                for(int z=0;z<availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().size();z++) {//todo check if we can add to db only the first price
+                                                    if(!availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getMerchantNetPrice().equals(0)) {
+                                                        pricingMatrixBean.setSortOrderOfPrice(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getSortOrder());
+                                                        pricingMatrixBean.setCurrencyCode(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getCurrencyCode());
+                                                        pricingMatrixBean.setPrice(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getPrice());
+                                                        pricingMatrixBean.setMerchantNetPrice(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getMerchantNetPrice());
+                                                        pricingMatrixBean.setMinNoOfTravellersRequiredForPrice(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getMinNoOfTravellersRequiredForPrice());
+
+                                                        pricingMatrixBean.setProductCode(productDetailedInfoAPIJSON.getData().getCode());
+                                                        pricingMatrixBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
+
+                                                        if (ViatorPricingMatrixDAO.addPricingMatrix(pricingMatrixBean)) {
+                                                            updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
+                                                            updateProductsInfoJSON.setDbCommError(true);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+                                }else{
+                                    boolean productexists=false;
+                                    for(String code: updateProductsInfoJSON.getProductsWithFailedAvailDates()){
+                                        if(code.equals(productDetailedInfoAPIJSON.getData().getCode()))
+                                            productexists=true;
+                                    }
+                                    if(!productexists) {
+                                        updateProductsInfoJSON.getProductsWithFailedPricingMatrixes().add(productDetailedInfoAPIJSON.getData().getCode());
+                                        updateProductsInfoJSON.setViatorErrorInfo("Update completed but some Products did not added correctly to DB or " +
+                                                "not updated.Check Failed Destinations/Failed Products List and" +
+                                                " ProductsWithFailedAvailDates list.");
+                                    }
+                                }
+
 
                                 if (productDetailedInfoAPIJSON.getData().getProductPhotos() != null) {
                                     for (ProductDetailProductPhotos prodphoto : productDetailedInfoAPIJSON.getData().getProductPhotos()) {
@@ -662,7 +744,7 @@ public class UpdateProducts {
                                                                              dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                              dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductPhotosDAO.addproductphotos(viatorProductPhotosBean)){
+                                        if(ViatorProductPhotosDAO.addproductphotos(viatorProductPhotosBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -685,7 +767,7 @@ public class UpdateProducts {
                                                                                  dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                  dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductTourGradesDAO.addproducttourgrades(viatorProductTourGradesBean)){
+                                        if(ViatorProductTourGradesDAO.addproducttourgrades(viatorProductTourGradesBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }
@@ -701,7 +783,7 @@ public class UpdateProducts {
                                                                                            dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                                            dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                                if(vProductTourGradeLangServDAO.addproducttourgradelanguageservicesBean(vProductTourGradeLangServBean)){
+                                                if(ViatorProductTourGradeLanguageServicesDAO.addproducttourgradelanguageservicesBean(vProductTourGradeLangServBean)){
                                                     updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                                     updateProductsInfoJSON.setDbCommError(true);
                                                 }
@@ -734,11 +816,11 @@ public class UpdateProducts {
                                                                              dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                              dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                                        if(viatorProductVideosDAO.addproductvideos(viatorProductVideosBean)){
+                                        if(ViatorProductVideosDAO.addproductvideos(viatorProductVideosBean)){
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }//todo deside if it is better to add an external loop for the products/destinations that hadn't updated/added to DB due to viator comm Error
-                                    }
+                                    }//todo remove ssl from all requests exept booking requests to see if it performs faster.
                                 }
 
                             }else{
@@ -822,26 +904,34 @@ public class UpdateProducts {
         viatorUpdateProductsInfoBean.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter());
         viatorUpdateProductsInfoBean.setViatoErrorInfo(updateProductsInfoJSON.getViatorErrorInfo());
         viatorUpdateProductsInfoBean.setViatorError(updateProductsInfoJSON.isViatorError());
-        viatorUpdateProductsInfoRid=viatorUpdateProductsInfoDAO.addViatorUpdateProductsInfo(viatorUpdateProductsInfoBean);
+        ViatorUpdateProductsInfoDAO.addViatorUpdateProductsInfo(viatorUpdateProductsInfoBean);
+        viatorUpdateProductsInfoRid=ViatorUpdateProductsInfoDAO.getLastRecord().getRid();
 
         for(FailedProduct failedProd:updateProductsInfoJSON.getFailedProducts()){
             viatorUpdateFailedProductsBean.setFailedProductCode(failedProd.getProductCode());
             viatorUpdateFailedProductsBean.setFailedProductDestid(failedProd.getDestId());
             viatorUpdateFailedProductsBean.setUpdateRid(viatorUpdateProductsInfoRid);
-            viatorUpdateFailedProductsDAO.addViatorUpdateFailedProduct(viatorUpdateFailedProductsBean);
+            ViatorUpdateFailedProductsDAO.addViatorUpdateFailedProduct(viatorUpdateFailedProductsBean);
         }
 
         for(int failedDest:updateProductsInfoJSON.getFailedDestinations()){
             viatorUpdateFailedDestinationsBean.setFailedDestination(failedDest);
             viatorUpdateFailedDestinationsBean.setUpdateRid(viatorUpdateProductsInfoRid);
-            viatorUpdateFailedDestinationsDAO.addViatorUpdateFailedDestination(viatorUpdateFailedDestinationsBean);
+            ViatorUpdateFailedDestinationsDAO.addViatorUpdateFailedDestination(viatorUpdateFailedDestinationsBean);
         }
 
         for(String prod:updateProductsInfoJSON.getProductsWithFailedAvailDates()){
             viatorUpdateFailedAvailDatesBean.setProductWithFailedAvailDates(prod);
             viatorUpdateFailedAvailDatesBean.setUpdateRid(viatorUpdateProductsInfoRid);
-            viatorUpdateFailedAvailDatesDAO.addViatorUpdateFailedAvailDates(viatorUpdateFailedAvailDatesBean);
+            ViatorUpdateFailedAvailDatesDAO.addViatorUpdateFailedAvailDates(viatorUpdateFailedAvailDatesBean);
         }
+
+        for(String prod:updateProductsInfoJSON.getProductsWithFailedPricingMatrixes()){
+            viatorUpdateFailedPricematrixesBean.setProductWithFailedPricematrixes(prod);
+            viatorUpdateFailedPricematrixesBean.setUpdateRid(viatorUpdateProductsInfoRid);
+            ViatorUpdateFailedPricematrixesDAO.addViatorUpdateFailedPricematrixes(viatorUpdateFailedPricematrixesBean);
+        }
+
 
         return updateProductsInfoJSON;
     }

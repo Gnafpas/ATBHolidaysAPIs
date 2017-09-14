@@ -12,15 +12,13 @@ import java.util.List;
  * Created by George on 23/06/17.
  */
 public class ViatorProductTourGradeLanguageServicesDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproducttourgradelanguageservicesBean(ViatorProductTourGradeLanguageServicesBean viatorproducttourgradelanguageservicesBean){
+    public static boolean addproducttourgradelanguageservicesBean(ViatorProductTourGradeLanguageServicesBean viatorproducttourgradelanguageservicesBean){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproducttourgradelanguageservicesBean);
             tx.commit();
@@ -36,12 +34,12 @@ public class ViatorProductTourGradeLanguageServicesDAO {
         return err;
     }
 
-    public boolean deleteProductTourGradeLanguageServices(String productCode){
+    public static boolean deleteProductTourGradeLanguageServices(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductTourGradeLanguageServicesBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -57,18 +55,39 @@ public class ViatorProductTourGradeLanguageServicesDAO {
         return err;
     }
 
-    public List<ViatorProductTourGradeLanguageServicesBean> getLanguageServicesByProductCodeAndTourGrade(String productCode,String tourGrade){
+    public static List<ViatorProductTourGradeLanguageServicesBean> getLanguageServicesByProductCodeAndTourGrade(String productCode,String tourGrade){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductTourGradeLanguageServicesBean> tourGradeLanguageServices=null;
         String hql ="Select tourGradeLanguageServices FROM ViatorProductTourGradeLanguageServicesBean tourGradeLanguageServices " +
                                                      "WHERE tourGradeLanguageServices.productCode like :productCode " +
                                                      "AND  tourGradeLanguageServices.gradeCode like :tourGrade";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             tourGradeLanguageServices=session.createQuery(hql).setParameter("productCode", productCode )
                                                               .setParameter("tourGrade", tourGrade)
                                                               .getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return tourGradeLanguageServices;
+    }
+
+    public static List<ViatorProductTourGradeLanguageServicesBean> getLanguageServicesByProductCode(String productCode){
+
+        Session session = HibernateUtil.getSession();
+        List<ViatorProductTourGradeLanguageServicesBean> tourGradeLanguageServices=null;
+        String hql ="Select tourGradeLanguageServices FROM ViatorProductTourGradeLanguageServicesBean tourGradeLanguageServices " +
+                "WHERE tourGradeLanguageServices.productCode like :productCode ";
+        try{
+            session.beginTransaction();
+            tourGradeLanguageServices=session.createQuery(hql).setParameter("productCode", productCode )
+                    .getResultList();
             session.getTransaction().commit();
             session.close();
         }catch (HibernateException e) {

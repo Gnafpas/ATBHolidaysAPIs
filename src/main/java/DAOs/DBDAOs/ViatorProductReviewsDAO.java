@@ -12,16 +12,13 @@ import java.util.List;
  * Created by George on 20/06/17.
  */
 public class ViatorProductReviewsDAO {
-//todo Add table to DB for travel agents reviews
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproductreviews(ViatorProductReviewsBean viatorproductreviewsBean ){
+    public static boolean addproductreviews(ViatorProductReviewsBean viatorproductreviewsBean ){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproductreviewsBean);
             tx.commit();
@@ -37,12 +34,12 @@ public class ViatorProductReviewsDAO {
         return err;
     }
 
-    public boolean deleteProductReviews(String productCode){
+    public static boolean deleteProductReviews(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductReviewsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,14 +55,14 @@ public class ViatorProductReviewsDAO {
         return err;
     }
 
-    public List<ViatorProductReviewsBean> getReviewsByProductCode(String productCode){
+    public static List<ViatorProductReviewsBean> getReviewsByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductReviewsBean> productReviewsBean=null;
         String hql ="Select reviews FROM ViatorProductReviewsBean reviews " +
                                    "WHERE reviews.productCode like :productCode " +
                                    "order by reviews.sortOrder " ;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             productReviewsBean=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

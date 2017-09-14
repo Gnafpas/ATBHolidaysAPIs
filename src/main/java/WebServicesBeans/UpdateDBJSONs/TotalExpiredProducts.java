@@ -10,7 +10,7 @@ public class TotalExpiredProducts {
     private int totalExpiredProducts=0;
     private List<String> totalExpiredProductsList=new ArrayList<>();
     private boolean viatorError;
-    private String viatorErrorInfo;
+    private String viatorErrorInfo="";
     private boolean dbCommError;
     private int dbCommErrorsCounter;
 

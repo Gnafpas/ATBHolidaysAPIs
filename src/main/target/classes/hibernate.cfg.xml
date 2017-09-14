@@ -71,6 +71,16 @@
         <mapping class="DBBeans.ViatorPickupHotelsBean"/>
         <mapping resource="ViatorAttractionsBean.hbm.xml"/>
         <mapping class="DBBeans.ViatorAttractionsBean"/>
+        <mapping resource="ViatorUpdateCategoriesInfoBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorUpdateCategoriesInfoBean"/>
+        <mapping resource="ViatorUpdateDestinationsInfoBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorUpdateDestinationsInfoBean"/>
+        <mapping class="DBBeans.ViatorPricingMatrixBean"/>
+        <mapping resource="ViatorPricingMatrixBean.hbm.xml"/>
+        <mapping resource="ViatorUpdateFailedPricematrixesBean.hbm.xml"/>
+        <mapping class="DBBeans.ViatorUpdateFailedPricematrixesBean"/>
+        <mapping class="DBBeans.ViatorProductBookingQuestionsBean"/>
+        <mapping resource="ViatorProductBookingQuestionsBean.hbm.xml"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

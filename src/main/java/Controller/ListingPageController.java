@@ -22,8 +22,8 @@ public class ListingPageController {
 
     @RequestMapping("/dest")
     public TaxonomyDestinationsAPIJSON dest(){
-        TaxonomyAPIDAO taxonomyAPIDAO=new TaxonomyAPIDAO();
-        return taxonomyAPIDAO.retrieveDestinations();
+
+        return TaxonomyAPIDAO.retrieveDestinations();
     }
 
     /**
@@ -36,12 +36,11 @@ public class ListingPageController {
     public AttractionsListingPageJSON getAttractions(@RequestBody GetAttractionsDAOParams params){
 
         AttractionsListingPageJSON attractionsListingPageJSON =new AttractionsListingPageJSON();
-        ViatorAttractionsDAO attractionsDAO=new ViatorAttractionsDAO();
 
         /**
          * Get Attractions
          */
-        attractionsListingPageJSON.setAttractions(attractionsDAO.getAttractions(params));
+        attractionsListingPageJSON.setAttractions(ViatorAttractionsDAO.getAttractions(params));
         if(attractionsListingPageJSON.getAttractions()==null)
             attractionsListingPageJSON.setDBError(true);
 
@@ -60,7 +59,6 @@ public class ListingPageController {
     public ProductsCategoriesListingPageJSON getProductsAndCategories(@RequestBody GetProductsDAOParams params){
 
         ProductsCategoriesListingPageJSON productsCategoriesListingPageJSON =new ProductsCategoriesListingPageJSON();
-        ViatorProductDetailsDAO productsDao=new ViatorProductDetailsDAO();
         List<Integer> catIds=new ArrayList<>();
         List <ViatorProductDetailsBean>  products;
         int i=0;
@@ -77,7 +75,7 @@ public class ListingPageController {
         /**
          * Get products
          */
-        productsCategoriesListingPageJSON.setProducts(productsDao.getProducts(params));
+        productsCategoriesListingPageJSON.setProducts(ViatorProductDetailsDAO.getProducts(params));
 
         /**
          * Get all categories/subcategories and Find products count for each category
@@ -88,7 +86,7 @@ public class ListingPageController {
             catIds.clear();
             catIds.add(cat.getCategory().getId());
             params.setCategories(catIds);
-            products=productsDao.getProducts(params);
+            products=ViatorProductDetailsDAO.getProducts(params);
             if(products!=null)
                categoriesJson.getCategories().get(i).getCategory().setProductCount(products.size());
             i++;
@@ -102,16 +100,14 @@ public class ListingPageController {
 
     @RequestMapping("/getAllCategories")
     public CategoriesJson getAllCategories(){
-        ViatorCategoriesDAO viatorCategoriesDAO=new ViatorCategoriesDAO();
-        ViatorSubcategoriesDAO viatorSubcategoriesDAO=new ViatorSubcategoriesDAO();
         CategoriesJson categoriesJson =new CategoriesJson();
         Category category;
-        List<ViatorCategoriesBean> categories=viatorCategoriesDAO.getAllCategories();
+        List<ViatorCategoriesBean> categories=ViatorCategoriesDAO.getAllCategories();
         if(categories!=null) {
             for (ViatorCategoriesBean cat : categories) {
                 category = new Category();
                 category.setCategory(cat);
-                category.setSubcategories(viatorSubcategoriesDAO.getSubcategoriesByCategoriId(cat.getId()));
+                category.setSubcategories(ViatorSubcategoriesDAO.getSubcategoriesByCategoriId(cat.getId()));
                 categoriesJson.getCategories().add(category);
             }
         }else
@@ -123,9 +119,8 @@ public class ListingPageController {
     public DestinationsJSON getAllCountries(){
         List<ViatorDestinationsBean> countries=new ArrayList<>();
         List<ViatorDestinationsBean> destinations;
-        ViatorDestinationsDAO destinationsDAO=new ViatorDestinationsDAO();
         DestinationsJSON destinationsJSON=new DestinationsJSON();
-        destinations=destinationsDAO.getAllDestinations();
+        destinations=ViatorDestinationsDAO.getAllDestinations();
         if(destinations!=null) {
             for (ViatorDestinationsBean destination : destinations) {
                 if (destination.getDestinationType().equals("COUNTRY"))
@@ -141,10 +136,9 @@ public class ListingPageController {
     public  DestinationsJSON getRegionsOfCountry(@RequestParam (value="countryId", defaultValue="0") int destId){
         List<ViatorDestinationsBean> regions=new ArrayList<>();
         List<ViatorDestinationsBean> destinations;
-        ViatorDestinationsDAO destinationsDAO=new ViatorDestinationsDAO();
         DestinationsJSON destinationsJSON=new DestinationsJSON();
         String[] split;
-        destinations=destinationsDAO.getAllDestinations();
+        destinations=ViatorDestinationsDAO.getAllDestinations();
         if(destinations!=null) {
             for (ViatorDestinationsBean destination : destinations) {
                 split = destination.getLookupId().split(Pattern.quote("."));
@@ -161,10 +155,9 @@ public class ListingPageController {
     public  DestinationsJSON getCitiesOfCountry(@RequestParam (value="countryId", defaultValue="0") int destId){
         List<ViatorDestinationsBean> cities=new ArrayList<>();
         List<ViatorDestinationsBean> destinations;
-        ViatorDestinationsDAO destinationsDAO=new ViatorDestinationsDAO();
         DestinationsJSON destinationsJSON=new DestinationsJSON();
         String[] split;
-        destinations=destinationsDAO.getAllDestinations();
+        destinations=ViatorDestinationsDAO.getAllDestinations();
         if(destinations!=null) {
             for (ViatorDestinationsBean destination : destinations) {
                 split = destination.getLookupId().split(Pattern.quote("."));
@@ -181,14 +174,13 @@ public class ListingPageController {
 //    @ResponseBody
 //    public List<CustomDate>  getLastDateWithAvailbilityInfo(@RequestBody GetProductsDAOParams params){
 //
-//        ViatorNoneAvailableDatesDAO viatorNoneAvailableDatesDAO =new ViatorNoneAvailableDatesDAO();
 //        List<CustomDate> dates;
 //
 //        params.setStartDate(null);
 //        params.setEndDate(null);
 //        ProductsCategoriesListingPageJSON productsCategoriesListingPageJSON=getProductsAndCategories( params);
 //        System.out.print(productsCategoriesListingPageJSON.getProducts().get(0).getCode());
-//        dates= viatorNoneAvailableDatesDAO.getNoneAvailDatesOfProducts(productsCategoriesListingPageJSON.getProducts());
+//        dates= ViatorNoneAvailableDatesDAO.getNoneAvailDatesOfProducts(productsCategoriesListingPageJSON.getProducts());
 //        return dates;
 //    }
 

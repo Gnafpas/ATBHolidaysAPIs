@@ -12,15 +12,13 @@ import java.util.List;
  * Created by George on 23/06/17.
  */
 public class ViatorProductInclusionsDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproductinclusions(ViatorProductInclusionsBean productinclusionsBean){
+    public static boolean addproductinclusions(ViatorProductInclusionsBean productinclusionsBean){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(productinclusionsBean);
             tx.commit();
@@ -36,12 +34,12 @@ public class ViatorProductInclusionsDAO {
         return err;
     }
 
-    public boolean deleteProductInclusions(String productCode){
+    public static boolean deleteProductInclusions(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductInclusionsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -57,13 +55,13 @@ public class ViatorProductInclusionsDAO {
         return err;
     }
 
-    public List<ViatorProductInclusionsBean> getInclusionsByProductCode(String productCode){
+    public static List<ViatorProductInclusionsBean> getInclusionsByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductInclusionsBean> inclusions=null;
         String hql ="Select inclusions FROM ViatorProductInclusionsBean inclusions " +
                                       "WHERE inclusions.productCode like :productCode ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             inclusions=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

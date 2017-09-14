@@ -12,16 +12,13 @@ import java.util.List;
  * Created by George on 20/06/17.
  */
 public class ViatorProductUserPhotosDAO {
-//todo add table to DB for travel agent photos
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproductuserphotos(ViatorProductUserPhotosBean viatorproductuserphotosBean ){
+    public static boolean addproductuserphotos(ViatorProductUserPhotosBean viatorproductuserphotosBean ){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproductuserphotosBean);
             tx.commit();
@@ -37,12 +34,12 @@ public class ViatorProductUserPhotosDAO {
         return err;
     }
 
-    public boolean deleteProductUserPhotos(String productCode){
+    public static boolean deleteProductUserPhotos(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductUserPhotosBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,14 +55,14 @@ public class ViatorProductUserPhotosDAO {
         return err;
     }
 
-    public List<ViatorProductUserPhotosBean> getUserPhotosByProductCode(String productCode){
+    public static List<ViatorProductUserPhotosBean> getUserPhotosByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductUserPhotosBean> userPhotos=null;
         String hql ="Select userPhotos FROM ViatorProductUserPhotosBean userPhotos " +
                                       "WHERE userPhotos.productCode like :productCode " +
                                       "order by userPhotos.sortOrder ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             userPhotos=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

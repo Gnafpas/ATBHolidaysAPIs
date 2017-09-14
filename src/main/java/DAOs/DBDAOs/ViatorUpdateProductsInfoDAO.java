@@ -6,22 +6,21 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
+
 /**
  * Created by George on 08/07/2017.
  */
 public class ViatorUpdateProductsInfoDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addViatorUpdateProductsInfo(ViatorUpdateProductsInfoBean viatorUpdateProductsInfoBean){
 
-    public int addViatorUpdateProductsInfo(ViatorUpdateProductsInfoBean viatorUpdateProductsInfoBean){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
-            session.save(viatorUpdateProductsInfoBean);
+            session.persist(viatorUpdateProductsInfoBean);
             tx.commit();
             session.close();
         }catch (HibernateException e) {
@@ -32,6 +31,27 @@ public class ViatorUpdateProductsInfoDAO {
             err=true;
             e.printStackTrace();
         }
-        return viatorUpdateProductsInfoBean.getRid();
+        return err;
+    }
+
+    public static ViatorUpdateProductsInfoBean getLastRecord(){
+
+        Session session = HibernateUtil.getSession();
+        String hql=     " select  updateInfo"
+                + " from DBBeans.ViatorUpdateProductsInfoBean updateInfo"
+                + " order by updateInfo.rid DESC";
+        ViatorUpdateProductsInfoBean viatorUpdateProductsInfoBean=null;
+        try{
+            Query query= session.createQuery(hql);
+            query.setMaxResults(1);
+            viatorUpdateProductsInfoBean=(ViatorUpdateProductsInfoBean)query.getSingleResult();
+            session.close();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            session.close();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
+        return viatorUpdateProductsInfoBean;
     }
 }

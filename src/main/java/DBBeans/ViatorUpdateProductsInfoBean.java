@@ -23,6 +23,7 @@ public class ViatorUpdateProductsInfoBean {
     private Integer dbCommErrorsCounter;
 
     @Id
+    @GeneratedValue
     @Column(name = "rid")
     public int getRid() {
         return rid;

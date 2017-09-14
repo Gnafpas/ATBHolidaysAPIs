@@ -17,8 +17,6 @@ import org.springframework.web.client.RestTemplate;
  */
 public class TaxonomyAPIDAO {
 
-    private RestTemplate restTemplate;
-
     /**
      *
      * Retrieves Data from /service/taxonomy/destinations (Complete list of all available destinations)
@@ -26,13 +24,13 @@ public class TaxonomyAPIDAO {
      * retrieve or something else went wrong it returns the object with property
      * success=false.
      */
-    public TaxonomyDestinationsAPIJSON retrieveDestinations(){
+    public static TaxonomyDestinationsAPIJSON retrieveDestinations(){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/taxonomy/destinations?apiKey=" + Helper.ProjectProperties.apiKey;
         TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON =new TaxonomyDestinationsAPIJSON();
         taxonomyDestinationsAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             taxonomyDestinationsAPIJSON = restTemplate.getForObject(url,TaxonomyDestinationsAPIJSON.class);
@@ -65,7 +63,7 @@ public class TaxonomyAPIDAO {
      * retrieve or something else went wrong it returns the object with property
      * success=false.
      */
-    public TaxonomyAttractionsAPIJSON retrieveAttractions(int destinationId, String topX, String sortOrder){
+    public static TaxonomyAttractionsAPIJSON retrieveAttractions(int destinationId, String topX, String sortOrder){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/taxonomy/attractions?apiKey=" + Helper.ProjectProperties.apiKey;
         TaxonomyAttractionsPOST taxonomyAttractionsPOST =new TaxonomyAttractionsPOST();
@@ -75,7 +73,7 @@ public class TaxonomyAPIDAO {
         TaxonomyAttractionsAPIJSON taxonomyAttractionsAPIJSON =new TaxonomyAttractionsAPIJSON();
         taxonomyAttractionsAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             taxonomyAttractionsAPIJSON = restTemplate.postForObject(url, taxonomyAttractionsPOST,TaxonomyAttractionsAPIJSON.class);
@@ -102,13 +100,13 @@ public class TaxonomyAPIDAO {
      * retrieve or something else went wrong it returns the object with property
      * success=false.
      */
-    public TaxonomyCategoriesAPIJSON retrieve_categories(){
+    public static TaxonomyCategoriesAPIJSON retrieve_categories(){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/taxonomy/categories?apiKey=" + Helper.ProjectProperties.apiKey;
         TaxonomyCategoriesAPIJSON taxonomyCategoriesAPIJSON =new TaxonomyCategoriesAPIJSON();
         taxonomyCategoriesAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             taxonomyCategoriesAPIJSON = restTemplate.getForObject(url,TaxonomyCategoriesAPIJSON.class);

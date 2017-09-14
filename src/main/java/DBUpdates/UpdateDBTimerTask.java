@@ -1,5 +1,7 @@
 package DBUpdates;
 
+import Helper.ProjectProperties;
+
 import java.util.TimerTask;
 
 /**
@@ -17,7 +19,24 @@ public class UpdateDBTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        UpdateProducts updateProducts =new UpdateProducts();
-        updateProducts.updateProducts(StartingDestId,StopDestId);
+
+        UpdateCategories.updateCategories();
+        /**
+         * Time between viator server requests.There is a limit for the number of requests per
+         * 10 seconds that we can make at viator's server(15req/10sec for prelive and 35req/10sec for live).
+         * Process may sleep for an amount of time to stay in the limits.
+         */
+        try {
+            Thread.sleep(ProjectProperties.minElapsedTimeBetweenViatorRequests);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        UpdateDestinations.updateDestinations();
+        try {
+            Thread.sleep(ProjectProperties.minElapsedTimeBetweenViatorRequests);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        UpdateProducts.updateProducts(StartingDestId,StopDestId);
     }
 }

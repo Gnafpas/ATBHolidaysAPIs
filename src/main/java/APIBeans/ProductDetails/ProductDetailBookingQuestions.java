@@ -5,7 +5,6 @@ package APIBeans.ProductDetails;
  */
 public class ProductDetailBookingQuestions {
 
-    private String productCode;
     private String questionId;
     private String stringQuestionId;
     private String title;
@@ -14,13 +13,6 @@ public class ProductDetailBookingQuestions {
     private String message;
     private int sortOrder;
 
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
 
     public String getQuestionId() {
         return questionId;

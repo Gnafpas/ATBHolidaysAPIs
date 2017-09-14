@@ -6,30 +6,26 @@ import APIBeans.Taxonomy.TaxonomySubcategory;
 import DAOs.APIDAOs.TaxonomyAPIDAO;
 import DAOs.DBDAOs.ViatorCategoriesDAO;
 import DAOs.DBDAOs.ViatorSubcategoriesDAO;
+import DAOs.DBDAOs.ViatorUpdateCategoriesInfoDAO;
 import DBBeans.ViatorCategoriesBean;
 import DBBeans.ViatorSubcategoriesBean;
+import DBBeans.ViatorUpdateCategoriesInfoBean;
 import WebServicesBeans.UpdateDBJSONs.InfoJSON;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-
 import java.sql.Timestamp;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 
 
 /**
  * Created by George on 19/06/17.
  */
 public class UpdateCategories {
-
-    public InfoJSON updateCategories() {
-        //todo the categories id are chenging be aware of dublications of ids in database
+//todo inform with email or some notification when categories or subcategories changed
+    public static InfoJSON updateCategories() {
         ViatorCategoriesBean viatorCategoriesBean=new ViatorCategoriesBean();
         ViatorSubcategoriesBean viatorsubcategoriesBean=new ViatorSubcategoriesBean();
-        TaxonomyAPIDAO taxonomyAPIDAO = new TaxonomyAPIDAO();
-        TaxonomyCategoriesAPIJSON taxonomyCategoriesAPIJSON= taxonomyAPIDAO.retrieve_categories();
-        ViatorCategoriesDAO viatorCategoriesDAO = new ViatorCategoriesDAO();
-        ViatorSubcategoriesDAO viatorSubcategoriesDAO=new ViatorSubcategoriesDAO();
+        TaxonomyCategoriesAPIJSON taxonomyCategoriesAPIJSON= TaxonomyAPIDAO.retrieve_categories();
+        ViatorUpdateCategoriesInfoBean viatorUpdateCategoriesInfoBean=new ViatorUpdateCategoriesInfoBean();
         DateTime dateTime;
 
         /**
@@ -54,12 +50,12 @@ public class UpdateCategories {
                                                   dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                   dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-                if(viatorCategoriesDAO.deleteCategory(viatorCategoriesBean.getId())){
+                if(ViatorCategoriesDAO.deleteCategory(viatorCategoriesBean.getId())){
                     infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
 
-                if(viatorCategoriesDAO.addcategory(viatorCategoriesBean)){
+                if(ViatorCategoriesDAO.addcategory(viatorCategoriesBean)){
                     infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                     infoJason.setDbCommError(true);
                 }
@@ -71,14 +67,12 @@ public class UpdateCategories {
                     viatorsubcategoriesBean.setSubcategoryName(subcat.getSubcategoryName());
                     viatorsubcategoriesBean.setSubcategoryUrlName(subcat.getSubcategoryUrlName());
 
-
-                    if(viatorSubcategoriesDAO.deleteSubcategory(viatorsubcategoriesBean.getId(),viatorsubcategoriesBean.getCategoryId())){
+                    if(ViatorSubcategoriesDAO.deleteSubcategory(viatorsubcategoriesBean.getId())){
                         infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                         infoJason.setDbCommError(true);
                     }
 
-
-                    if(viatorSubcategoriesDAO.addsubcategory(viatorsubcategoriesBean)){
+                    if(ViatorSubcategoriesDAO.addsubcategory(viatorsubcategoriesBean)){
                         infoJason.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter()+1);
                         infoJason.setDbCommError(true);
                     }
@@ -90,6 +84,16 @@ public class UpdateCategories {
             infoJason.setViatorErrorInfo("Communication ERROR.Did not received Categories");
             infoJason.setViatorError(true);
         }
+
+        dateTime =new DateTime( DateTimeZone.UTC);
+        viatorUpdateCategoriesInfoBean.setDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                   dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                   dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
+        viatorUpdateCategoriesInfoBean.setDbCommError(infoJason.isDbCommError());
+        viatorUpdateCategoriesInfoBean.setDbCommErrorsCounter(infoJason.getDbCommErrorsCounter());
+        viatorUpdateCategoriesInfoBean.setViatoErrorInfo(infoJason.getViatorErrorInfo());
+        viatorUpdateCategoriesInfoBean.setViatorError(infoJason.isViatorError());
+        ViatorUpdateCategoriesInfoDAO.addViatorUpdateCategoriesInfo(viatorUpdateCategoriesInfoBean);
 
         return infoJason;
     }

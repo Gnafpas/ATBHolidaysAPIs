@@ -17,15 +17,13 @@ import java.util.List;
  */
 public class ViatorProductXCategoryDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addprodactXcategory(ViatorProductXCategoryBean viatorproductXcategoryBean){
 
-    public boolean addprodactXcategory(ViatorProductXCategoryBean viatorproductXcategoryBean){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
+            session = HibernateUtil.getSession();
             tx=session.beginTransaction();
             session.save(viatorproductXcategoryBean);
             tx.commit();
@@ -41,12 +39,12 @@ public class ViatorProductXCategoryDAO {
         return err;
     }
 
-    public boolean deleteProductXCategory(String productCode){
+    public static boolean deleteProductXCategory(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductXCategoryBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -62,15 +60,15 @@ public class ViatorProductXCategoryDAO {
         return err;
     }
 
-    public List<ViatorCategoriesBean> getProductCategoriesByProductCode(String productCode){
+    public static List<ViatorCategoriesBean> getProductCategoriesByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorCategoriesBean> category=null;
         String hql ="Select category FROM ViatorProductXCategoryBean productXCategory ,ViatorCategoriesBean  category " +
                                     "WHERE productXCategory.productCode like :productCode " +
                                     "AND   category.id=productXCategory.categoryId " +
                                     "order by category.sortOrder ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             category=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

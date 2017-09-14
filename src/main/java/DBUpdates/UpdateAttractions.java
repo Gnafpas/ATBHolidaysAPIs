@@ -25,13 +25,10 @@ import java.util.List;
  */
 public class  UpdateAttractions {
 
-    public UpdateAttractionsInfoJSON UpdateAttractions(int destIdToStartRetrieveAttractions, int destIdToStopRetrieveAttractions) {
+    public static UpdateAttractionsInfoJSON UpdateAttractions(int destIdToStartRetrieveAttractions, int destIdToStopRetrieveAttractions) {
 
-        ProductAPIDAO productAPIDAO = new ProductAPIDAO();
         SearchFreetextPOST searchFreetextPOST = new SearchFreetextPOST();
-        ViatorAttractionsDAO viatorAttractionsDAO = new ViatorAttractionsDAO();
         ViatorAttractionsBean viatorAttractionsBean = new ViatorAttractionsBean();
-        TaxonomyAPIDAO taxonomy = new TaxonomyAPIDAO();
         TaxonomyDestinationsAPIJSON taxonomyDestinationsAPIJSON;
         TaxonomyAttractionsAPIJSON taxonomyAttractionsAPIJSON;
         SearchFreetextAttractionsAPIJSON searchFreetextAttractionsAPIJSON;
@@ -80,7 +77,7 @@ public class  UpdateAttractions {
         /**
          * Search all Destinations.
          */
-        taxonomyDestinationsAPIJSON = taxonomy.retrieveDestinations();
+        taxonomyDestinationsAPIJSON = TaxonomyAPIDAO.retrieveDestinations();
 
         /**
          * If couldn't retrieve destinations cancel the update.
@@ -142,7 +139,7 @@ public class  UpdateAttractions {
                 }
 
                 /** Get attraction summary*/
-                taxonomyAttractionsAPIJSON = taxonomy.retrieveAttractions(dest.getDestinationId(), "", "SEO_ALPHABETICAL");
+                taxonomyAttractionsAPIJSON = TaxonomyAPIDAO.retrieveAttractions(dest.getDestinationId(), "", "SEO_ALPHABETICAL");
                 timeElapsed = System.currentTimeMillis();
 
                 if (taxonomyAttractionsAPIJSON.isSuccess() && taxonomyAttractionsAPIJSON.getData() != null) {
@@ -169,7 +166,7 @@ public class  UpdateAttractions {
                             /** Get Attractions's details*/
                             searchFreetextPOST.setText(taxonomyAttractionsAPIJSON.getData().get(i).getTitle());
                             searchFreetextPOST.setDestId(taxonomyAttractionsAPIJSON.getData().get(i).getDestinationId());
-                            searchFreetextAttractionsAPIJSON = productAPIDAO.searchFreeTextAttraction(searchFreetextPOST);
+                            searchFreetextAttractionsAPIJSON = ProductAPIDAO.searchFreeTextAttraction(searchFreetextPOST);
                             timeElapsed = System.currentTimeMillis();
 
                             dateTime = new DateTime(DateTimeZone.UTC);
@@ -206,11 +203,11 @@ public class  UpdateAttractions {
                                         viatorAttractionsBean.setUserName(metadata.getData().getUserName());
                                         viatorAttractionsBean.setWebUrl(metadata.getData().getWebURL());
 
-                                        if (viatorAttractionsDAO.deleteAttraction(metadata.getData().getSeoId())) {
+                                        if (ViatorAttractionsDAO.deleteAttraction(metadata.getData().getSeoId())) {
                                             updateAttractionsInfoJSON.setDbCommErrorsCounter(updateAttractionsInfoJSON.getDbCommErrorsCounter() + 1);
                                             updateAttractionsInfoJSON.setDbCommError(true);
                                         }
-                                        if (viatorAttractionsDAO.addAttraction(viatorAttractionsBean)) {
+                                        if (ViatorAttractionsDAO.addAttraction(viatorAttractionsBean)) {
                                             updateAttractionsInfoJSON.setDbCommErrorsCounter(updateAttractionsInfoJSON.getDbCommErrorsCounter() + 1);
                                             updateAttractionsInfoJSON.setDbCommError(true);
                                         } else {

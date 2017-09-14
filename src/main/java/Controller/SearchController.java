@@ -2,9 +2,11 @@ package Controller;
 
 import DAOs.DBDAOs.ViatorAttractionsDAO;
 import DAOs.DBDAOs.ViatorDestinationsDAO;
+import DAOs.DBDAOs.ViatorNoneAvailableDatesDAO;
 import DAOs.DBDAOs.ViatorProductDetailsDAO;
 import DBBeans.ViatorAttractionsBean;
 import DBBeans.ViatorDestinationsBean;
+import DBBeans.ViatorNoneAvailableDatesBean;
 import DBBeans.ViatorProductDetailsBean;
 import Helper.SortOrderType;
 import WebServicesBeans.ListingPage.GetAttractionsDAOParams;
@@ -22,6 +24,44 @@ import java.util.regex.Pattern;
 
 @RestController
 public class SearchController {
+
+
+    /**
+     * Returns the last month that there is availability information for one of the given products.
+     */
+    @RequestMapping(value = "/getLastMonthWithAvailabilityInfo", method = RequestMethod.POST,consumes = "application/json")
+    @ResponseBody
+    public LastMonthWithAvailabilityInfoJSON getLastMonthWithAvailabilityInfo(@RequestBody  LastMonthWithAvailabilityInfoPOST params){
+
+        LastMonthWithAvailabilityInfoJSON lastMonthWithAvailabilityInfoJSON=new LastMonthWithAvailabilityInfoJSON();
+        List<ViatorProductDetailsBean> productsDetails= new ArrayList();
+        ViatorProductDetailsBean viatorProductDetailsBean;
+        List <ViatorNoneAvailableDatesBean> dates;
+        ViatorNoneAvailableDatesBean lastDate=null;
+        if(params.getProductCodes().size()==0)
+            return lastMonthWithAvailabilityInfoJSON;
+        for(String code:params.getProductCodes()) {
+            viatorProductDetailsBean=new ViatorProductDetailsBean();
+            viatorProductDetailsBean.setCode(code);
+            productsDetails.add(viatorProductDetailsBean);
+        }
+        dates=ViatorNoneAvailableDatesDAO.getNoneAvailDatesOfProducts(productsDetails);
+        if(dates!=null && dates.size()>0) {
+            lastDate=dates.get(0);
+            for (ViatorNoneAvailableDatesBean lDate : dates) {
+                if (lastDate.getMonth() < lDate.getMonth() && lastDate.getYear().equals(lDate.getYear()))
+                        lastDate=lDate;
+                else if (lastDate.getYear() < lDate.getYear())
+                        lastDate=lDate;
+            }
+            lastDate.setDay(0);
+        }
+        for(int i=0;i< dates.size(); i++)
+        lastMonthWithAvailabilityInfoJSON.setLastMonthWithAvailabilityInfo(lastDate);
+        if(dates==null)
+            lastMonthWithAvailabilityInfoJSON.setDBError(true);
+        return lastMonthWithAvailabilityInfoJSON;
+    }
 
     /**
      * Returns suggested destinations and suggested products based on text.Products have popularity order.
@@ -57,11 +97,10 @@ public class SearchController {
         String[] split_lookupid;
         int countDestinations=0;
         if(!destName.isEmpty() && destName.length()>=2) {
-            ViatorDestinationsDAO dest=new ViatorDestinationsDAO();
-            allDestinations = dest.getDestinationsByName("");
+            allDestinations = ViatorDestinationsDAO.getDestinationsByName("");
             if(allDestinations==null)
                 suggestedDestinationsList.setDbCommError(true);
-            reqDestinations=dest.getDestinationsByName(destName);
+            reqDestinations=ViatorDestinationsDAO.getDestinationsByName(destName);
             if(reqDestinations!=null) {
                 for (ViatorDestinationsBean destination : reqDestinations) {
                     if (destination.getDestinationType().equals("COUNTRY")) {
@@ -124,7 +163,6 @@ public class SearchController {
     }
 
     public SuggestedProductsList getSuggestedProducts( String text,int topXproducts){
-        ViatorProductDetailsDAO  productsDao=new ViatorProductDetailsDAO();
         SuggestedProductsList suggestedProducts=new SuggestedProductsList();
         List<ViatorProductDetailsBean> products;
         SuggestedProduct suggestedProduct;
@@ -132,7 +170,7 @@ public class SearchController {
         parameters.setTitle(text);
         parameters.setLastProduct(topXproducts);
         parameters.setSortOrder(SortOrderType.popularity);
-        products=productsDao.getProducts(parameters);
+        products=ViatorProductDetailsDAO.getProducts(parameters);
         if(products==null)
             suggestedProducts.setDbCommError(true);
         else{
@@ -151,7 +189,6 @@ public class SearchController {
 
 
     public SuggestedAttractionsList getSuggestedAttractions( String text,int topXproducts){
-        ViatorAttractionsDAO attractionsDAO=new ViatorAttractionsDAO();
         SuggestedAttractionsList suggestedAttractions=new SuggestedAttractionsList();
         List<ViatorAttractionsBean> attractions;
         SuggestedAttraction suggestedAttraction;
@@ -159,7 +196,7 @@ public class SearchController {
         parameters.setTitle(text);
         parameters.setLastAttraction(topXproducts);
         parameters.setSortOrder(SortOrderType.avgRatingD);
-        attractions=attractionsDAO.getAttractions(parameters);
+        attractions=ViatorAttractionsDAO.getAttractions(parameters);
         if(attractions==null)
             suggestedAttractions.setDbCommError(true);
         else{

@@ -14,15 +14,12 @@ import java.util.List;
  */
 public class ViatorSubcategoriesDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addsubcategory(ViatorSubcategoriesBean viatorsubcategoriesBean){
 
-    public boolean addsubcategory(ViatorSubcategoriesBean viatorsubcategoriesBean){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorsubcategoriesBean);
             tx.commit();
@@ -38,12 +35,12 @@ public class ViatorSubcategoriesDAO {
         return err;
     }
 
-    public boolean deleteSubcategory(int subcaatId,int catId){
+    public static boolean deleteSubcategory(int id){
 
-        String hql = String.format("delete from ViatorSubcategoriesBean WHERE id='"+subcaatId+"' AND categoryId='"+catId+"'");
+        Session session = HibernateUtil.getSession();
+        String hql = String.format("delete from ViatorSubcategoriesBean WHERE id='"+ id +"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -60,11 +57,12 @@ public class ViatorSubcategoriesDAO {
 
     }
 
-    public List<ViatorSubcategoriesBean> getAllSubcategories() {
+    public static List<ViatorSubcategoriesBean> getAllSubcategories() {
+
+        Session session = HibernateUtil.getSession();
         List<ViatorSubcategoriesBean> subCategories = null;
         String hql = "select categories from ViatorCategoriesBean categories";
         try {
-            session = helper.getSession();
             session.beginTransaction();
             subCategories = session.createQuery(hql).list();
             session.close();
@@ -78,23 +76,20 @@ public class ViatorSubcategoriesDAO {
     }
 
 
-    public List<ViatorSubcategoriesBean> getSubcategoriesByCategoriId(int categoriId){
+    public static List<ViatorSubcategoriesBean> getSubcategoriesByCategoriId(int categoriId){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorSubcategoriesBean> subcategories=null;
         String hql ="Select subcategories FROM ViatorSubcategoriesBean subcategories WHERE subcategories.categoryId= :categoriId" ;
-        boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             subcategories=session.createQuery(hql).setParameter("categoriId",   categoriId ).getResultList();
             session.getTransaction().commit();
             session.close();
         }catch (HibernateException e) {
-            err=true;
             e.printStackTrace();
             session.close();
         }catch (ExceptionInInitializerError e) {
-            err=true;
             e.printStackTrace();
         }
         return subcategories;

@@ -13,15 +13,15 @@ import java.util.List;
  * Created by George on 23/06/17.
  */
 public class ViatorDestinationsDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean adddestination(ViatorDestinationsBean viatordestinationsBean){
 
+    public static boolean adddestination(ViatorDestinationsBean viatordestinationsBean){
+
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
+
             tx=session.beginTransaction();
             session.save(viatordestinationsBean);
             tx.commit();
@@ -37,12 +37,12 @@ public class ViatorDestinationsDAO {
         return err;
     }
 
-    public boolean deleteDestination(int destId){
+    public static boolean deleteDestination(int destId){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorDestinationsBean WHERE destinationId='"+destId+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,16 +58,13 @@ public class ViatorDestinationsDAO {
         return err;
     }
 
-    public List<ViatorDestinationsBean> getDestinationsByName(String destName) {
+    public static List<ViatorDestinationsBean> getDestinationsByName(String destName) {
         List<ViatorDestinationsBean> destinations = null;
-
+        Session session = HibernateUtil.getSession();
         String hql = " select DISTINCT(i) "
                 + " from DBBeans.ViatorDestinationsBean i "
                 + " where i.destinationNameEn LIKE :destName";
-        Transaction tx = null;
         try {
-            session = helper.getSession();
-            tx = session.beginTransaction();
             destinations = session.createQuery(hql)
                     .setParameter("destName", "%" + destName + "%").list();
             session.close();
@@ -81,15 +78,12 @@ public class ViatorDestinationsDAO {
         return destinations;
     }
 
-    public List<ViatorDestinationsBean> getAllDestinations() {
+    public static List<ViatorDestinationsBean> getAllDestinations() {
         List<ViatorDestinationsBean> destinations = null;
-
+        Session session = HibernateUtil.getSession();
         String hql = " select DISTINCT(i) "
                    + " from DBBeans.ViatorDestinationsBean i ";
-        Transaction tx = null;
         try {
-            session = helper.getSession();
-            tx = session.beginTransaction();
             destinations = session.createQuery(hql) .list();
             session.close();
         } catch (HibernateException e) {

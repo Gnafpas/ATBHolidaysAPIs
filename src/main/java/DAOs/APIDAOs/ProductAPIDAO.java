@@ -22,9 +22,6 @@ import java.util.List;
  * Created by George on 29/05/17.
  */
 public class ProductAPIDAO {
-
-    private RestTemplate restTemplate;
-
     /**
      *
      * Retrieves Data from /service/search/freetext (Searching for Products)
@@ -32,13 +29,13 @@ public class ProductAPIDAO {
      * retrieve or something else went wrong it returns the object with property
      * success=false.
      */
-    public ProductsByDestIdSeoIdAPIJSON searchProducts(ProductsByDestinationPOST productsByDestinationPOST, ProductsByAttractionPOST productsByAttractionPOST, boolean isDestIdPost){
+    public static ProductsByDestIdSeoIdAPIJSON searchProducts(ProductsByDestinationPOST productsByDestinationPOST, ProductsByAttractionPOST productsByAttractionPOST, boolean isDestIdPost){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/search/products?apiKey=" + Helper.ProjectProperties.apiKey;
         ProductsByDestIdSeoIdAPIJSON productsByDestIdSeoIdAPIJSON =new ProductsByDestIdSeoIdAPIJSON();
         productsByDestIdSeoIdAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             if(isDestIdPost)
@@ -68,7 +65,7 @@ public class ProductAPIDAO {
      * retrieve or something else went wrong it returns the object with property
      * success=false.
      */
-    public SearchFreetextProductsAPIJSON searchFreeTextProduct(SearchFreetextPOST searchFreetextPOST){
+    public static SearchFreetextProductsAPIJSON searchFreeTextProduct(SearchFreetextPOST searchFreetextPOST){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/search/freetext?apiKey=" + Helper.ProjectProperties.apiKey;
         SearchFreetextProductsAPIJSON searchFreetextProductsAPIJSON =new SearchFreetextProductsAPIJSON();
@@ -77,7 +74,7 @@ public class ProductAPIDAO {
         searchtypes.add("PRODUCT");
         searchFreetextPOST.setSearchTypes(searchtypes);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             searchFreetextProductsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextProductsAPIJSON.class);
@@ -105,7 +102,7 @@ public class ProductAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public SearchFreetextDestinationsAPIJSON searchFreeTextDestination(SearchFreetextPOST searchFreetextPOST){
+    public static SearchFreetextDestinationsAPIJSON searchFreeTextDestination(SearchFreetextPOST searchFreetextPOST){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/search/freetext?apiKey=" + Helper.ProjectProperties.apiKey;
         SearchFreetextDestinationsAPIJSON searchFreetextDestinationsAPIJSON =new SearchFreetextDestinationsAPIJSON();
@@ -114,7 +111,7 @@ public class ProductAPIDAO {
         searchtypes.add("DESTINATION");
         searchFreetextPOST.setSearchTypes(searchtypes);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             searchFreetextDestinationsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextDestinationsAPIJSON.class);
@@ -142,7 +139,7 @@ public class ProductAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public SearchFreetextAttractionsAPIJSON searchFreeTextAttraction(SearchFreetextPOST searchFreetextPOST){
+    public static SearchFreetextAttractionsAPIJSON searchFreeTextAttraction(SearchFreetextPOST searchFreetextPOST){
 
         final String url =Helper.ProjectProperties.apiURL+ "/service/search/freetext?apiKey=" + Helper.ProjectProperties.apiKey;
         SearchFreetextAttractionsAPIJSON searcFreetextAttractionsAPIJSON =new SearchFreetextAttractionsAPIJSON();
@@ -151,7 +148,7 @@ public class ProductAPIDAO {
         searchtypes.add("ATTRACTION");
         searchFreetextPOST.setSearchTypes(searchtypes);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             searcFreetextAttractionsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextAttractionsAPIJSON.class);
@@ -179,7 +176,7 @@ public class ProductAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public ProductDetailedInfoAPIJSON productDetailedInfo(String code, String currencyCode, boolean excludeTourGradeAvailability, boolean showUnavailable){
+    public  static ProductDetailedInfoAPIJSON productDetailedInfo(String code, String currencyCode, boolean excludeTourGradeAvailability, boolean showUnavailable){
 
         final String url =Helper.ProjectProperties.apiURL + "/service/product?" + "code=" + code + "&currencyCode=" + currencyCode +
                           "&excludeTourGradeAvailability=" + excludeTourGradeAvailability + "&showUnavailable=" + showUnavailable +
@@ -187,7 +184,7 @@ public class ProductAPIDAO {
         ProductDetailedInfoAPIJSON productDetailedInfoAPIJSON =new ProductDetailedInfoAPIJSON();
         productDetailedInfoAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             productDetailedInfoAPIJSON = restTemplate.getForObject(url, ProductDetailedInfoAPIJSON.class);
@@ -214,13 +211,13 @@ public class ProductAPIDAO {
      * something else went wrong it returns the object with property
      * success=false.
      */
-    public ProductsByCodesAPIJSON getproductsByCodes(ProductsByCodesPOST productsByCodesPOST){
+    public static ProductsByCodesAPIJSON getproductsByCodes(ProductsByCodesPOST productsByCodesPOST){
 
         final String url =Helper.ProjectProperties.apiURL + "/service/search/products/codes?apiKey=" + Helper.ProjectProperties.apiKey;
         ProductsByCodesAPIJSON productsByCodesAPIJSON =new ProductsByCodesAPIJSON();
         productsByCodesAPIJSON.setSuccess(false);
         try {
-            restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
             ((SimpleClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
             productsByCodesAPIJSON = restTemplate.postForObject(url, productsByCodesPOST, ProductsByCodesAPIJSON.class);

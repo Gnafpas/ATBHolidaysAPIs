@@ -12,15 +12,13 @@ import java.util.List;
  * Created by George on 23/06/17.
  */
 public class ViatorProductVideosDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproductvideos(ViatorProductVideosBean viatorproductvideosBean){
+    public static boolean addproductvideos(ViatorProductVideosBean viatorproductvideosBean){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproductvideosBean);
             tx.commit();
@@ -36,12 +34,12 @@ public class ViatorProductVideosDAO {
         return err;
     }
 
-    public boolean deleteProductVideos(String productCode){
+    public static boolean deleteProductVideos(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductVideosBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -57,14 +55,14 @@ public class ViatorProductVideosDAO {
         return err;
     }
 
-    public List<ViatorProductVideosBean> getVideosByProductCode(String productCode){
+    public static List<ViatorProductVideosBean> getVideosByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductVideosBean> videos=null;
         String hql ="Select videos FROM ViatorProductVideosBean videos " +
                                   "WHERE videos.productCode like :productCode " +
                                   "order by videos.sortOrder ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             videos=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

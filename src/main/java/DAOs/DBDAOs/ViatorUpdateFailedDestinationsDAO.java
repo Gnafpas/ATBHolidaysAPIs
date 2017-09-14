@@ -11,15 +11,13 @@ import org.hibernate.Transaction;
  */
 public class ViatorUpdateFailedDestinationsDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addViatorUpdateFailedDestination(ViatorUpdateFailedDestinationsBean viatorUpdateFailedDestinationsBean){
 
-    public boolean addViatorUpdateFailedDestination(ViatorUpdateFailedDestinationsBean viatorUpdateFailedDestinationsBean){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
+
             tx=session.beginTransaction();
             session.save(viatorUpdateFailedDestinationsBean);
             tx.commit();

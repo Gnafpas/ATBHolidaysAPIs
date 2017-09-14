@@ -37,7 +37,7 @@ public class ViatorProductDetailsBean {
     private String thumbnailUrl;
     private String thumbnailHiResUrl;
     private String webUrl;
-    private String currencyCode;//todo add table to DB for different curencies
+    private String currencyCode;
     private BigDecimal price;
     private BigDecimal rrp;
     private BigDecimal merchantNetPriceFrom;

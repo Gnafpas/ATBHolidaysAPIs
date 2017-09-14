@@ -17,15 +17,13 @@ import java.util.List;
  * Created by George on 17/07/2017.
  */
 public class ViatorAttractionsDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addAttraction(ViatorAttractionsBean viatorAttractionsBean){
+    public static boolean addAttraction(ViatorAttractionsBean viatorAttractionsBean){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorAttractionsBean);
             tx.commit();
@@ -41,12 +39,12 @@ public class ViatorAttractionsDAO {
         return err;
     }
 
-    public boolean deleteAttraction(int seoId){
+    public static boolean deleteAttraction(int seoId){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("delete from ViatorAttractionsBean WHERE seoId='"+seoId+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -67,8 +65,9 @@ public class ViatorAttractionsDAO {
      * a combination of those attributes.Capability of sorting by REVIEW_AVG_RATING_D,
      * REVIEW_AVG_RATING_A, ALPHABETICAL.
      */
-    public List<ViatorAttractionsBean> getAttractions(GetAttractionsDAOParams params){
+    public static List<ViatorAttractionsBean> getAttractions(GetAttractionsDAOParams params){
 
+        Session session = HibernateUtil.getSession();
         List <ViatorAttractionsBean> attractions=null;
         int i;
         String hql=     " select  DISTINCT(attractions)"
@@ -95,10 +94,7 @@ public class ViatorAttractionsDAO {
             hql = hql + " order by attractions.rating ASC";
         }
 
-        Transaction tx = null;
         try{
-            session = helper.getSession();
-            tx=session.beginTransaction();
             Query query= session.createQuery(hql)
                     .setParameter("title", "%" + params.getTitle() + "%")
                     .setParameter("city", "%" + params.getCity() + "%");

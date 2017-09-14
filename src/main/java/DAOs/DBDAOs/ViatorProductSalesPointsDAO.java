@@ -13,15 +13,12 @@ import java.util.List;
  */
 public class ViatorProductSalesPointsDAO {
 
-    private HibernateUtil helper;
-    private Session session;
+    public static boolean addproductsalespointsBean(ViatorProductSalesPointsBean viatorproductsalespointsBean){
 
-    public boolean addproductsalespointsBean(ViatorProductSalesPointsBean viatorproductsalespointsBean){
-
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
             tx=session.beginTransaction();
             session.save(viatorproductsalespointsBean);
             tx.commit();
@@ -37,12 +34,12 @@ public class ViatorProductSalesPointsDAO {
         return err;
     }
 
-    public boolean deleteProductSalesPoints(String productCode){
+    public static boolean deleteProductSalesPoints(String productCode){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductSalesPointsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -58,13 +55,13 @@ public class ViatorProductSalesPointsDAO {
         return err;
     }
 
-    public List<ViatorProductSalesPointsBean> getSalesPointsByProductCode(String productCode){
+    public static List<ViatorProductSalesPointsBean> getSalesPointsByProductCode(String productCode){
 
+        Session session = HibernateUtil.getSession();
         List<ViatorProductSalesPointsBean> salesPoints=null;
         String hql ="Select salesPoints FROM ViatorProductSalesPointsBean salesPoints " +
                                        "WHERE salesPoints.productCode like :productCode ";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             salesPoints=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();

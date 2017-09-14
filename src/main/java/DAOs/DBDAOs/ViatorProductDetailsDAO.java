@@ -17,15 +17,14 @@ import java.util.List;
  * Created by George on 15/06/2017.
  */
 public class ViatorProductDetailsDAO {
-    private HibernateUtil helper;
-    private Session session;
 
-    public boolean addproduct(ViatorProductDetailsBean product){
+    public static boolean addproduct(ViatorProductDetailsBean product){
 
+        Session session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
-            session = helper.getSession();
+            session = HibernateUtil.getSession();
             tx=session.beginTransaction();
             session.save(product);
             tx.commit();
@@ -41,12 +40,12 @@ public class ViatorProductDetailsDAO {
         return err;
     }
 
-    public boolean deleteProduct(String code){
+    public static boolean deleteProduct(String code){
 
+        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductDetailsBean WHERE code='"+code+"'");
         boolean err=false;
         try{
-            session = helper.getSession();
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
@@ -62,11 +61,12 @@ public class ViatorProductDetailsDAO {
         return err;
     }
 
-    public List<String> getAllProductsCodes(){
+    public static List<String> getAllProductsCodes(){
+
+        Session session = HibernateUtil.getSession();
         List <String> products=null;
         String hql = "select code from ViatorProductDetailsBean";
         try{
-            session = helper.getSession();
             session.beginTransaction();
             products=session.createQuery(hql).list();
             session.close();
@@ -84,7 +84,7 @@ public class ViatorProductDetailsDAO {
      * a combination of those attributes.Capability of filtering by categories and sort by REVIEW_AVG_RATING_D,
      * REVIEW_AVG_RATING_A, POPULARITY, PRICE_D, PRICE_a, DURATION_D, DURATION_A.Also filtering by dates.
      */
-    public List <ViatorProductDetailsBean> getProducts(GetProductsDAOParams params){
+    public static List <ViatorProductDetailsBean> getProducts(GetProductsDAOParams params){
 
         List <ViatorProductDetailsBean> products=null;
         int i;
@@ -181,10 +181,8 @@ public class ViatorProductDetailsDAO {
             hql = hql + " order by productDetails.duration ASC";
         }
 
-        Transaction tx = null;
+        Session session = HibernateUtil.getSession();
         try{
-            session = helper.getSession();
-            tx=session.beginTransaction();
             Query query= session.createQuery(hql)
                     .setParameter("title", "%" + params.getTitle() + "%")
                     .setParameter("city", "%" + params.getCity() + "%")

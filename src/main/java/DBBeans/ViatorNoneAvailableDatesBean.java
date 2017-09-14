@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "viator_none_available_dates", schema = "develope_viator", catalog = "")
 public class ViatorNoneAvailableDatesBean {
-    private int rid;//todo may sould have long instead int
+    private int rid;
     private String productCode;
     private Integer year;
     private Integer month;

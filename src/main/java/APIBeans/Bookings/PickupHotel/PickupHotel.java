@@ -1,4 +1,4 @@
-package APIBeans.Bookings;
+package APIBeans.Bookings.PickupHotel;
 
 import java.math.BigDecimal;
 import java.util.List;
