@@ -6,30 +6,44 @@
   <session-factory>
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <!--<property name="connection.username">kalitaonlinenet</property>
+    <property name="connection.password">Ae0qywqudn61</property>
+    <property name="connection.url">jdbc:mysql://31.169.77.202:3306/kalitaon_product?useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>-->
     <property name="connection.username">root</property>
     <property name="connection.password">root</property>
     <property name="connection.url">jdbc:mysql://localhost:3306/atb_DB?useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
       <mapping resource="AProductTitleBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.AProductTitleBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean"/>
       <mapping resource="BProductDetailBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.BProductDetailBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.BProductDetailBean"/>
       <mapping resource="CProductOptionsBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.CProductOptionsBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.CProductOptionsBean"/>
       <mapping resource="DProductPhotoBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.DProductPhotoBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.DProductPhotoBean"/>
       <mapping resource="EPickupPointBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.EPickupPointBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.EPickupPointBean"/>
       <mapping resource="FPricePlanBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.FPricePlanBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.FPricePlanBean"/>
       <mapping resource="GPriceMatrixBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.GPriceMatrixBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.GPriceMatrixBean"/>
       <mapping resource="HAvailableDateBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.HAvailableDateBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.HAvailableDateBean"/>
       <mapping resource="HStopsaleDateBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.HStopsaleDateBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.HStopsaleDateBean"/>
       <mapping resource="IAvailableTimeBean.hbm.xml"/>
-      <mapping class="ATBDBBeans.IAvailableTimeBean"/>
-    <!-- <property name="connection.username"/> -->
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.IAvailableTimeBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean"/>
+      <mapping resource="ProductCategoriesBean.hbm.xml"/>
+      <mapping resource="HSpecialDateBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.HSpecialDateBean"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.JProductQuestionsBean"/>
+      <mapping resource="JProductQuestionsBean.hbm.xml"/>
+      <mapping resource="ProductCategoriesBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonProduct.SupplierPhotoPathBean"/>
+      <mapping resource="SupplierPhotoPathBean.hbm.xml"/>
+      <mapping resource="JProductQuestionsBean.hbm.xml"/>
+      <mapping resource="JProductQuestionsBean.hbm.xml"/>
+      <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->

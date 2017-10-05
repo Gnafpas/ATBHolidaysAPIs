@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.CityCodeBean" table="city_code" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="geonameid" column="geonameid"/>
+        <property name="originalName" column="original_name"/>
+        <property name="sanitizedName" column="sanitized_name"/>
+        <property name="alternateNamesCsv" column="alternate_names_CSV"/>
+        <property name="latitude" column="latitude"/>
+        <property name="longitude" column="longitude"/>
+        <property name="featureClass" column="feature_class"/>
+        <property name="featureCode" column="feature_code"/>
+        <property name="countryCodeIso" column="country_code_iso"/>
+        <property name="population" column="population"/>
+        <property name="dem" column="dem"/>
+        <property name="timeZoneRegion" column="time_zone_region"/>
+    </class>
+</hibernate-mapping>

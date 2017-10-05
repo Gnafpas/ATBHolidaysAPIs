@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorNoneAvailableDatesBean" table="viator_none_available_dates" schema="develope_viator">
+    <class name="Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean" table="viator_none_available_dates" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
         <property name="year" column="year"/>

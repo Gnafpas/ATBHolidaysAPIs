@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorSubcategoriesBean" table="viator_subcategories" schema="develope_viator">
+    <class name="Beans.ViatorDBBeans.ViatorSubcategoriesBean" table="viator_subcategories" schema="develope_viator">
         <id name="id" column="id"/>
         <property name="sortOrder" column="sort_order"/>
         <property name="subcategoryName" column="subcategoryName"/>

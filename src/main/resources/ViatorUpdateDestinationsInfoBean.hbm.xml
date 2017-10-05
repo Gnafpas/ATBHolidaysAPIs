@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorUpdateDestinationsInfoBean" table="viator_update_destinations_info"
+    <class name="Beans.ViatorDBBeans.ViatorUpdateDestinationsInfoBean" table="viator_update_destinations_info"
            schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="dateTime" column="date_time"/>

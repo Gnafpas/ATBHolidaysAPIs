@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorAttractionsBean" table="viator_attractions" schema="develope_viator">
+    <class name="Beans.ViatorDBBeans.ViatorAttractionsBean" table="viator_attractions" schema="develope_viator">
         <id name="seoId" column="seo_id"/>
         <property name="webUrl" column="web_URL"/>
         <property name="pageUrlName" column="page_Url_Name"/>

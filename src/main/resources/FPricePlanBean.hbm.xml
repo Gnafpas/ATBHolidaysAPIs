@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="ATBDBBeans.FPricePlanBean" table="f_price_plan" schema="atb_DB">
+    <class name="Beans.ATBDBBeans.KalitaonProduct.FPricePlanBean" table="f_price_plan" schema="atb_DB">
         <id name="id" column="id"/>
         <property name="productId" column="product_id"/>
         <property name="subId" column="sub_id"/>

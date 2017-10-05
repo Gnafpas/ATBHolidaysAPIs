@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="ATBDBBeans.HAvailableDateBean" table="h_available_date" schema="atb_DB">
+    <class name="Beans.ATBDBBeans.KalitaonProduct.HAvailableDateBean" table="h_available_date" schema="atb_DB">
         <id name="id" column="id"/>
         <property name="productId" column="product_id"/>
         <property name="planId" column="plan_id"/>

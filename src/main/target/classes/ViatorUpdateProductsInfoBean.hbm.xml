@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorUpdateProductsInfoBean" table="viator_update_products_info" schema="develope_viator">
+    <class name="Beans.ViatorDBBeans.ViatorUpdateProductsInfoBean" table="viator_update_products_info" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="totalLeafNodes" column="total_leaf_nodes"/>
         <property name="totalProducts" column="total_products"/>

@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorUpdateFailedAvailDatesBean" table="viator_update_failed_availDates"
+    <class name="Beans.ViatorDBBeans.ViatorUpdateFailedAvailDatesBean" table="viator_update_failed_availDates"
            schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productWithFailedAvailDates" column="product_with_failed_AvailDates"/>

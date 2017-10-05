@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorProductUserPhotosBean" table="viator_product_user_photos" schema="develope_viator">
+    <class name="Beans.ViatorDBBeans.ViatorProductUserPhotosBean" table="viator_product_user_photos" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
         <property name="photoId" column="photo_id"/>

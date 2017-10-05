@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean" table="product_categories" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="subCatId" column="sub_cat_id"/>
+        <property name="categoryName" column="category_name"/>
+        <property name="lng" column="lng"/>
+    </class>
+</hibernate-mapping>

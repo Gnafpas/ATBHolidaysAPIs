@@ -34,9 +34,9 @@
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/java" />
+          <root url="file://$MODULE_DIR$/resources" />
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
-          <root url="file://$MODULE_DIR$/resources" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -112,5 +112,6 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.6" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" exported="" name="commons-codec:commons-codec:1.10" level="project" />
   </component>
 </module>

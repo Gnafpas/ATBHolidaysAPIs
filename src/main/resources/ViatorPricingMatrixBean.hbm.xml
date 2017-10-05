@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="DBBeans.ViatorPricingMatrixBean" table="viator_pricing_matrix" schema="develope_viator">
+    <class name="Beans.ViatorDBBeans.ViatorPricingMatrixBean" table="viator_pricing_matrix" schema="develope_viator">
         <id name="rid" column="rid"/>
         <property name="productCode" column="product_code"/>
         <property name="callForLastMinAvailability" column="call_for_last_min_availability"/>
