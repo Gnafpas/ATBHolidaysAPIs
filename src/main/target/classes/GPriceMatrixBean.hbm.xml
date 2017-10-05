@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.GPriceMatrixBean" table="g_price_matrix" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="productId" column="product_id"/>
+        <property name="planId" column="plan_id"/>
+        <property name="optionTitle" column="option_title"/>
+        <property name="personType" column="person_type"/>
+        <property name="ageFrom" column="age_from"/>
+        <property name="ageTo" column="age_to"/>
+        <property name="minCountRequired" column="min_count_required"/>
+        <property name="maxCountRequired" column="max_count_required"/>
+        <property name="commission" column="commission"/>
+        <property name="priceRate" column="price_rate"/>
+        <property name="priceNet" column="price_net"/>
+        <property name="currencyCode" column="currency_code"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

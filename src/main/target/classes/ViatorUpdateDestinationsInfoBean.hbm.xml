@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ViatorDBBeans.ViatorUpdateDestinationsInfoBean" table="viator_update_destinations_info"
+           schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="dateTime" column="date_time"/>
+        <property name="viatorError" column="viator_error"/>
+        <property name="viatoErrorInfo" column="viato_error_Info"/>
+        <property name="dbCommError" column="db_comm_error"/>
+        <property name="dbCommErrorsCounter" column="db_comm_errors_Counter"/>
+    </class>
+</hibernate-mapping>

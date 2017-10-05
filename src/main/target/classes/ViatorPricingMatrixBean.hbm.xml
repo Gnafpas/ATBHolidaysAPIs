@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ViatorDBBeans.ViatorPricingMatrixBean" table="viator_pricing_matrix" schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="productCode" column="product_code"/>
+        <property name="callForLastMinAvailability" column="call_for_last_min_availability"/>
+        <property name="tourGradeCode" column="tour_grade_code"/>
+        <property name="tourGradeTitle" column="tour_grade_title"/>
+        <property name="pricingUnit" column="pricing_unit"/>
+        <property name="bookingDate" column="booking_date"/>
+        <property name="bandId" column="band_id"/>
+        <property name="minimumCountRequired" column="minimum_count_required"/>
+        <property name="maximumCountRequired" column="maximum_count_required"/>
+        <property name="minNoOfTravellersRequiredForPrice" column="min_no_of_travellers_required_for_price"/>
+        <property name="currencyCode" column="currency_code"/>
+        <property name="price" column="price"/>
+        <property name="merchantNetPrice" column="merchant_net_price"/>
+        <property name="sortOrderOfDate" column="sort_order_of_date"/>
+        <property name="sortOrderOfTourGrade" column="sort_order_of_tour_grade"/>
+        <property name="sortOrderOfPricing" column="sort_order_of_pricing"/>
+        <property name="sortOrderOfAgeBand" column="sort_order_of_age_band"/>
+        <property name="sortOrderOfPrice" column="sort_order_of_price"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

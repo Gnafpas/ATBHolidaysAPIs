@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ViatorDBBeans.ViatorProductBookingQuestionsBean" table="viator_product_booking_questions"
+           schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="productCode" column="product_code"/>
+        <property name="questionId" column="question_id"/>
+        <property name="stringQuestionId" column="string_question_id"/>
+        <property name="titleEn" column="title_EN"/>
+        <property name="subTitleEn" column="sub_title_EN"/>
+        <property name="required" column="required"/>
+        <property name="message" column="message"/>
+        <property name="sortOrder" column="sort_order"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

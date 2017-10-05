@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.FPricePlanBean" table="f_price_plan" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="productId" column="product_id"/>
+        <property name="subId" column="sub_id"/>
+        <property name="planTitle" column="plan_title"/>
+        <property name="priceType" column="price_type"/>
+        <property name="minParticipants" column="min_participants"/>
+        <property name="rateType" column="rate_type"/>
+        <property name="tourGradeCode" column="tour_grade_code"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

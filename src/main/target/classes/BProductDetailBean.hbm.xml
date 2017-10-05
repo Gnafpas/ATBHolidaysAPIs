@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.BProductDetailBean" table="b_product_detail" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="productId" column="product_id"/>
+        <property name="descriptionSummary" column="description_summary"/>
+        <property name="categories" column="categories"/>
+        <property name="highlight" column="highlight"/>
+        <property name="productDetail" column="product_detail"/>
+        <property name="inclusions" column="inclusions"/>
+        <property name="exclusions" column="exclusions"/>
+        <property name="cancellationPolicy" column="cancellation_policy"/>
+        <property name="adittionalInfo" column="adittional_info"/>
+        <property name="voucherInfo" column="voucher_info"/>
+        <property name="voucherCountryCode" column="voucher_country_code"/>
+        <property name="voucherTelephone" column="voucher_telephone"/>
+        <property name="mobileAccess" column="mobile_access"/>
+        <property name="merchantCancellable" column="merchant_cancellable"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.CProductOptionsBean" table="c_product_options" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="productId" column="product_id"/>
+        <property name="guidingLive" column="guiding_live"/>
+        <property name="guidingAudio" column="guiding_audio"/>
+        <property name="guidingBooklets" column="guiding_booklets"/>
+        <property name="duration" column="duration"/>
+        <property name="validy" column="validy"/>
+        <property name="minConfirmationTime" column="min_confirmation_time"/>
+        <property name="privateOption" column="private_option"/>
+        <property name="typeOfPricing" column="type_of_pricing"/>
+        <property name="availabilityTime" column="availability_time"/>
+        <property name="customerDetailRequest" column="customer_detail_request"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

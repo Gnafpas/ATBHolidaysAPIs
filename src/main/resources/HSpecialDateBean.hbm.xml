@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.HSpecialDateBean" table="h_special_date" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="productId" column="product_id"/>
+        <property name="planId" column="plan_id"/>
+        <property name="availableId" column="available_id"/>
+        <property name="serviceDate" column="service_date"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

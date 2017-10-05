@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ViatorDBBeans.AtbUpdateProductsInfoBean" table="atb_update_products_info"
+           schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="totalProducts" column="total_products"/>
+        <property name="totalExpiredProducts" column="total_expired_products"/>
+        <property name="startDateTime" column="start_date_time"/>
+        <property name="endDateTime" column="end_date_time"/>
+        <property name="dbCommErrorsCounter" column="db_comm_errors_Counter"/>
+    </class>
+</hibernate-mapping>

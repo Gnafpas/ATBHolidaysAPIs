@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean" table="sub_agency" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="gsaId" column="gsa_id"/>
+        <property name="agentName" column="agent_name"/>
+        <property name="countryCode" column="country_code"/>
+        <property name="pic" column="pic"/>
+        <property name="web" column="web"/>
+        <property name="email" column="email"/>
+        <property name="tel" column="tel"/>
+        <property name="fax" column="fax"/>
+        <property name="address" column="address"/>
+        <property name="iata" column="IATA"/>
+        <property name="tursab" column="TURSAB"/>
+        <property name="clia" column="CLIA"/>
+        <property name="asta" column="ASTA"/>
+        <property name="other" column="other"/>
+        <property name="taxOffice" column="tax_office"/>
+        <property name="taxNo" column="tax_no"/>
+        <property name="bankInfo" column="bank_info"/>
+        <property name="commission" column="commission"/>
+        <property name="markup" column="markup"/>
+        <property name="deposit" column="deposit"/>
+        <property name="currency" column="currency"/>
+        <property name="masterUsercode" column="master_usercode"/>
+        <property name="logo" column="logo"/>
+        <property name="xmlStatus" column="xml_status"/>
+        <property name="xmlStorekey" column="xml_storekey"/>
+        <property name="notes" column="notes"/>
+        <property name="activation" column="activation"/>
+        <property name="createdDate" column="created_date"/>
+    </class>
+</hibernate-mapping>

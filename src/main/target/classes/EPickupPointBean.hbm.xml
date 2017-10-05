@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.EPickupPointBean" table="e_pickup_point" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="productId" column="product_id"/>
+        <property name="pickupType" column="pickup_type"/>
+        <property name="meetingPoint" column="meeting_point"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="hotelPickupPoint" column="hotel_pickup_point"/>
+        <property name="dropOfEndPoint" column="drop_of_end_point"/>
+        <property name="startingPoint" column="starting_point"/>
+        <property name="latitude" column="latitude"/>
+        <property name="longitude" column="longitude"/>
+        <property name="mapZoom" column="map_zoom"/>
+        <property name="precisionType" column="precision_type"/>
+        <property name="pickupNote" column="pickup_note"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean" table="country_code" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="countryName" column="country_name"/>
+        <property name="countryCode" column="country_code"/>
+        <property name="isoCode" column="iso_code"/>
+        <property name="isoCode2" column="iso_code_2"/>
+        <property name="population" column="population"/>
+        <property name="areaKm2" column="area_km2"/>
+        <property name="gdpUsd" column="gdp_usd"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean" table="a_product_title" schema="atb_DB">
+        <id name="id" column="id"/>
+        <property name="subId" column="sub_id"/>
+        <property name="productCode" column="product_code"/>
+        <property name="textLanguage" column="text_language"/>
+        <property name="countryCode" column="country_code"/>
+        <property name="countryName" column="country_name"/>
+        <property name="cityCode" column="city_code"/>
+        <property name="cityName" column="city_name"/>
+        <property name="productTitle" column="product_title"/>
+        <property name="productReferenceCode" column="product_reference_code"/>
+        <property name="typeOfProduct" column="type_of_product"/>
+        <property name="mainSupplierId" column="main_supplier_id"/>
+        <property name="mainSupplierName" column="main_supplier_name"/>
+        <property name="subSupplierId" column="sub_supplier_id"/>
+        <property name="subSupplierName" column="sub_supplier_name"/>
+        <property name="aPoint" column="a_point"/>
+        <property name="bPoint" column="b_point"/>
+        <property name="bookingEngine" column="booking_engine"/>
+        <property name="thumbnailUrl" column="thumbnail_url"/>
+        <property name="categoriesTag" column="categories_tag"/>
+        <property name="showPrice" column="show_price"/>
+        <property name="marchandNetPrice" column="marchand_net_price"/>
+        <property name="currencyCode" column="currency_code"/>
+        <property name="sortOrder" column="sort_order"/>
+        <property name="onSale" column="on_sale"/>
+        <property name="reason" column="reason"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+    </class>
+</hibernate-mapping>
