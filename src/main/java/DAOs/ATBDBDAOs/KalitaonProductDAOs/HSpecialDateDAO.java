@@ -22,7 +22,6 @@ public class HSpecialDateDAO {
             tx = session.beginTransaction();
             session.insert(specialDate);
             tx.commit();
-            session.close();
         } catch (HibernateException e) {
             err = true;
             e.printStackTrace();
@@ -32,6 +31,8 @@ public class HSpecialDateDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
 
@@ -46,7 +47,6 @@ public class HSpecialDateDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,27 +56,33 @@ public class HSpecialDateDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
 
-    public static List<HSpecialDateBean> getSpecialDatesByProductId(String productId){
+    public static List<HSpecialDateBean> getSpecialDatesByProductId(String productId,String planId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List<HSpecialDateBean> specialDates=null;
         String hql ="Select specialDates FROM HSpecialDateBean specialDates " +
-                "WHERE specialDates.productId like :productId ";
+                "WHERE specialDates.productId like :productId"+
+                " AND   specialDates.planId like :planId";
         try{
             session.beginTransaction();
-            specialDates=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
+            specialDates=session.createQuery(hql).setParameter("productId",   productId )
+                    .setParameter("planId",   "%"+planId+"%" )
+                    .getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return specialDates;
     }

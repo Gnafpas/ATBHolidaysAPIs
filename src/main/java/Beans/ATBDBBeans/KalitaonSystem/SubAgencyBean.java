@@ -3,7 +3,7 @@ package Beans.ATBDBBeans.KalitaonSystem;
 import javax.persistence.*;
 
 /**
- * Created by George on 30/09/2017.
+ * Created by George on 19/10/2017.
  */
 @Entity
 @Table(name = "sub_agency", schema = "atb_System_DB", catalog = "")
@@ -11,13 +11,20 @@ public class SubAgencyBean {
     private int id;
     private String gsaId;
     private String agentName;
-    private String countryCode;
-    private String pic;
+    private String typeOfAgency;
+    private String firstName;
+    private String lastName;
+    private String jobTitle;
     private String web;
     private String email;
-    private String tel;
-    private String fax;
-    private String address;
+    private String mobile;
+    private String telephone;
+    private String countryCode;
+    private String countryName;
+    private String cityCode;
+    private String cityName;
+    private String billingAddress;
+    private String billingEmail;
     private String iata;
     private String tursab;
     private String clia;
@@ -25,12 +32,19 @@ public class SubAgencyBean {
     private String other;
     private String taxOffice;
     private String taxNo;
-    private String bankInfo;
+    private String bankName;
+    private String bankAddress;
+    private String bankCity;
+    private String bankState;
+    private String bankCountry;
+    private String accountName;
+    private String accountNumber;
+    private String iban;
+    private String swift;
     private String commission;
     private String markup;
     private String deposit;
     private String currency;
-    private String masterUsercode;
     private String logo;
     private String xmlStatus;
     private String xmlStorekey;
@@ -69,23 +83,43 @@ public class SubAgencyBean {
     }
 
     @Basic
-    @Column(name = "country_code")
-    public String getCountryCode() {
-        return countryCode;
+    @Column(name = "type_of_agency")
+    public String getTypeOfAgency() {
+        return typeOfAgency;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setTypeOfAgency(String typeOfAgency) {
+        this.typeOfAgency = typeOfAgency;
     }
 
     @Basic
-    @Column(name = "pic")
-    public String getPic() {
-        return pic;
+    @Column(name = "first_name")
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Basic
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Basic
+    @Column(name = "job_title")
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     @Basic
@@ -109,33 +143,83 @@ public class SubAgencyBean {
     }
 
     @Basic
-    @Column(name = "tel")
-    public String getTel() {
-        return tel;
+    @Column(name = "mobile")
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    @Basic
-    @Column(name = "fax")
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     @Basic
-    @Column(name = "address")
-    public String getAddress() {
-        return address;
+    @Column(name = "telephone")
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    @Basic
+    @Column(name = "country_code")
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    @Basic
+    @Column(name = "country_name")
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    @Basic
+    @Column(name = "city_code")
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    @Basic
+    @Column(name = "city_name")
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    @Basic
+    @Column(name = "billing_address")
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    @Basic
+    @Column(name = "billing_email")
+    public String getBillingEmail() {
+        return billingEmail;
+    }
+
+    public void setBillingEmail(String billingEmail) {
+        this.billingEmail = billingEmail;
     }
 
     @Basic
@@ -209,13 +293,93 @@ public class SubAgencyBean {
     }
 
     @Basic
-    @Column(name = "bank_info")
-    public String getBankInfo() {
-        return bankInfo;
+    @Column(name = "bank_name")
+    public String getBankName() {
+        return bankName;
     }
 
-    public void setBankInfo(String bankInfo) {
-        this.bankInfo = bankInfo;
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    @Basic
+    @Column(name = "bank_address")
+    public String getBankAddress() {
+        return bankAddress;
+    }
+
+    public void setBankAddress(String bankAddress) {
+        this.bankAddress = bankAddress;
+    }
+
+    @Basic
+    @Column(name = "bank_city")
+    public String getBankCity() {
+        return bankCity;
+    }
+
+    public void setBankCity(String bankCity) {
+        this.bankCity = bankCity;
+    }
+
+    @Basic
+    @Column(name = "bank_state")
+    public String getBankState() {
+        return bankState;
+    }
+
+    public void setBankState(String bankState) {
+        this.bankState = bankState;
+    }
+
+    @Basic
+    @Column(name = "bank_country")
+    public String getBankCountry() {
+        return bankCountry;
+    }
+
+    public void setBankCountry(String bankCountry) {
+        this.bankCountry = bankCountry;
+    }
+
+    @Basic
+    @Column(name = "account_name")
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    @Basic
+    @Column(name = "account_number")
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    @Basic
+    @Column(name = "iban")
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    @Basic
+    @Column(name = "swift")
+    public String getSwift() {
+        return swift;
+    }
+
+    public void setSwift(String swift) {
+        this.swift = swift;
     }
 
     @Basic
@@ -256,16 +420,6 @@ public class SubAgencyBean {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    @Basic
-    @Column(name = "master_usercode")
-    public String getMasterUsercode() {
-        return masterUsercode;
-    }
-
-    public void setMasterUsercode(String masterUsercode) {
-        this.masterUsercode = masterUsercode;
     }
 
     @Basic
@@ -338,13 +492,21 @@ public class SubAgencyBean {
         if (id != that.id) return false;
         if (gsaId != null ? !gsaId.equals(that.gsaId) : that.gsaId != null) return false;
         if (agentName != null ? !agentName.equals(that.agentName) : that.agentName != null) return false;
-        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
-        if (pic != null ? !pic.equals(that.pic) : that.pic != null) return false;
+        if (typeOfAgency != null ? !typeOfAgency.equals(that.typeOfAgency) : that.typeOfAgency != null) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (jobTitle != null ? !jobTitle.equals(that.jobTitle) : that.jobTitle != null) return false;
         if (web != null ? !web.equals(that.web) : that.web != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
-        if (fax != null ? !fax.equals(that.fax) : that.fax != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
+        if (telephone != null ? !telephone.equals(that.telephone) : that.telephone != null) return false;
+        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
+        if (countryName != null ? !countryName.equals(that.countryName) : that.countryName != null) return false;
+        if (cityCode != null ? !cityCode.equals(that.cityCode) : that.cityCode != null) return false;
+        if (cityName != null ? !cityName.equals(that.cityName) : that.cityName != null) return false;
+        if (billingAddress != null ? !billingAddress.equals(that.billingAddress) : that.billingAddress != null)
+            return false;
+        if (billingEmail != null ? !billingEmail.equals(that.billingEmail) : that.billingEmail != null) return false;
         if (iata != null ? !iata.equals(that.iata) : that.iata != null) return false;
         if (tursab != null ? !tursab.equals(that.tursab) : that.tursab != null) return false;
         if (clia != null ? !clia.equals(that.clia) : that.clia != null) return false;
@@ -352,13 +514,20 @@ public class SubAgencyBean {
         if (other != null ? !other.equals(that.other) : that.other != null) return false;
         if (taxOffice != null ? !taxOffice.equals(that.taxOffice) : that.taxOffice != null) return false;
         if (taxNo != null ? !taxNo.equals(that.taxNo) : that.taxNo != null) return false;
-        if (bankInfo != null ? !bankInfo.equals(that.bankInfo) : that.bankInfo != null) return false;
+        if (bankName != null ? !bankName.equals(that.bankName) : that.bankName != null) return false;
+        if (bankAddress != null ? !bankAddress.equals(that.bankAddress) : that.bankAddress != null) return false;
+        if (bankCity != null ? !bankCity.equals(that.bankCity) : that.bankCity != null) return false;
+        if (bankState != null ? !bankState.equals(that.bankState) : that.bankState != null) return false;
+        if (bankCountry != null ? !bankCountry.equals(that.bankCountry) : that.bankCountry != null) return false;
+        if (accountName != null ? !accountName.equals(that.accountName) : that.accountName != null) return false;
+        if (accountNumber != null ? !accountNumber.equals(that.accountNumber) : that.accountNumber != null)
+            return false;
+        if (iban != null ? !iban.equals(that.iban) : that.iban != null) return false;
+        if (swift != null ? !swift.equals(that.swift) : that.swift != null) return false;
         if (commission != null ? !commission.equals(that.commission) : that.commission != null) return false;
         if (markup != null ? !markup.equals(that.markup) : that.markup != null) return false;
         if (deposit != null ? !deposit.equals(that.deposit) : that.deposit != null) return false;
         if (currency != null ? !currency.equals(that.currency) : that.currency != null) return false;
-        if (masterUsercode != null ? !masterUsercode.equals(that.masterUsercode) : that.masterUsercode != null)
-            return false;
         if (logo != null ? !logo.equals(that.logo) : that.logo != null) return false;
         if (xmlStatus != null ? !xmlStatus.equals(that.xmlStatus) : that.xmlStatus != null) return false;
         if (xmlStorekey != null ? !xmlStorekey.equals(that.xmlStorekey) : that.xmlStorekey != null) return false;
@@ -374,13 +543,20 @@ public class SubAgencyBean {
         int result = id;
         result = 31 * result + (gsaId != null ? gsaId.hashCode() : 0);
         result = 31 * result + (agentName != null ? agentName.hashCode() : 0);
-        result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
-        result = 31 * result + (pic != null ? pic.hashCode() : 0);
+        result = 31 * result + (typeOfAgency != null ? typeOfAgency.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (jobTitle != null ? jobTitle.hashCode() : 0);
         result = 31 * result + (web != null ? web.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (tel != null ? tel.hashCode() : 0);
-        result = 31 * result + (fax != null ? fax.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
+        result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
+        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
+        result = 31 * result + (cityCode != null ? cityCode.hashCode() : 0);
+        result = 31 * result + (cityName != null ? cityName.hashCode() : 0);
+        result = 31 * result + (billingAddress != null ? billingAddress.hashCode() : 0);
+        result = 31 * result + (billingEmail != null ? billingEmail.hashCode() : 0);
         result = 31 * result + (iata != null ? iata.hashCode() : 0);
         result = 31 * result + (tursab != null ? tursab.hashCode() : 0);
         result = 31 * result + (clia != null ? clia.hashCode() : 0);
@@ -388,12 +564,19 @@ public class SubAgencyBean {
         result = 31 * result + (other != null ? other.hashCode() : 0);
         result = 31 * result + (taxOffice != null ? taxOffice.hashCode() : 0);
         result = 31 * result + (taxNo != null ? taxNo.hashCode() : 0);
-        result = 31 * result + (bankInfo != null ? bankInfo.hashCode() : 0);
+        result = 31 * result + (bankName != null ? bankName.hashCode() : 0);
+        result = 31 * result + (bankAddress != null ? bankAddress.hashCode() : 0);
+        result = 31 * result + (bankCity != null ? bankCity.hashCode() : 0);
+        result = 31 * result + (bankState != null ? bankState.hashCode() : 0);
+        result = 31 * result + (bankCountry != null ? bankCountry.hashCode() : 0);
+        result = 31 * result + (accountName != null ? accountName.hashCode() : 0);
+        result = 31 * result + (accountNumber != null ? accountNumber.hashCode() : 0);
+        result = 31 * result + (iban != null ? iban.hashCode() : 0);
+        result = 31 * result + (swift != null ? swift.hashCode() : 0);
         result = 31 * result + (commission != null ? commission.hashCode() : 0);
         result = 31 * result + (markup != null ? markup.hashCode() : 0);
         result = 31 * result + (deposit != null ? deposit.hashCode() : 0);
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
-        result = 31 * result + (masterUsercode != null ? masterUsercode.hashCode() : 0);
         result = 31 * result + (logo != null ? logo.hashCode() : 0);
         result = 31 * result + (xmlStatus != null ? xmlStatus.hashCode() : 0);
         result = 31 * result + (xmlStorekey != null ? xmlStorekey.hashCode() : 0);

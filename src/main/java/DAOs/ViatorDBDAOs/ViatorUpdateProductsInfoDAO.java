@@ -23,7 +23,6 @@ public class ViatorUpdateProductsInfoDAO {
             tx=session.beginTransaction();
             session.persist(viatorUpdateProductsInfoBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,8 @@ public class ViatorUpdateProductsInfoDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -48,13 +49,14 @@ public class ViatorUpdateProductsInfoDAO {
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
             viatorUpdateProductsInfoBean=(ViatorUpdateProductsInfoBean)query.getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return viatorUpdateProductsInfoBean;
     }

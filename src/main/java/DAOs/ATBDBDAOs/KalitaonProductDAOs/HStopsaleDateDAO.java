@@ -22,7 +22,6 @@ public class HStopsaleDateDAO {
             tx = session.beginTransaction();
             session.insert(stopsaleDateBean);
             tx.commit();
-            session.close();
         } catch (HibernateException e) {
             err = true;
             e.printStackTrace();
@@ -32,6 +31,8 @@ public class HStopsaleDateDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
 
@@ -46,7 +47,6 @@ public class HStopsaleDateDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,27 +56,33 @@ public class HStopsaleDateDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
 
-    public static List<HStopsaleDateBean> gethStopsaleDatesByProductId(String productId){
+    public static List<HStopsaleDateBean> gethStopsaleDatesByProductId(String productId,String planId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List<HStopsaleDateBean> hStopsaleDates=null;
         String hql ="Select hStopsaleDates FROM HStopsaleDateBean hStopsaleDates " +
-                "WHERE hStopsaleDates.productId like :productId ";
+                "WHERE hStopsaleDates.productId like :productId"+
+                " AND   hStopsaleDates.planId like :planId";
         try{
             session.beginTransaction();
-            hStopsaleDates=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
+            hStopsaleDates=session.createQuery(hql).setParameter("productId",   productId )
+                    .setParameter("planId",   "%"+planId+"%" )
+                    .getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return hStopsaleDates;
     }

@@ -20,7 +20,6 @@ public class ViatorUpdateCategoriesInfoDAO {
             tx=session.beginTransaction();
             session.persist(viatorUpdateCategoriesInfoBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -30,6 +29,8 @@ public class ViatorUpdateCategoriesInfoDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }

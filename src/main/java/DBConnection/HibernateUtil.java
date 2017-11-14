@@ -9,8 +9,9 @@ import org.hibernate.cfg.Configuration;
 /**
  * Created by George on 15/06/2017.
  */
-public class HibernateUtil {
+public class  HibernateUtil {
     private static final SessionFactory ourSessionFactory;
+
 
     static {
         try {

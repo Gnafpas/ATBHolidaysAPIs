@@ -23,7 +23,6 @@ public class ViatorPickupHotelsDAO {
             tx=session.beginTransaction();
             session.save(viatorPickupHotelsBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,8 @@ public class ViatorPickupHotelsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -47,13 +48,14 @@ public class ViatorPickupHotelsDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -69,13 +71,14 @@ public class ViatorPickupHotelsDAO {
             session.beginTransaction();
             pickupHotelsBean=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return pickupHotelsBean;
     }

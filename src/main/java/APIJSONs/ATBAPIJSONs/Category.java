@@ -1,25 +1,27 @@
 package APIJSONs.ATBAPIJSONs;
 
+import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
+
 /**
- * Created by George on 11/07/2017.
+ * Created by George on 20/10/2017.
  */
 public class Category {
-//    ViatorCategoriesBean category;
-//    List<ViatorSubcategoriesBean> subcategories=new ArrayList<>();
-//
-//    public ViatorCategoriesBean getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(ViatorCategoriesBean category) {
-//        this.category = category;
-//    }
-//
-//    public List<ViatorSubcategoriesBean> getSubcategories() {
-//        return subcategories;
-//    }
-//
-//    public void setSubcategories(List<ViatorSubcategoriesBean> subcategories) {
-//        this.subcategories = subcategories;
-//    }
+    private ProductCategoriesBean category;
+    private int productCount=0;
+
+    public ProductCategoriesBean getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategoriesBean category) {
+        this.category = category;
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
 }

@@ -22,7 +22,6 @@ public class IAvailableTimeDAO {
             tx = session.beginTransaction();
             session.insert(availableTimeBean);
             tx.commit();
-            session.close();
         } catch (HibernateException e) {
             err = true;
             e.printStackTrace();
@@ -32,6 +31,8 @@ public class IAvailableTimeDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
 
@@ -46,7 +47,6 @@ public class IAvailableTimeDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,27 +56,33 @@ public class IAvailableTimeDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
 
-    public static List<IAvailableTimeBean> getiAvailableTimesByProductId(String productId){
+    public static List<IAvailableTimeBean> getiAvailableTimesByProductId(String productId,String planId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List<IAvailableTimeBean> iAvailableTimes=null;
         String hql ="Select iAvailableTimes FROM IAvailableTimeBean iAvailableTimes " +
-                "WHERE iAvailableTimes.productId like :productId ";
+                "WHERE iAvailableTimes.productId like :productId"+
+                " AND   iAvailableTimes.planId like :planId";
         try{
             session.beginTransaction();
-            iAvailableTimes=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
+            iAvailableTimes=session.createQuery(hql).setParameter("productId",   productId )
+                    .setParameter("planId",   "%"+planId+"%" )
+                    .getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return iAvailableTimes;
     }

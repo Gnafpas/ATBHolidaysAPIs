@@ -24,7 +24,6 @@ public class ViatorProductAgeBandsDAO {
             tx=session.beginTransaction();
             session.save(viatorproductagebandsBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -34,6 +33,8 @@ public class ViatorProductAgeBandsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -47,7 +48,6 @@ public class ViatorProductAgeBandsDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -57,6 +57,8 @@ public class ViatorProductAgeBandsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -72,13 +74,14 @@ public class ViatorProductAgeBandsDAO {
             session.beginTransaction();
             ageBands=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return ageBands;
     }

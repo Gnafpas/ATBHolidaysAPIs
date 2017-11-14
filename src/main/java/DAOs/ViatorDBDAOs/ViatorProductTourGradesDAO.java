@@ -23,7 +23,6 @@ public class ViatorProductTourGradesDAO {
             tx=session.beginTransaction();
             session.save(viatorproducttourgradesBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,8 @@ public class ViatorProductTourGradesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -46,7 +47,6 @@ public class ViatorProductTourGradesDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,6 +56,8 @@ public class ViatorProductTourGradesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -71,13 +73,14 @@ public class ViatorProductTourGradesDAO {
             session.beginTransaction();
             tourGrades=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return tourGrades;
     }

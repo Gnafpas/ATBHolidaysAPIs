@@ -1,6 +1,6 @@
 package DAOs.ATBDBDAOs.KalitaonProductDAOs;
 
-import APIJSONs.ATBAPIJSONs.GetProductsSrvcParams;
+import APIJSONs.ATBAPIJSONs.ProductsAndCategoriesPOST;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import DBConnection.ATBHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
-import java.net.ConnectException;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +28,6 @@ public class AProductTitleDAO {
             tx=session.beginTransaction();
             session.insert(product);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -38,6 +36,8 @@ public class AProductTitleDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -51,7 +51,6 @@ public class AProductTitleDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -60,6 +59,8 @@ public class AProductTitleDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -73,13 +74,14 @@ public class AProductTitleDAO {
         try{
             session.beginTransaction();
             products=session.createQuery(hql).list();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return products;
     }
@@ -94,7 +96,6 @@ public class AProductTitleDAO {
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
             product=(AProductTitleBean)query.getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -103,6 +104,8 @@ public class AProductTitleDAO {
 
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return product;
     }
@@ -117,17 +120,17 @@ public class AProductTitleDAO {
         Query query= session.createQuery(hql);
         query.setMaxResults(1);
             product=(AProductTitleBean)query.getSingleResult();
-        session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (NoResultException e) {
             e.printStackTrace();
-        }catch (CJCommunicationsException e){//todo handle exception when turn of mysql server
+        }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
-
         return product;
     }
 
@@ -137,7 +140,7 @@ public class AProductTitleDAO {
      * a combination of those attributes.Capability of filtering by categories and sort by REVIEW_AVG_RATING_D,
      * REVIEW_AVG_RATING_A, POPULARITY, PRICE_D, PRICE_a, DURATION_D, DURATION_A.Also filtering by dates.
      */
-    public static List <AProductTitleBean> getProducts(GetProductsSrvcParams params){
+    public static List <AProductTitleBean> getProducts(ProductsAndCategoriesPOST params){
 
         List <AProductTitleBean> products=null;
         int i;
@@ -150,11 +153,13 @@ public class AProductTitleDAO {
          */
         hql=hql + " where productDetails.productTitle LIKE :title "
                 + " and productDetails.cityName LIKE :city "
-                + " and productDetails.countryName LIKE :country "
-                + " and productDetails.cityCode LIKE :cityCode "
-                + " and productDetails.countryCode LIKE :countryCode ";
-        if(!params.getCode().equals(""))
-            hql=hql + " and productDetails.id = :code ";
+                + " and productDetails.countryName LIKE :country ";
+        if(!params.getCityCode().equals(""))
+            hql=hql + " and productDetails.cityCode LIKE :cityCode ";
+        if(!params.getCountryCode().equals(""))
+            hql=hql + " and productDetails.countryCode LIKE :countryCode ";
+        if(params.getProductId()!=0)
+            hql=hql + " and productDetails.id = :productId ";
         if(params.getPriceFrom()!=0)
             hql=hql + " and cast(productDetails.marchandNetPrice as int) >= :priceFrom ";
         if(params.getPriceTo()!=0)
@@ -166,9 +171,14 @@ public class AProductTitleDAO {
         if(params.getCategories()!=null && params.getCategories().size()!=0) {
             i = 0;
             for (String cat : params.getCategories()) {
-                hql = hql+ " and  productDetails.categoriesTag like :categories"+i;
+                if(i==0)
+                  hql = hql+ " and  (productDetails.categoriesTag like :categories"+i;
+                else
+                    hql = hql+ " or  productDetails.categoriesTag like :categories"+i;
                 i++;
             }
+            if(i!=0)
+              hql = hql+ ")";
         }
 
         /**
@@ -182,7 +192,7 @@ public class AProductTitleDAO {
                         " where stopsaleDate.stopDate = :date" + i +
                         " and stopsaleDate.productId = productDetails.id)";
                 i++;
-            }
+            }//todo check stopsale dates to let products show up when there is even only one day available from the selected dates
         }
 
         StatelessSession session = ATBHibernateUtil.getSession();
@@ -190,12 +200,13 @@ public class AProductTitleDAO {
             Query query= session.createQuery(hql)
                     .setParameter("title", "%" + params.getTitle() + "%")
                     .setParameter("city", "%" + params.getCity() + "%")
-                    .setParameter("cityCode","%" + params.getCityCode() +"%")
-                    .setParameter("countryCode", "%" +params.getCountryCode() +"%")
                     .setParameter("country", "%" + params.getCountry() + "%");
-
-            if(!params.getCode().equals(""))
-                query.setParameter("code", Integer.parseInt(params.getCode()));
+            if(!params.getCityCode().equals(""))
+                query.setParameter("cityCode",  params.getCityCode());
+            if(!params.getCountryCode().equals(""))
+                query.setParameter("countryCode", params.getCountryCode());
+            if(params.getProductId()!=0)
+                query.setParameter("productId", params.getProductId());
             if(params.getPriceFrom()!=0)
                 query.setParameter("priceFrom", params.getPriceFrom());
             if(params.getPriceTo()!=0)
@@ -224,13 +235,13 @@ public class AProductTitleDAO {
                 query.setMaxResults(params.getLastProduct());
 
             products=query.getResultList();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
-        }
-
+        }finally {
+            session.close();
+        }//todo integrade sortorders
         return products;
     }
 

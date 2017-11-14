@@ -23,7 +23,6 @@ public class SupplierPhotoPathDAO {
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
             supplierPhotoPath=(SupplierPhotoPathBean)query.getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -32,6 +31,8 @@ public class SupplierPhotoPathDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return supplierPhotoPath;
     }

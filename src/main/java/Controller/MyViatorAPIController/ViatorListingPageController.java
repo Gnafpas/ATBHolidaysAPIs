@@ -81,7 +81,7 @@ public class ViatorListingPageController {
          * Get all categories/subcategories and Find products count for each category
          */
         CategoriesJson categoriesJson;
-        categoriesJson =getAllCategories();
+        categoriesJson =getAllViatorCategories();
         for(Category cat: categoriesJson.getCategories()){
             catIds.clear();
             catIds.add(cat.getCategory().getId());
@@ -98,8 +98,8 @@ public class ViatorListingPageController {
         return productsCategoriesListingPageJSON;
     }
 
-    @RequestMapping("/getAllCategories")
-    public CategoriesJson getAllCategories(){
+    @RequestMapping("/getAllViatorCategories")
+    public CategoriesJson getAllViatorCategories(){
         CategoriesJson categoriesJson =new CategoriesJson();
         Category category;
         List<ViatorCategoriesBean> categories=ViatorCategoriesDAO.getAllCategories();
@@ -178,7 +178,7 @@ public class ViatorListingPageController {
 //
 //        params.setStartDate(null);
 //        params.setEndDate(null);
-//        ProductsCategoriesListingPageJSON productsCategoriesListingPageJSON=getProductsAndCategories( params);
+//        ProductsAndCategoriesJSON productsCategoriesListingPageJSON=getProductsAndCategories( params);
 //        System.out.print(productsCategoriesListingPageJSON.getProducts().get(0).getCode());
 //        dates= ViatorNoneAvailableDatesDAO.getNoneAvailDatesOfProducts(productsCategoriesListingPageJSON.getProducts());
 //        return dates;

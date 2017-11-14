@@ -25,7 +25,6 @@ public class ViatorNoneAvailableDatesDAO {
             tx=session.beginTransaction();
             session.save(availabilityDatesBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -35,6 +34,8 @@ public class ViatorNoneAvailableDatesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -48,7 +49,6 @@ public class ViatorNoneAvailableDatesDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -58,6 +58,8 @@ public class ViatorNoneAvailableDatesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -86,13 +88,14 @@ public class ViatorNoneAvailableDatesDAO {
                 i++;
             }
             nonAvailDates=query.getResultList();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
 
         return nonAvailDates;

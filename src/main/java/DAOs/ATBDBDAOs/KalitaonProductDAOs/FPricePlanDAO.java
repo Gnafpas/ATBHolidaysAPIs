@@ -26,7 +26,6 @@ public class FPricePlanDAO {
             tx=session.beginTransaction();
             session.insert(pricePlanBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -36,6 +35,8 @@ public class FPricePlanDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -49,7 +50,6 @@ public class FPricePlanDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -59,6 +59,8 @@ public class FPricePlanDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -74,7 +76,6 @@ public class FPricePlanDAO {
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
             pricePlanBean=(FPricePlanBean)query.getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -83,8 +84,9 @@ public class FPricePlanDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
-
         return pricePlanBean;
     }
 
@@ -98,13 +100,14 @@ public class FPricePlanDAO {
             session.beginTransaction();
             fPricePlans=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return fPricePlans;
     }

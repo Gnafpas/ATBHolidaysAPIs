@@ -25,7 +25,6 @@ public class JProductQuestionsDAO {
             for(JProductQuestionsBean productQuestion:productQuestions)
                session.insert(productQuestion);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -34,6 +33,8 @@ public class JProductQuestionsDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -47,7 +48,6 @@ public class JProductQuestionsDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,6 +56,8 @@ public class JProductQuestionsDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -69,7 +71,6 @@ public class JProductQuestionsDAO {
             session.beginTransaction();
             productQuestions=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -78,6 +79,8 @@ public class JProductQuestionsDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return productQuestions;
     }

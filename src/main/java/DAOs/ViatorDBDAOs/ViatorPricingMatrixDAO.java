@@ -23,7 +23,6 @@ public class ViatorPricingMatrixDAO {
             tx=session.beginTransaction();
             session.save(viatorPricingMatrixBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,29 @@ public class ViatorPricingMatrixDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return err;
+    }
+
+    public static boolean deletePricingMatrixes(String productCode){
+
+        Session session = HibernateUtil.getSession();
+        String hql = String.format("DELETE FROM ViatorPricingMatrixBean WHERE productCode='"+productCode+"'");
+        boolean err=false;
+        try{
+            session.beginTransaction();
+            session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            err=true;
+            e.printStackTrace();
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -52,13 +74,14 @@ public class ViatorPricingMatrixDAO {
             session.beginTransaction();
             pricingMatrixBean=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return pricingMatrixBean;
     }

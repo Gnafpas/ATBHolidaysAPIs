@@ -7,6 +7,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by George on 20/08/2017.
  */
@@ -21,7 +23,6 @@ public class ViatorUpdateFailedPricematrixesDAO {
             tx=session.beginTransaction();
             session.save(viatorUpdateFailedPricematrixesBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -31,7 +32,31 @@ public class ViatorUpdateFailedPricematrixesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
+    }
+
+    public static List<String> getProductCodeByUpdateRid(int updateRid){
+
+        Session session = HibernateUtil.getSession();
+        List<String> failedProductCodes=null;
+        String hql ="Select failedProducts.productWithFailedPricematrixes FROM ViatorUpdateFailedPricematrixesBean failedProducts " +
+                "WHERE failedProducts.updateRid = :updateRid ";
+        try{
+            session.beginTransaction();
+            failedProductCodes=session.createQuery(hql).setParameter("updateRid", updateRid).getResultList();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+        }catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }catch (CJCommunicationsException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return failedProductCodes;
     }
 }

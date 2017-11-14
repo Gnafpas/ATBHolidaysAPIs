@@ -23,7 +23,6 @@ public class EPickupPointDAO {
             for(EPickupPointBean pickupPoint:pickupPoints)
                 session.insert(pickupPoint);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,8 @@ public class EPickupPointDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -46,7 +47,6 @@ public class EPickupPointDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,6 +56,8 @@ public class EPickupPointDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -70,13 +72,14 @@ public class EPickupPointDAO {
             session.beginTransaction();
             ePickupPoints=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return ePickupPoints;
     }

@@ -64,7 +64,9 @@ public class UpdateProducts {
         ViatorProductTourGradeLanguageServicesBean vProductTourGradeLangServBean=new ViatorProductTourGradeLanguageServicesBean();
         ViatorNoneAvailableDatesBean noneAvailableDatesBean=new ViatorNoneAvailableDatesBean();
         ViatorPricingMatrixBean pricingMatrixBean=new ViatorPricingMatrixBean();
-        ViatorPickupHotelsBean pickupHotelsBean=new ViatorPickupHotelsBean();
+        boolean priceMatrixExists;
+        List<ViatorPricingMatrixBean> singleTourGradepricingMatrixes=new ArrayList<>(); /*Keep a list of the price matrixes of a Single Tourgrade to check*/
+        ViatorPickupHotelsBean pickupHotelsBean=new ViatorPickupHotelsBean();           /*and avoid AgeBand duplications with same minmum/maximum count requirments*/
         ViatorUpdateFailedAvailDatesBean viatorUpdateFailedAvailDatesBean=new ViatorUpdateFailedAvailDatesBean();
         ViatorUpdateFailedPricematrixesBean viatorUpdateFailedPricematrixesBean=new ViatorUpdateFailedPricematrixesBean();
         ViatorUpdateFailedDestinationsBean viatorUpdateFailedDestinationsBean=new ViatorUpdateFailedDestinationsBean();
@@ -73,7 +75,7 @@ public class UpdateProducts {
         ViatorProductBookingQuestionsBean viatorProductBookingQuestionsBean=new ViatorProductBookingQuestionsBean();
         ViatorUpdateProductsInfoBean lastrec;
 
-        DateTime dateTime;
+
 
 
         /**
@@ -100,7 +102,6 @@ public class UpdateProducts {
          * Arguments for non-available-dates  table of a product.
          */
         List<CustomDate> nonAvailableDates=new ArrayList();
-        CustomDate nonAvailableDate;
         List<Integer> nonAvailableDays=new ArrayList();
         List<Integer> availableDays=new ArrayList();
         String[] splitYearMonth;
@@ -146,7 +147,7 @@ public class UpdateProducts {
          * Statistic Values/Information/Results.
          */
         UpdateProductsInfoJSON updateProductsInfoJSON =new UpdateProductsInfoJSON();
-        dateTime =new DateTime( DateTimeZone.UTC);
+        DateTime dateTime =new DateTime( DateTimeZone.UTC);
         updateProductsInfoJSON.setStartDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
                                                 dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                 dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
@@ -159,7 +160,7 @@ public class UpdateProducts {
         updateProductsInfoJSON.setTotalProcessSleep(0);
         List<Integer> failedDestinations=new ArrayList<>();
         List<FailedProduct> failedProducts=new ArrayList();
-        FailedProduct failedProduct;
+
 
         /**
          * Time between viator server requests.There is a limit for the number of requests per
@@ -171,7 +172,7 @@ public class UpdateProducts {
         /**
          * Clear Database from expired products.
          */
-        updateProductsInfoJSON.setTotalExpiredProducts(DeleteExpiredProducts.deleteExpiredProducts(logger));
+//        updateProductsInfoJSON.setTotalExpiredProducts(DeleteExpiredProducts.deleteExpiredProducts(logger));
 
         /**
          * Search all Destinations.
@@ -265,8 +266,7 @@ public class UpdateProducts {
                             productDetailedInfoAPIJSON = ProductAPIDAO.productDetailedInfo(productDetailsBean.getCode(), "EUR", false, false);
                             timeElapsed = System.currentTimeMillis();
 
-                            dateTime =new DateTime( DateTimeZone.UTC);//todo  see if it can be used the same object(not new every time).also at updatedestinations and updatecategories
-
+                            dateTime =new DateTime( DateTimeZone.UTC);
                             if (productDetailedInfoAPIJSON.isSuccess() && productDetailedInfoAPIJSON.getData()!= null) {
 
                                 productDetailsBean.setPrimaryDestinationId(productDetailedInfoAPIJSON.getData().getPrimaryDestinationId());
@@ -616,7 +616,7 @@ public class UpdateProducts {
                                         }
                                         nonAvailableDays.removeAll(availableDays);/**Removing the available dates of the non available dates list */
                                         for (int nonAvailableDay : nonAvailableDays) {
-                                            nonAvailableDate = new CustomDate();
+                                            CustomDate nonAvailableDate = new CustomDate();
                                             nonAvailableDate.setDay(nonAvailableDay);
                                             nonAvailableDate.setMonth(Integer.parseInt(splitYearMonth[1]));
                                             nonAvailableDate.setYear(Integer.parseInt(splitYearMonth[0]));
@@ -716,8 +716,10 @@ public class UpdateProducts {
                                                 pricingMatrixBean.setBandId(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getBandId());
                                                 if(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getMaximumCountRequired()!=null)
                                                     pricingMatrixBean.setMaximumCountRequired((int)availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getMaximumCountRequired());
+                                                else
+                                                    pricingMatrixBean.setMaximumCountRequired(9);//todo ask umut the max number
                                                 pricingMatrixBean.setMinimumCountRequired((int) availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getMinimumCountRequired());
-                                                for(int z=0;z<availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().size();z++) {//todo check if we can add to db only the first price
+                                                for(int z=0;z<availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().size();z++) {
                                                     if(!availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getMerchantNetPrice().equals(0)) {
                                                         pricingMatrixBean.setSortOrderOfPrice(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getSortOrder());
                                                         pricingMatrixBean.setCurrencyCode(availabilityAndPricingMatrixAPIJSON.getData().getDates().get(0).getTourGrades().get(j).getPricingMatrix().get(x).getAgeBandPrices().get(y).getPrices().get(z).getCurrencyCode());
@@ -730,14 +732,35 @@ public class UpdateProducts {
                                                                 dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                                                 dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
 
-                                                        if (ViatorPricingMatrixDAO.addPricingMatrix(pricingMatrixBean)) {
-                                                            updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
-                                                            updateProductsInfoJSON.setDbCommError(true);
+
+                                                        /** Keep a list of the price matrixes of a Single Tourgrade to check
+                                                         *  and avoid AgeBand duplications with same minmum/maximum count requirments.
+                                                         */
+                                                        priceMatrixExists=false;
+                                                        for(ViatorPricingMatrixBean singleTourGradepricingMatrix:singleTourGradepricingMatrixes) {
+                                                            if (singleTourGradepricingMatrix.getBandId() == pricingMatrixBean.getBandId() &&
+                                                                pricingMatrixBean.getMinimumCountRequired() == singleTourGradepricingMatrix.getMinimumCountRequired() &&
+                                                                singleTourGradepricingMatrix.getMaximumCountRequired() == pricingMatrixBean.getMaximumCountRequired()) {
+                                                                priceMatrixExists = true;
+                                                            }
+                                                        }
+                                                        if(!priceMatrixExists) {
+                                                            ViatorPricingMatrixBean singleTourGradepricingMatrix=new ViatorPricingMatrixBean();
+                                                            singleTourGradepricingMatrix.setBandId(pricingMatrixBean.getBandId());
+                                                            singleTourGradepricingMatrix.setMaximumCountRequired(pricingMatrixBean.getMaximumCountRequired());
+                                                            singleTourGradepricingMatrix.setMinimumCountRequired(pricingMatrixBean.getMinimumCountRequired());
+                                                            singleTourGradepricingMatrixes.add(singleTourGradepricingMatrix);
+                                                            if (ViatorPricingMatrixDAO.addPricingMatrix(pricingMatrixBean)) {
+                                                                updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
+                                                                updateProductsInfoJSON.setDbCommError(true);
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
                                         }
+                                        singleTourGradepricingMatrixes.clear();
+
                                     }
 
 
@@ -759,7 +782,7 @@ public class UpdateProducts {
                                 if (productDetailedInfoAPIJSON.getData().getProductPhotos() != null) {
                                     for (ProductDetailProductPhotos prodphoto : productDetailedInfoAPIJSON.getData().getProductPhotos()) {
                                         if (prodphoto.getPhotoURL() == null)
-                                            break;//todo check if there is a leak of photos
+                                            continue;
                                         viatorProductPhotosBean.setProductCode(productDetailedInfoAPIJSON.getData().getCode());
                                         viatorProductPhotosBean.setCaption(prodphoto.getCaption());
                                         viatorProductPhotosBean.setPhotoUrl(prodphoto.getPhotoURL());
@@ -844,11 +867,11 @@ public class UpdateProducts {
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter()+1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         }//todo deside if it is better to add an external loop for the products/destinations that hadn't updated/added to DB due to viator comm Error
-                                    }//todo remove ssl from all requests exept booking requests to see if it performs faster.
+                                    }
                                 }
 
                             }else{
-                                failedProduct=new FailedProduct();
+                                FailedProduct failedProduct=new FailedProduct();
                                 failedProduct.setDestId(dest.getDestinationId());
                                 failedProduct.setProductCode(productDetailsBean.getCode());
                                 failedProducts.add(failedProduct);
@@ -894,25 +917,6 @@ public class UpdateProducts {
                                               dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                                               dateTime.getHourOfDay(),dateTime.getMinuteOfHour())));
 
-        /**
-         * Print update Informations
-         */
-        logger.info("\n\n**********************     "+" Update started at: "+ updateProductsInfoJSON.getStartDateTime()+
-                           "\n**********************     "+" Update ended at: "+ updateProductsInfoJSON.getEndDateTime()+
-                           "\n**********************     "+" Viator communication Error: "+ updateProductsInfoJSON.isViatorError()+
-                           "\n**********************     "+" Viator communication Error info: "+ updateProductsInfoJSON.getViatorErrorInfo()+
-                           "\n**********************     "+" Database Error: "+ updateProductsInfoJSON.isDbCommError()+
-                           "\n**********************     "+" Database Errors counter: "+ updateProductsInfoJSON.getDbCommErrorsCounter()+
-                           "\n**********************     "+" Total process Sleep(in milliseconds): "+ updateProductsInfoJSON.getTotalProcessSleep()+
-                           "\n**********************     "+" Total Leaf Nodes: "+ updateProductsInfoJSON.getTotalLeafNodes()+
-                           "\n**********************     "+" Total Products updated/added: "+ updateProductsInfoJSON.getTotalProducts()+
-                           "\n**********************     "+" Total Expired Products deleted: "+ updateProductsInfoJSON.getTotalExpiredProducts().getTotalExpiredProducts()+
-                           "\n**********************     "+" Last Leaf Node Destination Id: "+ updateProductsInfoJSON.getLastLeafDestid()+
-                           "\n**********************     "+" Failed Destinations Id: "+ updateProductsInfoJSON.getFailedDestinations());
-        for(int i = 0; i< updateProductsInfoJSON.getFailedProducts().size(); i++){
-            logger.info("**********************     "+" Failed Product code/Dest Id: "+ updateProductsInfoJSON.getFailedProducts().get(i).getProductCode()
-                                                              +","+ updateProductsInfoJSON.getFailedProducts().get(i).getDestId());
-        }
 
         /**
          * Add update info to Database
@@ -956,6 +960,33 @@ public class UpdateProducts {
                 viatorUpdateFailedPricematrixesBean.setUpdateRid(lastrec.getRid());
                 ViatorUpdateFailedPricematrixesDAO.addViatorUpdateFailedPricematrixes(viatorUpdateFailedPricematrixesBean);
             }
+        }
+
+        /**
+         * Delete failed products from database
+         */
+        if(DeleteCorruptedProducts.deleteCorruptedProducts(logger)) {
+            updateProductsInfoJSON.setDbCommError(true);
+            logger.info("\n\n**********************     " + " Error while delleting corrupted products from database");
+        }//todo If ever change to simultation atb and viator update:remove this code and delete details of the product imidiately  when a failed viator communication takes place
+        /**
+         * Print update Informations
+         */
+        logger.info("\n\n**********************     "+" Update started at: "+ updateProductsInfoJSON.getStartDateTime()+
+                "\n**********************     "+" Update ended at: "+ updateProductsInfoJSON.getEndDateTime()+
+                "\n**********************     "+" Viator communication Error: "+ updateProductsInfoJSON.isViatorError()+
+                "\n**********************     "+" Viator communication Error info: "+ updateProductsInfoJSON.getViatorErrorInfo()+
+                "\n**********************     "+" Database Error: "+ updateProductsInfoJSON.isDbCommError()+
+                "\n**********************     "+" Database Errors counter: "+ updateProductsInfoJSON.getDbCommErrorsCounter()+
+                "\n**********************     "+" Total process Sleep(in milliseconds): "+ updateProductsInfoJSON.getTotalProcessSleep()+
+                "\n**********************     "+" Total Leaf Nodes: "+ updateProductsInfoJSON.getTotalLeafNodes()+
+                "\n**********************     "+" Total Products updated/added: "+ updateProductsInfoJSON.getTotalProducts()+
+                "\n**********************     "+" Total Expired Products deleted: "+ updateProductsInfoJSON.getTotalExpiredProducts().getTotalExpiredProducts()+
+                "\n**********************     "+" Last Leaf Node Destination Id: "+ updateProductsInfoJSON.getLastLeafDestid()+
+                "\n**********************     "+" Failed Destinations Id: "+ updateProductsInfoJSON.getFailedDestinations());
+        for(int i = 0; i< updateProductsInfoJSON.getFailedProducts().size(); i++){
+            logger.info("**********************     "+" Failed Product code/Dest Id: "+ updateProductsInfoJSON.getFailedProducts().get(i).getProductCode()
+                    +","+ updateProductsInfoJSON.getFailedProducts().get(i).getDestId());
         }
 
         return updateProductsInfoJSON;

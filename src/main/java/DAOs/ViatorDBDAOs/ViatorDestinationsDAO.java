@@ -25,7 +25,6 @@ public class ViatorDestinationsDAO {
             tx=session.beginTransaction();
             session.save(viatordestinationsBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -35,6 +34,8 @@ public class ViatorDestinationsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -48,7 +49,6 @@ public class ViatorDestinationsDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -58,6 +58,8 @@ public class ViatorDestinationsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -71,16 +73,40 @@ public class ViatorDestinationsDAO {
         try {
             destinations = session.createQuery(hql)
                     .setParameter("destName", "%" + destName + "%").list();
-            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         } catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
 
         return destinations;
+    }
+
+
+    public static ViatorDestinationsBean getDestinationsByDestinationId(int destId) {
+        ViatorDestinationsBean destination = null;
+        Session session = HibernateUtil.getSession();
+        String hql = " select i "
+                + " from Beans.ViatorDBBeans.ViatorDestinationsBean i "
+                + " where i.destinationId = :destId";
+        try {
+            destination =(ViatorDestinationsBean) session.createQuery(hql)
+                    .setParameter("destId", destId).getSingleResult();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }catch (CJCommunicationsException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+
+        return destination;
     }
 
     public static List<ViatorDestinationsBean> getAllDestinations() {
@@ -90,13 +116,14 @@ public class ViatorDestinationsDAO {
                    + " from Beans.ViatorDBBeans.ViatorDestinationsBean i ";
         try {
             destinations = session.createQuery(hql) .list();
-            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         } catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
 
         return destinations;

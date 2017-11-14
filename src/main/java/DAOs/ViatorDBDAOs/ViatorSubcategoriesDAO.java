@@ -23,7 +23,6 @@ public class ViatorSubcategoriesDAO {
             tx=session.beginTransaction();
             session.save(viatorsubcategoriesBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,8 @@ public class ViatorSubcategoriesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -46,7 +47,6 @@ public class ViatorSubcategoriesDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,6 +56,8 @@ public class ViatorSubcategoriesDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
 
@@ -69,13 +71,14 @@ public class ViatorSubcategoriesDAO {
         try {
             session.beginTransaction();
             subCategories = session.createQuery(hql).list();
-            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         } catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return subCategories;
     }
@@ -90,13 +93,14 @@ public class ViatorSubcategoriesDAO {
             session.beginTransaction();
             subcategories=session.createQuery(hql).setParameter("categoriId",   categoriId ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return subcategories;
     }

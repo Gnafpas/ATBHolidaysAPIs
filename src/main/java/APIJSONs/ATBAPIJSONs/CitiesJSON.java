@@ -8,24 +8,15 @@ import java.util.List;
 /**
  * Created by George on 18/09/2017.
  */
-public class CitiesJSON {
+public class CitiesJSON extends StandardJSON {
 
-    List<CityCodeBean> countries=new ArrayList<>();
-    private boolean DBError=false;
+    List<CityCodeBean> data=new ArrayList<>();
 
-    public List<CityCodeBean> getCountries() {
-        return countries;
+    public List<CityCodeBean> getData() {
+        return data;
     }
 
-    public void setCountries(List<CityCodeBean> countries) {
-        this.countries = countries;
-    }
-
-    public boolean isDBError() {
-        return DBError;
-    }
-
-    public void setDBError(boolean DBError) {
-        this.DBError = DBError;
+    public void setData(List<CityCodeBean> data) {
+        this.data = data;
     }
 }

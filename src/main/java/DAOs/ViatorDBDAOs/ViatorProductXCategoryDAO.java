@@ -25,7 +25,6 @@ public class ViatorProductXCategoryDAO {
             tx=session.beginTransaction();
             session.save(viatorproductXcategoryBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -35,6 +34,8 @@ public class ViatorProductXCategoryDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -48,7 +49,6 @@ public class ViatorProductXCategoryDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -58,6 +58,8 @@ public class ViatorProductXCategoryDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -74,13 +76,14 @@ public class ViatorProductXCategoryDAO {
             session.beginTransaction();
             category=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return category;
     }

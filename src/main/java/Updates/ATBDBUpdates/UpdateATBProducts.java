@@ -30,7 +30,7 @@ import java.util.logging.SimpleFormatter;
  */
 public class UpdateATBProducts {
 
-    public static void updateProducts() {
+    public static void updateProducts(String firstProductCode,String lastProductCode) {
 
         GetProductsDAOParams params = new GetProductsDAOParams();
 
@@ -88,7 +88,7 @@ public class UpdateATBProducts {
         if(allLanguages==null)
             allLanguages= new ArrayList<>();
         DateTime dateTime = new DateTime(DateTimeZone.UTC);
-        AProductTitleBean productTitlelastRecord = null;
+        AProductTitleBean productTitleRecord = null;
         FPricePlanBean pricePlanlastRecord = null;
         boolean firstPriceMatrix;
         List<String> productOptionlanguages=new ArrayList<>();
@@ -122,6 +122,14 @@ public class UpdateATBProducts {
         /** FPricePlan Table Parameters*/
         List<String> productTourGradeCodes=new ArrayList<>();
         boolean tourgradeExists;
+        List<String> tourGradeWithAgeBandcodes=new ArrayList<>();
+        boolean tourGradeWithAgeBandExists;
+
+        /** Determine from which product to start the update from the list*/
+        boolean updateProduct=false;
+        if(firstProductCode.equals("")){
+            updateProduct=true;
+        }
 
         /**
          * Set up logger.
@@ -159,6 +167,18 @@ public class UpdateATBProducts {
 
             for (String code : codes) {
 
+                /**
+                 * Determine from which product to start the update from the list
+                 */
+                if(code.equals(firstProductCode)){
+                    updateProduct=true;
+                }
+                if(code.equals(lastProductCode)){
+                    updateProduct=false;
+                }
+                if(!updateProduct)
+                    continue;
+
                 params.setCode(code);
                 products = ViatorProductDetailsDAO.getProducts(params);
                 if (products != null && products.size() > 0) {
@@ -188,7 +208,6 @@ public class UpdateATBProducts {
                     aProductTitleBean.setOnSale("On sale");
                     aProductTitleBean.setTextLanguage("ENG");
                     aProductTitleBean.setBookingEngine(products.get(0).getBookingEngineId());
-                    aProductTitleBean.setCountryName(products.get(0).getCountryEn());
                     aProductTitleBean.setCurrencyCode(products.get(0).getCurrencyCode());
                     aProductTitleBean.setMainSupplierId(ProjectProperties.photoSupplierId);
                     aProductTitleBean.setMarchandNetPrice(products.get(0).getMerchantNetPriceFrom().toString());
@@ -197,9 +216,23 @@ public class UpdateATBProducts {
                     aProductTitleBean.setSubId(products.get(0).getCode());
                     aProductTitleBean.setSubSupplierName(products.get(0).getSupplierName());
                     aProductTitleBean.setThumbnailUrl(products.get(0).getThumbnailHiResUrl());
-                    aProductTitleBean.setCityName(products.get(0).getCityEn());
+                    aProductTitleBean.setCityName(products.get(0).getCityEn().toUpperCase());
 
-                    for (CityCodeBean city : cities){
+                    /**
+                     * Countries matching
+                     */
+                    if(products.get(0).getCountryEn()!=null) {
+                        if(products.get(0).getCountryEn().equals("United States of America"))
+                            aProductTitleBean.setCountryName("USA");
+                        else if(products.get(0).getCountryEn().equals("Russian Federation"))
+                            aProductTitleBean.setCountryName("RUSSIA");
+                        else if(products.get(0).getCountryEn().equalsIgnoreCase("HONG KONG"))
+                            aProductTitleBean.setCountryName("CHINA");
+                        else
+                            aProductTitleBean.setCountryName(products.get(0).getCountryEn().toUpperCase());
+                    }
+
+                    for (CityCodeBean city : cities){//todo fix canarian and new york city
                         if(city.getOriginalName().equalsIgnoreCase(products.get(0).getCityEn()))
                             aProductTitleBean.setCityCode(city.getGeonameid());
                     }
@@ -453,7 +486,7 @@ public class UpdateATBProducts {
                             }
                             if (category.getGroupname().equals("Kid Friendly"))
                                 aProductTitleBean.setCategoriesTag(aProductTitleBean.getCategoriesTag() + "Kid Friendly Tours & Activities , ");
-                            if (categories.get(0).getGroupname().equals("Shore Excursions")) {
+                            if (category.getGroupname().equals("Shore Excursions")) {
                                 if (subCategories != null && subCategories.size() > 0) {
                                     for (ViatorSubcategoriesBean subCategory : subCategories) {
                                         if (subCategory.getSubcategoryName().equals("Port Transfers"))
@@ -464,7 +497,7 @@ public class UpdateATBProducts {
                             }
                             if (category.getGroupname().equals("Luxury & Special Occasions"))
                                 aProductTitleBean.setCategoriesTag(aProductTitleBean.getCategoriesTag() + "Luxury & Special Occasions , ");
-                            if (categories.get(0).getGroupname().equals("Private & Custom Tours"))
+                            if (category.getGroupname().equals("Private & Custom Tours"))
                                 aProductTitleBean.setCategoriesTag(aProductTitleBean.getCategoriesTag() + "Private   Custom Tours , ");
                             if (category.getGroupname().equals("Viator VIP & Exclusive Tours"))
                                 aProductTitleBean.setCategoriesTag(aProductTitleBean.getCategoriesTag() + "VIP & Exclusive Tours , ");
@@ -509,13 +542,22 @@ public class UpdateATBProducts {
                            failedProductCodes.add(code);
                         dbCommErrors++;
                     }else{
-                        logger.info("Product with code: "+aProductTitleBean.getProductCode()+" added/updated.");
                         totalproducts++;
+                        logger.info("Total  products added: "+ totalproducts +"Product with code: "+aProductTitleBean.getProductCode()+" added/updated.");
                     }
 
-                    productTitlelastRecord=AProductTitleDAO.getLastRecord();
-                    if(productTitlelastRecord==null)
-                        break;
+                    productTitleRecord=AProductTitleDAO.getProductByCode(code);//todo see if i can take the id when i add to the table the new record
+                    if(productTitleRecord==null) {
+                        failedProductCodeExist=false;
+                        for(String failedProductCode:failedProductCodes) {
+                            if(failedProductCode.equals(code))
+                                failedProductCodeExist=true;
+                        }
+                        if(!failedProductCodeExist)
+                            failedProductCodes.add(code);
+                        dbCommErrors++;
+                        continue;
+                    }
 
 
                     /**
@@ -536,7 +578,7 @@ public class UpdateATBProducts {
                     bProductDetailBean.setVoucherInfo(products.get(0).getVoucherRequirementsEn());
                     bProductDetailBean.setDescriptionSummary(products.get(0).getShortDescriptionEn());
                     bProductDetailBean.setProductDetail(products.get(0).getDescriptionEn());
-                    bProductDetailBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                    bProductDetailBean.setProductId(String.valueOf(productTitleRecord.getId()));
                     bProductDetailBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
                             dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                             dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
@@ -548,7 +590,7 @@ public class UpdateATBProducts {
                     additionalInfos = ViatorProductAdditionalInfoDAO.getAdditionalInfoByProductCode(products.get(0).getCode());
                     if (additionalInfos != null) {
                         for (ViatorProductAdditionalInfoBean additionalInfo : additionalInfos) {
-                            info = info + additionalInfo.getAdditionalInfo()+"";
+                            info = info + additionalInfo.getAdditionalInfo()+". ";
                         }
                         bProductDetailBean.setAdittionalInfo(info);
                     }
@@ -584,28 +626,28 @@ public class UpdateATBProducts {
                     /**
                      * Store  photos of product to ATB DB d_Product_Photo table.
                      */
+                    dProductPhotoBean=new DProductPhotoBean();
+                    photoURL=products.get(0).getThumbnailHiResUrl().split(ProjectProperties.photoUrlSplitKey);
+                    dProductPhotoBean.setSupplierId("");
+                    dProductPhotoBean.setMainPhoto("");
+                    dProductPhotoBean.setCaption("");
+                    dProductPhotoBean.setVt("2");
+                    dProductPhotoBean.setSubId("");
+                    dProductPhotoBean.setPhotoName("");
+                    dProductPhotoBean.setSupplierId(ProjectProperties.photoSupplierId);
+                    dProductPhotoBean.setPhotoName(photoURL[1]);
+                    dProductPhotoBean.setProductId(String.valueOf(productTitleRecord.getId()));
+                    dProductPhotoBean.setCreatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                            dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                            dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
+                    dProductPhotoBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                            dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                            dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
+
+                    dProductPhotos.add(dProductPhotoBean);
+
                     photos = ViatorProductPhotosDAO.getPhotosByProductCode(products.get(0).getCode());
                     if (photos != null && photos.size() > 0) {
-
-                        dProductPhotoBean=new DProductPhotoBean();
-                        photoURL=products.get(0).getThumbnailHiResUrl().split(ProjectProperties.photoUrlSplitKey);
-                        dProductPhotoBean.setSupplierId("");
-                        dProductPhotoBean.setMainPhoto("");
-                        dProductPhotoBean.setCaption("");
-                        dProductPhotoBean.setVt("2");
-                        dProductPhotoBean.setSubId("");
-                        dProductPhotoBean.setPhotoName("");
-                        dProductPhotoBean.setSupplierId(ProjectProperties.photoSupplierId);
-                        dProductPhotoBean.setPhotoName(photoURL[1]);
-                        dProductPhotoBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
-                        dProductPhotoBean.setCreatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
-                        dProductPhotoBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
-
-                        dProductPhotos.add(dProductPhotoBean);
 
                         for (ViatorProductPhotosBean photo : photos) {
 
@@ -618,7 +660,7 @@ public class UpdateATBProducts {
                             dProductPhotoBean.setSubId("");
                             dProductPhotoBean.setPhotoName("");
                             dProductPhotoBean.setPhotoName(ProjectProperties.photoSizeUrl+photoURL[1]);
-                            dProductPhotoBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                            dProductPhotoBean.setProductId(String.valueOf(productTitleRecord.getId()));
                             dProductPhotoBean.setSupplierId(ProjectProperties.photoSupplierId);
                             dProductPhotoBean.setCreatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
                                     dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
@@ -641,7 +683,7 @@ public class UpdateATBProducts {
                             jProductQuestionsBean = new JProductQuestionsBean();
                             jProductQuestionsBean.setMessage(bookingQuestion.getMessage());
                             jProductQuestionsBean.setProductCode(bookingQuestion.getProductCode());
-                            jProductQuestionsBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                            jProductQuestionsBean.setProductId(String.valueOf(productTitleRecord.getId()));
                             jProductQuestionsBean.setQuestionId(bookingQuestion.getQuestionId());
                             jProductQuestionsBean.setRequired(bookingQuestion.getRequired());
                             jProductQuestionsBean.setSortOrder(bookingQuestion.getSortOrder());
@@ -674,7 +716,7 @@ public class UpdateATBProducts {
                             ePickupPointBean.setLongitude("");
                             ePickupPointBean.setStartingPoint("");
                             ePickupPointBean.setHotelId("");
-                            ePickupPointBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                            ePickupPointBean.setProductId(String.valueOf(productTitleRecord.getId()));
                             ePickupPointBean.setHotelPickupPoint(pickupHotel.getHotelName());
                             ePickupPointBean.setLatitude(String.valueOf(pickupHotel.getLatitude()));
                             ePickupPointBean.setLongitude(String.valueOf(pickupHotel.getLongitude()));
@@ -708,7 +750,7 @@ public class UpdateATBProducts {
                     cProductOptionsBean.setCustomerDetailRequest("");
                     cProductOptionsBean.setDuration("");
                     cProductOptionsBean.setAvailabilityTime("Starting Times");
-                    cProductOptionsBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                    cProductOptionsBean.setProductId(String.valueOf(productTitleRecord.getId()));
                     cProductOptionsBean.setDuration(products.get(0).getDuration());
                     cProductOptionsBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
                             dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
@@ -815,37 +857,38 @@ public class UpdateATBProducts {
                             if(FPricePlanDAO.deletePriceplan(String.valueOf(updatedProduct.getId()))) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(String.valueOf(updatedProduct.getId())))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(String.valueOf(updatedProduct.getId()));
                                 dbCommErrors++;
                             }
                             if(IAvailableTimeDAO.deleteavailableTime(String.valueOf(updatedProduct.getId()))) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(String.valueOf(updatedProduct.getId())))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(String.valueOf(updatedProduct.getId()));
                                 dbCommErrors++;
                             }
                             if(HStopsaleDateDAO.deleteStopsaleDate(String.valueOf(updatedProduct.getId()))) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(String.valueOf(updatedProduct.getId())))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(String.valueOf(updatedProduct.getId()));
                                 dbCommErrors++;
                             }
                         }
                         firstPriceMatrix=true;
 
                         productTourGradeCodes.clear();
+                        tourGradeWithAgeBandcodes.clear();
                         for (ViatorPricingMatrixBean pricingMatrix : pricingMatrixes) {
 
                             /**
@@ -853,11 +896,17 @@ public class UpdateATBProducts {
                              */
                             tourgradeExists=false;
                             for(String tgcode: productTourGradeCodes){
-                                if(pricingMatrix.getTourGradeCode().equals(tgcode))
+                                if(tgcode.equals(pricingMatrix.getTourGradeCode()))
                                     tourgradeExists=true;
                             }
-                            if (!tourgradeExists) {
+                            tourGradeWithAgeBandExists=false;
+                            for(String tgcodewageband: tourGradeWithAgeBandcodes){
+                                if(tgcodewageband.equals(pricingMatrix.getTourGradeCode()+pricingMatrix.getBandId()))
+                                    tourGradeWithAgeBandExists=true;
+                            }
+                            if (!tourgradeExists || tourGradeWithAgeBandExists) {
                                 productTourGradeCodes.add(pricingMatrix.getTourGradeCode());
+                                tourGradeWithAgeBandcodes.add(pricingMatrix.getTourGradeCode()+pricingMatrix.getBandId());
                                 fPricePlanBean.setTourGradeCode("");
                                 fPricePlanBean.setRateType("net");
                                 fPricePlanBean.setSubId("");
@@ -865,11 +914,19 @@ public class UpdateATBProducts {
                                 fPricePlanBean.setPriceType("");
                                 fPricePlanBean.setMinParticipants("");
                                 iAvailableTimeBean.setStartTime("");
-                                fPricePlanBean.setMinParticipants(String.valueOf(pricingMatrix.getMinimumCountRequired()));//todo see if this is correct
-                                fPricePlanBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                                if(pricingMatrix.getMinimumCountRequired()==0)
+                                    fPricePlanBean.setMinParticipants("1");
+                                else
+                                    fPricePlanBean.setMinParticipants(String.valueOf(pricingMatrix.getMinimumCountRequired()));
+
+                                fPricePlanBean.setProductId(String.valueOf(productTitleRecord.getId()));
                                 fPricePlanBean.setTourGradeCode(pricingMatrix.getTourGradeCode());
-                                if(pricingMatrix.getPricingUnit()!=null && !pricingMatrix.getPricingUnit().equals(""))
-                                    fPricePlanBean.setPriceType("Price "+pricingMatrix.getPricingUnit());
+                                if(pricingMatrix.getPricingUnit()!=null && !pricingMatrix.getPricingUnit().equals("")) {
+                                    if (!pricingMatrix.getPricingUnit().equals("per person"))
+                                        fPricePlanBean.setPriceType("Price per group");
+                                    else
+                                        fPricePlanBean.setPriceType("Price per person");
+                                }
                                 tourGrades = ViatorProductTourGradesDAO.getTourGradesByProductCode(pricingMatrix.getProductCode());
                                 if (tourGrades != null) {
                                     for (ViatorProductTourGradesBean tourGrade : tourGrades) {
@@ -896,14 +953,14 @@ public class UpdateATBProducts {
                                 if(FPricePlanDAO.addPriceplan(fPricePlanBean)) {
                                     failedProductCodeExist=false;
                                     for(String failedProductCode:failedProductCodes) {
-                                        if(failedProductCode.equals(code))
+                                        if(failedProductCode.equals(fPricePlanBean.getProductId()))
                                             failedProductCodeExist=true;
                                     }
                                     if(!failedProductCodeExist)
-                                        failedProductCodes.add(code);
+                                        failedProductCodes.add(fPricePlanBean.getProductId());
                                     dbCommErrors++;
                                 }
-                                pricePlanlastRecord = FPricePlanDAO.getLastRecord();
+                                pricePlanlastRecord = FPricePlanDAO.getLastRecord();//todo get id from the save operation instantly
 
                                 if (pricePlanlastRecord != null) {
 
@@ -920,9 +977,9 @@ public class UpdateATBProducts {
                                         hAvailableDateBean.setPlanId("");
                                         hAvailableDateBean.setAvailableTitle(pricePlanlastRecord.getPlanTitle());
                                         hAvailableDateBean.setPlanId(String.valueOf(pricePlanlastRecord.getId()));
-                                        hAvailableDateBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                                        hAvailableDateBean.setProductId(String.valueOf(productTitleRecord.getId()));
                                         hAvailableDateBean.setStartDate(Timestamp.valueOf(String.format("%04d-%02d-%02d 13:00:00",
-                                                noneAvailableDates.get(0).getYear(), noneAvailableDates.get(0).getMonth() , 1)));
+                                                                        noneAvailableDates.get(0).getYear(), noneAvailableDates.get(0).getMonth() , 1)));
                                         calendar.set(noneAvailableDates.get(noneAvailableDates.size() - 1).getYear(), noneAvailableDates.get(noneAvailableDates.size() - 1).getMonth() - 1,1);//todo check the -1 at month
                                         lastDate = calendar.getActualMaximum(Calendar.DATE);
                                         hAvailableDateBean.setEndDate(Timestamp.valueOf(String.format("%04d-%02d-%02d 13:00:00",
@@ -938,25 +995,25 @@ public class UpdateATBProducts {
                                             if(HAvailableDateDAO.deleteAvailableDate(String.valueOf(updatedProduct.getId()))) {
                                                 failedProductCodeExist=false;
                                                 for(String failedProductCode:failedProductCodes) {
-                                                    if(failedProductCode.equals(code))
+                                                    if(failedProductCode.equals(hAvailableDateBean.getProductId()))
                                                         failedProductCodeExist=true;
                                                 }
                                                 if(!failedProductCodeExist)
-                                                    failedProductCodes.add(code);
+                                                    failedProductCodes.add(hAvailableDateBean.getProductId());
                                                 dbCommErrors++;
                                             }
                                         }
                                         if(HAvailableDateDAO.addAvailableDate(hAvailableDateBean)) {
                                             failedProductCodeExist=false;
                                             for(String failedProductCode:failedProductCodes) {
-                                                if(failedProductCode.equals(code))
+                                                if(failedProductCode.equals(hAvailableDateBean.getProductId()))
                                                     failedProductCodeExist=true;
                                             }
                                             if(!failedProductCodeExist)
-                                                failedProductCodes.add(code);
+                                                failedProductCodes.add(hAvailableDateBean.getProductId());
                                             dbCommErrors++;
                                         }
-                                        lastAvailableDateRecord = HAvailableDateDAO.getLastRecord();
+                                        lastAvailableDateRecord = HAvailableDateDAO.getLastRecord();//todo get id from the save operation instantly
 
                                         if (lastAvailableDateRecord != null) {
                                             if (noneAvailableDates != null && noneAvailableDates.size() > 0) {
@@ -968,7 +1025,7 @@ public class UpdateATBProducts {
                                                         hStopsaleDateBean.setPlanId("");
                                                         hStopsaleDateBean.setAvailableId(String.valueOf(lastAvailableDateRecord.getId()));
                                                         hStopsaleDateBean.setPlanId(String.valueOf(pricePlanlastRecord.getId()));
-                                                        hStopsaleDateBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                                                        hStopsaleDateBean.setProductId(String.valueOf(productTitleRecord.getId()));
                                                         hStopsaleDateBean.setStopDate(Timestamp.valueOf(String.format("%04d-%02d-%02d 13:00:00",
                                                                 noneAvailableDate.getYear(), noneAvailableDate.getMonth(), noneAvailableDate.getDay())));
                                                         hStopsaleDateBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
@@ -981,11 +1038,11 @@ public class UpdateATBProducts {
                                                         if(HStopsaleDateDAO.addStopsaleDate(hStopsaleDateBean)) {
                                                             failedProductCodeExist=false;
                                                             for(String failedProductCode:failedProductCodes) {
-                                                                if(failedProductCode.equals(code))
+                                                                if(failedProductCode.equals(hStopsaleDateBean.getProductId()))
                                                                     failedProductCodeExist=true;
                                                             }
                                                             if(!failedProductCodeExist)
-                                                                failedProductCodes.add(code);
+                                                                failedProductCodes.add(hStopsaleDateBean.getProductId());
                                                             dbCommErrors++;
                                                         }
                                                     }
@@ -994,7 +1051,7 @@ public class UpdateATBProducts {
                                             //  }
 
 
-                                            iAvailableTimeBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                                            iAvailableTimeBean.setProductId(String.valueOf(productTitleRecord.getId()));
                                             iAvailableTimeBean.setPlanId(String.valueOf(pricePlanlastRecord.getId()));
                                             iAvailableTimeBean.setEndTime(":");
                                             iAvailableTimeBean.setAvailableId(String.valueOf(lastAvailableDateRecord.getId()));
@@ -1010,77 +1067,77 @@ public class UpdateATBProducts {
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                                 iAvailableTimeBean.setWeekDay("Tuesday");
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                                 iAvailableTimeBean.setWeekDay("Wednesday");
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                                 iAvailableTimeBean.setWeekDay("Thursday");
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                                 iAvailableTimeBean.setWeekDay("Friday");
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                                 iAvailableTimeBean.setWeekDay("Saturday");
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                                 iAvailableTimeBean.setWeekDay("Sunday");
                                                 if(IAvailableTimeDAO.addAvailableTime(iAvailableTimeBean)) {
                                                     failedProductCodeExist=false;
                                                     for(String failedProductCode:failedProductCodes) {
-                                                        if(failedProductCode.equals(code))
+                                                        if(failedProductCode.equals(iAvailableTimeBean.getProductId()))
                                                             failedProductCodeExist=true;
                                                     }
                                                     if(!failedProductCodeExist)
-                                                        failedProductCodes.add(code);
+                                                        failedProductCodes.add(iAvailableTimeBean.getProductId());
                                                     dbCommErrors++;
                                                 }
                                             }
@@ -1092,7 +1149,7 @@ public class UpdateATBProducts {
 
                             if (pricePlanlastRecord != null) {
                                 gPriceMatrixBean = new GPriceMatrixBean();
-                                if(pricingMatrix.getMinNoOfTravellersRequiredForPrice()==1) {//todo check if it s ok like this
+                                if(pricingMatrix.getMinNoOfTravellersRequiredForPrice()==1) {//todo check if it s ok like this.Maybe I can remove this becouse I keep only one now at the viator update with the "avoid AgeBand duplications with same minmum/maximum count requirments."
 
                                     gPriceMatrixBean.setPriceRate("");
                                     gPriceMatrixBean.setCommission("");
@@ -1104,7 +1161,7 @@ public class UpdateATBProducts {
                                     gPriceMatrixBean.setAgeFrom("");
                                     gPriceMatrixBean.setAgeTo("");
                                     gPriceMatrixBean.setPlanId(String.valueOf(pricePlanlastRecord.getId()));
-                                    gPriceMatrixBean.setProductId(String.valueOf(productTitlelastRecord.getId()));
+                                    gPriceMatrixBean.setProductId(String.valueOf(productTitleRecord.getId()));
                                     ageBands = ViatorProductAgeBandsDAO.getAgeBandsByProductCode(pricingMatrix.getProductCode());
                                     if (ageBands != null) {
                                         for (ViatorProductAgeBandsBean ageBand : ageBands) {
@@ -1116,9 +1173,9 @@ public class UpdateATBProducts {
                                     }
                                     gPriceMatrixBean.setCurrencyCode(pricingMatrix.getCurrencyCode());
                                     gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
-                                    if (pricingMatrix.getMaximumCountRequired() == null || pricingMatrix.getMaximumCountRequired() > 9)//todo check if it must be only below 10
-                                        gPriceMatrixBean.setMaxCountRequired(9);
-                                    else
+                                   // if (pricingMatrix.getMaximumCountRequired() == 100)//|| pricingMatrix.getMaximumCountRequired() > 9)//todo check if it must be only below 10
+                                    //    gPriceMatrixBean.setMaxCountRequired(9);
+                                    //else
                                         gPriceMatrixBean.setMaxCountRequired(pricingMatrix.getMaximumCountRequired());
                                     if (pricingMatrix.getBandId() == 1)
                                         gPriceMatrixBean.setPersonType("adult");
@@ -1154,133 +1211,145 @@ public class UpdateATBProducts {
                             if(BProductDetailDAO.deleteProduct(productId)) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(productId))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(productId);
                                 dbCommErrors++;
                             }
                         }
                         if(BProductDetailDAO.addproduct(bProductDetails)) {
-                            failedProductCodeExist=false;
-                            for(String failedProductCode:failedProductCodes) {
-                                if(failedProductCode.equals(code))
-                                    failedProductCodeExist=true;
+                            for (BProductDetailBean bProductDetail : bProductDetails) {
+                                failedProductCodeExist = false;
+                                for (String failedProductCode : failedProductCodes) {
+                                    if (failedProductCode.equals(bProductDetail.getProductId()))
+                                        failedProductCodeExist = true;
+                                }
+                                if (!failedProductCodeExist)
+                                    failedProductCodes.add(bProductDetail.getProductId());
                             }
-                            if(!failedProductCodeExist)
-                                failedProductCodes.add(code);
                             dbCommErrors++;
                         }
                         for(String productId:updatedProductsIds) {
                             if(DProductPhotoDAO.deletePhoto(productId)) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(productId))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(productId);
                                 dbCommErrors++;
                             }
                         }
                         if(DProductPhotoDAO.addPhoto(dProductPhotos)) {
-                            failedProductCodeExist=false;
-                            for(String failedProductCode:failedProductCodes) {
-                                if(failedProductCode.equals(code))
-                                    failedProductCodeExist=true;
+                            for (DProductPhotoBean dProductPhoto : dProductPhotos) {
+                                failedProductCodeExist = false;
+                                for (String failedProductCode : failedProductCodes) {
+                                    if (failedProductCode.equals(dProductPhoto.getProductId()))
+                                        failedProductCodeExist = true;
+                                }
+                                if (!failedProductCodeExist)
+                                    failedProductCodes.add(dProductPhoto.getProductId());
+                                dbCommErrors++;
                             }
-                            if(!failedProductCodeExist)
-                                failedProductCodes.add(code);
-                            dbCommErrors++;
                         }
                         for(String productId:updatedProductsIds) {
                             if(JProductQuestionsDAO.deleteProductQuestions(productId)) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(productId))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(productId);
                                 dbCommErrors++;
                             }
                         }
                         if(JProductQuestionsDAO.addpProductQuestion(jProductQuestions)) {
-                            failedProductCodeExist=false;
-                            for(String failedProductCode:failedProductCodes) {
-                                if(failedProductCode.equals(code))
-                                    failedProductCodeExist=true;
+                            for (JProductQuestionsBean jProductQuestion : jProductQuestions) {
+                                failedProductCodeExist = false;
+                                for (String failedProductCode : failedProductCodes) {
+                                    if (failedProductCode.equals(jProductQuestion.getProductId()))
+                                        failedProductCodeExist = true;
+                                }
+                                if (!failedProductCodeExist)
+                                    failedProductCodes.add(jProductQuestion.getProductId());
+                                dbCommErrors++;
                             }
-                            if(!failedProductCodeExist)
-                                failedProductCodes.add(code);
-                            dbCommErrors++;
                         }
                         for(String productId:updatedProductsIds) {
                             if(EPickupPointDAO.deletePickupPoint(productId)) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(productId))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(productId);
                                 dbCommErrors++;
                             }
                         }
                         if(EPickupPointDAO.addPickupPoint(ePickupPoints)) {
-                            failedProductCodeExist=false;
-                            for(String failedProductCode:failedProductCodes) {
-                                if(failedProductCode.equals(code))
-                                    failedProductCodeExist=true;
+                            for (EPickupPointBean ePickupPoint : ePickupPoints) {
+                                failedProductCodeExist = false;
+                                for (String failedProductCode : failedProductCodes) {
+                                    if (failedProductCode.equals(ePickupPoint.getProductId()))
+                                        failedProductCodeExist = true;
+                                }
+                                if (!failedProductCodeExist)
+                                    failedProductCodes.add(ePickupPoint.getProductId());
+                                dbCommErrors++;
                             }
-                            if(!failedProductCodeExist)
-                                failedProductCodes.add(code);
-                            dbCommErrors++;
                         }
                         for(String productId:updatedProductsIds) {
                             if(CProductOptionsDAO.deleteProductOption(productId)) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(productId))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(productId);
                                 dbCommErrors++;
                             }
                         }
                         if(CProductOptionsDAO.addProductOption(cProductOptions)) {
-                            failedProductCodeExist=false;
-                            for(String failedProductCode:failedProductCodes) {
-                                if(failedProductCode.equals(code))
-                                    failedProductCodeExist=true;
+                            for (CProductOptionsBean cProductOption : cProductOptions) {
+                                failedProductCodeExist = false;
+                                for (String failedProductCode : failedProductCodes) {
+                                    if (failedProductCode.equals(cProductOption.getProductId()))
+                                        failedProductCodeExist = true;
+                                }
+                                if (!failedProductCodeExist)
+                                    failedProductCodes.add(cProductOption.getProductId());
+                                dbCommErrors++;
                             }
-                            if(!failedProductCodeExist)
-                                failedProductCodes.add(code);
-                            dbCommErrors++;
                         }
                         for(String productId:updatedProductsIds) {
                             if(GPriceMatrixDAO.deletePriceMatrix(productId)) {
                                 failedProductCodeExist=false;
                                 for(String failedProductCode:failedProductCodes) {
-                                    if(failedProductCode.equals(code))
+                                    if(failedProductCode.equals(productId))
                                         failedProductCodeExist=true;
                                 }
                                 if(!failedProductCodeExist)
-                                    failedProductCodes.add(code);
+                                    failedProductCodes.add(productId);
                                 dbCommErrors++;
                             }
                         }
                         if(GPriceMatrixDAO.addPriceMatrix(gPriceMatrixes)) {
-                            failedProductCodeExist=false;
-                            for(String failedProductCode:failedProductCodes) {
-                                if(failedProductCode.equals(code))
-                                    failedProductCodeExist=true;
+                            for (GPriceMatrixBean gPriceMatrix : gPriceMatrixes) {
+                                failedProductCodeExist = false;
+                                for (String failedProductCode : failedProductCodes) {
+                                    if (failedProductCode.equals(gPriceMatrix.getProductId()))
+                                        failedProductCodeExist = true;
+                                }
+                                if (!failedProductCodeExist)
+                                    failedProductCodes.add(gPriceMatrix.getProductId());
+                                dbCommErrors++;
                             }
-                            if(!failedProductCodeExist)
-                                failedProductCodes.add(code);
-                            dbCommErrors++;
                         }
 
                         bProductDetails.clear();

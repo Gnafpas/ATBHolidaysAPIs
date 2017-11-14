@@ -21,7 +21,6 @@ public class AtbUpdateFailedProductDAO {
             tx=session.beginTransaction();
             session.save(atbUpdateFailedProductBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -31,6 +30,8 @@ public class AtbUpdateFailedProductDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }

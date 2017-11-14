@@ -21,14 +21,15 @@ public class ProductCategoriesDAO {
         try{
             session.beginTransaction();
             categories=session.createQuery(hql).list();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
-        }catch (CJCommunicationsException e){
+        }catch (CJCommunicationsException e) {
             e.printStackTrace();
-        }
+        }finally {
+                session.close();
+            }
         return categories;
     }
 }

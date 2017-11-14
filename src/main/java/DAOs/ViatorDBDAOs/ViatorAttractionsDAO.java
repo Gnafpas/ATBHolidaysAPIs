@@ -26,7 +26,6 @@ public class ViatorAttractionsDAO {
             tx=session.beginTransaction();
             session.save(viatorAttractionsBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -36,6 +35,8 @@ public class ViatorAttractionsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -49,7 +50,6 @@ public class ViatorAttractionsDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -59,6 +59,8 @@ public class ViatorAttractionsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -114,13 +116,14 @@ public class ViatorAttractionsDAO {
                 query.setMaxResults(params.getLastAttraction());
 
             attractions=query.getResultList();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
 
         return attractions;

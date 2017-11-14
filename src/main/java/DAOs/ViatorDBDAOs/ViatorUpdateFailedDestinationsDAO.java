@@ -22,7 +22,6 @@ public class ViatorUpdateFailedDestinationsDAO {
             tx=session.beginTransaction();
             session.save(viatorUpdateFailedDestinationsBean);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -32,6 +31,8 @@ public class ViatorUpdateFailedDestinationsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }

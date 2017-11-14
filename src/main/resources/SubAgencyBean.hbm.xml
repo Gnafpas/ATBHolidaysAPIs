@@ -8,13 +8,20 @@
         <id name="id" column="id"/>
         <property name="gsaId" column="gsa_id"/>
         <property name="agentName" column="agent_name"/>
-        <property name="countryCode" column="country_code"/>
-        <property name="pic" column="pic"/>
+        <property name="typeOfAgency" column="type_of_agency"/>
+        <property name="firstName" column="first_name"/>
+        <property name="lastName" column="last_name"/>
+        <property name="jobTitle" column="job_title"/>
         <property name="web" column="web"/>
         <property name="email" column="email"/>
-        <property name="tel" column="tel"/>
-        <property name="fax" column="fax"/>
-        <property name="address" column="address"/>
+        <property name="mobile" column="mobile"/>
+        <property name="telephone" column="telephone"/>
+        <property name="countryCode" column="country_code"/>
+        <property name="countryName" column="country_name"/>
+        <property name="cityCode" column="city_code"/>
+        <property name="cityName" column="city_name"/>
+        <property name="billingAddress" column="billing_address"/>
+        <property name="billingEmail" column="billing_email"/>
         <property name="iata" column="IATA"/>
         <property name="tursab" column="TURSAB"/>
         <property name="clia" column="CLIA"/>
@@ -22,12 +29,19 @@
         <property name="other" column="other"/>
         <property name="taxOffice" column="tax_office"/>
         <property name="taxNo" column="tax_no"/>
-        <property name="bankInfo" column="bank_info"/>
+        <property name="bankName" column="bank_name"/>
+        <property name="bankAddress" column="bank_address"/>
+        <property name="bankCity" column="bank_city"/>
+        <property name="bankState" column="bank_state"/>
+        <property name="bankCountry" column="bank_country"/>
+        <property name="accountName" column="account_name"/>
+        <property name="accountNumber" column="account_number"/>
+        <property name="iban" column="iban"/>
+        <property name="swift" column="swift"/>
         <property name="commission" column="commission"/>
         <property name="markup" column="markup"/>
         <property name="deposit" column="deposit"/>
         <property name="currency" column="currency"/>
-        <property name="masterUsercode" column="master_usercode"/>
         <property name="logo" column="logo"/>
         <property name="xmlStatus" column="xml_status"/>
         <property name="xmlStorekey" column="xml_storekey"/>

@@ -149,6 +149,14 @@ public class DeleteExpiredProducts {
                                     totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
                                     totalExpiredProducts.setDbCommError(true);
                                 }
+                                if(ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code)){
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
+                                    totalExpiredProducts.setDbCommError(true);
+                                }
+                                if(ViatorPricingMatrixDAO.deletePricingMatrixes(code)){
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
+                                    totalExpiredProducts.setDbCommError(true);
+                                }
                                 logger.info("********************** Deleting expired product with code: "+code+" **********************");
                                 totalExpiredProductsList.add(code);
                                 totalExpiredProducts.setTotalExpiredProducts(totalExpiredProducts.getTotalExpiredProducts()+1);

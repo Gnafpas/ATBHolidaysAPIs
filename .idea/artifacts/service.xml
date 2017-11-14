@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="service">
+    <output-path>$PROJECT_DIR$/out/artifacts/service</output-path>
+    <root id="archive" name="service.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="lib1" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.9.9" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:4.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-security:1.5.3.RELEASE" />
+          <element id="library" level="project" name="Spring Security-3.2.5" />
+          <element id="library" level="project" name="commons-codec:commons-codec:1.10" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-c3p0:5.2.12.Final" />
+          <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1.2" />
+        </element>
+        <element id="directory" name="classes">
+          <element id="module-output" name="main" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -7,6 +7,7 @@
     <class name="Beans.ATBDBBeans.KalitaonSystem.CityCodeBean" table="city_code" schema="atb_System_DB">
         <id name="id" column="id"/>
         <property name="geonameid" column="geonameid"/>
+
         <property name="originalName" column="original_name"/>
         <property name="sanitizedName" column="sanitized_name"/>
         <property name="alternateNamesCsv" column="alternate_names_CSV"/>

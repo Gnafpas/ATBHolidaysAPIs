@@ -22,7 +22,6 @@ public class SubAgencyDAO {
         try{
             session.beginTransaction();
             subAgency=(SubAgencyBean)session.createQuery(hql).setParameter("agentName",agentName ).getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -30,6 +29,8 @@ public class SubAgencyDAO {
         }catch (NoResultException e) {
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return subAgency;
     }
@@ -43,7 +44,6 @@ public class SubAgencyDAO {
         try{
             session.beginTransaction();
             subAgency=(SubAgencyBean)session.createQuery(hql).setParameter("stroreKey",stroreKey ).getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -51,6 +51,8 @@ public class SubAgencyDAO {
         }catch (NoResultException e) {
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return subAgency;
     }
@@ -64,32 +66,49 @@ public class SubAgencyDAO {
             subAgencyBean=new SubAgencyBean();
             subAgencyBean.setAgentName(agentName);
             subAgencyBean.setXmlStorekey(xmlStorekey);
+            subAgencyBean.setLastName("");
+            subAgencyBean.setFirstName("");
+            subAgencyBean.setTypeOfAgency("");
             subAgencyBean.setActivation("");
-            subAgencyBean.setAddress("");
+            subAgencyBean.setAccountNumber("");
+            subAgencyBean.setAccountName("");
             subAgencyBean.setAsta("");
-            subAgencyBean.setBankInfo("");
+            subAgencyBean.setBankAddress("");
+            subAgencyBean.setBankCity("");
+            subAgencyBean.setBankCountry("");
+            subAgencyBean.setBankName("");
+            subAgencyBean.setBankState("");
+            subAgencyBean.setBillingAddress("");
+            subAgencyBean.setBillingEmail("");
+            subAgencyBean.setCityCode("");
+            subAgencyBean.setCityName("");
             subAgencyBean.setClia("");
             subAgencyBean.setCommission("");
             subAgencyBean.setCountryCode("");
+            subAgencyBean.setCountryName("");
             subAgencyBean.setCreatedDate("");
             subAgencyBean.setCurrency("");
             subAgencyBean.setDeposit("");
-            subAgencyBean.setEmail("");
-            subAgencyBean.setFax("");
             subAgencyBean.setGsaId("");
+            subAgencyBean.setEmail("");
             subAgencyBean.setIata("");
+            subAgencyBean.setIban("");
+            subAgencyBean.setJobTitle("");
             subAgencyBean.setLogo("");
             subAgencyBean.setMarkup("");
-            subAgencyBean.setMasterUsercode("");
+            subAgencyBean.setMobile("");
             subAgencyBean.setNotes("");
+            subAgencyBean.setSwift("");
             subAgencyBean.setOther("");
-            subAgencyBean.setPic("");
             subAgencyBean.setTaxNo("");
             subAgencyBean.setTaxOffice("");
-            subAgencyBean.setTel("");
+            subAgencyBean.setTelephone("");
             subAgencyBean.setTursab("");
-            subAgencyBean.setWeb("");
             subAgencyBean.setXmlStatus("");
+            subAgencyBean.setWeb("");
+
+
+
         }
         else
             subAgencyBean.setXmlStorekey(xmlStorekey);
@@ -101,13 +120,14 @@ public class SubAgencyDAO {
             session.beginTransaction();
             session.saveOrUpdate(subAgencyBean);
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return subAgency;
     }

@@ -25,17 +25,18 @@ public class HAvailableDateDAO {
             tx = session.beginTransaction();
             session.insert(availableDate);
             tx.commit();
-            session.close();
         } catch (HibernateException e) {
             err = true;
             e.printStackTrace();
         } catch (ExceptionInInitializerError e) {
             err = true;
             e.printStackTrace();
-        }catch (CJCommunicationsException e){
-            err=true;
+        }catch (CJCommunicationsException e) {
+            err = true;
             e.printStackTrace();
-        }
+        }finally {
+                session.close();
+            }
         return err;
 
     }
@@ -49,7 +50,6 @@ public class HAvailableDateDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -59,6 +59,8 @@ public class HAvailableDateDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -73,7 +75,6 @@ public class HAvailableDateDAO {
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
             product=(HAvailableDateBean)query.getSingleResult();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
@@ -82,28 +83,33 @@ public class HAvailableDateDAO {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
-
         return product;
     }
 
-    public static List<HAvailableDateBean> gethAvailableDatesByProductId(String productId){
+    public static List<HAvailableDateBean> gethAvailableDatesByProductId(String productId,String planId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List<HAvailableDateBean> hAvailableDates=null;
         String hql ="Select hAvailableDates FROM HAvailableDateBean hAvailableDates " +
-                "WHERE hAvailableDates.productId like :productId ";
+                "WHERE hAvailableDates.productId like :productId" +
+                " AND   hAvailableDates.planId like :planId";
         try{
             session.beginTransaction();
-            hAvailableDates=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
+            hAvailableDates=session.createQuery(hql).setParameter("productId",   productId )
+                    .setParameter("planId",   "%"+planId+"%" )
+                    .getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return hAvailableDates;
     }

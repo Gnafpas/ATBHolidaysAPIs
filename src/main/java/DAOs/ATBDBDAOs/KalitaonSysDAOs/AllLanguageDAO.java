@@ -21,13 +21,14 @@ public class AllLanguageDAO {
         try{
             session.beginTransaction();
             languages=session.createQuery(hql).list();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return languages;
     }

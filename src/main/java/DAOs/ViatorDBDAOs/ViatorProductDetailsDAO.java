@@ -27,11 +27,9 @@ public class ViatorProductDetailsDAO {
         Transaction tx;
         boolean err=false;
         try{
-            session = HibernateUtil.getSession();
             tx=session.beginTransaction();
             session.save(product);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -41,6 +39,8 @@ public class ViatorProductDetailsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -54,7 +54,6 @@ public class ViatorProductDetailsDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -64,6 +63,8 @@ public class ViatorProductDetailsDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -72,17 +73,18 @@ public class ViatorProductDetailsDAO {
 
         Session session = HibernateUtil.getSession();
         List <String> products=null;
-        String hql = "select code from ViatorProductDetailsBean";
+        String hql = "select code from ViatorProductDetailsBean a order by a.code desc" ;
         try{
             session.beginTransaction();
             products=session.createQuery(hql).list();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return products;
     }
@@ -231,13 +233,14 @@ public class ViatorProductDetailsDAO {
                 query.setMaxResults(params.getLastProduct());
 
             products=query.getResultList();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return products;
     }

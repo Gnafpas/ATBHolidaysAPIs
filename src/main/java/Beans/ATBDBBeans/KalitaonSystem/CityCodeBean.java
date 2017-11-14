@@ -3,13 +3,14 @@ package Beans.ATBDBBeans.KalitaonSystem;
 import javax.persistence.*;
 
 /**
- * Created by George on 18/09/2017.
+ * Created by George on 04/11/2017.
  */
 @Entity
 @Table(name = "city_code", schema = "atb_System_DB", catalog = "")
 public class CityCodeBean {
     private int id;
     private String geonameid;
+    private Integer viatorid;
     private String originalName;
     private String sanitizedName;
     private String alternateNamesCsv;
@@ -40,6 +41,16 @@ public class CityCodeBean {
 
     public void setGeonameid(String geonameid) {
         this.geonameid = geonameid;
+    }
+
+    @Basic
+    @Column(name = "viatorid")
+    public Integer getViatorid() {
+        return viatorid;
+    }
+
+    public void setViatorid(Integer viatorid) {
+        this.viatorid = viatorid;
     }
 
     @Basic
@@ -161,6 +172,7 @@ public class CityCodeBean {
 
         if (id != that.id) return false;
         if (geonameid != null ? !geonameid.equals(that.geonameid) : that.geonameid != null) return false;
+        if (viatorid != null ? !viatorid.equals(that.viatorid) : that.viatorid != null) return false;
         if (originalName != null ? !originalName.equals(that.originalName) : that.originalName != null) return false;
         if (sanitizedName != null ? !sanitizedName.equals(that.sanitizedName) : that.sanitizedName != null)
             return false;
@@ -184,6 +196,7 @@ public class CityCodeBean {
     public int hashCode() {
         int result = id;
         result = 31 * result + (geonameid != null ? geonameid.hashCode() : 0);
+        result = 31 * result + (viatorid != null ? viatorid.hashCode() : 0);
         result = 31 * result + (originalName != null ? originalName.hashCode() : 0);
         result = 31 * result + (sanitizedName != null ? sanitizedName.hashCode() : 0);
         result = 31 * result + (alternateNamesCsv != null ? alternateNamesCsv.hashCode() : 0);

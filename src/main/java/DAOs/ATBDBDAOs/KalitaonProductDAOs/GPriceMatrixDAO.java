@@ -23,7 +23,6 @@ public class GPriceMatrixDAO {
             for(GPriceMatrixBean priceMatrix:priceMatrixes)
                 session.insert(priceMatrix);
             tx.commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -33,6 +32,8 @@ public class GPriceMatrixDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
@@ -46,7 +47,6 @@ public class GPriceMatrixDAO {
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             err=true;
             e.printStackTrace();
@@ -56,27 +56,33 @@ public class GPriceMatrixDAO {
         }catch (CJCommunicationsException e){
             err=true;
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return err;
     }
 
-    public static List<GPriceMatrixBean> getgPriceMatrixesByProductId(String productId){
+    public static List<GPriceMatrixBean> getgPriceMatrixesByProductId(String productId,String planId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List<GPriceMatrixBean> gPriceMatrixes=null;
         String hql ="Select gPriceMatrixes FROM GPriceMatrixBean gPriceMatrixes " +
-                "WHERE gPriceMatrixes.productId like :productId ";
+                "WHERE gPriceMatrixes.productId like :productId " +
+                "AND   gPriceMatrixes.planId like :planId";
         try{
             session.beginTransaction();
-            gPriceMatrixes=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
+            gPriceMatrixes=session.createQuery(hql).setParameter("productId",   productId )
+                                                   .setParameter("planId",   "%"+planId+"%" )
+                                                   .getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (HibernateException e) {
             e.printStackTrace();
         }catch (ExceptionInInitializerError e) {
             e.printStackTrace();
         }catch (CJCommunicationsException e){
             e.printStackTrace();
+        }finally {
+            session.close();
         }
         return gPriceMatrixes;
     }

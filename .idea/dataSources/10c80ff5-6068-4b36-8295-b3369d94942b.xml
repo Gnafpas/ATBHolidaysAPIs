@@ -190,7 +190,7 @@
     </column>
     <column id="57" parent="13" name="description_summary">
       <Position>3</Position>
-      <DataType>varchar(1000)|0</DataType>
+      <DataType>varchar(2500)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="58" parent="13" name="categories">
@@ -818,6 +818,7 @@
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="180" parent="23" name="product_id">
       <Position>2</Position>
