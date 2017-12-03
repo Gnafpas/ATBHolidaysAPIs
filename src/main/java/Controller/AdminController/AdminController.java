@@ -1,18 +1,18 @@
 package Controller.AdminController;
 
+import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 import Beans.ViatorDBBeans.ViatorDestinationsBean;
+import Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean;
+import DAOs.ATBDBDAOs.KalitaonProductDAOs.AProductTitleDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CityCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
-import DAOs.CarnectAPIDAOs.DestinationsDAOs.*;
-import DAOs.CarnectAPIDAOs.DestinationsDAOs.Destination;
-import DAOs.CarnectAPIDAOs.ServiceDAOs.*;
-import DAOs.SunHotelsDAOs.*;
 import DAOs.ViatorDBDAOs.ViatorDestinationsDAO;
-import Updates.ATBDBUpdates.UpdateATBDBTimerTask;
-import Updates.ATBDBUpdates.UpdateATBProducts;
+import DAOs.ViatorDBDAOs.ViatorNoneAvailableDatesDAO;
+import Updates.ATBDBUpdates.ViatorContentUpdates.UpdateATBDBTimerTask;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
+import Updates.ATBDBUpdates.SunHotelsDBUpdates.UpdateSunHotelsDBTimerTask;
 import Updates.ViatorDBUpdates.*;
 import Helper.APIKeyGeneration;
 import Helper.ProjectProperties;
@@ -22,12 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.logging.Logger;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 29/05/17.
@@ -39,6 +38,14 @@ public class AdminController {
     private boolean viatortimerRuns = false;
     private Timer atbTimer;
     private boolean atbTimerRuns = false;
+    private Timer sunHotTimer;
+    private boolean sunHotTimerRuns = false;
+    public static boolean viatorimidiateUpdateStop=false;
+    public static boolean atbimidiateUpdateStop=false;
+    public static boolean sunHotelsimidiateUpdateStop=false;
+    public static boolean viatorUpdateRunning=false;
+    public static boolean atbViatorUpdateRunning=false;
+    public static boolean sunHotelsUpdateRunning=false;
 
     /**
      * All functions return results about the update.If there were errors in communication with viator server or DB
@@ -73,6 +80,8 @@ public class AdminController {
 
     @RequestMapping("/stopViatorDBUpdate")
     public String stopViatorDBUpdate(){
+        viatorimidiateUpdateStop=true;
+        atbimidiateUpdateStop=true;
         if(viatortimerRuns) {
             viatorTimer.cancel();
             viatorTimer.purge();
@@ -84,10 +93,10 @@ public class AdminController {
 
     @RequestMapping("/isViatorDBUpdateTimertaskEnabled")
     public String isViatorDBUpdateTimertaskEnabled(){
-        if(viatortimerRuns)
-            return "True";
-        else
+        if(!viatortimerRuns && !viatorUpdateRunning && !atbViatorUpdateRunning)//todo remove atbViatorUpdateRunning if ever seperate the update
             return "False";
+        else
+            return "True";
     }
 
     @RequestMapping("/deleteCorruptedProducts")
@@ -119,6 +128,7 @@ public class AdminController {
 
     @RequestMapping("/stopATBDBUpdate")
     public String stopATBDBUpdate(){
+        atbimidiateUpdateStop=true;
         if(atbTimerRuns) {
             atbTimer.cancel();
             atbTimer.purge();
@@ -130,10 +140,48 @@ public class AdminController {
 
     @RequestMapping("/isATBDBUpdateTimertaskEnabled")
     public String isATBDBUpdateTimertaskEnabled(){
-        if(atbTimerRuns)
-            return "True";
-        else
+        if(!atbTimerRuns && !atbViatorUpdateRunning)
             return "False";
+        else
+            return "True";
+    }
+
+    @RequestMapping("/startSunHotDBUpdate")
+    public String startSunHotBUpdate(@RequestParam(value="StartingDestId", defaultValue="0") Integer StartingDestId,
+                                     @RequestParam(value="StopDestId", defaultValue="0") Integer StopDestId ) {
+        if(!sunHotTimerRuns) {
+            /**
+             * Update products with timer every X hours.
+             */
+            TimerTask timerTask = new UpdateSunHotelsDBTimerTask(StartingDestId,StopDestId);
+            sunHotTimer = new Timer(true);
+            sunHotTimer.scheduleAtFixedRate(timerTask, 0, Helper.ProjectProperties.runSunhotDBUpdateEveryXMillisecs);
+            sunHotTimerRuns=true;
+            return "Update timer task started.Runs every "+ ProjectProperties.runSunhotDBUpdateEveryXMillisecs /60 /60 /1000+" hours." ;
+        }
+        else
+            return "Update timer task runs already.";
+        //todo combine atb and viator update to run serialized
+    }
+
+    @RequestMapping("/stopSunHotDBUpdate")
+    public String stopSunHotDBUpdate(){
+        sunHotelsimidiateUpdateStop=true;
+        if(sunHotTimerRuns) {
+            sunHotTimer.cancel();
+            sunHotTimer.purge();
+            sunHotTimerRuns = false;
+            return "Update timer task  stopped. ";
+        }else
+            return "Update timer task isn't running. ";
+    }
+
+    @RequestMapping("/isSunHotDBUpdateTimertaskEnabled")
+    public String isSunHotDBUpdateTimertaskEnabled(){
+        if(!sunHotTimerRuns && !sunHotelsUpdateRunning )
+            return "False";
+        else
+            return "True";
     }
 
     @RequestMapping("/updateCategories")
@@ -159,7 +207,7 @@ public class AdminController {
         try {
             key = APIKeyGeneration.generate(128);
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("Exception caught");
+            errLogger.info("Exception caught");
             e.printStackTrace();
         }
         String saltedPassword = Helper.ProjectProperties.SALTForKeyGeneration + key;
@@ -168,55 +216,7 @@ public class AdminController {
         return key;
     }
 
-    @RequestMapping("/carnectTest")
-    public String carnectTest() {
-//        Destination destination=new Destination();
-//        destination.setHandlerResolver(new JaxWsHandlerResolver());
-//        DestinationSoap destinationSoap = destination.getDestinationSoap();
-//        VehicleCountryRequest vehicleCountryRequest=new VehicleCountryRequest();
-//        vehicleCountryRequest.setLanguage("EN");
-//        VehicleCountryResponse response =destinationSoap.getCountries(vehicleCountryRequest);
 
-
-
-        GregorianCalendar c = new GregorianCalendar();
-        c.setTime(new Date());
-        XMLGregorianCalendar date2;
-        try {
-             date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-
-        NonStaticXMLAPI nonStaticXMLAPI=new NonStaticXMLAPI();
-        NonStaticXMLAPISoap nonStaticXMLAPISoap=nonStaticXMLAPI.getNonStaticXMLAPISoap();
-        PreBookV2 preBook=new PreBookV2();
-        PreBookResult preBookResult=nonStaticXMLAPISoap.preBookV2 ("ATBHols","Shisane123","USD","eng",date2,date2,1,2,0,"",1,1,"US","","","7673130","137159","","","");
-        GetLanguagesResult  getLanguagesResult=  nonStaticXMLAPISoap.getLanguages("ATBHols","Shisane123");
-
-        System.out.println(getLanguagesResult.getLanguages().getLanguage().get(0).getName()+"  "+" "+preBookResult.getPreBookCode()+" "+preBookResult.getRoomId()+" "+preBookResult.getCancellationPolicies()+" "+preBookResult.getNotes());
-        }catch(DatatypeConfigurationException e){}
-//        Service service=new Service();
-//        service.setHandlerResolver(new JaxWsHandlerResolver());
-//        ServiceSoap serviceSoap=service.getServiceSoap();
-//        VehAvailRateRQ vehAvailRateRQ=new VehAvailRateRQ();
-//        VehicleAvailRQCoreType vehicleAvailRQCoreType=new VehicleAvailRQCoreType();
-//        vehicleAvailRQCoreType.setRateQueryParameterType();
-//
-//        VehRateRuleRS.VehRentalCore vehRentalCore=new VehRateRuleRS.VehRentalCore();
-//        VehicleRentalCoreType.ReturnLocation returnLocation=new VehicleRentalCoreType.ReturnLocation();
-//        returnLocation.setLocationCode("51");
-//        returnLocation.setCodeContext("1");
-//        vehRentalCore.setReturnLocation(returnLocation);
-//
-//        vehicleAvailRQCoreType.setVehRentalCore(vehRentalCore);
-//
-//        ArrayOfSourceType arrayOfSourceType=new ArrayOfSourceType();
-//        arrayOfSourceType.getSource();
-//        vehAvailRateRQ.setPOS(arrayOfSourceType);
-//        vehAvailRateRQ.setVehAvailRQCore(vehicleAvailCoreType);
-//        VehAvailRateRS vehAvailRateRS=serviceSoap.getVehAvailRate(vehAvailRateRQ);
-
-return "ok";
-     //   return response.getCountries().getCountry().get(0).getName();
-    }
 
     @RequestMapping("/updatecitycodes")
     public String updatecitycodes() {
@@ -365,15 +365,65 @@ return "ok";
 
     @RequestMapping("/temp")
     public String temp() {
-        String a="bla";
-        System.out.println(a);
-        a=a.replace(".","");
-        a=a.replace("-","");
-        a=a.substring(0,3);
-        System.out.println(a);
+        List<String> prods=AProductTitleDAO.getAllViatorProductsCodes();
 
+        for(String prod:prods){
+            AProductTitleBean p=AProductTitleDAO.getProductByCode(prod);
+            if(p.getCityCode()!=null && !p.getCityCode().equals(0)) {
+                CityCodeBean cityCodeBean = CityCodeDAO.getCityByGeonameId(p.getCityCode());
+                if (cityCodeBean != null) {
+
+                    p.setCityName(cityCodeBean.getSanitizedName().toUpperCase());
+                    AProductTitleDAO.deleteProduct(prod);
+                    AProductTitleDAO.addproduct(p);
+                }
+            }
+        }
         return "ok";
     }
 
+
+
+    @RequestMapping("/carnectTest")
+    public String carnectTest() {
+//        Destination destination=new Destination();
+//        destination.setHandlerResolver(new JaxWsHandlerResolver());
+//        DestinationSoap destinationSoap = destination.getDestinationSoap();
+//        VehicleCountryRequest vehicleCountryRequest=new VehicleCountryRequest();
+//        vehicleCountryRequest.setLanguage("EN");
+//        VehicleCountryResponse response =destinationSoap.getCountries(vehicleCountryRequest);
+
+//        Service service=new Service();
+//        service.setHandlerResolver(new JaxWsHandlerResolver());
+//        ServiceSoap serviceSoap=service.getServiceSoap();
+//        VehAvailRateRQ vehAvailRateRQ=new VehAvailRateRQ();
+//        VehicleAvailRQCoreType vehicleAvailRQCoreType=new VehicleAvailRQCoreType();
+//        vehicleAvailRQCoreType.setRateQueryParameterType();
+//
+//        VehRateRuleRS.VehRentalCore vehRentalCore=new VehRateRuleRS.VehRentalCore();
+//        VehicleRentalCoreType.ReturnLocation returnLocation=new VehicleRentalCoreType.ReturnLocation();
+//        returnLocation.setLocationCode("51");
+//        returnLocation.setCodeContext("1");
+//        vehRentalCore.setReturnLocation(returnLocation);
+//
+//        vehicleAvailRQCoreType.setVehRentalCore(vehRentalCore);
+//
+//        ArrayOfSourceType arrayOfSourceType=new ArrayOfSourceType();
+//        arrayOfSourceType.getSource();
+//        vehAvailRateRQ.setPOS(arrayOfSourceType);
+//        vehAvailRateRQ.setVehAvailRQCore(vehicleAvailCoreType);
+//        VehAvailRateRS vehAvailRateRS=serviceSoap.getVehAvailRate(vehAvailRateRQ);
+
+
+        errLogger.info("afascad  ");
+        List<ViatorNoneAvailableDatesBean> noneAvailableDates;
+        noneAvailableDates= ViatorNoneAvailableDatesDAO.getNoneAvailableDatesBeanByProductCode("26867P28");
+        for(ViatorNoneAvailableDatesBean noneAvailableDate:noneAvailableDates) {
+            System.out.println(noneAvailableDate.getProductCode());
+        }
+        System.out.println(noneAvailableDates.size());
+        return "ok";
+        //   return response.getCountries().getCountry().get(0).getName();
+    }
 }
 

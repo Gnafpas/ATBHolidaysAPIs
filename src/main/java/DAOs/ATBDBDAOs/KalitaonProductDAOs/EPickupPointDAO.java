@@ -7,7 +7,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 18/08/2017.
@@ -25,13 +29,19 @@ public class EPickupPointDAO {
             tx.commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -49,13 +59,19 @@ public class EPickupPointDAO {
             session.getTransaction().commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -73,11 +89,17 @@ public class EPickupPointDAO {
             ePickupPoints=session.createQuery(hql).setParameter("productId",   productId ).getResultList();
             session.getTransaction().commit();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }

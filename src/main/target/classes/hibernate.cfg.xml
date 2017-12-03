@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.c3p0.min_size">10</property>
         <property name="hibernate.c3p0.max_size">20</property>
         <property name="hibernate.c3p0.acquire_increment">1</property>
@@ -15,12 +15,12 @@
         <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
         <property name="hibernate.c3p0.acquireRetryDelay">250</property>
 
-        <property name="connection.username">root</property>
-        <property name="connection.password">h3ll0mysq1</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true</property>
         <!--<property name="connection.username">root</property>
-        <property name="connection.password">root</property>
+        <property name="connection.password">h3ll0mysq1</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true</property>-->
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true</property>
         <mapping class="Beans.ViatorDBBeans.ViatorProductDetailsBean"/>
         <mapping resource="ViatorProductDetailsBean.hbm.xml"/>
         <mapping resource="ViatorProductXCategoryBean.hbm.xml"/>
@@ -97,6 +97,8 @@
         <mapping class="Beans.ViatorDBBeans.AtbUpdateFailedProductBean"/>
         <mapping resource="AtbUpdateProductsInfoBean.hbm.xml"/>
         <mapping class="Beans.ViatorDBBeans.AtbUpdateProductsInfoBean"/>
+        <mapping resource="SunhotelsUpdateInfoBean.hbm.xml"/>
+        <mapping class="Beans.ATBDBBeans.KalitaonHotel.SunhotelsUpdateInfoBean"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

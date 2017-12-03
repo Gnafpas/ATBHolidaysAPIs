@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.c3p0.min_size">10</property>
         <property name="hibernate.c3p0.max_size">20</property>
         <property name="hibernate.c3p0.acquire_increment">1</property>
@@ -97,6 +97,8 @@
         <mapping class="Beans.ViatorDBBeans.AtbUpdateFailedProductBean"/>
         <mapping resource="AtbUpdateProductsInfoBean.hbm.xml"/>
         <mapping class="Beans.ViatorDBBeans.AtbUpdateProductsInfoBean"/>
+        <mapping resource="SunhotelsUpdateInfoBean.hbm.xml"/>
+        <mapping class="Beans.ATBDBBeans.KalitaonHotel.SunhotelsUpdateInfoBean"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

@@ -115,7 +115,7 @@ public class TaxonomyController {
 
                 if(!params.getCityCode().equals("") || !params.getCountryCode().equals("")) {
                     params.setCategories(categoryNames);
-                    products = AProductTitleDAO.getProducts(params);
+                    products = AProductTitleDAO.getProducts(params,null,null);
                     if (products != null)
                         category.setProductCount(products.size());
                 }

@@ -1,15 +1,21 @@
 package Controller.ATBAPIController;
 
-import APIJSONs.ATBAPIJSONs.*;
+import APIJSONs.ATBAPIJSONs.Category;
+import APIJSONs.ATBAPIJSONs.ProductDetailsJSON;
+import APIJSONs.ATBAPIJSONs.ProductsAndCategoriesJSON;
+import APIJSONs.ATBAPIJSONs.ProductsAndCategoriesPOST;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
-import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.*;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +35,13 @@ public class ProductController {
     @RequestMapping(value = "/product/search", method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
     public ProductsAndCategoriesJSON getATBProductsAndCategories(@RequestBody ProductsAndCategoriesPOST params){
-//todo send only max 500 products
+
         ProductsAndCategoriesJSON productsAndCategoriesJSON =new ProductsAndCategoriesJSON();
         List <AProductTitleBean>  products;
         int i=0;
+
+        if(!params.getCountryCode().equals(""))
+            params.setCountryCode(params.getCountryCode()+" ");//todo fix isocode at the database(Remove the space at the end of the code) or live it like this
         DateTime dateTime =new DateTime( DateTimeZone.UTC);
         productsAndCategoriesJSON.setDateStamp(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:%02d",
                 dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
@@ -44,19 +53,26 @@ public class ProductController {
             params.setLastProduct(params.getFirstProduct()+500);
         else if(params.getLastProduct()-params.getFirstProduct()>500)
             params.setLastProduct(params.getFirstProduct()+500);
-//        ZonedDateTime startDate;//todo remove dates
-//        ZonedDateTime endDate;
-//        endDate=ZonedDateTime.of ( LocalDate.of ( 2017 , 9 , 29 ) ,//todo remove this code
-//                                   LocalTime.of ( 9 , 30 ) , ZoneId.of ( "America/New_York" ) );
-//        startDate=ZonedDateTime.of (LocalDate.of ( 2017 , 9 , 29 ) ,
-//                                    LocalTime.of ( 9 , 30 ) , ZoneId.of ( "America/New_York" ) );
-//        params.setEndDate(endDate);
-//        params.setStartDate(startDate);
 
+        ZonedDateTime startDate=null;
+        ZonedDateTime endDate=null;
+        if(!params.getStartDate().equals("") && !params.getEndDate().equals("")) {
+            String sdate[]=params.getStartDate().split("-");
+            String edate[]=params.getEndDate().split("-");
+            if(sdate.length==3 && edate.length==3) {
+               try {
+                   endDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(sdate[0]), Integer.parseInt(sdate[1]), Integer.parseInt(sdate[2])),
+                           LocalTime.of(9, 30), ZoneId.of("America/New_York"));
+                   startDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(edate[0]), Integer.parseInt(edate[1]), Integer.parseInt(edate[2])),
+                           LocalTime.of(9, 30), ZoneId.of("America/New_York"));
+               }catch(NumberFormatException e){}
+            }
+
+        }
         /**
          * Get products
          */
-        productsAndCategoriesJSON.getData().setProducts(AProductTitleDAO.getProducts(params));
+        productsAndCategoriesJSON.getData().setProducts(AProductTitleDAO.getProducts(params,startDate,endDate));
 
         /**
          * Get all categories and Find products count for each category
@@ -73,7 +89,7 @@ public class ProductController {
                 categoryNames.clear();
                 categoryNames.add(cat.getCategoryName());
                 params.setCategories(categoryNames);
-                products = AProductTitleDAO.getProducts(params);
+                products = AProductTitleDAO.getProducts(params,startDate,endDate);
                 if (products != null)
                     category.setProductCount(products.size());
                 categoriesInJSON.add(category);
@@ -104,7 +120,7 @@ public class ProductController {
         ProductsAndCategoriesPOST params = new ProductsAndCategoriesPOST();
         params.setProductId(Integer.valueOf(productId));
 
-        productDetailsJSON.getData().setProductTitle(AProductTitleDAO.getProducts(params));
+        productDetailsJSON.getData().setProductTitle(AProductTitleDAO.getProducts(params,null,null));
         productDetailsJSON.getData().setProductDetails(BProductDetailDAO.getBProductDetailsByProductId(productId));
         productDetailsJSON.getData().setProductOptions(CProductOptionsDAO.getcProductOptionsByProductId(productId));
         productDetailsJSON.getData().setProductPhotos(DProductPhotoDAO.getdProductPhotosByProductId(productId));

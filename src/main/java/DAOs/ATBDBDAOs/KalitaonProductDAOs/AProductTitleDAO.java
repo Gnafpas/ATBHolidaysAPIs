@@ -10,9 +10,13 @@ import org.hibernate.Transaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 08/08/2017.
@@ -30,12 +34,19 @@ public class AProductTitleDAO {
             tx.commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -53,12 +64,19 @@ public class AProductTitleDAO {
             session.getTransaction().commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -75,11 +93,17 @@ public class AProductTitleDAO {
             session.beginTransaction();
             products=session.createQuery(hql).list();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -91,19 +115,19 @@ public class AProductTitleDAO {
 
         StatelessSession session = ATBHibernateUtil.getSession();
         AProductTitleBean product=null;
-        String hql ="Select a FROM Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean a WHERE a.productCode='"+ productCode +"'";
+        String hql ="Select a FROM Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean a WHERE a.productCode='"+ productCode +"' and a.mainSupplierName='Viator'";
         try{
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
             product=(AProductTitleBean)query.getSingleResult();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            errLogger.info(e.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            errLogger.info(e.toString());
         }catch (NoResultException e){
 
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            errLogger.info(e.toString());
         }finally {
             session.close();
         }
@@ -121,13 +145,21 @@ public class AProductTitleDAO {
         query.setMaxResults(1);
             product=(AProductTitleBean)query.getSingleResult();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (NoResultException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -140,7 +172,7 @@ public class AProductTitleDAO {
      * a combination of those attributes.Capability of filtering by categories and sort by REVIEW_AVG_RATING_D,
      * REVIEW_AVG_RATING_A, POPULARITY, PRICE_D, PRICE_a, DURATION_D, DURATION_A.Also filtering by dates.
      */
-    public static List <AProductTitleBean> getProducts(ProductsAndCategoriesPOST params){
+    public static List <AProductTitleBean> getProducts(ProductsAndCategoriesPOST params,ZonedDateTime startDate,ZonedDateTime endDate){
 
         List <AProductTitleBean> products=null;
         int i;
@@ -184,9 +216,9 @@ public class AProductTitleDAO {
         /**
          * Dates filter hql restrictions
          */
-        if(params.getStartDate()!=null && params.getEndDate()!=null){
+        if(startDate!=null && endDate!=null && startDate.isBefore(endDate)){
             i=0;
-            for (ZonedDateTime date = params.getStartDate(); date.isBefore(params.getEndDate().plusDays(1)); date = date.plusDays(1))
+            for (ZonedDateTime date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1))
             {
                 hql = hql + " and not exists (select stopsaleDate from HStopsaleDateBean stopsaleDate " +
                         " where stopsaleDate.stopDate = :date" + i +
@@ -194,6 +226,30 @@ public class AProductTitleDAO {
                 i++;
             }//todo check stopsale dates to let products show up when there is even only one day available from the selected dates
         }
+
+
+//        /**
+//         * Sort order hql code
+//         */
+//        if(params.getSortOrder().equals(SortOrderType.alphabetical)){
+//            hql = hql + " order by productDetails.titleEn";
+//        }else if(params.getSortOrder().equals(SortOrderType.avgRatingD)){
+//            hql = hql + " order by productDetails.rating DESC";
+//        }else if(params.getSortOrder().equals(SortOrderType.avgRatingA)){
+//            hql = hql + " order by productDetails.rating ASC";
+//        }else if(params.getSortOrder().equals(SortOrderType.popularity)) {
+//            hql = hql + " order by productDetails.reviewCount + productDetails.rating1Count " +
+//                    " +   productDetails.rating2Count + productDetails.rating3Count " +
+//                    " +   productDetails.rating4Count + productDetails.rating5Count DESC ";
+//        }else if(params.getSortOrder().equals(SortOrderType.priceD)) {
+//            hql = hql + " order by productDetails.price DESC";
+//        }else if(params.getSortOrder().equals(SortOrderType.priceA)) {
+//            hql = hql + " order by productDetails.price ASC";
+//        }else if(params.getSortOrder().equals(SortOrderType.durationD)) {
+//            hql = hql + " order by productDetails.duration DESC";
+//        }else if(params.getSortOrder().equals(SortOrderType.durationA)) {
+//            hql = hql + " order by productDetails.duration ASC";
+//        }
 
         StatelessSession session = ATBHibernateUtil.getSession();
         try{
@@ -219,9 +275,9 @@ public class AProductTitleDAO {
                     i++;
                 }
             }
-            if(params.getStartDate()!=null && params.getEndDate()!=null){
+            if(startDate!=null && endDate!=null && startDate.isBefore(endDate)){
                 i=0;
-                for (ZonedDateTime date = params.getStartDate(); date.isBefore(params.getEndDate().plusDays(1)); date = date.plusDays(1))
+                for (ZonedDateTime date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1))
                 {
                     query.setParameter("date"+i, Date.from(date.toInstant()), TemporalType.DATE);
                     i++;
@@ -236,9 +292,13 @@ public class AProductTitleDAO {
 
             products=query.getResultList();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }//todo integrade sortorders

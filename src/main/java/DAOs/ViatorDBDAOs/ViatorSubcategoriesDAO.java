@@ -7,7 +7,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 19/06/17.
@@ -25,13 +29,19 @@ public class ViatorSubcategoriesDAO {
             tx.commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -49,13 +59,19 @@ public class ViatorSubcategoriesDAO {
             session.getTransaction().commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -72,11 +88,17 @@ public class ViatorSubcategoriesDAO {
             session.beginTransaction();
             subCategories = session.createQuery(hql).list();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         } catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -94,11 +116,17 @@ public class ViatorSubcategoriesDAO {
             subcategories=session.createQuery(hql).setParameter("categoriId",   categoriId ).getResultList();
             session.getTransaction().commit();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }

@@ -6,12 +6,15 @@
         <datasource-map>
           <unit-entry name="ATBDBHibernate.cfg.xml" value="10c80ff5-6068-4b36-8295-b3369d94942b" />
           <unit-entry name="ATBSysDBHibernate.cfg.xml" value="2354679e-c375-4b8d-998f-91e0347477c5" />
+          <unit-entry name="SunHotels.cfg.xml" value="bdf23856-5c65-4e19-8f70-fcfd46a14320" />
           <unit-entry name="hibernate.cfg.xml" value="5c76ddf9-0c28-4cc0-8429-52800807847b" />
           <unit-entry name="target:classes:hibernate.cfg.xml" value="352f0c0d-7dfe-4700-96e5-687fce594720" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/ATBDBHibernate.cfg.xml" />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/ATBSysDBHibernate.cfg.xml" />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/SunHot.cfg.xml" />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/SunHotels.cfg.xml" />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/hibernate.cfg.xml" />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/target/classes/hibernate.cfg.xml" />
       </configuration>

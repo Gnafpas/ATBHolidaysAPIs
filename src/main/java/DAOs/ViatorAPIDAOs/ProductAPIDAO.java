@@ -17,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Controller.Application.errLogger;
+
 
 /**
  * Created by George on 29/05/17.
@@ -44,15 +46,15 @@ public class ProductAPIDAO {
                 productsByDestIdSeoIdAPIJSON = restTemplate.postForObject(url, productsByAttractionPOST, ProductsByDestIdSeoIdAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return productsByDestIdSeoIdAPIJSON;
@@ -80,15 +82,15 @@ public class ProductAPIDAO {
             searchFreetextProductsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextProductsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return searchFreetextProductsAPIJSON;
@@ -117,15 +119,15 @@ public class ProductAPIDAO {
             searchFreetextDestinationsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextDestinationsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return searchFreetextDestinationsAPIJSON;
@@ -154,15 +156,15 @@ public class ProductAPIDAO {
             searcFreetextAttractionsAPIJSON = restTemplate.postForObject(url, searchFreetextPOST, SearchFreetextAttractionsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return searcFreetextAttractionsAPIJSON;
@@ -190,15 +192,15 @@ public class ProductAPIDAO {
             productDetailedInfoAPIJSON = restTemplate.getForObject(url, ProductDetailedInfoAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return productDetailedInfoAPIJSON;
@@ -223,15 +225,15 @@ public class ProductAPIDAO {
             productsByCodesAPIJSON = restTemplate.postForObject(url, productsByCodesPOST, ProductsByCodesAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return productsByCodesAPIJSON;

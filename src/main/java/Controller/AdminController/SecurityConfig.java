@@ -43,7 +43,8 @@ public class SecurityConfig{
                     .authorizeRequests()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/stopViatorDBUpdate", "/updateCategories", "/updateDestinations", "/updateAttractions", "/startViatorDBUpdate","/newAPIClient",
-                                             "/startATBDBUpdate","/isViatorDBUpdateTimertaskEnabled","/stopATBDBUpdate","/isATBDBUpdateTimertaskEnabled","/carnectTest","/deleteCorruptedProducts","/updatecitycodes","/blankid","/temp")
+                                             "/startATBDBUpdate","/isViatorDBUpdateTimertaskEnabled","/stopATBDBUpdate","/isATBDBUpdateTimertaskEnabled",
+                                             "/stopSunHotDBUpdate","/startSunHotDBUpdate","/isSunHotDBUpdateTimertaskEnabled","/carnectTest","/deleteCorruptedProducts","/updatecitycodes","/blankid","/temp")
                     .hasRole("ADMIN")
                     .and().formLogin();
             http.csrf().disable();
@@ -61,10 +62,10 @@ public class SecurityConfig{
                && !request.getServletPath().equals("/startViatorDBUpdate") && !request.getServletPath().equals("/newAPIClient")
                && !request.getServletPath().equals("/isViatorDBUpdateTimertaskEnabled") && !request.getServletPath().equals("/isATBDBUpdateTimertaskEnabled")
                && !request.getServletPath().equals("/stopATBDBUpdate") && !request.getServletPath().equals("/startATBDBUpdate")
-               && !request.getServletPath().equals("/carnectTest") && !request.getServletPath().equals("/deleteCorruptedProducts") && !request.getServletPath().equals("/updatecitycodes") && !request.getServletPath().equals("/blankid") && !request.getServletPath().equals("/temp") ) {
+               && !request.getServletPath().equals("/isSunHotDBUpdateTimertaskEnabled") && !request.getServletPath().equals("/startSunHotDBUpdate")
+               && !request.getServletPath().equals("/stopSunHotDBUpdate") && !request.getServletPath().equals("/carnectTest") && !request.getServletPath().equals("/deleteCorruptedProducts") && !request.getServletPath().equals("/updatecitycodes") && !request.getServletPath().equals("/blankid") && !request.getServletPath().equals("/temp") ) {
                 String saltedPassword = Helper.ProjectProperties.SALTForKeyGeneration + request.getParameter("apiKey");
                 String hashedPassword = Helper.APIKeyGeneration.generateHash(saltedPassword);
-
                 subAgencyBean = SubAgencyDAO.getSubAgentByStoreKey(hashedPassword);
                 if (subAgencyBean == null) {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED,

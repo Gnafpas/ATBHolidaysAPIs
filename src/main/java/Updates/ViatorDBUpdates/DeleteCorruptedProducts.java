@@ -2,11 +2,13 @@ package Updates.ViatorDBUpdates;
 
 import Beans.ViatorAPIBeans.Bookings.AvailabilityAndPricingMatrix.PricingMatrix;
 import Beans.ViatorDBBeans.UpdateDBBeans.TotalExpiredProducts;
+import Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean;
 import Beans.ViatorDBBeans.ViatorPricingMatrixBean;
 import Beans.ViatorDBBeans.ViatorUpdateFailedProductsBean;
 import Beans.ViatorDBBeans.ViatorUpdateProductsInfoBean;
 import DAOs.ViatorDBDAOs.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -108,10 +110,11 @@ public class DeleteCorruptedProducts {
             errorWhileDeleting=true;
 
         /**
-         * Delete products comming from viator with no rates
+         * Delete products comming from viator with no rates or comming only with price zero
          */
         List<String> allCodes=ViatorProductDetailsDAO.getAllProductsCodes();
         List<ViatorPricingMatrixBean> pricingMatrixes;
+        List<ViatorNoneAvailableDatesBean> noneAvailableDates;
         if(allCodes!=null){
             for(String code:allCodes){
                 pricingMatrixes=ViatorPricingMatrixDAO.getPricingMatrixByProductCode(code);
@@ -155,6 +158,100 @@ public class DeleteCorruptedProducts {
                             errorWhileDeleting=true;
                         counter2++;
                         logger.info("********************** Deleting product comming from viator with no rates with code: " + code + " **********************");
+                    }else{
+                        BigDecimal maxprice=new BigDecimal(0);
+                        for(ViatorPricingMatrixBean pricingMatrix:pricingMatrixes){
+                            if(pricingMatrix.getMerchantNetPrice().compareTo(maxprice)==1) {
+                                maxprice = pricingMatrix.getMerchantNetPrice();
+                            }
+                        }
+                        if(maxprice.compareTo(new BigDecimal(0))==0){
+                            if (ViatorProductDetailsDAO.deleteProduct(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductAgeBandsDAO.deleteProductAgeBands(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductExclusionsDAO.deleteProductExlusions(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductInclusionsDAO.deleteProductInclusions(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductPhotosDAO.deleteProductPhotos(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductReviewsDAO.deleteProductReviews(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductSalesPointsDAO.deleteProductSalesPoints(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductTourGradesDAO.deleteProductTourGrades(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductUserPhotosDAO.deleteProductUserPhotos(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductVideosDAO.deleteProductVideos(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductXCategoryDAO.deleteProductXCategory(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code))
+                                errorWhileDeleting=true;
+                            if (ViatorPickupHotelsDAO.deleteProductPickupHotels(code))
+                                errorWhileDeleting=true;
+                            if (ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code))
+                                errorWhileDeleting=true;
+                            if (ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code))
+                                errorWhileDeleting=true;
+                            if (ViatorPricingMatrixDAO.deletePricingMatrixes(code))
+                                errorWhileDeleting=true;
+                            counter2++;
+                            logger.info("********************** Deleting product comming from viator with no rates with code: " + code + " **********************");
+                        }
+                    }
+
+                }else
+                    errorWhileDeleting=true;
+            }
+            for(String code:allCodes){
+                noneAvailableDates=ViatorNoneAvailableDatesDAO.getNoneAvailableDatesBeanByProductCode(code);
+                if(noneAvailableDates!=null){
+                    if(noneAvailableDates.size()==0){
+                        if (ViatorProductDetailsDAO.deleteProduct(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductAgeBandsDAO.deleteProductAgeBands(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductExclusionsDAO.deleteProductExlusions(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductInclusionsDAO.deleteProductInclusions(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductPhotosDAO.deleteProductPhotos(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductReviewsDAO.deleteProductReviews(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductSalesPointsDAO.deleteProductSalesPoints(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductTourGradesDAO.deleteProductTourGrades(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductUserPhotosDAO.deleteProductUserPhotos(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductVideosDAO.deleteProductVideos(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductXCategoryDAO.deleteProductXCategory(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code))
+                            errorWhileDeleting=true;
+                        if (ViatorPickupHotelsDAO.deleteProductPickupHotels(code))
+                            errorWhileDeleting=true;
+                        if (ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code))
+                            errorWhileDeleting=true;
+                        if (ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code))
+                            errorWhileDeleting=true;
+                        if (ViatorPricingMatrixDAO.deletePricingMatrixes(code))
+                            errorWhileDeleting=true;
+                        counter2++;
+                        logger.info("********************** Deleting product comming from viator with no available dates with code: " + code + " **********************");
                     }
 
                 }else
@@ -165,6 +262,6 @@ public class DeleteCorruptedProducts {
 
         logger.info("**********************  " + counter + " corrupted products deleted."+ " **********************");
         logger.info("**********************  " + counter2 + " products comming from viator with no rates deleted."+ " **********************");
-        return errorWhileDeleting;
+        return errorWhileDeleting;//todo delete all products that had not been updated for more than 2 weeks
     }
 }

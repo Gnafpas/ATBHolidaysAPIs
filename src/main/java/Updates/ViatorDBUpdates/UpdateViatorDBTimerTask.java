@@ -1,10 +1,7 @@
 package Updates.ViatorDBUpdates;
 
-import Updates.ATBDBUpdates.UpdateATBProducts;
+import Updates.ATBDBUpdates.ViatorContentUpdates.UpdateATBProducts;
 import Helper.ProjectProperties;
-import Updates.ViatorDBUpdates.UpdateCategories;
-import Updates.ViatorDBUpdates.UpdateDestinations;
-import Updates.ViatorDBUpdates.UpdateProducts;
 
 import java.util.TimerTask;
 
@@ -54,5 +51,14 @@ public class UpdateViatorDBTimerTask extends TimerTask {
             Thread.currentThread().interrupt();
         }
         UpdateATBProducts.updateProducts(firstProductCode,lastProductCode);
+
+
+        /**
+         * From the second time of timertask runs and so on these values will be again default
+         */
+        this.StartingDestId=0;
+        this.StopDestId=0;
+        this.firstProductCode="";
+        this.lastProductCode="";//todo check if it works as expected
     }
 }

@@ -1,7 +1,5 @@
 package APIJSONs.ATBAPIJSONs;
 
-import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
-
 import java.util.ArrayList;
 import java.util.List;
 

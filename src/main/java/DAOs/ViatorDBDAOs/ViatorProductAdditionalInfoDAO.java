@@ -7,7 +7,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 23/06/17.
@@ -26,13 +30,19 @@ public class ViatorProductAdditionalInfoDAO {
             tx.commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -50,13 +60,19 @@ public class ViatorProductAdditionalInfoDAO {
             session.getTransaction().commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -73,11 +89,17 @@ public class ViatorProductAdditionalInfoDAO {
             additionalInfo=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
             session.getTransaction().commit();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }

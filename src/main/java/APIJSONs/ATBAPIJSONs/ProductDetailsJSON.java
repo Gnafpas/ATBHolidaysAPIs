@@ -1,9 +1,5 @@
 package APIJSONs.ATBAPIJSONs;
 
-import Beans.ATBDBBeans.KalitaonProduct.*;
-
-import java.util.List;
-
 /**
  * Created by George on 27/09/2017.
  */

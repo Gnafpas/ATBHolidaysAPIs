@@ -9,7 +9,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import javax.persistence.Query;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 07/07/2017.
@@ -27,13 +31,19 @@ public class ViatorNoneAvailableDatesDAO {
             tx.commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
@@ -51,17 +61,51 @@ public class ViatorNoneAvailableDatesDAO {
             session.getTransaction().commit();
         }catch (HibernateException e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             err=true;
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }
         return err;
+    }
+
+    public static List<ViatorNoneAvailableDatesBean> getNoneAvailableDatesBeanByProductCode(String productCode){
+
+        Session session = HibernateUtil.getSession();
+        List<ViatorNoneAvailableDatesBean> noneAvailableDatesBean=null;
+        String hql ="Select noneAvailDates FROM ViatorNoneAvailableDatesBean noneAvailDates " +
+                "WHERE noneAvailDates.productCode like :productCode " ;
+        try{
+            session.beginTransaction();
+            noneAvailableDatesBean=session.createQuery(hql).setParameter("productCode",   productCode ).getResultList();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return noneAvailableDatesBean;
     }
 
     public static List<ViatorNoneAvailableDatesBean> getNoneAvailDatesOfProducts(List<ViatorProductDetailsBean> productsDetails){
@@ -89,11 +133,17 @@ public class ViatorNoneAvailableDatesDAO {
             }
             nonAvailDates=query.getResultList();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }

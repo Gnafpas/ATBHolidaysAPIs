@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.HotelBean" table="hotel" schema="Sunhotels">
+        <id name="hotelId" column="hotel_id"/>
+        <property name="providerId" column="provider_id"/>
+        <property name="name" column="name"/>
+        <property name="description" column="description"/>
+        <property name="mealType" column="meal_type"/>
+        <property name="active" column="active"/>
+        <property name="starRating" column="star_rating"/>
+        <property name="district" column="district"/>
+        <property name="city" column="city"/>
+        <property name="state" column="state"/>
+        <property name="country" column="country"/>
+        <property name="countryCode" column="country_code"/>
+        <property name="address" column="address"/>
+        <property name="zipCode" column="zip_code"/>
+        <property name="mapUrl" column="map_url"/>
+        <property name="providerRef" column="provider_ref"/>
+        <property name="latitude" column="latitude"/>
+        <property name="longitude" column="longitude"/>
+        <property name="createdAt" column="created_at"/>
+        <property name="updatedAt" column="updated_at"/>
+        <property name="currencyId" column="currency_id"/>
+        <property name="destinationId" column="destination_id"/>
+    </class>
+</hibernate-mapping>

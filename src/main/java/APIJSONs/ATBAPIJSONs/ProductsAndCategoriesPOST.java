@@ -19,8 +19,8 @@ public class ProductsAndCategoriesPOST {
     private String country="";
     private String city="";
     private int productId=0;
-    private ZonedDateTime startDate=null;
-    private ZonedDateTime endDate=null;
+    private String startDate=null;
+    private String endDate=null;
     private List<String> categories=new ArrayList<>();
 
     public int getPriceFrom() {
@@ -39,19 +39,19 @@ public class ProductsAndCategoriesPOST {
         this.priceTo = priceTo;
     }
 
-    public ZonedDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(ZonedDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public ZonedDateTime getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(ZonedDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

@@ -9,6 +9,11 @@ import org.hibernate.StatelessSession;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import static Controller.Application.errLogger;
+
 /**
  * Created by George on 05/10/2017.
  */
@@ -24,13 +29,21 @@ public class SupplierPhotoPathDAO {
             query.setMaxResults(1);
             supplierPhotoPath=(SupplierPhotoPathBean)query.getSingleResult();
         }catch (HibernateException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (NoResultException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }finally {
             session.close();
         }

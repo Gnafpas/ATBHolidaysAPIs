@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.SunhotelsUpdateInfoBean" table="sunhotels_update_info"
+           schema="develope_viator">
+        <id name="rid" column="rid"/>
+        <property name="startDateTime" column="start_date_time"/>
+        <property name="endDateTime" column="end_date_time"/>
+        <property name="atbdbCommErrorCounter" column="atbdb_comm_error_counter"/>
+        <property name="sunhotelsCommErrorCounter" column="sunhotels_comm_error_counter"/>
+        <property name="totalexpiredHotels" column="totalexpired_hotels"/>
+    </class>
+</hibernate-mapping>

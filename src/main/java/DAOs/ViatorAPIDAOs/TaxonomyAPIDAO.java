@@ -11,6 +11,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import static Controller.Application.errLogger;
+
 
 /**
  * Created by George on 04/06/17.
@@ -36,15 +38,15 @@ public class TaxonomyAPIDAO {
             taxonomyDestinationsAPIJSON = restTemplate.getForObject(url,TaxonomyDestinationsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return taxonomyDestinationsAPIJSON;
@@ -79,15 +81,15 @@ public class TaxonomyAPIDAO {
             taxonomyAttractionsAPIJSON = restTemplate.postForObject(url, taxonomyAttractionsPOST,TaxonomyAttractionsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return taxonomyAttractionsAPIJSON;
@@ -112,15 +114,15 @@ public class TaxonomyAPIDAO {
             taxonomyCategoriesAPIJSON = restTemplate.getForObject(url,TaxonomyCategoriesAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return taxonomyCategoriesAPIJSON;

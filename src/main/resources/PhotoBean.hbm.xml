@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.PhotoBean" table="photo" schema="Sunhotels">
+        <id name="id" column="id"/>
+        <property name="title" column="title"/>
+        <property name="description" column="description"/>
+        <property name="photoPath" column="photo_path"/>
+        <property name="photoUrl" column="photo_url"/>
+        <property name="facilityId" column="facility_id"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="roomId" column="room_id"/>
+        <property name="providerId" column="provider_id"/>
+        <property name="coverPhoto" column="cover_photo"/>
+    </class>
+</hibernate-mapping>

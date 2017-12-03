@@ -10,6 +10,7 @@ import Beans.ViatorAPIBeans.ProductsByDestIDSeoID.ProductsByDestIdSeoIdAPIJSON;
 import Beans.ViatorAPIBeans.ProductsByDestIDSeoID.ProductsByDestinationPOST;
 import Beans.ViatorAPIBeans.Taxonomy.TaxonomyDestinationsAPIJSON;
 import Beans.ViatorAPIBeans.Taxonomy.TaxonomyDestinationsData;
+import Controller.AdminController.AdminController;
 import DAOs.ViatorAPIDAOs.BookingsAPIDAO;
 import DAOs.ViatorAPIDAOs.ProductAPIDAO;
 import DAOs.ViatorAPIDAOs.TaxonomyAPIDAO;
@@ -26,17 +27,24 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import static Controller.AdminController.AdminController.viatorimidiateUpdateStop;
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 15/06/2017.
  */
 public class UpdateProducts {
+
+
+
 
     public static UpdateProductsInfoJSON updateProducts(int destIdToStartRetrieveProducts, int destIdToStopRetrieveProducts) {
 
@@ -75,7 +83,7 @@ public class UpdateProducts {
         ViatorProductBookingQuestionsBean viatorProductBookingQuestionsBean=new ViatorProductBookingQuestionsBean();
         ViatorUpdateProductsInfoBean lastrec;
 
-
+        AdminController.viatorUpdateRunning=true;
 
 
         /**
@@ -93,9 +101,13 @@ public class UpdateProducts {
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
         } catch (SecurityException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }
 
         /**
@@ -172,7 +184,7 @@ public class UpdateProducts {
         /**
          * Clear Database from expired products.
          */
-//        updateProductsInfoJSON.setTotalExpiredProducts(DeleteExpiredProducts.deleteExpiredProducts(logger));
+        updateProductsInfoJSON.setTotalExpiredProducts(DeleteExpiredProducts.deleteExpiredProducts(logger));
 
         /**
          * Search all Destinations.
@@ -215,8 +227,10 @@ public class UpdateProducts {
             /**
              * If a destination it's a leaf retrieve all its products and store in DB.
              */
-            if(leafNodeDest && RetrieveProducts) {
+            if(leafNodeDest && RetrieveProducts ) {
 
+                if(viatorimidiateUpdateStop)
+                    break;
                 /**
                  * Statistic Information for Admin.
                  */
@@ -243,6 +257,9 @@ public class UpdateProducts {
                 if (productsByDestIdSeoIdAPIJSON.isSuccess() && productsByDestIdSeoIdAPIJSON.getData()!=null) {
 
                     for (int i = 0; i < productsByDestIdSeoIdAPIJSON.getData().size(); i++) {
+
+                        if(viatorimidiateUpdateStop)
+                            break;
 
                         /**
                          * Update/Add records of all related tables of product in the DB.
@@ -989,6 +1006,7 @@ public class UpdateProducts {
                     +","+ updateProductsInfoJSON.getFailedProducts().get(i).getDestId());
         }
 
+        AdminController.viatorUpdateRunning=false;
         return updateProductsInfoJSON;
     }
 }

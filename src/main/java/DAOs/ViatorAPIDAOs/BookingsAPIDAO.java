@@ -18,6 +18,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import static Controller.Application.errLogger;
+
 /**
  * Created by George on 07/07/2017.
  */
@@ -43,15 +45,15 @@ public class BookingsAPIDAO {
             availabilityDatesAPIJSON = restTemplate.getForObject(url, AvailabilityDatesAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return availabilityDatesAPIJSON;
@@ -77,15 +79,15 @@ public class BookingsAPIDAO {
             pickupHotelsAPIJSON = restTemplate.getForObject(url, PickupHotelsAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return pickupHotelsAPIJSON;
@@ -114,15 +116,15 @@ public class BookingsAPIDAO {
             availabilityAndPricingMatrixAPIJSON = restTemplate.postForObject(url, availabilityAndPricingMatrixPOST, AvailabilityAndPricingMatrixAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return availabilityAndPricingMatrixAPIJSON;
@@ -148,15 +150,15 @@ public class BookingsAPIDAO {
             bookAPIJSON = restTemplate.postForObject(url, bookPOST, BookAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return bookAPIJSON;
@@ -181,15 +183,15 @@ public class BookingsAPIDAO {
             calculatePriceAPIJSON = restTemplate.postForObject(url, calculatePricePOST, CalculatePriceAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return calculatePriceAPIJSON;
@@ -214,15 +216,15 @@ public class BookingsAPIDAO {
             cancelAPIJSON = restTemplate.postForObject(url, cancelPOST, CancelAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return cancelAPIJSON;
@@ -247,15 +249,15 @@ public class BookingsAPIDAO {
             pastBookingAPIJSON = restTemplate.getForObject(url, PastBookingAPIJSON.class);
         }
         catch ( HttpClientErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch ( HttpServerErrorException e) {
-            System.out.println("*****************"+e.getStatusCode()+"*****************");
-            System.out.println("*****************"+e.getResponseBodyAsString()+"*****************");
+            errLogger.info("*****************"+e.getStatusCode()+"*****************");
+            errLogger.info("*****************"+e.getResponseBodyAsString()+"*****************");
         }
         catch( ResourceAccessException e2) {
-            System.out.println("*****************"+e2.getMessage()+"*****************");
+            errLogger.info("*****************"+e2.getMessage()+"*****************");
         }
 
         return pastBookingAPIJSON;

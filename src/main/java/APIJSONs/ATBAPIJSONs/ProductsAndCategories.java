@@ -1,7 +1,6 @@
 package APIJSONs.ATBAPIJSONs;
 
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
-import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 
 import java.util.ArrayList;
 import java.util.List;
