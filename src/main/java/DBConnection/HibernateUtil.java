@@ -4,6 +4,7 @@ package DBConnection;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.StatelessSession;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -23,7 +24,7 @@ public class  HibernateUtil {
         }
     }
 
-    public static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
+    public static StatelessSession getSession() throws HibernateException {
+        return ourSessionFactory.openStatelessSession();
     }
 }

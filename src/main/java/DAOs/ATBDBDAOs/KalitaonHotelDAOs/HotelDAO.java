@@ -81,14 +81,14 @@ public class HotelDAO {
         return err;
     }
 
-    public static List<HotelBean> getAllHotels(){
+    public static List<Integer> getAllHotelsIds(){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
-        List <HotelBean> hotelBean=null;
-        String hql = "select hotel from HotelBean hotel where providerId='"+sanHotelsProviderId+"'";
+        List <Integer> hotelIds=null;
+        String hql = "select hotelId from HotelBean hotel where providerId='"+sanHotelsProviderId+"'";
         try{
             session.beginTransaction();
-            hotelBean=session.createQuery(hql).list();
+            hotelIds=session.createQuery(hql).list();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
@@ -108,14 +108,16 @@ public class HotelDAO {
         }finally {
             session.close();
         }
-        return hotelBean;
+        return hotelIds;
     }
 
-    public static HotelBean getAllHotelByHotelId(int hotelId){
+
+
+    public static HotelBean getHotelByHotelId(int hotelId,int providerId){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         HotelBean hotelBean=null;
-        String hql = "select hotel from HotelBean hotel where  hotel.hotelId='"+hotelId+"' and hotel.providerId='"+sanHotelsProviderId+"'";
+        String hql = "select hotel from HotelBean hotel where  hotel.hotelId='"+hotelId+"' and providerId='"+providerId+"'";
         try{
             session.beginTransaction();
             hotelBean=(HotelBean)session.createQuery(hql).getSingleResult();
@@ -128,9 +130,9 @@ public class HotelDAO {
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (ClientTransportException e) {
-                StringWriter errors = new StringWriter();
-                e.printStackTrace(new PrintWriter(errors));
-                errLogger.info(errors.toString());
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
@@ -142,4 +144,6 @@ public class HotelDAO {
         }
         return hotelBean;
     }
+
+
 }

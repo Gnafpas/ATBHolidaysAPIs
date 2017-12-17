@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,15 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductVideosDAO {
 
-    public static boolean addproductvideos(ViatorProductVideosBean viatorproductvideosBean){
+    public static boolean addproductvideos(ViatorProductVideosBean viatorproductvideosBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(viatorproductvideosBean);
-            tx.commit();
+            session.insert(viatorproductvideosBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -42,15 +39,13 @@ public class ViatorProductVideosDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductVideos(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductVideosBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -80,7 +75,7 @@ public class ViatorProductVideosDAO {
 
     public static List<ViatorProductVideosBean> getVideosByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductVideosBean> videos=null;
         String hql ="Select videos FROM ViatorProductVideosBean videos " +
                                   "WHERE videos.productCode like :productCode " +

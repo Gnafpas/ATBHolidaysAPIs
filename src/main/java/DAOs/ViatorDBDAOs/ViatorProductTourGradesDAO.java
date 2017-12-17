@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,15 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductTourGradesDAO {
 
-    public static boolean addproducttourgrades(ViatorProductTourGradesBean viatorproducttourgradesBean ){
+    public static boolean addproducttourgrades(ViatorProductTourGradesBean viatorproducttourgradesBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(viatorproducttourgradesBean);
-            tx.commit();
+            session.insert(viatorproducttourgradesBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -42,15 +39,13 @@ public class ViatorProductTourGradesDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductTourGrades(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductTourGradesBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -80,7 +75,7 @@ public class ViatorProductTourGradesDAO {
 
     public static List<ViatorProductTourGradesBean> getTourGradesByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductTourGradesBean> tourGrades=null;
         String hql ="Select tourGrades FROM ViatorProductTourGradesBean tourGrades " +
                                       "WHERE tourGrades.productCode like :productCode " +

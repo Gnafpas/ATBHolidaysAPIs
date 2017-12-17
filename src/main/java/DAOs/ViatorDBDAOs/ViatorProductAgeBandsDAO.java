@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,16 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductAgeBandsDAO {
 
-    public static boolean addproductagebandsBean(ViatorProductAgeBandsBean viatorproductagebandsBean){
+    public static boolean addproductagebandsBean(ViatorProductAgeBandsBean viatorproductagebandsBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-
-            tx=session.beginTransaction();
-            session.save(viatorproductagebandsBean);
-            tx.commit();
+            session.insert(viatorproductagebandsBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -43,15 +39,13 @@ public class ViatorProductAgeBandsDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductAgeBands(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductAgeBandsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -81,7 +75,7 @@ public class ViatorProductAgeBandsDAO {
 
     public static List<ViatorProductAgeBandsBean> getAgeBandsByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductAgeBandsBean> ageBands=null;
         String hql ="Select ageBands FROM ViatorProductAgeBandsBean ageBands " +
                                     "WHERE ageBands.productCode like :productCode " +

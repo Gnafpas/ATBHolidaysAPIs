@@ -1,6 +1,6 @@
 package Controller.ATBAPIController;
 
-import APIJSONs.ATBAPIJSONs.*;
+import APIJSONs.ATBAPIJSONs.Product.*;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
 import Beans.ATBDBBeans.KalitaonSystem.AllLanguageBean;

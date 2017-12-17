@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,15 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductSalesPointsDAO {
 
-    public static boolean addproductsalespointsBean(ViatorProductSalesPointsBean viatorproductsalespointsBean){
+    public static boolean addproductsalespointsBean(ViatorProductSalesPointsBean viatorproductsalespointsBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(viatorproductsalespointsBean);
-            tx.commit();
+            session.insert(viatorproductsalespointsBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -42,15 +39,13 @@ public class ViatorProductSalesPointsDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductSalesPoints(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductSalesPointsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -80,7 +75,7 @@ public class ViatorProductSalesPointsDAO {
 
     public static List<ViatorProductSalesPointsBean> getSalesPointsByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductSalesPointsBean> salesPoints=null;
         String hql ="Select salesPoints FROM ViatorProductSalesPointsBean salesPoints " +
                                        "WHERE salesPoints.productCode like :productCode ";

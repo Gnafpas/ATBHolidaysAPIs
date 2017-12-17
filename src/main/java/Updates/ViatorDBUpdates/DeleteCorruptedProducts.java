@@ -7,11 +7,21 @@ import Beans.ViatorDBBeans.ViatorPricingMatrixBean;
 import Beans.ViatorDBBeans.ViatorUpdateFailedProductsBean;
 import Beans.ViatorDBBeans.ViatorUpdateProductsInfoBean;
 import DAOs.ViatorDBDAOs.*;
+import DBConnection.HibernateUtil;
+import com.mysql.cj.core.exceptions.CJCommunicationsException;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 02/11/2017.
@@ -63,43 +73,36 @@ public class DeleteCorruptedProducts {
                 }
             }
 
+
             for (String code:corruptedProducts) {
-                if (ViatorProductDetailsDAO.deleteProduct(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductAgeBandsDAO.deleteProductAgeBands(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductExclusionsDAO.deleteProductExlusions(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductInclusionsDAO.deleteProductInclusions(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductPhotosDAO.deleteProductPhotos(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductReviewsDAO.deleteProductReviews(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductSalesPointsDAO.deleteProductSalesPoints(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductTourGradesDAO.deleteProductTourGrades(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductUserPhotosDAO.deleteProductUserPhotos(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductVideosDAO.deleteProductVideos(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductXCategoryDAO.deleteProductXCategory(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code))
-                    errorWhileDeleting=true;
-                if (ViatorPickupHotelsDAO.deleteProductPickupHotels(code))
-                    errorWhileDeleting=true;
-                if (ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code))
-                    errorWhileDeleting=true;
-                if (ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code))
-                    errorWhileDeleting=true;
-                if (ViatorPricingMatrixDAO.deletePricingMatrixes(code))
-                    errorWhileDeleting=true;
+                StatelessSession session = HibernateUtil.getSession();
+                Transaction tx;
+                try {
+                    tx = session.beginTransaction();
+                    if (ViatorProductDetailsDAO.deleteProduct(code,session)) {
+                        errorWhileDeleting = true;
+                        tx.rollback();
+                    } else {
+                        tx.commit();
+                    }
+                } catch (HibernateException e) {
+                    StringWriter errors = new StringWriter();
+                    e.printStackTrace(new PrintWriter(errors));
+                    errLogger.info(errors.toString());
+                    errorWhileDeleting = true;
+                } catch (ExceptionInInitializerError e) {
+                    StringWriter errors = new StringWriter();
+                    e.printStackTrace(new PrintWriter(errors));
+                    errLogger.info(errors.toString());
+                    errorWhileDeleting = true;
+                } catch (CJCommunicationsException e) {
+                    StringWriter errors = new StringWriter();
+                    e.printStackTrace(new PrintWriter(errors));
+                    errLogger.info(errors.toString());
+                    errorWhileDeleting = true;
+                } finally {
+                    session.close();
+                }
                 counter++;
                 logger.info("********************** Deleting corrupted product with code: " + code + " **********************");
 
@@ -120,42 +123,35 @@ public class DeleteCorruptedProducts {
                 pricingMatrixes=ViatorPricingMatrixDAO.getPricingMatrixByProductCode(code);
                 if(pricingMatrixes!=null){
                     if(pricingMatrixes.size()==0){
-                        if (ViatorProductDetailsDAO.deleteProduct(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductAgeBandsDAO.deleteProductAgeBands(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductExclusionsDAO.deleteProductExlusions(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductInclusionsDAO.deleteProductInclusions(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductPhotosDAO.deleteProductPhotos(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductReviewsDAO.deleteProductReviews(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductSalesPointsDAO.deleteProductSalesPoints(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductTourGradesDAO.deleteProductTourGrades(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductUserPhotosDAO.deleteProductUserPhotos(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductVideosDAO.deleteProductVideos(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductXCategoryDAO.deleteProductXCategory(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code))
-                            errorWhileDeleting=true;
-                        if (ViatorPickupHotelsDAO.deleteProductPickupHotels(code))
-                            errorWhileDeleting=true;
-                        if (ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code))
-                            errorWhileDeleting=true;
-                        if (ViatorPricingMatrixDAO.deletePricingMatrixes(code))
-                            errorWhileDeleting=true;
+
+                        StatelessSession session = HibernateUtil.getSession();
+                        Transaction tx;
+                        try {
+                            tx = session.beginTransaction();
+                            if (ViatorProductDetailsDAO.deleteProduct(code,session)){
+                                errorWhileDeleting=true;
+                                tx.rollback();
+                            } else {
+                                tx.commit();
+                            }
+                        } catch (HibernateException e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            errorWhileDeleting = true;
+                        } catch (ExceptionInInitializerError e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            errorWhileDeleting = true;
+                        } catch (CJCommunicationsException e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            errorWhileDeleting = true;
+                        } finally {
+                            session.close();
+                        }
                         counter2++;
                         logger.info("********************** Deleting product comming from viator with no rates with code: " + code + " **********************");
                     }else{
@@ -166,42 +162,34 @@ public class DeleteCorruptedProducts {
                             }
                         }
                         if(maxprice.compareTo(new BigDecimal(0))==0){
-                            if (ViatorProductDetailsDAO.deleteProduct(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductAgeBandsDAO.deleteProductAgeBands(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductExclusionsDAO.deleteProductExlusions(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductInclusionsDAO.deleteProductInclusions(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductPhotosDAO.deleteProductPhotos(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductReviewsDAO.deleteProductReviews(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductSalesPointsDAO.deleteProductSalesPoints(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductTourGradesDAO.deleteProductTourGrades(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductUserPhotosDAO.deleteProductUserPhotos(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductVideosDAO.deleteProductVideos(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductXCategoryDAO.deleteProductXCategory(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code))
-                                errorWhileDeleting=true;
-                            if (ViatorPickupHotelsDAO.deleteProductPickupHotels(code))
-                                errorWhileDeleting=true;
-                            if (ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code))
-                                errorWhileDeleting=true;
-                            if (ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code))
-                                errorWhileDeleting=true;
-                            if (ViatorPricingMatrixDAO.deletePricingMatrixes(code))
-                                errorWhileDeleting=true;
+                            StatelessSession session = HibernateUtil.getSession();
+                            Transaction tx;
+                            try {
+                                tx = session.beginTransaction();
+                                if (ViatorProductDetailsDAO.deleteProduct(code,session)){
+                                    errorWhileDeleting=true;
+                                    tx.rollback();
+                                } else {
+                                    tx.commit();
+                                }
+                            } catch (HibernateException e) {
+                                StringWriter errors = new StringWriter();
+                                e.printStackTrace(new PrintWriter(errors));
+                                errLogger.info(errors.toString());
+                                errorWhileDeleting = true;
+                            } catch (ExceptionInInitializerError e) {
+                                StringWriter errors = new StringWriter();
+                                e.printStackTrace(new PrintWriter(errors));
+                                errLogger.info(errors.toString());
+                                errorWhileDeleting = true;
+                            } catch (CJCommunicationsException e) {
+                                StringWriter errors = new StringWriter();
+                                e.printStackTrace(new PrintWriter(errors));
+                                errLogger.info(errors.toString());
+                                errorWhileDeleting = true;
+                            } finally {
+                                session.close();
+                            }
                             counter2++;
                             logger.info("********************** Deleting product comming from viator with no rates with code: " + code + " **********************");
                         }
@@ -214,42 +202,34 @@ public class DeleteCorruptedProducts {
                 noneAvailableDates=ViatorNoneAvailableDatesDAO.getNoneAvailableDatesBeanByProductCode(code);
                 if(noneAvailableDates!=null){
                     if(noneAvailableDates.size()==0){
-                        if (ViatorProductDetailsDAO.deleteProduct(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductAgeBandsDAO.deleteProductAgeBands(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductExclusionsDAO.deleteProductExlusions(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductInclusionsDAO.deleteProductInclusions(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductPhotosDAO.deleteProductPhotos(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductReviewsDAO.deleteProductReviews(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductSalesPointsDAO.deleteProductSalesPoints(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductTourGradesDAO.deleteProductTourGrades(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductUserPhotosDAO.deleteProductUserPhotos(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductVideosDAO.deleteProductVideos(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductXCategoryDAO.deleteProductXCategory(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code))
-                            errorWhileDeleting=true;
-                        if (ViatorPickupHotelsDAO.deleteProductPickupHotels(code))
-                            errorWhileDeleting=true;
-                        if (ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code))
-                            errorWhileDeleting=true;
-                        if (ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code))
-                            errorWhileDeleting=true;
-                        if (ViatorPricingMatrixDAO.deletePricingMatrixes(code))
-                            errorWhileDeleting=true;
+                        StatelessSession session = HibernateUtil.getSession();
+                        Transaction tx;
+                        try {
+                            tx = session.beginTransaction();
+                            if (ViatorProductDetailsDAO.deleteProduct(code,session)){
+                                errorWhileDeleting=true;
+                                tx.rollback();
+                            } else {
+                                tx.commit();
+                            }
+                        } catch (HibernateException e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            errorWhileDeleting = true;
+                        } catch (ExceptionInInitializerError e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            errorWhileDeleting = true;
+                        } catch (CJCommunicationsException e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            errorWhileDeleting = true;
+                        } finally {
+                            session.close();
+                        }
                         counter2++;
                         logger.info("********************** Deleting product comming from viator with no available dates with code: " + code + " **********************");
                     }

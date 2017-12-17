@@ -64,6 +64,8 @@ public class AdminController {
                                       @RequestParam(value="StopDestId", defaultValue="0") Integer StopDestId ,
                                       @RequestParam(value="firstProductCode", defaultValue="") String firstProductCode,
                                       @RequestParam(value="lastProductCode", defaultValue="") String lastProductCode) {
+        viatorimidiateUpdateStop=false;
+        atbimidiateUpdateStop=false;
         if(!viatortimerRuns) {
             /**
              * Update products with timer every X hours.
@@ -111,6 +113,7 @@ public class AdminController {
     @RequestMapping("/startATBDBUpdate")
     public String startATBDBUpdate(@RequestParam(value="firstProductCode", defaultValue="") String firstProductCode,
                                    @RequestParam(value="lastProductCode", defaultValue="") String lastProductCode) {
+        atbimidiateUpdateStop=false;
         if(!atbTimerRuns) {
             /**
              * Update products with timer every X hours.
@@ -149,6 +152,7 @@ public class AdminController {
     @RequestMapping("/startSunHotDBUpdate")
     public String startSunHotBUpdate(@RequestParam(value="StartingDestId", defaultValue="0") Integer StartingDestId,
                                      @RequestParam(value="StopDestId", defaultValue="0") Integer StopDestId ) {
+        sunHotelsimidiateUpdateStop=false;
         if(!sunHotTimerRuns) {
             /**
              * Update products with timer every X hours.

@@ -1,11 +1,13 @@
 package DAOs.ATBDBDAOs.KalitaonHotelDAOs;
 
 import Beans.ATBDBBeans.KalitaonHotel.PhotoBean;
+import DBConnection.SunHotelsHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import com.sun.xml.internal.ws.client.ClientTransportException;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 
+import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -76,5 +78,37 @@ public class PhotoDAO {
             errLogger.info(errors.toString());
         }
         return err;
+    }
+
+    public static List<PhotoBean> getPhotosByHotelId(int hotelId,int providerId){
+
+        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        List<PhotoBean> photos=null;
+        String hql = "select photo from PhotoBean photo where  photo.hotelId='"+hotelId+"' and providerId='"+providerId+"'";
+        try{
+            session.beginTransaction();
+            photos=session.createQuery(hql).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+
+        }finally {
+            session.close();
+        }
+        return photos;
     }
 }

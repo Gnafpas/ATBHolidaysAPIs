@@ -6,6 +6,7 @@ import Helper.SortOrderType;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import javax.persistence.Query;
@@ -22,12 +23,12 @@ public class ViatorAttractionsDAO {
 
     public static boolean addAttraction(ViatorAttractionsBean viatorAttractionsBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.save(viatorAttractionsBean);
+            session.insert(viatorAttractionsBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -52,7 +53,7 @@ public class ViatorAttractionsDAO {
 
     public static boolean deleteAttraction(int seoId){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("delete from ViatorAttractionsBean WHERE seoId='"+seoId+"'");
         boolean err=false;
         try{

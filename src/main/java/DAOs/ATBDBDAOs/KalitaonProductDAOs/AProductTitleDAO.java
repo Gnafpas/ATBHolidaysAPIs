@@ -1,6 +1,6 @@
 package DAOs.ATBDBDAOs.KalitaonProductDAOs;
 
-import APIJSONs.ATBAPIJSONs.ProductsAndCategoriesPOST;
+import APIJSONs.ATBAPIJSONs.Product.ProductsAndCategoriesPOST;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import DBConnection.ATBHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;

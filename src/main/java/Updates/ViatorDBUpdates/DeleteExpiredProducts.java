@@ -4,12 +4,22 @@ import Beans.ViatorAPIBeans.ProductsByCodes.ProductsByCodesAPIJSON;
 import Beans.ViatorAPIBeans.ProductsByCodes.ProductsByCodesPOST;
 import DAOs.ViatorAPIDAOs.ProductAPIDAO;
 import DAOs.ViatorDBDAOs.*;
+import DBConnection.HibernateUtil;
 import Helper.ProjectProperties;
 import Beans.ViatorDBBeans.UpdateDBBeans.TotalExpiredProducts;
+import com.mysql.cj.core.exceptions.CJCommunicationsException;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 27/06/2017.
@@ -85,77 +95,37 @@ public class DeleteExpiredProducts {
                                     expired=false;
                             }
                             if (expired) {
-                                if(ViatorProductDetailsDAO.deleteProduct(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
+                                StatelessSession session = HibernateUtil.getSession();
+                                Transaction tx;
+                                try {
+                                    tx = session.beginTransaction();
+                                    if (ViatorProductDetailsDAO.deleteProduct(code, session)) {
+                                        totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter() + 1);
+                                        totalExpiredProducts.setDbCommError(true);
+                                        tx.rollback();
+                                    } else {
+                                        tx.commit();
+                                    }
+                                } catch (HibernateException e) {
+                                    StringWriter errors = new StringWriter();
+                                    e.printStackTrace(new PrintWriter(errors));
+                                    errLogger.info(errors.toString());
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter() + 1);
                                     totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductAdditionalInfoDAO.deleteProductAdditionalInfo(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
+                                } catch (ExceptionInInitializerError e) {
+                                    StringWriter errors = new StringWriter();
+                                    e.printStackTrace(new PrintWriter(errors));
+                                    errLogger.info(errors.toString());
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter() + 1);
                                     totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductAgeBandsDAO.deleteProductAgeBands(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
+                                } catch (CJCommunicationsException e) {
+                                    StringWriter errors = new StringWriter();
+                                    e.printStackTrace(new PrintWriter(errors));
+                                    errLogger.info(errors.toString());
+                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter() + 1);
                                     totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductExclusionsDAO.deleteProductExlusions(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductInclusionsDAO.deleteProductInclusions(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductPhotosDAO.deleteProductPhotos(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductReviewsDAO.deleteProductReviews(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductSalesPointsDAO.deleteProductSalesPoints(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductTourGradeLanguageServicesDAO.deleteProductTourGradeLanguageServices(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductTourGradesDAO.deleteProductTourGrades(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductUserPhotosDAO.deleteProductUserPhotos(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductVideosDAO.deleteProductVideos(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductXCategoryDAO.deleteProductXCategory(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductXSubcategoryDAO.deleteProductXSubctegory(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorPickupHotelsDAO.deleteProductPickupHotels(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorNoneAvailableDatesDAO.deleteProductNoneAvailDates(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorProductBookingQuestionsDAO.deleteBookingQuestion(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
-                                }
-                                if(ViatorPricingMatrixDAO.deletePricingMatrixes(code)){
-                                    totalExpiredProducts.setDbCommErrorsCounter(totalExpiredProducts.getDbCommErrorsCounter()+1);
-                                    totalExpiredProducts.setDbCommError(true);
+                                } finally {
+                                    session.close();
                                 }
                                 logger.info("********************** Deleting expired product with code: "+code+" **********************");
                                 totalExpiredProductsList.add(code);

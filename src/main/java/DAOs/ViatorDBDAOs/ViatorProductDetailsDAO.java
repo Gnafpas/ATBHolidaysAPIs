@@ -7,6 +7,7 @@ import Helper.SortOrderType;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.Session;
 import org.hibernate.HibernateException;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 import org.hibernate.exception.GenericJDBCException;
 
@@ -24,15 +25,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductDetailsDAO {
 
-    public static boolean addproduct(ViatorProductDetailsBean product){
+    public static boolean addproduct(ViatorProductDetailsBean product,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(product);
-            tx.commit();
+            session.insert(product);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -48,16 +45,39 @@ public class ViatorProductDetailsDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
-    public static boolean deleteProduct(String code){
+    public static boolean deleteProduct(String code,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductDetailsBean WHERE code='"+code+"'");
+        boolean err=false;
+        try{
+            session.createQuery(hql).executeUpdate();
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }
+        return err;
+    }
+
+    public static boolean deleteProductsBeforeDate(String date){
+
+        StatelessSession session = HibernateUtil.getSession();
+        String hql = String.format("DELETE FROM ViatorProductDetailsBean WHERE updatedAt != '"+date+"'");
         boolean err=false;
         try{
             session.beginTransaction();
@@ -84,9 +104,11 @@ public class ViatorProductDetailsDAO {
         return err;
     }
 
+
+
     public static List<String> getAllProductsCodes(){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List <String> products=null;
         String hql = "select code from ViatorProductDetailsBean a order by a.code desc" ;
         try{
@@ -122,7 +144,7 @@ public class ViatorProductDetailsDAO {
                       + " from Beans.ViatorDBBeans.ViatorProductDetailsBean productDetails"
                       + " where productDetails.code LIKE :code ";
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         try{
             Query query= session.createQuery(hql).setParameter("code", code);
             products=query.getResultList();

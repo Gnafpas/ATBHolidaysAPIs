@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -20,12 +21,12 @@ public class ViatorSubcategoriesDAO {
 
     public static boolean addsubcategory(ViatorSubcategoriesBean viatorsubcategoriesBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.save(viatorsubcategoriesBean);
+            session.insert(viatorsubcategoriesBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -50,7 +51,7 @@ public class ViatorSubcategoriesDAO {
 
     public static boolean deleteSubcategory(int id){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("delete from ViatorSubcategoriesBean WHERE id='"+ id +"'");
         boolean err=false;
         try{
@@ -81,7 +82,7 @@ public class ViatorSubcategoriesDAO {
 
     public static List<ViatorSubcategoriesBean> getAllSubcategories() {
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorSubcategoriesBean> subCategories = null;
         String hql = "select categories from ViatorCategoriesBean categories";
         try {
@@ -108,7 +109,7 @@ public class ViatorSubcategoriesDAO {
 
     public static List<ViatorSubcategoriesBean> getSubcategoriesByCategoriId(int categoriId){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorSubcategoriesBean> subcategories=null;
         String hql ="Select subcategories FROM ViatorSubcategoriesBean subcategories WHERE subcategories.categoryId= :categoriId" ;
         try{

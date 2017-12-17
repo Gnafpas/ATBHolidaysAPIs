@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,15 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductInclusionsDAO {
 
-    public static boolean addproductinclusions(ViatorProductInclusionsBean productinclusionsBean){
+    public static boolean addproductinclusions(ViatorProductInclusionsBean productinclusionsBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(productinclusionsBean);
-            tx.commit();
+            session.insert(productinclusionsBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -42,15 +39,13 @@ public class ViatorProductInclusionsDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductInclusions(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductInclusionsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -80,7 +75,7 @@ public class ViatorProductInclusionsDAO {
 
     public static List<ViatorProductInclusionsBean> getInclusionsByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductInclusionsBean> inclusions=null;
         String hql ="Select inclusions FROM ViatorProductInclusionsBean inclusions " +
                                       "WHERE inclusions.productCode like :productCode ";

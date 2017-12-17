@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,16 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductBookingQuestionsDAO {
 
-    public static boolean addBookingQuestion(ViatorProductBookingQuestionsBean viatorProductBookingQuestionsBean){
+    public static boolean addBookingQuestion(ViatorProductBookingQuestionsBean viatorProductBookingQuestionsBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-
-            tx=session.beginTransaction();
-            session.save(viatorProductBookingQuestionsBean);
-            tx.commit();
+            session.insert(viatorProductBookingQuestionsBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -43,15 +39,13 @@ public class ViatorProductBookingQuestionsDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteBookingQuestion(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductBookingQuestionsBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -81,7 +75,7 @@ public class ViatorProductBookingQuestionsDAO {
 
     public static List<ViatorProductBookingQuestionsBean> getBookingQuestionsByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductBookingQuestionsBean> bookingQuestions=null;
         String hql ="Select bookingQuestions FROM ViatorProductBookingQuestionsBean bookingQuestions " +
                     "WHERE bookingQuestions.productCode like :productCode " +

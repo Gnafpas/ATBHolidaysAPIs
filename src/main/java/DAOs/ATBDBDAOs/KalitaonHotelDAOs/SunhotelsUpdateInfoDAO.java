@@ -6,6 +6,7 @@ import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import com.sun.xml.internal.ws.client.ClientTransportException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -20,12 +21,12 @@ public class SunhotelsUpdateInfoDAO {
 
     public static boolean addSunhotelsUpdateInfoBean(SunhotelsUpdateInfoBean sunhotelsUpdateInfoBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.save(sunhotelsUpdateInfoBean);
+            session.insert(sunhotelsUpdateInfoBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;

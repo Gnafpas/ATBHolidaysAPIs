@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -21,13 +22,13 @@ public class ViatorDestinationsDAO {
 
     public static boolean adddestination(ViatorDestinationsBean viatordestinationsBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
 
             tx=session.beginTransaction();
-            session.save(viatordestinationsBean);
+            session.insert(viatordestinationsBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -52,7 +53,7 @@ public class ViatorDestinationsDAO {
 
     public static boolean deleteDestination(int destId){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorDestinationsBean WHERE destinationId='"+destId+"'");
         boolean err=false;
         try{
@@ -82,7 +83,7 @@ public class ViatorDestinationsDAO {
 
     public static List<ViatorDestinationsBean> getDestinationsByName(String destName) {
         List<ViatorDestinationsBean> destinations = null;
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = " select DISTINCT(i) "
                 + " from Beans.ViatorDBBeans.ViatorDestinationsBean i "
                 + " where i.destinationNameEn LIKE :destName";
@@ -111,7 +112,7 @@ public class ViatorDestinationsDAO {
 
     public static ViatorDestinationsBean getDestinationsByDestinationId(int destId) {
         ViatorDestinationsBean destination = null;
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = " select i "
                 + " from Beans.ViatorDBBeans.ViatorDestinationsBean i "
                 + " where i.destinationId = :destId";
@@ -139,7 +140,7 @@ public class ViatorDestinationsDAO {
 
     public static List<ViatorDestinationsBean> getAllDestinations() {
         List<ViatorDestinationsBean> destinations = null;
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = " select DISTINCT(i) "
                    + " from Beans.ViatorDBBeans.ViatorDestinationsBean i ";
         try {

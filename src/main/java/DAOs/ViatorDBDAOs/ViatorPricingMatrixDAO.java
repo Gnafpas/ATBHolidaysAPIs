@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,15 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorPricingMatrixDAO {
 
-    public static  boolean addPricingMatrix(ViatorPricingMatrixBean viatorPricingMatrixBean){
+    public static  boolean addPricingMatrix(ViatorPricingMatrixBean viatorPricingMatrixBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(viatorPricingMatrixBean);
-            tx.commit();
+            session.insert(viatorPricingMatrixBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -42,15 +39,13 @@ public class ViatorPricingMatrixDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deletePricingMatrixes(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorPricingMatrixBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -75,7 +70,7 @@ public class ViatorPricingMatrixDAO {
 
     public static List<ViatorPricingMatrixBean> getPricingMatrixByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorPricingMatrixBean> pricingMatrixBean=null;
         String hql ="Select pricingMatrix FROM ViatorPricingMatrixBean pricingMatrix " +
                 "WHERE pricingMatrix.productCode like :productCode " +

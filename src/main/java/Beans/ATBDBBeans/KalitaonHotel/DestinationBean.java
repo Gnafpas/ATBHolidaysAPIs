@@ -15,7 +15,7 @@ public class DestinationBean {
     private String countryName;
     private String countryCode;
     private String timezone;
-    private Integer providerId;
+    private Integer providerId;//todo dbusage from mehmet:﻿destinations ,photo, hotel mapping , hotel, hotel facility tables
 
     @Id
     @Column(name = "id")

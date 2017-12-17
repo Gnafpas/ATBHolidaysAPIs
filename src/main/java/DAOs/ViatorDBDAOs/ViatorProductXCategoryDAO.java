@@ -6,6 +6,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -19,16 +20,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductXCategoryDAO {
 
-    public static boolean addprodactXcategory(ViatorProductXCategoryBean viatorproductXcategoryBean){
+    public static boolean addprodactXcategory(ViatorProductXCategoryBean viatorproductXcategoryBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            session = HibernateUtil.getSession();
-            tx=session.beginTransaction();
-            session.save(viatorproductXcategoryBean);
-            tx.commit();
+            session.insert(viatorproductXcategoryBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -44,15 +40,13 @@ public class ViatorProductXCategoryDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductXCategory(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductXCategoryBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -82,7 +76,7 @@ public class ViatorProductXCategoryDAO {
 
     public static List<ViatorCategoriesBean> getProductCategoriesByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorCategoriesBean> category=null;
         String hql ="Select category FROM ViatorProductXCategoryBean productXCategory ,ViatorCategoriesBean  category " +
                                     "WHERE productXCategory.productCode like :productCode " +

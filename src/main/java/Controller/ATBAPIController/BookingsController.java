@@ -1,9 +1,9 @@
 package Controller.ATBAPIController;
 
-import APIJSONs.ATBAPIJSONs.Availability;
-import APIJSONs.ATBAPIJSONs.AvailabilityJSON;
-import APIJSONs.ATBAPIJSONs.Pricingmatrix;
-import APIJSONs.ATBAPIJSONs.PricingmatrixJSON;
+import APIJSONs.ATBAPIJSONs.Product.Availability;
+import APIJSONs.ATBAPIJSONs.Product.AvailabilityJSON;
+import APIJSONs.ATBAPIJSONs.Product.Pricingmatrix;
+import APIJSONs.ATBAPIJSONs.Product.PricingmatrixJSON;
 import Beans.ATBDBBeans.KalitaonProduct.*;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.*;
 import org.joda.time.DateTime;
@@ -158,7 +158,10 @@ public class BookingsController {
             pricingmatrixJSON.setSuccess(false);
             pricingmatrixJSON.setErrorMessageText("Database Communication Error.");
         }
+        pricingmatrixJSON.setTotalCount(pricingmatrixJSON.getData().size());
         return pricingmatrixJSON;
     }
+
+
 
 }

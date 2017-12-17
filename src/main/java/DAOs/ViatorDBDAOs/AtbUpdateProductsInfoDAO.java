@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import javax.persistence.Query;
@@ -21,12 +22,12 @@ public class AtbUpdateProductsInfoDAO {
 
     public static boolean addATBUpdateProductsInfo(AtbUpdateProductsInfoBean atbUpdateProductsInfoBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.save(atbUpdateProductsInfoBean);
+            session.insert(atbUpdateProductsInfoBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -51,7 +52,7 @@ public class AtbUpdateProductsInfoDAO {
 
     public static AtbUpdateProductsInfoBean getLastRecord(){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql=     " select  updateInfo"
                       + " from Beans.ViatorDBBeans.AtbUpdateProductsInfoBean updateInfo"
                       + " order by updateInfo.rid DESC";

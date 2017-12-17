@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -18,15 +19,11 @@ import static Controller.Application.errLogger;
  */
 public class ViatorProductTourGradeLanguageServicesDAO {
 
-    public static boolean addproducttourgradelanguageservicesBean(ViatorProductTourGradeLanguageServicesBean viatorproducttourgradelanguageservicesBean){
+    public static boolean addproducttourgradelanguageservicesBean(ViatorProductTourGradeLanguageServicesBean viatorproducttourgradelanguageservicesBean,StatelessSession session){
 
-        Session session = HibernateUtil.getSession();
-        Transaction tx;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
-            session.save(viatorproducttourgradelanguageservicesBean);
-            tx.commit();
+            session.insert(viatorproducttourgradelanguageservicesBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -42,15 +39,13 @@ public class ViatorProductTourGradeLanguageServicesDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
         }
         return err;
     }
 
     public static boolean deleteProductTourGradeLanguageServices(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("DELETE FROM ViatorProductTourGradeLanguageServicesBean WHERE productCode='"+productCode+"'");
         boolean err=false;
         try{
@@ -80,7 +75,7 @@ public class ViatorProductTourGradeLanguageServicesDAO {
 
     public static List<ViatorProductTourGradeLanguageServicesBean> getLanguageServicesByProductCodeAndTourGrade(String productCode,String tourGrade){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductTourGradeLanguageServicesBean> tourGradeLanguageServices=null;
         String hql ="Select tourGradeLanguageServices FROM ViatorProductTourGradeLanguageServicesBean tourGradeLanguageServices " +
                                                      "WHERE tourGradeLanguageServices.productCode like :productCode " +
@@ -111,7 +106,7 @@ public class ViatorProductTourGradeLanguageServicesDAO {
 
     public static List<ViatorProductTourGradeLanguageServicesBean> getLanguageServicesByProductCode(String productCode){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<ViatorProductTourGradeLanguageServicesBean> tourGradeLanguageServices=null;
         String hql ="Select tourGradeLanguageServices FROM ViatorProductTourGradeLanguageServicesBean tourGradeLanguageServices " +
                 "WHERE tourGradeLanguageServices.productCode like :productCode ";

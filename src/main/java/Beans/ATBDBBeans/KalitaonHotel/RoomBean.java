@@ -3,12 +3,14 @@ package Beans.ATBDBBeans.KalitaonHotel;
 import javax.persistence.*;
 
 /**
- * Created by George on 24/11/2017.
+ * Created by George on 09/12/2017.
  */
 @Entity
 @Table(name = "room", schema = "Sunhotels", catalog = "")
 public class RoomBean {
-    private int id;
+    private int atbRoomId;
+    private int providerId;
+    private int hotelId;
     private String description;
     private Integer roomSize;
     private Integer providerRef;
@@ -19,19 +21,38 @@ public class RoomBean {
     private int maxChildOccupation;
     private int minInfantOccupation;
     private int maxInfantOccupation;
-    private int hotelId;
     private int roomTypeId;
-    private int providerId;
     private boolean dirty;
+    private Integer originalRoomId;
 
     @Id
-    @Column(name = "id")
-    public int getId() {
-        return id;
+    @Column(name = "atb_room_id")
+    public int getAtbRoomId() {
+        return atbRoomId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAtbRoomId(int atbRoomId) {
+        this.atbRoomId = atbRoomId;
+    }
+
+    @Basic
+    @Column(name = "provider_id")
+    public int getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(int providerId) {
+        this.providerId = providerId;
+    }
+
+    @Basic
+    @Column(name = "hotel_id")
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     @Basic
@@ -135,16 +156,6 @@ public class RoomBean {
     }
 
     @Basic
-    @Column(name = "hotel_id")
-    public int getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
-    }
-
-    @Basic
     @Column(name = "room_type_id")
     public int getRoomTypeId() {
         return roomTypeId;
@@ -152,16 +163,6 @@ public class RoomBean {
 
     public void setRoomTypeId(int roomTypeId) {
         this.roomTypeId = roomTypeId;
-    }
-
-    @Basic
-    @Column(name = "provider_id")
-    public int getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(int providerId) {
-        this.providerId = providerId;
     }
 
     @Basic
@@ -174,6 +175,16 @@ public class RoomBean {
         this.dirty = dirty;
     }
 
+    @Basic
+    @Column(name = "original_room_id")
+    public Integer getOriginalRoomId() {
+        return originalRoomId;
+    }
+
+    public void setOriginalRoomId(Integer originalRoomId) {
+        this.originalRoomId = originalRoomId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -181,16 +192,16 @@ public class RoomBean {
 
         RoomBean roomBean = (RoomBean) o;
 
-        if (id != roomBean.id) return false;
+        if (atbRoomId != roomBean.atbRoomId) return false;
+        if (providerId != roomBean.providerId) return false;
+        if (hotelId != roomBean.hotelId) return false;
         if (minAdultOccupation != roomBean.minAdultOccupation) return false;
         if (maxAdultOccupation != roomBean.maxAdultOccupation) return false;
         if (minChildOccupation != roomBean.minChildOccupation) return false;
         if (maxChildOccupation != roomBean.maxChildOccupation) return false;
         if (minInfantOccupation != roomBean.minInfantOccupation) return false;
         if (maxInfantOccupation != roomBean.maxInfantOccupation) return false;
-        if (hotelId != roomBean.hotelId) return false;
         if (roomTypeId != roomBean.roomTypeId) return false;
-        if (providerId != roomBean.providerId) return false;
         if (dirty != roomBean.dirty) return false;
         if (description != null ? !description.equals(roomBean.description) : roomBean.description != null)
             return false;
@@ -199,13 +210,17 @@ public class RoomBean {
             return false;
         if (sizeMeasurement != null ? !sizeMeasurement.equals(roomBean.sizeMeasurement) : roomBean.sizeMeasurement != null)
             return false;
+        if (originalRoomId != null ? !originalRoomId.equals(roomBean.originalRoomId) : roomBean.originalRoomId != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = atbRoomId;
+        result = 31 * result + providerId;
+        result = 31 * result + hotelId;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (roomSize != null ? roomSize.hashCode() : 0);
         result = 31 * result + (providerRef != null ? providerRef.hashCode() : 0);
@@ -216,10 +231,9 @@ public class RoomBean {
         result = 31 * result + (int) maxChildOccupation;
         result = 31 * result + (int) minInfantOccupation;
         result = 31 * result + (int) maxInfantOccupation;
-        result = 31 * result + hotelId;
         result = 31 * result + roomTypeId;
-        result = 31 * result + providerId;
         result = 31 * result + (dirty ? 1 : 0);
+        result = 31 * result + (originalRoomId != null ? originalRoomId.hashCode() : 0);
         return result;
     }
 }

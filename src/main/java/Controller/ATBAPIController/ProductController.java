@@ -1,9 +1,9 @@
 package Controller.ATBAPIController;
 
-import APIJSONs.ATBAPIJSONs.Category;
-import APIJSONs.ATBAPIJSONs.ProductDetailsJSON;
-import APIJSONs.ATBAPIJSONs.ProductsAndCategoriesJSON;
-import APIJSONs.ATBAPIJSONs.ProductsAndCategoriesPOST;
+import APIJSONs.ATBAPIJSONs.Product.Category;
+import APIJSONs.ATBAPIJSONs.Product.ProductDetailsJSON;
+import APIJSONs.ATBAPIJSONs.Product.ProductsAndCategoriesJSON;
+import APIJSONs.ATBAPIJSONs.Product.ProductsAndCategoriesPOST;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.*;

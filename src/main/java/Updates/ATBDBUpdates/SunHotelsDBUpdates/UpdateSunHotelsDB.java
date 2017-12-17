@@ -29,7 +29,9 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import static Controller.AdminController.AdminController.sunHotelsimidiateUpdateStop;
 import static Controller.Application.errLogger;
+import static Helper.ProjectProperties.localImagesURL;
 import static Helper.ProjectProperties.sanHotelsProviderId;
+import static Helper.StoreImage.saveImage;
 
 /**
  * Created by George on 21/11/2017.
@@ -38,7 +40,7 @@ public class UpdateSunHotelsDB {
 
     public static void updateHotelsContent(int StartingDestId,int StopDestId) {
 
-        DestinationBean destinationBean=new DestinationBean();
+        DestinationBean destinationBean;
         RoomtypeBean roomtypeBean=new RoomtypeBean();
         FacilityBean facilityBean=new FacilityBean();
         HotelfacilityBean hotelfacilityBean;
@@ -85,9 +87,10 @@ public class UpdateSunHotelsDB {
          * Delete expired hotels
          */
         logger.info("********************** Starting delete expired hotels procedure... **********************");
-        totalExpiredHotels=DeleteExpiredHotels.deleteExpiredHotels(logger);
+        //totalExpiredHotels=DeleteExpiredHotels.deleteExpiredHotels(logger);
         logger.info("********************** Expired hotels procedure ended. **********************");
 
+        //todo update meals
         /**
          * Retrieve features
          */
@@ -164,6 +167,7 @@ public class UpdateSunHotelsDB {
             RetrieveProducts = true;
         else
             RetrieveProducts = false;
+
         try {
             NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
             NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
@@ -194,17 +198,31 @@ public class UpdateSunHotelsDB {
                     /**
                      * Update Destinations
                      */
-                    destinationBean.setDestinationId(dest.getDestinationId());
-                    destinationBean.setCountryName(dest.getCountryName());
-                    destinationBean.setName(dest.getDestinationName());
-                    destinationBean.setProviderId(sanHotelsProviderId);
-                    destinationBean.setProviderRef(0);
-                    destinationBean.setTimezone(dest.getTimeZone());
-                    destinationBean.setCountryCode(dest.getCountryCode());
-                    if(DestinationDAO.deleteDestinationBean(dest.getDestinationId()))
-                        atbDBErrCommCounter++;
-                    if(DestinationDAO.addDestinationBean(destinationBean))
-                        atbDBErrCommCounter++;
+                    destinationBean=DestinationDAO.getDestinationBean(dest.getDestinationId(),sanHotelsProviderId);
+                    if(destinationBean!=null){
+                        destinationBean.setDestinationId(dest.getDestinationId());
+                        destinationBean.setCountryName(dest.getCountryName());
+                        destinationBean.setName(dest.getDestinationName());
+                        destinationBean.setProviderId(sanHotelsProviderId);
+                        destinationBean.setProviderRef(0);
+                        destinationBean.setTimezone(dest.getTimeZone());
+                        destinationBean.setCountryCode(dest.getCountryCode());
+                        if(DestinationDAO.updateDestinationBean(destinationBean))
+                            atbDBErrCommCounter++;
+                    }else{
+                        destinationBean=new DestinationBean();
+                        destinationBean.setDestinationId(dest.getDestinationId());
+                        destinationBean.setCountryName(dest.getCountryName());
+                        destinationBean.setName(dest.getDestinationName());
+                        destinationBean.setProviderId(sanHotelsProviderId);
+                        destinationBean.setProviderRef(0);
+                        destinationBean.setTimezone(dest.getTimeZone());
+                        destinationBean.setCountryCode(dest.getCountryCode());
+                        if(DestinationDAO.deleteDestinationBean(dest.getDestinationId()))
+                            atbDBErrCommCounter++;
+                        if(DestinationDAO.addDestinationBean(destinationBean))
+                            atbDBErrCommCounter++;
+                    }
 
 
                     if (RetrieveProducts) {
@@ -311,6 +329,7 @@ public class UpdateSunHotelsDB {
                                             roomBean.setProviderRef(0);
                                             roomBean.setRoomSize(0);
                                             roomBean.setSizeMeasurement("");
+                                            roomBean.setOriginalRoomId(room.getId());
                                             rooms.add(roomBean);
 
 
@@ -342,6 +361,10 @@ public class UpdateSunHotelsDB {
                                             if (HotelDAO.addHotelBean(hotelBean, session)) {
                                                 atbDBErrCommCounter++;
                                             } else {
+                                                if(HotelmappingDAO.getATBHotelId(hotelBean.getHotelId(),sanHotelsProviderId,session)==0) {
+                                                    if (HotelmappingDAO.addHotelmapping(hotelBean.getHotelId(), sanHotelsProviderId, session))
+                                                        atbDBErrCommCounter++;
+                                                }
                                                 if (RoomDAO.addRoomBean(rooms, session))
                                                     atbDBErrCommCounter++;
                                                 if (RoombedDAO.addRoombedBean(roombeds, session))

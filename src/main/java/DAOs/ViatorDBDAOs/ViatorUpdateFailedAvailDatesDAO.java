@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -20,12 +21,12 @@ public class ViatorUpdateFailedAvailDatesDAO {
 
     public static boolean addViatorUpdateFailedAvailDates(ViatorUpdateFailedAvailDatesBean viatorUpdateFailedAvailDatesBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.save(viatorUpdateFailedAvailDatesBean);
+            session.insert(viatorUpdateFailedAvailDatesBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -50,7 +51,7 @@ public class ViatorUpdateFailedAvailDatesDAO {
 
     public static List<String> getProductCodeByUpdateRid(int updateRid){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List<String> failedProductCodes=null;
         String hql ="Select failedProducts.productWithFailedAvailDates FROM ViatorUpdateFailedAvailDatesBean failedProducts " +
                 "WHERE failedProducts.updateRid = :updateRid ";

@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -19,13 +20,13 @@ public class ViatorUpdateFailedDestinationsDAO {
 
     public static boolean addViatorUpdateFailedDestination(ViatorUpdateFailedDestinationsBean viatorUpdateFailedDestinationsBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
 
             tx=session.beginTransaction();
-            session.save(viatorUpdateFailedDestinationsBean);
+            session.insert(viatorUpdateFailedDestinationsBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;

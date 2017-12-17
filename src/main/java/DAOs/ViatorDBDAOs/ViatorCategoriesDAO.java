@@ -5,6 +5,7 @@ import DBConnection.HibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
@@ -21,12 +22,12 @@ public class ViatorCategoriesDAO {
 
     public static boolean addcategory(ViatorCategoriesBean viatorcategoriesBean){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.save(viatorcategoriesBean);
+            session.insert(viatorcategoriesBean);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -51,7 +52,7 @@ public class ViatorCategoriesDAO {
 
     public static boolean deleteCategory(int catId){
 
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         String hql = String.format("delete from ViatorCategoriesBean WHERE id='"+catId+"'");
         boolean err=false;
         try{
@@ -80,7 +81,7 @@ public class ViatorCategoriesDAO {
     }
 
     public static List<ViatorCategoriesBean> getAllCategories(){
-        Session session = HibernateUtil.getSession();
+        StatelessSession session = HibernateUtil.getSession();
         List <ViatorCategoriesBean> categories=null;
         String hql = "select categories from ViatorCategoriesBean categories";
         try{
