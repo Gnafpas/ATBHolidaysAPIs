@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.c3p0.min_size">10</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.acquire_increment">1</property>
+        <property name="hibernate.c3p0.idle_test_period">3000</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.timeout">1800</property>
+        <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
+        <property name="hibernate.c3p0.acquireRetryDelay">250</property>
+
+       <property name="connection.username">root</property>
+        <property name="connection.password">h3ll0mysq1</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/kalitaon_hotel2?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>
+        <!--<property name="connection.username">root</property>
+       <property name="connection.password">root</property>
+       <property name="connection.url">jdbc:mysql://localhost:3306/Sunhotels?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>-->
+       <mapping resource="HotelBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.HotelBean"/>
+       <mapping resource="PhotoBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.PhotoBean"/>
+       <mapping resource="HotelfacilityBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.HotelfacilityBean"/>
+       <mapping resource="FacilityBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.FacilityBean"/>
+       <mapping resource="RoomBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.RoomBean"/>
+       <mapping resource="RoombedBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.RoombedBean"/>
+       <mapping resource="RoomtypeBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.RoomtypeBean"/>
+       <mapping resource="DestinationBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.DestinationBean"/>
+       <mapping resource="HotelBean.hbm.xml"/>
+       <mapping resource="HotelBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.HotelmappingBean"/>
+       <mapping resource="HotelmappingBean.hbm.xml"/>
+       <mapping resource="RoomBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.MealBean"/>
+       <mapping resource="MealBean.hbm.xml"/>
+       <mapping resource="SearchLogBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.SearchLogBean"/>
+       <mapping resource="SearchLogBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.ApiUsrSearchLogBean"/>
+       <mapping resource="ApiUsrSearchLogBean.hbm.xml"/>
+       <mapping resource="ResortBean.hbm.xml"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.ResortBean"/>
+       <mapping class="Beans.ATBDBBeans.KalitaonHotel.ResortMappingBean"/>
+       <mapping resource="ResortMappingBean.hbm.xml"/>
+
+
+       <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

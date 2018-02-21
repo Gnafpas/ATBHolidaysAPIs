@@ -19,5 +19,6 @@
         <property name="population" column="population"/>
         <property name="dem" column="dem"/>
         <property name="timeZoneRegion" column="time_zone_region"/>
+        <property name="hasProduct" column="has_product"/>
     </class>
 </hibernate-mapping>

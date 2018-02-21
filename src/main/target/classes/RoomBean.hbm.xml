@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.RoomBean" table="room" schema="Sunhotels">
+        <id name="atbRoomId" column="atb_room_id"/>
+        <property name="providerId" column="provider_id"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="description" column="description"/>
+        <property name="roomSize" column="room_size"/>
+        <property name="providerRef" column="provider_ref"/>
+        <property name="sizeMeasurement" column="size_measurement"/>
+        <property name="minAdultOccupation" column="min_adult_occupation"/>
+        <property name="maxAdultOccupation" column="max_adult_occupation"/>
+        <property name="minChildOccupation" column="min_child_occupation"/>
+        <property name="maxChildOccupation" column="max_child_occupation"/>
+        <property name="minInfantOccupation" column="min_infant_occupation"/>
+        <property name="maxInfantOccupation" column="max_infant_occupation"/>
+        <property name="roomTypeId" column="room_type_id"/>
+        <property name="dirty" column="dirty"/>
+        <property name="originalRoomId" column="original_room_id"/>
+    </class>
+</hibernate-mapping>

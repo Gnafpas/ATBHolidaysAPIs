@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.BookingsAllBean" table="bookings_all" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="bookingDate" column="booking_date"/>
+        <property name="basketId" column="basket_id"/>
+        <property name="productType" column="product_type"/>
+        <property name="productTitle" column="product_title"/>
+        <property name="bookingId" column="booking_id"/>
+        <property name="productId" column="product_id"/>
+        <property name="planId" column="plan_id"/>
+        <property name="priceId" column="price_id"/>
+        <property name="gsaId" column="gsa_id"/>
+        <property name="topGsaName" column="top_gsa_name"/>
+        <property name="agentId" column="agent_id"/>
+        <property name="agentName" column="agent_name"/>
+        <property name="supplierId" column="supplier_id"/>
+        <property name="supplierName" column="supplier_name"/>
+        <property name="countryName" column="country_name"/>
+        <property name="cityName" column="city_name"/>
+        <property name="checkIn" column="check_in"/>
+        <property name="checkOut" column="check_out"/>
+        <property name="supplierSale" column="supplier_sale"/>
+        <property name="supplierCurrency" column="supplier_currency"/>
+        <property name="gsaMarkup" column="gsa_markup"/>
+        <property name="gsaSale" column="gsa_sale"/>
+        <property name="agentMarkup" column="agent_markup"/>
+        <property name="agentSale" column="agent_sale"/>
+        <property name="agentCommission" column="agent_commission"/>
+        <property name="agentEndSale" column="agent_end_sale"/>
+        <property name="agentEndSaleCur" column="agent_end_sale_cur"/>
+        <property name="saleCurrency" column="sale_currency"/>
+        <property name="payType" column="pay_type"/>
+        <property name="payDate" column="pay_date"/>
+        <property name="paying" column="paying"/>
+        <property name="adittionalRequest" column="adittional_request"/>
+        <property name="basis" column="basis"/>
+        <property name="confirmationNo" column="confirmation_no"/>
+        <property name="xmlBookRef" column="xml_book_ref"/>
+        <property name="xmlAgent" column="xml_agent"/>
+        <property name="discountMarkup" column="discount_markup"/>
+        <property name="discountAmount" column="discount_amount"/>
+        <property name="invoiceNo" column="invoice_no"/>
+        <property name="invoiceStatus" column="invoice_status"/>
+        <property name="invoiceAmount" column="invoice_amount"/>
+        <property name="status" column="status"/>
+        <property name="statusReason" column="status_reason"/>
+        <property name="updater" column="updater"/>
+        <property name="updateDate" column="update_date"/>
+        <property name="tourLeader" column="tour_leader"/>
+        <property name="totalPax" column="total_pax"/>
+        <property name="liveGuide" column="live_guide"/>
+        <property name="audioGuide" column="audio_guide"/>
+        <property name="bookletGuide" column="booklet_guide"/>
+        <property name="contactCountryCode" column="contact_country_code"/>
+        <property name="contactTel" column="contact_tel"/>
+        <property name="contactEmail" column="contact_email"/>
+        <property name="common1" column="common_1"/>
+        <property name="common2" column="common_2"/>
+        <property name="common3" column="common_3"/>
+        <property name="common4" column="common_4"/>
+        <property name="common5" column="common_5"/>
+        <property name="common6" column="common_6"/>
+        <property name="common7" column="common_7"/>
+        <property name="common8" column="common_8"/>
+        <property name="common9" column="common_9"/>
+        <property name="common10" column="common_10"/>
+        <property name="common11" column="common_11"/>
+        <property name="common12" column="common_12"/>
+        <property name="common13" column="common_13"/>
+        <property name="common14" column="common_14"/>
+        <property name="common15" column="common_15"/>
+        <property name="posId" column="pos_id"/>
+        <property name="supplierReferences" column="supplier_references"/>
+    </class>
+</hibernate-mapping>

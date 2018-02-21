@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.GsaDepositStatementBean" table="gsa_deposit_statement"
+           schema="atb_System_DB">
+        <id name="id" column="ID"/>
+        <property name="transactionSign" column="transaction_sign"/>
+        <property name="transactionDate" column="transaction_date"/>
+        <property name="gsaId" column="gsa_id"/>
+        <property name="agentId" column="agent_id"/>
+        <property name="agentName" column="agent_name"/>
+        <property name="bookingId" column="booking_id"/>
+        <property name="amound" column="amound"/>
+        <property name="balance" column="balance"/>
+        <property name="notes" column="notes"/>
+    </class>
+</hibernate-mapping>

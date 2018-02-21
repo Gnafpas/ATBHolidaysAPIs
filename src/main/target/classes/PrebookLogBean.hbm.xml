@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonLog.PrebookLogBean" table="prebook_log" schema="kalitaon_search_log">
+        <id name="id" column="id"/>
+        <property name="prebookRef" column="prebook_ref"/>
+        <property name="prebookDate" column="prebook_date"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="roomId" column="room_id"/>
+        <property name="roomTypeName" column="room_type_name"/>
+        <property name="mealName" column="meal_name"/>
+        <property name="price" column="price"/>
+        <property name="notes" column="notes"/>
+        <property name="cancelPolicy" column="cancel_policy"/>
+        <property name="percentage" column="percentage"/>
+        <property name="deadline" column="deadline"/>
+        <property name="atbCancelPolicy" column="atb_cancel_policy"/>
+    </class>
+</hibernate-mapping>
