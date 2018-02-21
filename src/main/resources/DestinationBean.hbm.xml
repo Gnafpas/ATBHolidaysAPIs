@@ -8,10 +8,12 @@
         <id name="id" column="id"/>
         <property name="name" column="name"/>
         <property name="destinationId" column="destination_id"/>
+        <property name="hotelBedsCode" column="hotel_beds_code"/>
         <property name="providerRef" column="provider_ref"/>
         <property name="countryName" column="country_name"/>
         <property name="countryCode" column="country_code"/>
         <property name="timezone" column="timezone"/>
         <property name="providerId" column="provider_id"/>
+        <property name="sortOrder" column="sort_order"/>
     </class>
 </hibernate-mapping>

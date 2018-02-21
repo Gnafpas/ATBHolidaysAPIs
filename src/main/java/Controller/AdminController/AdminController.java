@@ -3,13 +3,19 @@ package Controller.AdminController;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
+import Beans.HotelBedsAPIBeans.Destiantions.CountriesAPIJSON;
+import Beans.HotelBedsAPIBeans.Destiantions.DestinationsAPIJSON;
+import Beans.HotelBedsAPIBeans.Hotels.HotelsAPIJSON;
 import Beans.ViatorDBBeans.ViatorDestinationsBean;
 import Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.AProductTitleDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CityCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
+import DAOs.HotelBedsAPIDAOs.DestinationsAPIDAO;
+import DAOs.HotelBedsAPIDAOs.HotelAPIDAO;
 import DAOs.ViatorDBDAOs.ViatorDestinationsDAO;
 import DAOs.ViatorDBDAOs.ViatorNoneAvailableDatesDAO;
+import Updates.ATBDBUpdates.HotelBedsDBUpdates.UpdateHotelBedsDB;
 import Updates.ATBDBUpdates.ViatorContentUpdates.UpdateATBDBTimerTask;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
 import Updates.ATBDBUpdates.SunHotelsDBUpdates.UpdateSunHotelsDBTimerTask;
@@ -17,11 +23,24 @@ import Updates.ViatorDBUpdates.*;
 import Helper.APIKeyGeneration;
 import Helper.ProjectProperties;
 import Beans.ViatorDBBeans.UpdateDBBeans.InfoJSON;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.logging.Logger;
@@ -369,22 +388,41 @@ public class AdminController {
 
     @RequestMapping("/temp")
     public String temp() {
-        List<String> prods=AProductTitleDAO.getAllViatorProductsCodes();
 
-        for(String prod:prods){
-            AProductTitleBean p=AProductTitleDAO.getProductByCode(prod);
-            if(p.getCityCode()!=null && !p.getCityCode().equals(0)) {
-                CityCodeBean cityCodeBean = CityCodeDAO.getCityByGeonameId(p.getCityCode());
-                if (cityCodeBean != null) {
-
-                    p.setCityName(cityCodeBean.getSanitizedName().toUpperCase());
-                    AProductTitleDAO.deleteProduct(prod);
-                    AProductTitleDAO.addproduct(p);
-                }
-            }
+        try {
+            GregorianCalendar gc = new GregorianCalendar(2018, 02, 10);
+            DatatypeFactory df = DatatypeFactory.newInstance();
+            XMLGregorianCalendar xmlGregorianCalendar = df.newXMLGregorianCalendar(gc);
+            System.out.println("sdff " + xmlGregorianCalendar.toString());
+            Date date = xmlGregorianCalendar.toGregorianCalendar().getTime();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            System.out.println("sd " + sqlDate.toString());
+        }catch(DatatypeConfigurationException e){}
+//        List<String> prods= AProductTitleDAO.getAllViatorProductsCodes();
+//
+//        for(String prod:prods){
+//            AProductTitleBean p=AProductTitleDAO.getProductByCode(prod);
+//            if(p.getCityCode()!=null && !p.getCityCode().equals(0)) {
+//                CityCodeBean cityCodeBean = CityCodeDAO.getCityByGeonameId(p.getCityCode());
+//                if (cityCodeBean != null) {
+//
+//                    p.setCityName(cityCodeBean.getSanitizedName().toUpperCase());
+//                    AProductTitleDAO.deleteProduct(prod);
+//                    AProductTitleDAO.addproduct(p);
+//                }
+//            }
+//        }
+        //UpdateHotelBedsDB.updateHotelsContent(0,10);
+        String destBean="George-sd";
+        String[] dbDestName=destBean.split("( )|(\\()|(\\))|(-)");
+        for(String d:dbDestName){
+            if(!d.equals(""))
+              System.out.println(d);
         }
         return "ok";
     }
+
+
 
 
 

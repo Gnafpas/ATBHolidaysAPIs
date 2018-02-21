@@ -20,12 +20,14 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class HotelfacilityDAO {
 
-    public static boolean addHotelfacilityBean(List<HotelfacilityBean> hotelfacilities,StatelessSession session){
+    public static boolean addHotelfacilityBean(List<HotelfacilityBean> hotelfacilities,StatelessSession session,StatelessSession session2){
 
         boolean err=false;
         try{
-            for(HotelfacilityBean hotelfacility:hotelfacilities)
+            for(HotelfacilityBean hotelfacility:hotelfacilities) {
                 session.insert(hotelfacility);
+                session2.insert(hotelfacility);
+            }
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -51,12 +53,14 @@ public class HotelfacilityDAO {
 
     }
 
-    public static boolean deleteHotelfacilityBean(int hotelId,StatelessSession session){
+    public static boolean deleteHotelfacilityBean(int hotelId,StatelessSession session,StatelessSession session2){
 
         String hql = String.format("DELETE FROM HotelfacilityBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
+            session2.createQuery(hql).executeUpdate();
+            session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -81,13 +85,18 @@ public class HotelfacilityDAO {
         return err;
     }
 
-    public static List<HotelfacilityBean> getFacilitiesByHotelId(int hotelId,int providerId){
+    public static List<HotelfacilityBean> getFacilitiesByHotelId(int hotelId,int providerId,StatelessSession session){
 
-        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        boolean externalSession=false;
+        if(session==null) {
+            session = SunHotelsHibernateUtil.getSession();
+            externalSession =true;
+        }
         List<HotelfacilityBean> hotelfacilities=null;
         String hql = "select facility from HotelfacilityBean facility where  facility.hotelId='"+hotelId+"' and facility.providerId='"+providerId+"'";
         try{
-            session.beginTransaction();
+            if(externalSession)
+                session.beginTransaction();
             hotelfacilities=session.createQuery(hql).list();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
@@ -108,7 +117,8 @@ public class HotelfacilityDAO {
         }catch (NoResultException e){
 
         }finally {
-            session.close();
+            if(externalSession)
+                session.close();
         }
         return hotelfacilities;
     }

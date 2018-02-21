@@ -11,11 +11,13 @@ public class DestinationBean {
     private int id;
     private String name;
     private int destinationId;
+    private String hotelBedsCode;
     private int providerRef;
     private String countryName;
     private String countryCode;
     private String timezone;
     private Integer providerId;//todo dbusage from mehmet:﻿destinations ,photo, hotel mapping , hotel, hotel facility tables
+    private int sortOrder;
 
     @Id
     @Column(name = "id")
@@ -45,6 +47,16 @@ public class DestinationBean {
 
     public void setDestinationId(int destinationId) {
         this.destinationId = destinationId;
+    }
+
+    @Basic
+    @Column(name = "hotel_beds_code")
+    public String getHotelBedsCode() {
+        return hotelBedsCode;
+    }
+
+    public void setHotelBedsCode(String hotelBedsCode) {
+        this.hotelBedsCode = hotelBedsCode;
     }
 
     @Basic
@@ -97,6 +109,16 @@ public class DestinationBean {
         this.providerId = providerId;
     }
 
+    @Basic
+    @Column(name = "sort_order")
+    public int getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,6 +134,7 @@ public class DestinationBean {
         if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
         if (timezone != null ? !timezone.equals(that.timezone) : that.timezone != null) return false;
         if (providerId != null ? !providerId.equals(that.providerId) : that.providerId != null) return false;
+        if (sortOrder != that.sortOrder) return false;
 
         return true;
     }
@@ -126,6 +149,7 @@ public class DestinationBean {
         result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
         result = 31 * result + (timezone != null ? timezone.hashCode() : 0);
         result = 31 * result + (providerId != null ? providerId.hashCode() : 0);
+        result = 31 * result + sortOrder;
         return result;
     }
 }

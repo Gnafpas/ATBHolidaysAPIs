@@ -3,12 +3,13 @@ package APIJSONs.ATBAPIJSONs.HotelATBFrontEnd;
 
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsRoomTypeWithRoomsResponse;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by George on 07/12/2017.
  */
-public class SunHotelsResponse {
+public class SunHotelsResponse implements Comparable<SunHotelsResponse> {
 
 
     private String city;
@@ -163,5 +164,24 @@ public class SunHotelsResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+
+    @Override
+    public int compareTo(SunHotelsResponse o) {
+        return Comparators.ratting.compare(this, o);
+    }
+
+
+    public static class Comparators {
+
+        public static Comparator<SunHotelsResponse> ratting = new Comparator<SunHotelsResponse>() {
+            @Override
+            public int compare(SunHotelsResponse o1, SunHotelsResponse o2) {
+                return o1.getStar_rating().compareTo(o2.getStar_rating());
+            }
+        };
+
     }
 }

@@ -20,12 +20,14 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class PhotoDAO {
 
-    public static boolean addPhotoBean(List<PhotoBean> photos,StatelessSession session){
+    public static boolean addPhotoBean(List<PhotoBean> photos,StatelessSession session,StatelessSession session2){
 
         boolean err=false;
         try{
-            for(PhotoBean photo:photos)
-               session.insert(photo);
+            for(PhotoBean photo:photos) {
+                session.insert(photo);
+                session2.insert(photo);
+            }
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -50,12 +52,13 @@ public class PhotoDAO {
         return err;
     }
 
-    public static boolean deletePhotoBean(int hotelId,StatelessSession session){
+    public static boolean deletePhotoBean(int hotelId,StatelessSession session,StatelessSession session2){
 
         String hql = String.format("DELETE FROM PhotoBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
+            session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -80,13 +83,18 @@ public class PhotoDAO {
         return err;
     }
 
-    public static List<PhotoBean> getPhotosByHotelId(int hotelId,int providerId){
+    public static List<PhotoBean> getPhotosByHotelId(int hotelId,int providerId,StatelessSession session){
 
-        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        boolean externalSession=false;
+        if(session==null) {
+            session = SunHotelsHibernateUtil.getSession();
+            externalSession =true;
+        };
         List<PhotoBean> photos=null;
         String hql = "select photo from PhotoBean photo where  photo.hotelId='"+hotelId+"' and providerId='"+providerId+"'";
         try{
-            session.beginTransaction();
+            if(externalSession)
+                session.beginTransaction();
             photos=session.createQuery(hql).list();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
@@ -107,7 +115,8 @@ public class PhotoDAO {
         }catch (NoResultException e){
 
         }finally {
-            session.close();
+            if(externalSession)
+                session.close();
         }
         return photos;
     }

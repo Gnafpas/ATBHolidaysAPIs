@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.ResortBean" table="resort" schema="Sunhotels">
+        <id name="resortId" column="resortId"/>
+        <property name="providerId" column="provider_id"/>
+        <property name="resortName" column="resort_name"/>
+        <property name="destinationId" column="destination_id"/>
+        <property name="destinationName" column="destination_name"/>
+        <property name="countryName" column="country_name"/>
+        <property name="countryCode" column="country_code"/>
+    </class>
+</hibernate-mapping>

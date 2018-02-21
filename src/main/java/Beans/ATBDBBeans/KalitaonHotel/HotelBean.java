@@ -32,6 +32,7 @@ public class HotelBean {
     private Integer currencyId;
     private Integer destinationId;
     private int providerId;
+    private int resortId;
 
     @Id
     @Column(name = "hotel_id")
@@ -41,6 +42,16 @@ public class HotelBean {
 
     public void setHotelId(int hotelId) {
         this.hotelId = hotelId;
+    }
+
+    @Basic
+    @Column(name = "resort_id")
+    public int getResortId() {
+        return resortId;
+    }
+
+    public void setResortId(int resortId) {
+        this.resortId = resortId;
     }
 
     @Basic
@@ -263,6 +274,7 @@ public class HotelBean {
         if (hotelId != hotelBean.hotelId) return false;
         if (active != hotelBean.active) return false;
         if (providerId != hotelBean.providerId) return false;
+        if (resortId != hotelBean.resortId) return false;
         if (name != null ? !name.equals(hotelBean.name) : hotelBean.name != null) return false;
         if (description != null ? !description.equals(hotelBean.description) : hotelBean.description != null)
             return false;
@@ -314,6 +326,7 @@ public class HotelBean {
         result = 31 * result + (currencyId != null ? currencyId.hashCode() : 0);
         result = 31 * result + (destinationId != null ? destinationId.hashCode() : 0);
         result = 31 * result + providerId;
+        result = 31 * result + resortId;
         return result;
     }
 }

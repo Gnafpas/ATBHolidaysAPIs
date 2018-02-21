@@ -22,6 +22,7 @@ public class CityCodeBean {
     private String population;
     private String dem;
     private String timeZoneRegion;
+    private boolean hasProduct;
 
     @Id
     @Column(name = "id")
@@ -41,6 +42,16 @@ public class CityCodeBean {
 
     public void setGeonameid(String geonameid) {
         this.geonameid = geonameid;
+    }
+
+    @Basic
+    @Column(name = "hasProduct")
+    public boolean isHasProduct() {
+        return hasProduct;
+    }
+
+    public void setHasProduct(boolean hasProduct) {
+        this.hasProduct = hasProduct;
     }
 
     @Basic

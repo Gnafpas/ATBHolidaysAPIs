@@ -16,6 +16,7 @@ public class DProductPhotoBean {
     private String caption;
     private String mainPhoto;
     private String supplierId;
+    private String atb;
     private String createdAt;
     private String updatedAt;
 
@@ -100,6 +101,16 @@ public class DProductPhotoBean {
     }
 
     @Basic
+    @Column(name = "atb")
+    public String getAtb() {
+        return atb;
+    }
+
+    public void setAtb(String atb) {
+        this.atb = atb;
+    }
+
+    @Basic
     @Column(name = "created_at")
     public String getCreatedAt() {
         return createdAt;
@@ -134,6 +145,7 @@ public class DProductPhotoBean {
         if (caption != null ? !caption.equals(that.caption) : that.caption != null) return false;
         if (mainPhoto != null ? !mainPhoto.equals(that.mainPhoto) : that.mainPhoto != null) return false;
         if (supplierId != null ? !supplierId.equals(that.supplierId) : that.supplierId != null) return false;
+        if (atb != null ? !atb.equals(that.atb) : that.atb != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
 
@@ -150,6 +162,7 @@ public class DProductPhotoBean {
         result = 31 * result + (caption != null ? caption.hashCode() : 0);
         result = 31 * result + (mainPhoto != null ? mainPhoto.hashCode() : 0);
         result = 31 * result + (supplierId != null ? supplierId.hashCode() : 0);
+        result = 31 * result + (atb != null ? atb.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         return result;

@@ -20,11 +20,12 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class HotelDAO {
 
-    public static boolean addHotelBean(HotelBean hotelBean, StatelessSession session){
+    public static boolean addHotelBean(HotelBean hotelBean, StatelessSession session,StatelessSession session2){
 
         boolean err=false;
         try{
             session.insert(hotelBean);
+            session2.insert(hotelBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -51,12 +52,13 @@ public class HotelDAO {
 
 
 
-    public static boolean deleteHotelBean(int hotelId,StatelessSession session ){
+    public static boolean deleteHotelBean(int hotelId,StatelessSession session,StatelessSession session2,int provider ){
 
-        String hql = String.format("DELETE FROM HotelBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM HotelBean WHERE hotelId='"+hotelId+"' and providerId='"+provider+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
+            session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -81,11 +83,11 @@ public class HotelDAO {
         return err;
     }
 
-    public static List<Integer> getAllHotelsIds(){
+    public static List<Integer> getAllHotelsIds(int provider){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         List <Integer> hotelIds=null;
-        String hql = "select hotelId from HotelBean hotel where providerId='"+sanHotelsProviderId+"'";
+        String hql = "select hotelId from HotelBean hotel where providerId='"+provider+"'";
         try{
             session.beginTransaction();
             hotelIds=session.createQuery(hql).list();
@@ -113,14 +115,94 @@ public class HotelDAO {
 
 
 
-    public static HotelBean getHotelByHotelId(int hotelId,int providerId){
+    public static List<HotelBean> getHotelByHotelId(int hotelId,int providerId,StatelessSession session) {
 
-        StatelessSession session = SunHotelsHibernateUtil.getSession();
-        HotelBean hotelBean=null;
+        boolean incomingSession=true;
+        List<HotelBean> hotels=null;
         String hql = "select hotel from HotelBean hotel where  hotel.hotelId='"+hotelId+"' and providerId='"+providerId+"'";
         try{
+            if(session==null) {
+                session = SunHotelsHibernateUtil.getSession();
+                session.beginTransaction();
+                incomingSession=false;
+            }
+            hotels=session.createQuery(hql).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+
+        }finally {
+            if(!incomingSession)
+                session.close();
+        }
+        return hotels;
+    }
+
+    public static List<HotelBean> getHotelByHotelIds(List<Integer> hotelIds,int providerId,StatelessSession session) {
+
+        boolean incomingSession=true;
+        List<HotelBean> hotels=null;
+        if(hotelIds!=null && hotelIds.size()>0) {
+            String hql = "select hotel from HotelBean hotel where  providerId='" + providerId + "' and (hotel.hotelId='" + hotelIds.get(0)+"'";
+            for (int id : hotelIds) {
+                hql = hql + " or hotel.hotelId='" + id + "'";
+            }
+            hql= hql+")";
+            try {
+                if (session == null) {
+                    session = SunHotelsHibernateUtil.getSession();
+                    session.beginTransaction();
+                    incomingSession = false;
+                }
+                hotels = session.createQuery(hql).list();
+            } catch (HibernateException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+            } catch (ExceptionInInitializerError e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+            } catch (ClientTransportException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+            } catch (CJCommunicationsException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+            } catch (NoResultException e) {
+
+            } finally {
+                if (!incomingSession)
+                    session.close();
+            }
+        }
+        return hotels;
+    }
+
+    public static List<HotelBean> getHotelByDestId(int destId,int providerId) {
+
+        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        List<HotelBean> hotels=null;
+        String hql = "select hotel from HotelBean hotel where  hotel.destinationId='"+destId+"' and providerId='"+providerId+"'";
+        try{
             session.beginTransaction();
-            hotelBean=(HotelBean)session.createQuery(hql).getSingleResult();
+            hotels=session.createQuery(hql).list();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
@@ -142,7 +224,7 @@ public class HotelDAO {
         }finally {
             session.close();
         }
-        return hotelBean;
+        return hotels;
     }
 
 

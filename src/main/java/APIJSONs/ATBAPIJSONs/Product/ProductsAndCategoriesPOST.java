@@ -21,7 +21,16 @@ public class ProductsAndCategoriesPOST {
     private int productId=0;
     private String startDate=null;
     private String endDate=null;
+    private int typeOfProduct=0;
     private List<String> categories=new ArrayList<>();
+
+    public int getTypeOfProduct() {
+        return typeOfProduct;
+    }
+
+    public void setTypeOfProduct(int typeOfProduct) {
+        this.typeOfProduct = typeOfProduct;
+    }
 
     public int getPriceFrom() {
         return priceFrom;

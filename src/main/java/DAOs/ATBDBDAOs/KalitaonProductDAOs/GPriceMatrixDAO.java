@@ -78,7 +78,7 @@ public class GPriceMatrixDAO {
         return err;
     }
 
-    public static List<GPriceMatrixBean> getgPriceMatrixesByProductId(String productId,String planId){
+    public static List<GPriceMatrixBean> getgPriceMatrixesByProductIdAndPlanId(String productId,String planId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List<GPriceMatrixBean> gPriceMatrixes=null;

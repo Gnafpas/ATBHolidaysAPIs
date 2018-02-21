@@ -7,23 +7,58 @@ import java.util.List;
  */
 public class SunHotelsSearchPOST {
 
-    private String checkInDate;
-    private String checkOutDate;
-    private int numberOfAdults;
-    private int numberOfRooms;
-    private int numberOfChildren;
-    private List<Integer> childrenAges;
-    private int infant;
-    private List<Integer> mealIds;
+    private String checkInDate="";
+    private String checkOutDate="";
+    private int numberOfAdults=0;
+    private int numberOfRooms=0;
+    private int numberOfChildren=0;
+    private String childrenAges="";
+    private int infant=0;
     private List<String> currencies;
-    private String hotelID;
+    private String hotelID="";
     private int providerId=0;
     private String destinationId=null;
-    private String customerCountry;
-    private String sortOrder="Ascending";
-    private String sortBy="Price";
+    private String customerCountry="";
+    private String sortOrder;
+    private String sortBy;
     private String maxPrice;
     private String minPrice;
+    private String mealPlans;
+    private String starRatings;
+    private String districts;
+    private int searchId=0;
+
+    public String getMealPlans() {
+        return mealPlans;
+    }
+
+    public void setMealPlans(String mealPlans) {
+        this.mealPlans = mealPlans;
+    }
+
+    public String getStarRatings() {
+        return starRatings;
+    }
+
+    public void setStarRatings(String starRatings) {
+        this.starRatings = starRatings;
+    }
+
+    public String getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(String districts) {
+        this.districts = districts;
+    }
+
+    public int getSearchId() {
+        return searchId;
+    }
+
+    public void setSearchId(int searchId) {
+        this.searchId = searchId;
+    }
 
     public int getProviderId() {
         return providerId;
@@ -113,11 +148,11 @@ public class SunHotelsSearchPOST {
         this.numberOfRooms = numberOfRooms;
     }
 
-    public List<Integer> getChildrenAges() {
+    public String getChildrenAges() {
         return childrenAges;
     }
 
-    public void setChildrenAges(List<Integer> childrenAges) {
+    public void setChildrenAges(String childrenAges) {
         this.childrenAges = childrenAges;
     }
 
@@ -127,14 +162,6 @@ public class SunHotelsSearchPOST {
 
     public void setInfant(int infant) {
         this.infant = infant;
-    }
-
-    public List<Integer> getMealIds() {
-        return mealIds;
-    }
-
-    public void setMealIds(List<Integer> mealIds) {
-        this.mealIds = mealIds;
     }
 
     public List<String> getCurrencies() {

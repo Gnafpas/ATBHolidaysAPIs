@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.TravellerInfoBean" table="traveller_info" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="bookingId" column="booking_id"/>
+        <property name="travelType" column="travel_type"/>
+        <property name="travelName" column="travel_name"/>
+        <property name="travelSurname" column="travel_surname"/>
+        <property name="travelBirdthDate" column="travel_birdth_date"/>
+    </class>
+</hibernate-mapping>

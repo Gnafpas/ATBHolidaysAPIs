@@ -27,5 +27,6 @@
         <property name="updatedAt" column="updated_at"/>
         <property name="currencyId" column="currency_id"/>
         <property name="destinationId" column="destination_id"/>
+        <property name="resortId" column="resort_id"/>
     </class>
 </hibernate-mapping>

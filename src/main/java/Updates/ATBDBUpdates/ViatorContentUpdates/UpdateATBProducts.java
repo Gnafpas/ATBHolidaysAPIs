@@ -669,6 +669,7 @@ public class UpdateATBProducts {
                     dProductPhotoBean.setVt("2");
                     dProductPhotoBean.setSubId("");
                     dProductPhotoBean.setPhotoName("");
+                    dProductPhotoBean.setAtb("");
                     dProductPhotoBean.setSupplierId(ProjectProperties.photoSupplierId);
                     if(photoURL.length>1) {
                         dProductPhotoBean.setPhotoName(photoURL[1]);
@@ -695,6 +696,7 @@ public class UpdateATBProducts {
                             dProductPhotoBean.setVt("2");
                             dProductPhotoBean.setSubId("");
                             dProductPhotoBean.setPhotoName("");
+                            dProductPhotoBean.setAtb("");
                             if(photoURL.length>1) {
                                 dProductPhotoBean.setPhotoName(ProjectProperties.photoSizeUrl + photoURL[1]);
                                 dProductPhotoBean.setProductId(String.valueOf(productTitleRecord.getId()));

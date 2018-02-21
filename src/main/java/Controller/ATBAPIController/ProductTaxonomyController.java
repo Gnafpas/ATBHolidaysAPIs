@@ -23,10 +23,10 @@ import java.util.List;
  * Created by George on 15/09/2017.
  */
 @RestController
-public class TaxonomyController {
+public class ProductTaxonomyController {
 
 
-    @RequestMapping("/taxonomy/languages")
+    @RequestMapping("/product/taxonomy/languages")
     public LanguagesJSON getAllLanguages(){
         List<AllLanguageBean> languages;
         LanguagesJSON languagesJSON=new LanguagesJSON();
@@ -47,7 +47,7 @@ public class TaxonomyController {
     }
 
 
-    @RequestMapping("/taxonomy/countries")
+    @RequestMapping("/product/taxonomy/countries")
     public CountriesJSON getAllCountries(){
         List<CountryCodeBean> countries;
         CountriesJSON countriesJSON=new CountriesJSON();
@@ -67,7 +67,7 @@ public class TaxonomyController {
         return countriesJSON;
     }
 
-    @RequestMapping("/taxonomy/citiesofCountry")
+    @RequestMapping("/product/taxonomy/citiesOfCountry")
     public CitiesJSON getAllCities(@RequestParam (value="countryCode", defaultValue="") String countryCode){
         List<CityCodeBean> cities;
         CitiesJSON citiesJSON = new CitiesJSON();
@@ -89,7 +89,7 @@ public class TaxonomyController {
     }
 
 
-    @RequestMapping("/taxonomy/categories")
+    @RequestMapping("/product/taxonomy/categories")
     public CategoriesJson getAllCategories(@RequestParam (value="countryCode", defaultValue="") String countryCode,
                                            @RequestParam (value="cityCode", defaultValue="") String cityCode){
 //todo fix country codes at database.they have spaces

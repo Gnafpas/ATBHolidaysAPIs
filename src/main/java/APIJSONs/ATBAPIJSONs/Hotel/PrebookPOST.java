@@ -6,7 +6,7 @@ import java.util.List;
  * Created by George on 28/11/2017.
  */
 public class PrebookPOST {
-    private String currency;
+
     private String checkInDate;
     private String checkOutDate;
     private int rooms;
@@ -16,20 +16,9 @@ public class PrebookPOST {
     private int infant;
     private int mealId;
     private String customerCountry;
-    private String searchPrice;
     private String roomId="";
-    private String roomtypeId;
-    private String blockSuperDeal;
-    private String showPriceBreakdown;
+    private String hotelId;
 
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
 
     public String getCheckInDate() {
         return checkInDate;
@@ -103,14 +92,6 @@ public class PrebookPOST {
         this.customerCountry = customerCountry;
     }
 
-    public String getSearchPrice() {
-        return searchPrice;
-    }
-
-    public void setSearchPrice(String searchPrice) {
-        this.searchPrice = searchPrice;
-    }
-
     public String getRoomId() {
         return roomId;
     }
@@ -119,27 +100,13 @@ public class PrebookPOST {
         this.roomId = roomId;
     }
 
-    public String getRoomtypeId() {
-        return roomtypeId;
+    public String getHotelId() {
+        return hotelId;
     }
 
-    public void setRoomtypeId(String roomtypeId) {
-        this.roomtypeId = roomtypeId;
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
     }
 
-    public String getBlockSuperDeal() {
-        return blockSuperDeal;
-    }
 
-    public void setBlockSuperDeal(String blockSuperDeal) {
-        this.blockSuperDeal = blockSuperDeal;
-    }
-
-    public String getShowPriceBreakdown() {
-        return showPriceBreakdown;
-    }
-
-    public void setShowPriceBreakdown(String showPriceBreakdown) {
-        this.showPriceBreakdown = showPriceBreakdown;
-    }
 }

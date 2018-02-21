@@ -1,12 +1,10 @@
 package DAOs.ATBDBDAOs.KalitaonSysDAOs;
 
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
-import DBConnection.ATBHibernateUtil;
 import DBConnection.ATBSysHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
@@ -25,7 +23,7 @@ public class CityCodeDAO {
 
         Session session = ATBSysHibernateUtil.getSession();
         List <CityCodeBean> cities=null;
-        String hql = "select cities from CityCodeBean cities where countryCodeIso like :countryCode";
+        String hql = "select cities from CityCodeBean cities where countryCodeIso like :countryCode and hasProduct=true ";
         try{
             session.beginTransaction();
             cities=session.createQuery(hql).setParameter("countryCode",  countryCode ).list();

@@ -8,7 +8,16 @@ import DAOs.SunHotelsAPIDAOs.*;
  */
 public class SunHotelsBookJSON extends StandardJSON {
 
-    Booking bookResult;
+    private Booking bookResult;
+    private String errorType;
+
+    public String getErrorType() {
+        return errorType;
+    }
+
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     public Booking getBookResult() {
         return bookResult;

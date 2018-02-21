@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.GsaBean" table="GSA" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="gsaName" column="gsa_name"/>
+        <property name="countryCode" column="country_code"/>
+        <property name="pic" column="pic"/>
+        <property name="tel" column="tel"/>
+        <property name="fax" column="fax"/>
+        <property name="mobile" column="mobile"/>
+        <property name="email" column="email"/>
+        <property name="address" column="address"/>
+        <property name="iata" column="IATA"/>
+        <property name="tursab" column="TURSAB"/>
+        <property name="clia" column="CLIA"/>
+        <property name="asta" column="ASTA"/>
+        <property name="other" column="OTHER"/>
+        <property name="taxOffice" column="tax_office"/>
+        <property name="taxNo" column="tax_no"/>
+        <property name="bankInfo" column="bank_info"/>
+        <property name="trsMkp" column="trs_mkp"/>
+        <property name="mtrMkp" column="mtr_mkp"/>
+        <property name="dtrMkp" column="dtr_mkp"/>
+        <property name="otlMkp" column="otl_mkp"/>
+        <property name="grpMkp" column="grp_mkp"/>
+        <property name="evtMkp" column="evt_mkp"/>
+        <property name="nonrefTrsMkp" column="nonref_trs_mkp"/>
+        <property name="nonrefMtrMkp" column="nonref_mtr_mkp"/>
+        <property name="nonrefDtrMkp" column="nonref_dtr_mkp"/>
+        <property name="nonrefOtlMkp" column="nonref_otl_mkp"/>
+        <property name="nonrefEvtMkp" column="nonref_evt_mkp"/>
+        <property name="customCommission" column="custom_commission"/>
+        <property name="deposit" column="deposit"/>
+        <property name="currency" column="currency"/>
+        <property name="activation" column="activation"/>
+        <property name="createDate" column="create_date"/>
+    </class>
+</hibernate-mapping>

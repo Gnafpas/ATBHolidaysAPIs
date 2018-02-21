@@ -23,6 +23,7 @@ public class Application extends SpringBootServletInitializer {
 //todo change mysql driver and configure mysql for connection pooling
 
     public static Logger errLogger;
+    public static Logger userlogs;
 
 
     @Override
@@ -48,7 +49,25 @@ public class Application extends SpringBootServletInitializer {
             e.printStackTrace();
         }
 
+        userlogs = Logger.getLogger("Userlog");
+        FileHandler fh2;
+        try {
+            for(Handler handler:userlogs.getHandlers()) {
+                userlogs.removeHandler(handler);
+            }
+            // This block configure the logger with handler and formatter
+            fh2 = new FileHandler(ProjectProperties.logspath+"Userlog.log");
+            userlogs.addHandler(fh2);
+            SimpleFormatter formatter2 = new SimpleFormatter();
+            fh2.setFormatter(formatter2);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         errLogger.info("App started...");
+        userlogs.info("App started...");
         return application.sources(Application.class);
     }
 }

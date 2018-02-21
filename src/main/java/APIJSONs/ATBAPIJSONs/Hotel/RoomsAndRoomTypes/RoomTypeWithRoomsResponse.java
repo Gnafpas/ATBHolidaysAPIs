@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class RoomTypeWithRoomsResponse {
 
-    private String name;
+    private String roomType;
     private int roomtypeID;
     private List<RoomResponse> rooms;
     private boolean sharedRoom;
@@ -22,13 +22,12 @@ public class RoomTypeWithRoomsResponse {
         this.sharedRoom = sharedRoom;
     }
 
-
-    public String getName() {
-        return name;
+    public String getRoomType() {
+        return roomType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     public int getRoomtypeID() {

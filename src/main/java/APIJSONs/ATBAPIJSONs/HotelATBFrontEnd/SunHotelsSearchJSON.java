@@ -1,7 +1,5 @@
 package APIJSONs.ATBAPIJSONs.HotelATBFrontEnd;
 
-import APIJSONs.ATBAPIJSONs.StandardJSON;
-
 import java.util.List;
 
 /**
@@ -11,6 +9,15 @@ public class SunHotelsSearchJSON  {
 
     private List<SunHotelsResponse> results;
     private String search_ref;
+    private int totalHotelsCount;
+
+    public int getTotalHotelsCount() {
+        return totalHotelsCount;
+    }
+
+    public void setTotalHotelsCount(int totalHotelsCount) {
+        this.totalHotelsCount = totalHotelsCount;
+    }
 
     public List<SunHotelsResponse> getResults() {
         return results;

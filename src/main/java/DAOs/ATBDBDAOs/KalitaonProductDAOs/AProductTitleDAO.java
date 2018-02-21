@@ -134,6 +134,29 @@ public class AProductTitleDAO {
         return product;
     }
 
+    public static  AProductTitleBean getProductById(String productId){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        AProductTitleBean product=null;
+        String hql ="Select a FROM Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean a WHERE a.id='"+ productId +"'";
+        try{
+            Query query= session.createQuery(hql);
+            query.setMaxResults(1);
+            product=(AProductTitleBean)query.getSingleResult();
+        }catch (HibernateException e) {
+            errLogger.info(e.toString());
+        }catch (ExceptionInInitializerError e) {
+            errLogger.info(e.toString());
+        }catch (NoResultException e){
+
+        }catch (CJCommunicationsException e){
+            errLogger.info(e.toString());
+        }finally {
+            session.close();
+        }
+        return product;
+    }
+
     public static AProductTitleBean getLastRecord(){
         StatelessSession session = ATBHibernateUtil.getSession();
         String hql=     " select  a"
@@ -192,6 +215,8 @@ public class AProductTitleDAO {
             hql=hql + " and productDetails.countryCode LIKE :countryCode ";
         if(params.getProductId()!=0)
             hql=hql + " and productDetails.id = :productId ";
+        if(params.getTypeOfProduct()!=0)
+            hql=hql + " and productDetails.typeOfProduct = :typeOfProduct ";
         if(params.getPriceFrom()!=0)
             hql=hql + " and cast(productDetails.marchandNetPrice as int) >= :priceFrom ";
         if(params.getPriceTo()!=0)
@@ -263,6 +288,8 @@ public class AProductTitleDAO {
                 query.setParameter("countryCode", params.getCountryCode());
             if(params.getProductId()!=0)
                 query.setParameter("productId", params.getProductId());
+            if(params.getTypeOfProduct()!=0)
+                query.setParameter("typeOfProduct", String.valueOf(params.getTypeOfProduct()));
             if(params.getPriceFrom()!=0)
                 query.setParameter("priceFrom", params.getPriceFrom());
             if(params.getPriceTo()!=0)
@@ -285,10 +312,10 @@ public class AProductTitleDAO {
             }
 
             /**Decreasing by 1 because the first product is at position 0.*/
-            if(params.getFirstProduct()!=0)
-                query.setFirstResult(params.getFirstProduct()-1);
-            if(params.getLastProduct()!=0)
-                query.setMaxResults(params.getLastProduct());
+//            if(params.getFirstProduct()!=0)
+//                query.setFirstResult(params.getFirstProduct()-1);
+//            if(params.getLastProduct()!=0)
+//                query.setMaxResults(params.getLastProduct());
 
             products=query.getResultList();
         }catch (HibernateException e) {

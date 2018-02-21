@@ -6,23 +6,16 @@ import DAOs.SunHotelsAPIDAOs.ArrayOfPriceWithPaymentMethods;
 import DAOs.SunHotelsAPIDAOs.Discount;
 import DAOs.SunHotelsAPIDAOs.MonetaryValueWithPaymentMethods;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class RoomMealResponse {
 
-    private int mealId;
-    private ArrayOfPriceWithPaymentMethods prices;
     private Discount discount;
-    private String name;
+    private int mealId;
+    private BigDecimal price;
+    private String mealName;
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getMealId() {
         return mealId;
@@ -32,12 +25,20 @@ public class RoomMealResponse {
         this.mealId = mealId;
     }
 
-    public ArrayOfPriceWithPaymentMethods getPrices() {
-        return prices;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPrices(ArrayOfPriceWithPaymentMethods prices) {
-        this.prices = prices;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getMealName() {
+        return mealName;
+    }
+
+    public void setMealName(String mealName) {
+        this.mealName = mealName;
     }
 
     public Discount getDiscount() {

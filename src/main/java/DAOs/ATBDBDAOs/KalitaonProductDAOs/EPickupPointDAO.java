@@ -7,6 +7,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -104,5 +105,34 @@ public class EPickupPointDAO {
             session.close();
         }
         return ePickupPoints;
+    }
+
+    public static EPickupPointBean getePickupPointByHotelId(String hotelId){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        EPickupPointBean ePickupPoint=null;
+        String hql ="Select ePickupPoints FROM EPickupPointBean ePickupPoints " +
+                "WHERE ePickupPoints.hotelId like :hotelId ";
+        try{
+            session.beginTransaction();
+            ePickupPoint=(EPickupPointBean)session.createQuery(hql).setParameter("hotelId",   hotelId ).getSingleResult();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch(NoResultException e) {
+        }finally {
+            session.close();
+        }
+        return ePickupPoint;
     }
 }

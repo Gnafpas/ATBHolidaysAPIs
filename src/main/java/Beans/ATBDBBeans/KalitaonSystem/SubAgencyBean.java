@@ -3,7 +3,7 @@ package Beans.ATBDBBeans.KalitaonSystem;
 import javax.persistence.*;
 
 /**
- * Created by George on 19/10/2017.
+ * Created by George on 22/01/2018.
  */
 @Entity
 @Table(name = "sub_agency", schema = "atb_System_DB", catalog = "")
@@ -43,6 +43,12 @@ public class SubAgencyBean {
     private String swift;
     private String commission;
     private String markup;
+    private String trsMkp;
+    private String dtrMkp;
+    private String mtrMkp;
+    private String otlMkp;
+    private String grpMkp;
+    private String evtMkp;
     private String deposit;
     private String currency;
     private String logo;
@@ -403,6 +409,66 @@ public class SubAgencyBean {
     }
 
     @Basic
+    @Column(name = "trs_mkp")
+    public String getTrsMkp() {
+        return trsMkp;
+    }
+
+    public void setTrsMkp(String trsMkp) {
+        this.trsMkp = trsMkp;
+    }
+
+    @Basic
+    @Column(name = "dtr_mkp")
+    public String getDtrMkp() {
+        return dtrMkp;
+    }
+
+    public void setDtrMkp(String dtrMkp) {
+        this.dtrMkp = dtrMkp;
+    }
+
+    @Basic
+    @Column(name = "mtr_mkp")
+    public String getMtrMkp() {
+        return mtrMkp;
+    }
+
+    public void setMtrMkp(String mtrMkp) {
+        this.mtrMkp = mtrMkp;
+    }
+
+    @Basic
+    @Column(name = "otl_mkp")
+    public String getOtlMkp() {
+        return otlMkp;
+    }
+
+    public void setOtlMkp(String otlMkp) {
+        this.otlMkp = otlMkp;
+    }
+
+    @Basic
+    @Column(name = "grp_mkp")
+    public String getGrpMkp() {
+        return grpMkp;
+    }
+
+    public void setGrpMkp(String grpMkp) {
+        this.grpMkp = grpMkp;
+    }
+
+    @Basic
+    @Column(name = "evt_mkp")
+    public String getEvtMkp() {
+        return evtMkp;
+    }
+
+    public void setEvtMkp(String evtMkp) {
+        this.evtMkp = evtMkp;
+    }
+
+    @Basic
     @Column(name = "deposit")
     public String getDeposit() {
         return deposit;
@@ -526,6 +592,12 @@ public class SubAgencyBean {
         if (swift != null ? !swift.equals(that.swift) : that.swift != null) return false;
         if (commission != null ? !commission.equals(that.commission) : that.commission != null) return false;
         if (markup != null ? !markup.equals(that.markup) : that.markup != null) return false;
+        if (trsMkp != null ? !trsMkp.equals(that.trsMkp) : that.trsMkp != null) return false;
+        if (dtrMkp != null ? !dtrMkp.equals(that.dtrMkp) : that.dtrMkp != null) return false;
+        if (mtrMkp != null ? !mtrMkp.equals(that.mtrMkp) : that.mtrMkp != null) return false;
+        if (otlMkp != null ? !otlMkp.equals(that.otlMkp) : that.otlMkp != null) return false;
+        if (grpMkp != null ? !grpMkp.equals(that.grpMkp) : that.grpMkp != null) return false;
+        if (evtMkp != null ? !evtMkp.equals(that.evtMkp) : that.evtMkp != null) return false;
         if (deposit != null ? !deposit.equals(that.deposit) : that.deposit != null) return false;
         if (currency != null ? !currency.equals(that.currency) : that.currency != null) return false;
         if (logo != null ? !logo.equals(that.logo) : that.logo != null) return false;
@@ -575,6 +647,12 @@ public class SubAgencyBean {
         result = 31 * result + (swift != null ? swift.hashCode() : 0);
         result = 31 * result + (commission != null ? commission.hashCode() : 0);
         result = 31 * result + (markup != null ? markup.hashCode() : 0);
+        result = 31 * result + (trsMkp != null ? trsMkp.hashCode() : 0);
+        result = 31 * result + (dtrMkp != null ? dtrMkp.hashCode() : 0);
+        result = 31 * result + (mtrMkp != null ? mtrMkp.hashCode() : 0);
+        result = 31 * result + (otlMkp != null ? otlMkp.hashCode() : 0);
+        result = 31 * result + (grpMkp != null ? grpMkp.hashCode() : 0);
+        result = 31 * result + (evtMkp != null ? evtMkp.hashCode() : 0);
         result = 31 * result + (deposit != null ? deposit.hashCode() : 0);
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
         result = 31 * result + (logo != null ? logo.hashCode() : 0);

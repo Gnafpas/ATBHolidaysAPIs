@@ -139,4 +139,34 @@ public class FPricePlanDAO {
         }
         return fPricePlans;
     }
+
+    public static FPricePlanBean getfPricePlansById(int planId){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        FPricePlanBean fPricePlan=null;
+        String hql ="Select fPricePlans FROM FPricePlanBean fPricePlans " +
+                "WHERE fPricePlans.id =:planId ";
+        try{
+            session.beginTransaction();
+            fPricePlan=(FPricePlanBean)session.createQuery(hql).setParameter("planId",   planId ).getSingleResult();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch(NoResultException e) {
+
+        }finally {
+            session.close();
+        }
+        return fPricePlan;
+    }
 }

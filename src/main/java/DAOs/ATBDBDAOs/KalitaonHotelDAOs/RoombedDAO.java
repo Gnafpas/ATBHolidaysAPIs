@@ -18,13 +18,15 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class RoombedDAO {
 
-    public static boolean addRoombedBean(List<RoombedBean> roombeds,StatelessSession session){
+    public static boolean addRoombedBean(List<RoombedBean> roombeds,StatelessSession session,StatelessSession session2){
 
 
         boolean err=false;
         try{
-            for(RoombedBean roombed :roombeds)
-             session.insert(roombed);
+            for(RoombedBean roombed :roombeds) {
+                session.insert(roombed);
+                session2.insert(roombed);
+            }
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -49,12 +51,13 @@ public class RoombedDAO {
         return err;
     }
 
-    public static boolean deleteRoombedBean(int hotelId,StatelessSession session){
+    public static boolean deleteRoombedBean(int hotelId,StatelessSession session,StatelessSession session2){
 
         String hql = String.format("DELETE FROM RoombedBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
+            session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

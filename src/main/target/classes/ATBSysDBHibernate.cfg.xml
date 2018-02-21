@@ -5,7 +5,7 @@
 <hibernate-configuration>
   <session-factory>
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.c3p0.min_size">10</property>
     <property name="hibernate.c3p0.max_size">20</property>
     <property name="hibernate.c3p0.acquire_increment">1</property>
@@ -17,21 +17,32 @@
 
       <property name="connection.username">kalitaonlinenet</property>
       <property name="connection.password">Ae0qywqudn61</property>
-      <property name="connection.url">jdbc:mysql://31.169.77.202:3306/kalitaon_system?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true</property>
+      <property name="connection.url">jdbc:mysql://31.169.77.202:3306/kalitaon_system?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>
       <!--<property name="connection.username">root</property>
       <property name="connection.password">root</property>
-      <property name="connection.url">jdbc:mysql://localhost:3306/atb_System_DB?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true</property>-->
-    <mapping resource="AllLanguageBean.hbm.xml"/>
-    <mapping class="Beans.ATBDBBeans.KalitaonSystem.AllLanguageBean"/>
-    <mapping class="Beans.ATBDBBeans.KalitaonSystem.CityCodeBean"/>
-    <mapping resource="CityCodeBean.hbm.xml"/>
-    <mapping class="Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean"/>
-    <mapping resource="CountryCodeBean.hbm.xml"/>
-      <mapping class="Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean"/>
+      <property name="connection.url">jdbc:mysql://localhost:3306/atb_System_DB?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>-->
+   <mapping resource="AllLanguageBean.hbm.xml"/>
+   <mapping class="Beans.ATBDBBeans.KalitaonSystem.AllLanguageBean"/>
+   <mapping class="Beans.ATBDBBeans.KalitaonSystem.CityCodeBean"/>
+   <mapping resource="CityCodeBean.hbm.xml"/>
+   <mapping class="Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean"/>
+   <mapping resource="CountryCodeBean.hbm.xml"/>
+     <mapping class="Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean"/>
+     <mapping resource="SubAgencyBean.hbm.xml"/>
+     <mapping resource="SubAgencyBean.hbm.xml"/>
+     <mapping class="Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean"/>
+     <mapping resource="CityCodeBean.hbm.xml"/>
+      <mapping resource="GsaBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonSystem.GsaBean"/>
+      <mapping resource="BookingTransactionBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonSystem.BookingTransactionBean"/>
+      <mapping resource="BookingsAllBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonSystem.BookingsAllBean"/>
+      <mapping resource="GsaDepositStatementBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonSystem.GsaDepositStatementBean"/>
       <mapping resource="SubAgencyBean.hbm.xml"/>
-      <mapping resource="SubAgencyBean.hbm.xml"/>
-      <mapping class="Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean"/>
-      <mapping resource="CityCodeBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonSystem.TravellerInfoBean"/>
+      <mapping resource="TravellerInfoBean.hbm.xml"/>
 
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->

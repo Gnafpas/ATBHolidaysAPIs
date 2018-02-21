@@ -6,6 +6,7 @@ import DAOs.SunHotelsAPIDAOs.GetStaticHotelsAndRoomsResult;
 import DAOs.SunHotelsAPIDAOs.NonStaticXMLAPI;
 import DAOs.SunHotelsAPIDAOs.NonStaticXMLAPISoap;
 import DBConnection.SunHotelsHibernateUtil;
+import DBConnection.SunHotelsMainServerHibernateUtil;
 import Helper.ProjectProperties;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
@@ -35,7 +36,7 @@ public class DeleteExpiredHotels {
         /**
          * retrieve all codes of the hotels in DB
          */
-        List<Integer> hotelIds = HotelDAO.getAllHotelsIds();
+        List<Integer> hotelIds = HotelDAO.getAllHotelsIds(sanHotelsProviderId);
         if (hotelIds == null) {
             totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter()+1);
         } else {
@@ -74,15 +75,16 @@ public class DeleteExpiredHotels {
                             if (expired) {
                                 StatelessSession session = SunHotelsHibernateUtil.getSession();
                                 Transaction tx;
+                                StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                                Transaction tx2;
                                 tx = session.beginTransaction();
-                                if(HotelmappingDAO.deleteHotelmapping(hotelId,sanHotelsProviderId,session))
+                                tx2 = session2.beginTransaction();
+                                if (HotelDAO.deleteHotelBean(hotelId,session,session2,sanHotelsProviderId))
                                     totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
-                                else{
-                                    if (HotelDAO.deleteHotelBean(hotelId,session))
-                                        totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
-                                }
                                 tx.commit();
+                                tx2.commit();
                                 session.close();
+                                session2.close();
                                 logger.info("********************** Deleting expired hotel with id: " + hotelId + " **********************");
                                 totalExpiredHotelsList.add(hotelId);
                                 totalExpiredHotels.setTotalExpiredhotels(totalExpiredHotels.getTotalExpiredhotels() + 1);

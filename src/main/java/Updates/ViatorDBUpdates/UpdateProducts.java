@@ -45,6 +45,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import static Controller.AdminController.AdminController.viatorimidiateUpdateStop;
 import static Controller.Application.errLogger;
+import static Helper.ProjectProperties.defaultCurrencyCode;
 
 /**
  * Created by George on 15/06/2017.
@@ -165,7 +166,7 @@ public class UpdateProducts {
          * Set Default Values to POST object to retrieve all Viator's products.
          */
         String topX = "";
-        String currencyCode = ProjectProperties.defaultCurrencyCode;
+        String currencyCode = defaultCurrencyCode;
         String startDate = "";
         String endDate = "";
         int catId = 0;
@@ -307,9 +308,7 @@ public class UpdateProducts {
                                 }
                             }
                             /** Get product's details*/
-                            logger.info(" 131313131313");
-                            productDetailedInfoAPIJSON = ProductAPIDAO.productDetailedInfo(productDetailsBean.getCode(), "EUR", false, false);
-                            logger.info(" 141414141414141");
+                            productDetailedInfoAPIJSON = ProductAPIDAO.productDetailedInfo(productDetailsBean.getCode(), defaultCurrencyCode, false, false);
                             timeElapsed = System.currentTimeMillis();
 
                             if (productDetailedInfoAPIJSON.isSuccess() && productDetailedInfoAPIJSON.getData()!= null) {
@@ -442,9 +441,7 @@ public class UpdateProducts {
                                 /**
                                  * Requesting viator for pickup Hotels of a product to add them to Pickup Hotels DB table.
                                  */
-                                logger.info(" 1515151515151");
                                 pickupHotelsAPIJSON = BookingsAPIDAO.productPickupHotels(productDetailedInfoAPIJSON.getData().getCode());
-                                logger.info(" 16616161616161");
                                 timeElapsed = System.currentTimeMillis();
                                 if (pickupHotelsAPIJSON.isSuccess() && pickupHotelsAPIJSON.getData() != null) {
 
@@ -597,9 +594,7 @@ public class UpdateProducts {
                                 /**
                                  * Requesting viator for availability dates of product.
                                  */
-                                logger.info(" 181818181818");
                                 availabilityDatesAPIJSON = BookingsAPIDAO.productAvailabilityDates(productDetailedInfoAPIJSON.getData().getCode());
-                                logger.info(" 19191919191919");
                                 timeElapsed = System.currentTimeMillis();
 
                                 /**
@@ -704,11 +699,9 @@ public class UpdateProducts {
                                 /**
                                  * Requesting viator for pricingmatrix of product.
                                  */
-                                logger.info(" 20202020202");
                                 availabilityAndPricingMatrixAPIJSON = BookingsAPIDAO.productAvailabilityAndPricingMatrix(productDetailedInfoAPIJSON.getData().getCode(),
                                         Integer.toString(dateTime.getMonthOfYear()),
                                         Integer.toString(dateTime.getYear()));
-                                logger.info(" 2122121212121");
                                 timeElapsed = System.currentTimeMillis();
 
                                 if (availabilityAndPricingMatrixAPIJSON.isSuccess() && availabilityAndPricingMatrixAPIJSON.getData() != null
@@ -876,25 +869,20 @@ public class UpdateProducts {
                                 /**
                                  * Add/Update product details to DB.
                                  */
-                                logger.info(" 00000000000");//todo change city name from crete to chania atbholidays contracts
                                 StatelessSession session = HibernateUtil.getSession();
                                 Transaction tx;
                                 try {
-                                    logger.info(" 111111111111");
                                     tx = session.beginTransaction();
-                                    logger.info(" 22222222222");
                                     int currentDBErrCommCounter = updateProductsInfoJSON.getDbCommErrorsCounter();
                                     if (ViatorProductDetailsDAO.deleteProduct(productDetailsBean.getCode(),session)) {
                                         updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
                                         updateProductsInfoJSON.setDbCommError(true);
                                     } else {
-                                        logger.info(" 33333333333");
                                         if (ViatorProductDetailsDAO.addproduct(productDetailsBean,session)) {
                                             updateProductsInfoJSON.setDbCommErrorsCounter(updateProductsInfoJSON.getDbCommErrorsCounter() + 1);
                                             updateProductsInfoJSON.setDbCommError(true);
                                         } else {
                                             updateProductsInfoJSON.setTotalProducts(updateProductsInfoJSON.getTotalProducts() + 1);
-                                            logger.info(" 444444444444");
                                             if (productDetailedInfoAPIJSON.getData().getCode() != null)
                                                 logger.info("      ****************     Product code : " + productDetailedInfoAPIJSON.getData().getCode() +
                                                         " . Product count :" + updateProductsInfoJSON.getTotalProducts() + "     ****************      ");
@@ -1000,7 +988,6 @@ public class UpdateProducts {
                                                     updateProductsInfoJSON.setDbCommError(true);
                                                 }
                                             }
-                                            logger.info(" 5555555");
                                             viatorProductBookingQuestions.clear();
                                             pricingMatrixes.clear();
                                             pickupHotels.clear();
@@ -1021,14 +1008,10 @@ public class UpdateProducts {
                                         }
                                     }
                                     if (currentDBErrCommCounter == updateProductsInfoJSON.getDbCommErrorsCounter()) {
-                                        logger.info(" 66666666");
                                         tx.commit();
-                                        logger.info(" 777777777");
                                     }
                                     else {
-                                        logger.info(" 888888888");
                                         tx.rollback();
-                                        logger.info(" 9999999999");
                                     }
                                 } catch (HibernateException e) {
                                     StringWriter errors = new StringWriter();
@@ -1051,7 +1034,6 @@ public class UpdateProducts {
                                 } finally {
                                     session.close();
                                 }
-                                logger.info(" 10000000000");
                             }else{
                                 FailedProduct failedProduct=new FailedProduct();
                                 failedProduct.setDestId(dest.getDestinationId());

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.SearchLogBean" table="search_log" schema="Sunhotels">
+        <id name="searchId" column="search_id"/>
+        <property name="request" column="request"/>
+        <property name="response" column="response"/>
+        <property name="currentDisplayedHotels" column="current_displayed_hotels"/>
+        <property name="currentSortOrder" column="current_sort_order"/>
+        <property name="currentSortBy" column="current_sort_by"/>
+        <property name="currentDistricts" column="current_districts"/>
+        <property name="currentStarRatings" column="current_star_ratings"/>
+        <property name="currentMealPlans" column="current_meal_plans"/>
+        <property name="currentMinPrice" column="current_min_price"/>
+        <property name="currentMaxPrice" column="current_max_price"/>
+    </class>
+</hibernate-mapping>

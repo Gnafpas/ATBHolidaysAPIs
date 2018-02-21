@@ -9,13 +9,22 @@ import java.util.List;
  */
 public class HotelSearchJSON extends StandardJSON {
 
-    List<HotelResponse> results;
+    private List<HotelResponse> data;
+    private int searchId;
 
-    public List<HotelResponse> getResults() {
-        return results;
+    public int getSearchId() {
+        return searchId;
     }
 
-    public void setResults(List<HotelResponse> results) {
-        this.results = results;
+    public void setSearchId(int searchId) {
+        this.searchId = searchId;
+    }
+
+    public List<HotelResponse> getData() {
+        return data;
+    }
+
+    public void setData(List<HotelResponse> data) {
+        this.data = data;
     }
 }

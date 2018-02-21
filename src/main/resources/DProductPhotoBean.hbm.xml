@@ -13,6 +13,7 @@
         <property name="caption" column="caption"/>
         <property name="mainPhoto" column="main_photo"/>
         <property name="supplierId" column="supplier_id"/>
+        <property name="atb" column="atb"/>
         <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
     </class>

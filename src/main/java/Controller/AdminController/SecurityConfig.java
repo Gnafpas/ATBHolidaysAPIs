@@ -44,7 +44,7 @@ public class SecurityConfig{
                     .antMatchers("/login").permitAll()
                     .antMatchers("/stopViatorDBUpdate", "/updateCategories", "/updateDestinations", "/updateAttractions", "/startViatorDBUpdate","/newAPIClient",
                                              "/startATBDBUpdate","/isViatorDBUpdateTimertaskEnabled","/stopATBDBUpdate","/isATBDBUpdateTimertaskEnabled",
-                                             "/stopSunHotDBUpdate","/startSunHotDBUpdate","/isSunHotDBUpdateTimertaskEnabled","/carnectTest","/deleteCorruptedProducts","/updatecitycodes","/blankid","/temp")
+                                             "/stopSunHotDBUpdate","/startSunHotDBUpdate","/isSunHotDBUpdateTimertaskEnabled","/carnectTest","/deleteCorruptedProducts","/updatecitycodes","/blankid")
                     .hasRole("ADMIN")
                     .and().formLogin();
             http.csrf().disable();

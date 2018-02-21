@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.BookingTransactionBean" table="booking_transaction"
+           schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="transactionType" column="transaction_type"/>
+        <property name="bookingId" column="booking_id"/>
+        <property name="gsaId" column="gsa_id"/>
+        <property name="agentId" column="agent_id"/>
+        <property name="agentName" column="agent_name"/>
+        <property name="transDate" column="trans_date"/>
+        <property name="transRate" column="trans_rate"/>
+        <property name="transCur" column="trans_cur"/>
+        <property name="transType" column="trans_type"/>
+        <property name="transNote" column="trans_note"/>
+    </class>
+</hibernate-mapping>

@@ -18,8 +18,17 @@ public class SunhotelsBookPOST {
     private int roomId;
     private String roomtypeId;
     private String email;
+    private String prebookcode;
     private List<Adult> adults;
     private List<Children> children;
+
+    public String getPrebookcode() {
+        return prebookcode;
+    }
+
+    public void setPrebookcode(String prebookcode) {
+        this.prebookcode = prebookcode;
+    }
 
     public String getEmail() {
         return email;

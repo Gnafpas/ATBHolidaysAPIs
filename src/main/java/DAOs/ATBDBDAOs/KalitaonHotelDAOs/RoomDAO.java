@@ -20,12 +20,14 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class RoomDAO {
 
-    public static boolean addRoomBean(List<RoomBean> rooms,StatelessSession session){
+    public static boolean addRoomBean(List<RoomBean> rooms,StatelessSession session,StatelessSession session2){
 
         boolean err=false;
         try{
-            for(RoomBean room:rooms)
-              session.insert(room);
+            for(RoomBean room:rooms) {
+                session.insert(room);
+                session2.insert(room);
+            }
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -50,12 +52,13 @@ public class RoomDAO {
         return err;
     }
 
-    public static boolean deleteRoomBean(int hotelId,StatelessSession session){
+    public static boolean deleteRoomBean(int hotelId,StatelessSession session,StatelessSession session2){
 
         String hql = String.format("DELETE FROM RoomBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
+            session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -80,13 +83,18 @@ public class RoomDAO {
         return err;
     }
 
-    public static List<RoomBean> getRoomsByHotelId(int hotelId,int providerId){
+    public static List<RoomBean> getRoomsByHotelId(int hotelId,int providerId,StatelessSession session){
 
-        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        boolean externalSession=false;
+        if(session==null) {
+            session = SunHotelsHibernateUtil.getSession();
+            externalSession =true;
+        }
         List<RoomBean> rooms=null;
         String hql = "select room from RoomBean room where  room.hotelId='"+hotelId+"' and room.providerId='"+providerId+"'";
         try{
-            session.beginTransaction();
+            if(externalSession)
+               session.beginTransaction();
             rooms=session.createQuery(hql).list();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
@@ -107,7 +115,8 @@ public class RoomDAO {
         }catch (NoResultException e){
 
         }finally {
-            session.close();
+            if(externalSession)
+               session.close();
         }
         return rooms;
     }

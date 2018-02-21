@@ -5,6 +5,7 @@ import APIJSONs.ATBAPIJSONs.Product.ProductDetailsJSON;
 import APIJSONs.ATBAPIJSONs.Product.ProductsAndCategoriesJSON;
 import APIJSONs.ATBAPIJSONs.Product.ProductsAndCategoriesPOST;
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
+import Beans.ATBDBBeans.KalitaonProduct.DProductPhotoBean;
 import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.*;
 import org.joda.time.DateTime;
@@ -18,6 +19,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static Helper.ProjectProperties.photoSupplierId;
 
 /**
  * Created by George on 27/09/2017.
@@ -50,61 +53,70 @@ public class ProductController {
          * Limit Max products per request.
          */
         if(params.getLastProduct()==0)
-            params.setLastProduct(params.getFirstProduct()+500);
-        else if(params.getLastProduct()-params.getFirstProduct()>500)
-            params.setLastProduct(params.getFirstProduct()+500);
+            params.setLastProduct(params.getFirstProduct()+1000);
+        else if(params.getLastProduct()-params.getFirstProduct()>1000)
+            params.setLastProduct(params.getFirstProduct()+1000);
 
         ZonedDateTime startDate=null;
         ZonedDateTime endDate=null;
-        if(!params.getStartDate().equals("") && !params.getEndDate().equals("")) {
-            String sdate[]=params.getStartDate().split("-");
-            String edate[]=params.getEndDate().split("-");
-            if(sdate.length==3 && edate.length==3) {
-               try {
-                   endDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(sdate[0]), Integer.parseInt(sdate[1]), Integer.parseInt(sdate[2])),
-                           LocalTime.of(9, 30), ZoneId.of("America/New_York"));
-                   startDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(edate[0]), Integer.parseInt(edate[1]), Integer.parseInt(edate[2])),
-                           LocalTime.of(9, 30), ZoneId.of("America/New_York"));
-               }catch(NumberFormatException e){}
-            }
+        if(params.getStartDate()!=null && params.getEndDate()!=null) {
+            if (!params.getStartDate().equals("") && !params.getEndDate().equals("")) {
+                String sdate[] = params.getStartDate().split("-");
+                String edate[] = params.getEndDate().split("-");
+                if (sdate.length == 3 && edate.length == 3) {
+                    try {
+                        endDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(sdate[0]), Integer.parseInt(sdate[1]), Integer.parseInt(sdate[2])),
+                                LocalTime.of(9, 30), ZoneId.of("America/New_York"));
+                        startDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(edate[0]), Integer.parseInt(edate[1]), Integer.parseInt(edate[2])),
+                                LocalTime.of(9, 30), ZoneId.of("America/New_York"));
+                    } catch (NumberFormatException e) {
+                    }
+                }
 
+            }
         }
         /**
          * Get products
          */
-        productsAndCategoriesJSON.getData().setProducts(AProductTitleDAO.getProducts(params,startDate,endDate));
+        products=AProductTitleDAO.getProducts(params,startDate,endDate);
+        if(products==null) {
+            productsAndCategoriesJSON.setSuccess(false);
+            productsAndCategoriesJSON.setErrorMessageText("Database Communication Error.");
+        }else {
+            productsAndCategoriesJSON.setTotalCount(products.size());
+            if(params.getLastProduct()>=products.size() || params.getLastProduct()<=0)
+                productsAndCategoriesJSON.getData().setProducts(products.subList(params.getFirstProduct(),products.size()));
+            else
+                productsAndCategoriesJSON.getData().setProducts(products.subList(params.getFirstProduct(),params.getLastProduct()));
+        }
 
         /**
          * Get all categories and Find products count for each category
          */
-        List<ProductCategoriesBean> categories;
-        List<String> categoryNames=new ArrayList<>();
-        List<Category> categoriesInJSON=new ArrayList<>();
-        Category category;
-        categories=ProductCategoriesDAO.getAllCategories();
-        if(categories!=null) {
-            for (ProductCategoriesBean cat : categories) {
-                category = new Category();
-                category.setCategory(cat);
-                categoryNames.clear();
-                categoryNames.add(cat.getCategoryName());
-                params.setCategories(categoryNames);
-                products = AProductTitleDAO.getProducts(params,startDate,endDate);
-                if (products != null)
-                    category.setProductCount(products.size());
-                categoriesInJSON.add(category);
-            }
-        }else {
-            productsAndCategoriesJSON.setSuccess(false);
-            productsAndCategoriesJSON.setErrorMessageText("Database Communication Error.");
-        }
-        productsAndCategoriesJSON.getData().setCategories(categoriesInJSON);
+//        List<ProductCategoriesBean> categories;
+//        List<String> categoryNames=new ArrayList<>();
+//        List<Category> categoriesInJSON=new ArrayList<>();
+//        Category category;
+//        categories=ProductCategoriesDAO.getAllCategories();
+//        if(categories!=null) {
+//            for (ProductCategoriesBean cat : categories) {
+//                category = new Category();
+//                category.setCategory(cat);
+//                categoryNames.clear();
+//                categoryNames.add(cat.getCategoryName());
+//                params.setCategories(categoryNames);
+//                products = AProductTitleDAO.getProducts(params,startDate,endDate);
+//                if (products != null)
+//                    category.setProductCount(products.size());
+//                categoriesInJSON.add(category);
+//            }
+//        }else {
+//            productsAndCategoriesJSON.setSuccess(false);
+//            productsAndCategoriesJSON.setErrorMessageText("Database Communication Error.");
+//        }
+//        productsAndCategoriesJSON.getData().setCategories(categoriesInJSON);
 
-        if(productsAndCategoriesJSON.getData().getProducts()==null) {
-            productsAndCategoriesJSON.setSuccess(false);
-            productsAndCategoriesJSON.setErrorMessageText("Database Communication Error.");
-        }else
-            productsAndCategoriesJSON.setTotalCount(productsAndCategoriesJSON.getData().getProducts().size());
+
         return productsAndCategoriesJSON;
     }
 
@@ -123,7 +135,21 @@ public class ProductController {
         productDetailsJSON.getData().setProductTitle(AProductTitleDAO.getProducts(params,null,null));
         productDetailsJSON.getData().setProductDetails(BProductDetailDAO.getBProductDetailsByProductId(productId));
         productDetailsJSON.getData().setProductOptions(CProductOptionsDAO.getcProductOptionsByProductId(productId));
-        productDetailsJSON.getData().setProductPhotos(DProductPhotoDAO.getdProductPhotosByProductId(productId));
+        List<DProductPhotoBean> dProductPhotobeans=DProductPhotoDAO.getdProductPhotosByProductId(productId);
+        if(dProductPhotobeans!=null){
+            for(DProductPhotoBean photo:dProductPhotobeans){
+                if(photo.getSupplierId()!=null && photo.getSupplierId().equals(""))
+                    photo.setPhotoName("http://old.atbholidays.com/photo_gallery/max/"+photo.getPhotoName());
+                else if(photo.getSupplierId()!=null && photo.getSupplierId().equals(String.valueOf(photoSupplierId))) {
+                    if(photo.getPhotoName().charAt(0)=='/')
+                        photo.setPhotoName("http://cache-graphicslib.viator.com/graphicslib-prelive" + photo.getPhotoName());
+                    else
+                        photo.setPhotoName("http://cache-graphicslib.viator.com/graphicslib-prelive/" + photo.getPhotoName());
+                }
+            }
+        }else
+            dProductPhotobeans=new ArrayList<>();
+        productDetailsJSON.getData().setProductPhotos(dProductPhotobeans);
         productDetailsJSON.getData().setPickupPoints(EPickupPointDAO.getePickupPointsByProductId(productId));
         productDetailsJSON.getData().setPricePlans(FPricePlanDAO.getfPricePlansByProductId(productId));
         productDetailsJSON.getData().setBookingQuestions(JProductQuestionsDAO.getProductByCode(productId));
