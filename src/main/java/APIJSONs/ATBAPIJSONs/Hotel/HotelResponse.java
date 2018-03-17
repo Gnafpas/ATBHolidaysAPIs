@@ -29,9 +29,27 @@ public class HotelResponse implements Comparable<HotelResponse>{
     private String address;
     private String latitude;
     private String name;
+    private String accommodationId;
+    private String accommodationName;
     private int resortId;
 
-    public int getResortId() {
+    public String getAccommodationId() {
+        return accommodationId;
+    }
+
+    public void setAccommodationId(String accommodationId) {
+        this.accommodationId = accommodationId;
+    }
+
+    public String getAccommodationName() {
+        return accommodationName;
+    }
+
+    public void setAccommodationName(String accommodationName) {
+        this.accommodationName = accommodationName;
+    }
+
+        public int getResortId() {
         return resortId;
     }
 

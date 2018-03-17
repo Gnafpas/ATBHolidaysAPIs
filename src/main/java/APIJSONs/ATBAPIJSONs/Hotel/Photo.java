@@ -12,7 +12,7 @@ public class Photo {
     private String photoUrl;
     private Integer facilityId;
     private int hotelId;
-    private Integer roomId;
+    private String roomId;
     private boolean coverPhoto;
 
     public int getId() {
@@ -71,11 +71,11 @@ public class Photo {
         this.hotelId = hotelId;
     }
 
-    public Integer getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 

@@ -23,20 +23,12 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class RoomtypeDAO {
 
-    public static boolean addRoomtypeBean(RoomtypeBean roomtypeBean){
+    public static boolean addRoomtypeBean(RoomtypeBean roomtypeBean, StatelessSession session,StatelessSession session2){
 
-        StatelessSession session = SunHotelsHibernateUtil.getSession();
-        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-        Transaction tx;
-        Transaction tx2;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
             session.insert(roomtypeBean);
-            tx.commit();
-            tx2=session2.beginTransaction();
             session2.insert(roomtypeBean);
-            tx2.commit();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -57,18 +49,45 @@ public class RoomtypeDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
-            session2.close();
         }
         return err;
     }
 
-    public static boolean deleteAllRoomtypes(){
+    public static boolean updateRoomtypeBean(RoomtypeBean roomtypeBean, StatelessSession session,StatelessSession session2){
+
+        boolean err=false;
+        try{
+            session.update(roomtypeBean);
+            session2.update(roomtypeBean);
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err = true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }
+        return err;
+    }
+
+    public static boolean deleteAllRoomtypes(int providerId){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-        String hql = String.format("DELETE FROM RoomtypeBean WHERE providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM RoomtypeBean WHERE providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.beginTransaction();
@@ -136,7 +155,7 @@ public class RoomtypeDAO {
         return roomTypes;
     }
 
-    public static RoomtypeBean getRoomsTypesbyId(int roomtypeId,int providerId,StatelessSession session){
+    public static RoomtypeBean getRoomsTypesbyId(String roomtypeId,int providerId,StatelessSession session){
 
         boolean externalSession=false;
         if(session==null) {
@@ -174,15 +193,15 @@ public class RoomtypeDAO {
         return roomType;
     }
 
-    public static int getOriginalRoomtypeId(String atbRoomtypeId) {
+    public static String getOriginalRoomtypeId(String atbRoomtypeId) {
 
         StatelessSession session;
         session = SunHotelsHibernateUtil.getSession();
-        int originalRoomtypeId = 0;
+        String originalRoomtypeId = null;
         String hql = "select roomType.roomtypeId from RoomtypeBean roomType where roomType.id='" + atbRoomtypeId + "'";
         try {
             session.beginTransaction();
-            originalRoomtypeId = (int) session.createQuery(hql).getSingleResult();
+            originalRoomtypeId = (String) session.createQuery(hql).getSingleResult();
         } catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));

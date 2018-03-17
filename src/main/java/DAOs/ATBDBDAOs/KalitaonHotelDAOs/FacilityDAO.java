@@ -22,20 +22,12 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class FacilityDAO {
 
-    public static boolean addFacilityBean(FacilityBean facilityBean){
+    public static boolean addFacilityBean(FacilityBean facilityBean, StatelessSession session,StatelessSession session2){
 
-        StatelessSession session = SunHotelsHibernateUtil.getSession();
-        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-        Transaction tx;
-        Transaction tx2;
         boolean err=false;
         try{
-            tx=session.beginTransaction();
             session.insert(facilityBean);
-            tx.commit();
-            tx2=session2.beginTransaction();
             session2.insert(facilityBean);
-            tx2.commit();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -56,18 +48,45 @@ public class FacilityDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-        }finally {
-            session.close();
-            session2.close();
         }
         return err;
     }
 
-    public static boolean deleteAllFacilities(){
+    public static boolean updateFacilityBean(FacilityBean facilityBean, StatelessSession session,StatelessSession session2){
+
+        boolean err=false;
+        try{
+            session.update(facilityBean);
+            session2.update(facilityBean);
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err = true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }
+        return err;
+    }
+
+    public static boolean deleteAllFacilities(int providerId){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         StatelessSession session2 = SunHotelsHibernateUtil.getSession();
-        String hql = String.format("DELETE FROM FacilityBean WHERE providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM FacilityBean WHERE providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.beginTransaction();
@@ -133,5 +152,42 @@ public class FacilityDAO {
             session.close();
         }
         return facilities;
+    }
+
+    public static FacilityBean getFacilityByFacilityId(String facilityId, int providerId, StatelessSession session) {
+
+        boolean incomingSession = true;
+        FacilityBean facilityBean = null;
+        String hql = "select facilityBean from FacilityBean facilityBean where  facilityBean.facilityId='" + facilityId + "' and facilityBean.providerId='" + providerId + "'";
+        try {
+            if (session == null) {
+                session = SunHotelsHibernateUtil.getSession();
+                session.beginTransaction();
+                incomingSession = false;
+            }
+            facilityBean = (FacilityBean)session.createQuery(hql).getSingleResult();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (NoResultException e) {
+
+        } finally {
+            if (!incomingSession)
+                session.close();
+        }
+        return facilityBean;
     }
 }

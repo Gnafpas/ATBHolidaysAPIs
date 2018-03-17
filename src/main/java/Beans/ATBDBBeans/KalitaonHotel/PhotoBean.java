@@ -15,7 +15,7 @@ public class PhotoBean {
     private String photoUrl;
     private Integer facilityId;
     private int hotelId;
-    private Integer roomId;
+    private String roomId;
     private int providerId;
     private boolean coverPhoto;
 
@@ -91,11 +91,11 @@ public class PhotoBean {
 
     @Basic
     @Column(name = "room_id")
-    public Integer getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 

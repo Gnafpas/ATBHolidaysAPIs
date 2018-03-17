@@ -195,7 +195,7 @@ public class HotelDAO {
         return hotels;
     }
 
-    public static List<HotelBean> getHotelByDestId(int destId,int providerId) {
+    public static List<HotelBean> getHotelByDestId(String destId,int providerId) {
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         List<HotelBean> hotels=null;

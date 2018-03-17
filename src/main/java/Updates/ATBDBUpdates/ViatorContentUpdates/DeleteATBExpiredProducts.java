@@ -51,8 +51,8 @@ public class DeleteATBExpiredProducts {
                 }
                 if (expired) {
 
-                    product=AProductTitleDAO.getProductByCode(code);
-                    AProductTitleDAO.deleteProduct(code);
+                    product=AProductTitleDAO.getProductByCode(code,"Viator");
+                    AProductTitleDAO.deleteProduct(code,"Viator");
                     BProductDetailDAO.deleteProduct(String.valueOf(product.getId()));
                     CProductOptionsDAO.deleteProductOption(String.valueOf(product.getId()));
                     DProductPhotoDAO.deletePhoto(String.valueOf(product.getId()));

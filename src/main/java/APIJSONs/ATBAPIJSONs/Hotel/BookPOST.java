@@ -16,18 +16,10 @@ public class BookPOST {
     private int roomId=0;
     private String hotelId;
     private String email;
-    private String customerEmail;
     private String prebookcode;
     private List<Adult> adults;
     private List<Children> children;
 
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
 
     public String getPrebookcode() {
         return prebookcode;

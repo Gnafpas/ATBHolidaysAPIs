@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonSystem.SupplierBean" table="supplier" schema="atb_System_DB">
+        <id name="id" column="id"/>
+        <property name="supplierName" column="supplier_name"/>
+        <property name="countryId" column="country_id"/>
+        <property name="cityId" column="city_id"/>
+        <property name="operationPic" column="operation_pic"/>
+        <property name="operationTel" column="operation_tel"/>
+        <property name="operationMail" column="operation_mail"/>
+        <property name="reservationPic" column="reservation_pic"/>
+        <property name="reservationTel" column="reservation_tel"/>
+        <property name="reservationMail" column="reservation_mail"/>
+        <property name="productPic" column="product_pic"/>
+        <property name="productTel" column="product_tel"/>
+        <property name="productMail" column="product_mail"/>
+        <property name="bankDetail" column="bank_detail"/>
+        <property name="taxNo" column="tax_no"/>
+        <property name="taxOffice" column="tax_office"/>
+        <property name="address" column="address"/>
+        <property name="officeTel" column="office_tel"/>
+        <property name="mobileTel" column="mobile_tel"/>
+        <property name="fax" column="fax"/>
+        <property name="reservationType" column="reservation_type"/>
+        <property name="rstOnlineSite" column="rst_online_site"/>
+        <property name="rstOnlineLogin" column="rst_online_login"/>
+        <property name="rstExUsername" column="rst_ex_username"/>
+        <property name="rstExPassword" column="rst_ex_password"/>
+        <property name="rstEmailInfo" column="rst_email_info"/>
+        <property name="accountPic" column="account_pic"/>
+        <property name="accountTel" column="account_tel"/>
+        <property name="accountMail" column="account_mail"/>
+        <property name="groupPic" column="group_pic"/>
+        <property name="groupTel" column="group_tel"/>
+        <property name="groupMail" column="group_mail"/>
+        <property name="notes" column="notes"/>
+        <property name="logs" column="logs"/>
+        <property name="authorized" column="authorized"/>
+        <property name="extranet" column="extranet"/>
+        <property name="activation" column="activation"/>
+        <property name="autoMail" column="auto_mail"/>
+        <property name="contractor" column="contractor"/>
+        <property name="dataSpecialist" column="data_specialist"/>
+        <property name="bookingUser" column="booking_user"/>
+        <property name="contract" column="contract"/>
+        <property name="paymentDate" column="payment_date"/>
+        <property name="paymentType" column="payment_type"/>
+        <property name="createDate" column="create_date"/>
+        <property name="updateDate" column="update_date"/>
+    </class>
+</hibernate-mapping>

@@ -123,17 +123,71 @@ public class BookingsAllDAO {
         return booking;
     }
 
-    public static List<BookingsAllBean> getBookingsAllBeanByDate(ZonedDateTime dateFrom,ZonedDateTime dateTo,int agentId){
+    public static  List<BookingsAllBean> getBookingsAllByBookingId(String bookingId,int agentId){
+
+        Session session = ATBSysHibernateUtil.getSession();
+        List<BookingsAllBean>  bookings=null;
+        String hql = "select booking from BookingsAllBean booking " +
+                "where booking.bookingId like :bookingId and booking.agentId ='"+agentId+"'";
+        try{
+            session.beginTransaction();
+            bookings=session.createQuery(hql).setParameter("bookingId", "%" +bookingId + "%" ).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e) {
+        }catch (CJCommunicationsException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return bookings;
+    }
+
+    public static List<BookingsAllBean> getAllHotelBookingsByDate(ZonedDateTime dateFrom,ZonedDateTime dateTo,int agentId){
 
         Session session = ATBSysHibernateUtil.getSession();
         List<BookingsAllBean> bookings=null;
         String hql = "select booking from BookingsAllBean booking " +
-                     "where booking.agentId ='"+agentId+"' and booking.bookingDate  between :dateFrom and :dateTo";
+                     "where booking.agentId ='"+agentId+"' and booking.productType='HTL' and booking.bookingDate  between :dateFrom and :dateTo";
 
         try{
             session.beginTransaction();
             bookings=session.createQuery(hql).setParameter("dateFrom", Date.from(dateFrom.toInstant()), TemporalType.DATE).
                                               setParameter("dateTo", Date.from(dateTo.toInstant()), TemporalType.DATE).getResultList();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e) {
+        }catch (CJCommunicationsException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return bookings;
+    }
+
+    public static List<BookingsAllBean> getAllProductBookingsByDate(ZonedDateTime dateFrom,ZonedDateTime dateTo,int agentId){
+
+        Session session = ATBSysHibernateUtil.getSession();
+        List<BookingsAllBean> bookings=null;
+        String hql = "select booking from BookingsAllBean booking " +
+                "where booking.agentId ='"+agentId+"' and booking.productType!='HTL' and booking.bookingDate  between :dateFrom and :dateTo";
+
+        try{
+            session.beginTransaction();
+            bookings=session.createQuery(hql).setParameter("dateFrom", Date.from(dateFrom.toInstant()), TemporalType.DATE).
+                    setParameter("dateTo", Date.from(dateTo.toInstant()), TemporalType.DATE).getResultList();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));

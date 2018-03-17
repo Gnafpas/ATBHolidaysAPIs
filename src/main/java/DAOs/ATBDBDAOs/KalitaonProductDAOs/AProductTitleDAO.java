@@ -7,6 +7,7 @@ import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
+
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -53,10 +54,10 @@ public class AProductTitleDAO {
         return err;
     }
 
-    public static boolean deleteProduct(String code){
+    public static boolean deleteProduct(String code, String supplierName){
 
         StatelessSession session = ATBHibernateUtil.getSession();
-        String hql = String.format("DELETE FROM AProductTitleBean WHERE productCode='"+code+"' AND main_supplier_name = 'Viator'");
+        String hql = String.format("DELETE FROM AProductTitleBean WHERE productCode='"+code+"' AND main_supplier_name = '"+supplierName+"'");
         boolean err=false;
         try{
             session.beginTransaction();
@@ -84,38 +85,11 @@ public class AProductTitleDAO {
     }
 
 
-    public static List<String> getAllViatorProductsCodes(){
-
-        StatelessSession session = ATBHibernateUtil.getSession();
-        List <String> products=null;
-        String hql = "select productCode from AProductTitleBean  where main_supplier_name = 'Viator'";
-        try{
-            session.beginTransaction();
-            products=session.createQuery(hql).list();
-        }catch (HibernateException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }catch (ExceptionInInitializerError e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }catch (CJCommunicationsException e){
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }finally {
-            session.close();
-        }
-        return products;
-    }
-
-
-    public static  AProductTitleBean getProductByCode(String productCode){
+    public static  AProductTitleBean getProductByCode(String productCode, String supplierName){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         AProductTitleBean product=null;
-        String hql ="Select a FROM Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean a WHERE a.productCode='"+ productCode +"' and a.mainSupplierName='Viator'";
+        String hql ="Select a FROM Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean a WHERE a.productCode='"+ productCode +"' and a.mainSupplierName='"+supplierName+"'";
         try{
             Query query= session.createQuery(hql);
             query.setMaxResults(1);
@@ -156,16 +130,41 @@ public class AProductTitleDAO {
         }
         return product;
     }
+    public static List<String> getAllViatorProductsCodes(){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        List <String> products=null;
+        String hql = "select productCode from AProductTitleBean  where main_supplier_name = 'Viator'";
+        try{
+            session.beginTransaction();
+            products=session.createQuery(hql).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return products;
+    }
 
     public static AProductTitleBean getLastRecord(){
         StatelessSession session = ATBHibernateUtil.getSession();
         String hql=     " select  a"
-                      + " from AProductTitleBean a"
-                      + " order by a.id DESC";
+                + " from AProductTitleBean a"
+                + " order by a.id DESC";
         AProductTitleBean product=null;
         try{
-        Query query= session.createQuery(hql);
-        query.setMaxResults(1);
+            Query query= session.createQuery(hql);
+            query.setMaxResults(1);
             product=(AProductTitleBean)query.getSingleResult();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
@@ -229,13 +228,13 @@ public class AProductTitleDAO {
             i = 0;
             for (String cat : params.getCategories()) {
                 if(i==0)
-                  hql = hql+ " and  (productDetails.categoriesTag like :categories"+i;
+                    hql = hql+ " and  (productDetails.categoriesTag like :categories"+i;
                 else
                     hql = hql+ " or  productDetails.categoriesTag like :categories"+i;
                 i++;
             }
             if(i!=0)
-              hql = hql+ ")";
+                hql = hql+ ")";
         }
 
         /**
@@ -331,5 +330,6 @@ public class AProductTitleDAO {
         }//todo integrade sortorders
         return products;
     }
+
 
 }

@@ -9,6 +9,16 @@ public class APIJSONMetada {
     private int to;
     private int total;
     private AuditData auditData ;
+    private Error error=null;
+
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
+    }
 
     public int getFrom() {
         return from;

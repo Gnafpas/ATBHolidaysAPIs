@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="StaticHotel">
  *   &lt;complexContent>
- *     &lt;extension base="{http://xml.sunhotels.net/15/}Hotel">
+ *     &lt;extension base="{http://xml.sunhotels.net/15/}HotelPost">
  *       &lt;sequence>
  *         &lt;element name="type" type="{http://xml.sunhotels.net/15/}AccommodationType"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>

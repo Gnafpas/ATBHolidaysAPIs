@@ -34,7 +34,6 @@ public class DestinationsAPIDAO {
             requestHeaders.add("Api-Key", hotelBedsApiKey);
             requestHeaders.add("Accept", "application/json");
             HttpEntity<?> httpEntity = new HttpEntity<>( requestHeaders);
-            System.out.println(" sdasd "+ signature);
             destinationsAPIJSON = restTemplate.exchange(url, HttpMethod.GET, httpEntity, DestinationsAPIJSON.class).getBody();
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
@@ -61,7 +60,6 @@ public class DestinationsAPIDAO {
             requestHeaders.add("Api-Key", hotelBedsApiKey);
             requestHeaders.add("Accept", "application/json");
             HttpEntity<?> httpEntity = new HttpEntity<>( requestHeaders);
-            System.out.println(" sdasd "+ signature);
             countriesAPIJSON = restTemplate.exchange(url, HttpMethod.GET, httpEntity, CountriesAPIJSON.class).getBody();
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");

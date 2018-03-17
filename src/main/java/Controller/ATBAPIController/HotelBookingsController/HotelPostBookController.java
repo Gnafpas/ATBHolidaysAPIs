@@ -43,7 +43,7 @@ import static Helper.ProjectProperties.sunhotelspass;
  * Created by George on 03/02/2018.
  */
 @RestController
-public class PostBookController {
+public class HotelPostBookController {
 
     @RequestMapping("/hotel/booking/bookingInfo")
     public BookInfoJSON hotelBookingInfo(@RequestParam(value="bookingNumber", defaultValue="0") int bookingNumber,
@@ -87,7 +87,7 @@ public class PostBookController {
                     } catch (NumberFormatException e) {
                     }
                 }
-                bookingsBeans=BookingsAllDAO.getBookingsAllBeanByDate(checkin,checkout,subAgencyBean.getId());
+                bookingsBeans=BookingsAllDAO.getAllHotelBookingsByDate(checkin,checkout,subAgencyBean.getId());
             }else{
                 bookInfoJSON.setSuccess(false);
                 bookInfoJSON.setErrorType("Missing Parameters");
@@ -265,7 +265,6 @@ public class PostBookController {
                                     cancelJSON.setCancellationResult(cancellResult);
                                     cancelJSON.setErrorMessageText(result.getError().getMessage());
                                     cancelJSON.setSuccess(false);
-                                    cancelJSON.setSuccess(true);
                                     return cancelJSON;
                                 } else {
                                     if (result.getCode() == 1) {

@@ -36,6 +36,45 @@ public class AProductTitleBean {
     private String reason;
     private String createdAt;
     private String updatedAt;
+    private String stock;
+
+
+    public AProductTitleBean () {
+        super();
+    }
+    public AProductTitleBean (boolean init){
+        super();
+        if (init) {
+            this.subId = "";
+            this.productCode = "";
+            this.textLanguage = "";
+            this.countryCode = "";
+            this.countryName = "";
+            this.cityCode = "";
+            this.cityName = "";
+            this.productTitle = "";
+            this.productReferenceCode = "";
+            this.typeOfProduct = "";
+            this.mainSupplierId = "";
+            this.mainSupplierName = "";
+            this.subSupplierId = "";
+            this.subSupplierName = "";
+            this.aPoint = "";
+            this.bPoint = "";
+            this.bookingEngine = "";
+            this.thumbnailUrl = "";
+            this.categoriesTag = "";
+            this.showPrice = "";
+            this.marchandNetPrice = "";
+            this.currencyCode = "";
+            this.sortOrder = "";
+            this.onSale = "";
+            this.reason = "";
+            this.createdAt = "";
+            this.updatedAt = "";
+        }
+
+    }
 
     @Id
     @Column(name = "id")
@@ -317,6 +356,16 @@ public class AProductTitleBean {
         this.updatedAt = updatedAt;
     }
 
+    @Basic
+    @Column(name = "stock")
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -361,6 +410,7 @@ public class AProductTitleBean {
         if (reason != null ? !reason.equals(that.reason) : that.reason != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
+        if (stock != null ? !stock.equals(that.stock) : that.stock != null) return false;
 
         return true;
     }
@@ -395,6 +445,7 @@ public class AProductTitleBean {
         result = 31 * result + (reason != null ? reason.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (stock != null ? stock.hashCode() : 0);
         return result;
     }
 }

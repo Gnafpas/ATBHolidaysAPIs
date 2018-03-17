@@ -53,6 +53,8 @@
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.ResortBean"/>
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.ResortMappingBean"/>
         <mapping resource="ResortMappingBean.hbm.xml"/>
+        <mapping class="Beans.ATBDBBeans.KalitaonHotel.AccommodationsBean"/>
+        <mapping resource="AccommodationsBean.hbm.xml"/>
 
 
         <!-- DB schema will be updated if needed -->

@@ -30,7 +30,9 @@ public class HotelBean {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Integer currencyId;
-    private Integer destinationId;
+    private String destinationId;
+    private String accommodationId;
+    private String accommodationName;
     private int providerId;
     private int resortId;
 
@@ -246,12 +248,32 @@ public class HotelBean {
 
     @Basic
     @Column(name = "destination_id")
-    public Integer getDestinationId() {
+    public String getDestinationId() {
         return destinationId;
     }
 
-    public void setDestinationId(Integer destinationId) {
+    public void setDestinationId(String destinationId) {
         this.destinationId = destinationId;
+    }
+
+    @Basic
+    @Column(name = "accommodation_id")
+    public String getAccommodationId() {
+        return accommodationId;
+    }
+
+    public void setAccommodationId(String accommodationId) {
+        this.accommodationId = accommodationId;
+    }
+
+    @Basic
+    @Column(name = "accommodation_name")
+    public String getAccommodationName() {
+        return accommodationName;
+    }
+
+    public void setAccommodationName(String accommodationName) {
+        this.accommodationName = accommodationName;
     }
 
     @Basic
@@ -298,6 +320,8 @@ public class HotelBean {
         if (currencyId != null ? !currencyId.equals(hotelBean.currencyId) : hotelBean.currencyId != null) return false;
         if (destinationId != null ? !destinationId.equals(hotelBean.destinationId) : hotelBean.destinationId != null)
             return false;
+        if (accommodationId != null ? !accommodationId.equals(hotelBean.accommodationId) : hotelBean.accommodationId != null) return false;
+        if (accommodationName != null ? !accommodationName.equals(hotelBean.accommodationName) : hotelBean.accommodationName != null) return false;
 
         return true;
     }
@@ -325,6 +349,8 @@ public class HotelBean {
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (currencyId != null ? currencyId.hashCode() : 0);
         result = 31 * result + (destinationId != null ? destinationId.hashCode() : 0);
+        result = 31 * result + (accommodationId != null ? accommodationId.hashCode() : 0);
+        result = 31 * result + (accommodationName != null ? accommodationName.hashCode() : 0);
         result = 31 * result + providerId;
         result = 31 * result + resortId;
         return result;

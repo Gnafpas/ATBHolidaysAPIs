@@ -52,9 +52,9 @@ public class PhotoDAO {
         return err;
     }
 
-    public static boolean deletePhotoBean(int hotelId,StatelessSession session,StatelessSession session2){
+    public static boolean deletePhotoBean(int hotelId,int providerId,StatelessSession session,StatelessSession session2){
 
-        String hql = String.format("DELETE FROM PhotoBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM PhotoBean WHERE hotelId='"+hotelId+"' and providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();

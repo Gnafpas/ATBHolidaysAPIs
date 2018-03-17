@@ -1,4 +1,6 @@
-package DAOs.HotelBedsAPIDAOs;
+package Beans.HotelBedsAPIBeans;
+
+import DAOs.HotelBedsAPIDAOs.*;
 
 /**
  * Created by George on 11/01/2018.

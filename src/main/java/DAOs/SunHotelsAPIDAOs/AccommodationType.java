@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;simpleType name="AccommodationType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Hotel"/>
+ *     &lt;enumeration value="HotelPost"/>
  *     &lt;enumeration value="Apartment"/>
  *     &lt;enumeration value="Villa"/>
  *   &lt;/restriction>
@@ -26,8 +26,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum AccommodationType {
 
-    @XmlEnumValue("Hotel")
-    HOTEL("Hotel"),
+    @XmlEnumValue("HotelPost")
+    HOTEL("HotelPost"),
     @XmlEnumValue("Apartment")
     APARTMENT("Apartment"),
     @XmlEnumValue("Villa")

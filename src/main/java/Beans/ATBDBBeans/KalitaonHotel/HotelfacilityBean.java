@@ -15,7 +15,7 @@ public class HotelfacilityBean {
     private int id;
     private BigDecimal price;
     private String explanation;
-    private int facilityId;
+    private String facilityId;
     private int hotelId;
     private int providerId;
 
@@ -51,11 +51,11 @@ public class HotelfacilityBean {
 
     @Basic
     @Column(name = "facility_id")
-    public int getFacilityId() {
+    public String getFacilityId() {
         return facilityId;
     }
 
-    public void setFacilityId(int facilityId) {
+    public void setFacilityId(String facilityId) {
         this.facilityId = facilityId;
     }
 
@@ -87,7 +87,7 @@ public class HotelfacilityBean {
         HotelfacilityBean that = (HotelfacilityBean) o;
 
         if (id != that.id) return false;
-        if (facilityId != that.facilityId) return false;
+        if (facilityId != null ? !facilityId.equals(that.facilityId) : that.facilityId != null) return false;
         if (hotelId != that.hotelId) return false;
         if (providerId != that.providerId) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
@@ -102,7 +102,7 @@ public class HotelfacilityBean {
         int result = id;
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (explanation != null ? explanation.hashCode() : 0);
-        result = 31 * result + facilityId;
+        result = 31 * result + (facilityId != null ? facilityId.hashCode() : 0);
         result = 31 * result + hotelId;
         result = 31 * result + providerId;
         return result;

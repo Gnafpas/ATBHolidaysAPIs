@@ -43,6 +43,8 @@
       <mapping resource="SubAgencyBean.hbm.xml"/>
       <mapping class="Beans.ATBDBBeans.KalitaonSystem.TravellerInfoBean"/>
       <mapping resource="TravellerInfoBean.hbm.xml"/>
+      <mapping resource="SupplierBean.hbm.xml"/>
+      <mapping class="Beans.ATBDBBeans.KalitaonSystem.SupplierBean"/>
 
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->

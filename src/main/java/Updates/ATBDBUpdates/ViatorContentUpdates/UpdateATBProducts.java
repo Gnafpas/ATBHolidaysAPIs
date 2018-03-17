@@ -554,10 +554,10 @@ public class UpdateATBProducts {
                     /**
                      * Add product to ATB DB.Record database communication errors to add them to update info table.
                      */
-                    updatedProduct= AProductTitleDAO.getProductByCode(aProductTitleBean.getProductCode());
+                    updatedProduct= AProductTitleDAO.getProductByCode(aProductTitleBean.getProductCode(),"Viator");
                     if(updatedProduct!=null)
                         updatedProductsIds.add(String.valueOf(updatedProduct.getId()));
-                    if(AProductTitleDAO.deleteProduct(aProductTitleBean.getProductCode())) {
+                    if(AProductTitleDAO.deleteProduct(aProductTitleBean.getProductCode(),"Viator")) {
                         failedProductCodeExist=false;
                         for(String failedProductCode:failedProductCodes) {
                             if(failedProductCode.equals(code))
@@ -581,7 +581,7 @@ public class UpdateATBProducts {
                         logger.info("Total  products added: "+ totalproducts +"Product with code: "+aProductTitleBean.getProductCode()+" added/updated.");
                     }
 
-                    productTitleRecord=AProductTitleDAO.getProductByCode(code);//todo see if i can take the id when i add to the table the new record
+                    productTitleRecord=AProductTitleDAO.getProductByCode(code,"Viator");//todo see if i can take the id when i add to the table the new record
                     if(productTitleRecord==null) {
                         failedProductCodeExist=false;
                         for(String failedProductCode:failedProductCodes) {
@@ -648,10 +648,10 @@ public class UpdateATBProducts {
                     if (products.get(0).getHighlightsEn() != null)
                         bProductDetailBean.setHighlight(products.get(0).getHighlightsEn());
                     if (products.get(0).getMerchantCancellable()) {
-                        bProductDetailBean.setMerchantCancellable("true");
+                        bProductDetailBean.setMerchantCancellable("48");
                         bProductDetailBean.setCancellationPolicy("Fully refundable up to 48 hours");
                     } else {
-                        bProductDetailBean.setMerchantCancellable("false");
+                        bProductDetailBean.setMerchantCancellable("non-refundable");
                         bProductDetailBean.setCancellationPolicy("Fully non-refundable at time of booking");
                     }
 

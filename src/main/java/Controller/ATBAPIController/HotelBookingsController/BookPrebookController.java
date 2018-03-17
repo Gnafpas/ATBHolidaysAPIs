@@ -23,6 +23,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.*;
 import java.util.*;
 import java.sql.Timestamp;
@@ -79,7 +80,8 @@ public class BookPrebookController {
             }
 
             int originalHotelId;
-            if (params.getHotelId() == null) {
+            String originalHotelIdStringFormat="";
+            if (params.getHotelId() == null || params.getHotelId().equals("")) {
                 prebookJSON.setSuccess(false);
                 prebookJSON.setErrorMessageText("Wrong hotelId");
                 return prebookJSON;
@@ -89,7 +91,18 @@ public class BookPrebookController {
                     prebookJSON.setSuccess(false);
                     prebookJSON.setErrorMessageText("Wrong hotelId");
                     return prebookJSON;
+                }else if(!params.getRoomTypeId().equals("")){
+                    originalHotelIdStringFormat=String.valueOf(originalHotelId);
                 }
+            }
+
+            String blockSuperDeal="";
+            String originalRoomTypeIdStrFrm="";
+            if(params.getRoomTypeId()!=null && !params.getRoomTypeId().equals("")) {
+                blockSuperDeal = "false";
+                String originalRoomTypeId=RoomtypeDAO.getOriginalRoomtypeId(params.getRoomTypeId());
+                if(originalRoomTypeId!=null)
+                    originalRoomTypeIdStrFrm=originalRoomTypeId;
             }
 
             try {
@@ -103,7 +116,7 @@ public class BookPrebookController {
                 result = nonStaticXMLAPISoap.preBookV2(sunhotelsUsername, sunhotelspass, subAgencyBean.getCurrency(), "English",
                         xmlCheckin, xmlCheckout, params.getRooms(), params.getAdults(), params.getChildren(),
                         childrenAges, params.getInfant(), params.getMealId(), params.getCustomerCountry(), "",
-                        "", params.getRoomId(), "", "", "",
+                        "", params.getRoomId(), originalHotelIdStringFormat, originalRoomTypeIdStrFrm, blockSuperDeal,
                         "");
             } catch (DatatypeConfigurationException e) {
             } catch (NullPointerException e) {
@@ -463,8 +476,8 @@ public class BookPrebookController {
                     bookingsAllBean.setContactCountryCode(params.getCustomerCountry());
                 else
                     bookingsAllBean.setContactCountryCode("");
-                if(params.getCustomerEmail()!=null)
-                    bookingsAllBean.setContactEmail(params.getCustomerEmail());
+                if(params.getEmail()!=null)
+                    bookingsAllBean.setContactEmail(params.getEmail());
                 else
                     bookingsAllBean.setContactEmail("");
                 if(params.getInfant()>0)
@@ -525,7 +538,7 @@ public class BookPrebookController {
                         bookingsAllBean.setTopGsaName(gsaBean.getGsaName());
                         if (prebookJSON.getPrice() != null ) {
                             if (subAgencyBean.getOtlMkp() != null && !subAgencyBean.getOtlMkp().equals("")) {
-                                BigDecimal gsaSale = (prebookJSON.getPrice().getValue().multiply(new BigDecimal(100))).divide(new BigDecimal(Integer.parseInt(subAgencyBean.getOtlMkp())+100)).setScale(2, BigDecimal.ROUND_HALF_UP);
+                                BigDecimal gsaSale = prebookJSON.getPrice().getValue().multiply(new BigDecimal(100).divide(new BigDecimal(Integer.parseInt(subAgencyBean.getOtlMkp())+100),2, RoundingMode.HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP);
                                 bookingsAllBean.setGsaSale(String.valueOf(gsaSale));
                                 bookingsAllBean.setAgentMarkup(subAgencyBean.getOtlMkp());
                                 if(gsaBean.getOtlMkp()!= null && !gsaBean.getOtlMkp().equals("")) {
@@ -533,7 +546,7 @@ public class BookPrebookController {
                                     agentSale = gsaSale.add(gsaSale.multiply(BigDecimal.valueOf(Integer.parseInt(subAgencyBean.getOtlMkp())).divide(new BigDecimal(100)))).setScale(2, BigDecimal.ROUND_HALF_UP);
                                     bookingsAllBean.setAgentSale(String.valueOf(agentSale));
                                     bookingsAllBean.setAgentEndSale(String.valueOf(agentSale));
-                                    bookingsAllBean.setSupplierSale((gsaSale.multiply(new BigDecimal(100))).divide(new BigDecimal(Integer.parseInt(gsaBean.getOtlMkp())+100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                    bookingsAllBean.setSupplierSale((gsaSale.multiply(new BigDecimal(100))).divide(new BigDecimal(Integer.parseInt(gsaBean.getOtlMkp())+100),2, RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
                                 }else{
                                     bookJSON.setSuccess(false);
                                     bookJSON.setErrorMessageText("Code:1.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
@@ -604,7 +617,7 @@ public class BookPrebookController {
                  * Store travellers to TravellerInfo table.
                  */
                 TravellerInfoBean travellerInfoBean;
-                for(int j=0;i<numOfAdults;i++){
+                for(int j=0;j<numOfAdults;j++){
                     travellerInfoBean= new TravellerInfoBean();
                     travellerInfoBean.setTravelName(adults[j].getFirst_name());
                     travellerInfoBean.setTravelSurname(adults[j].getLast_name());
@@ -613,7 +626,7 @@ public class BookPrebookController {
                     travellerInfoBean.setTravelBirdthDate("");
                     TravellerInfoDAO.storeTraveler(travellerInfoBean);
                 }
-                for(int j=0;i<numOfChildren;i++){
+                for(int j=0;j<numOfChildren;j++){
                     travellerInfoBean= new TravellerInfoBean();
                     travellerInfoBean.setTravelName(children[j].getFirst_name());
                     travellerInfoBean.setTravelSurname(children[j].getLast_name());
@@ -622,7 +635,6 @@ public class BookPrebookController {
                     travellerInfoBean.setTravelBirdthDate("");
                     TravellerInfoDAO.storeTraveler(travellerInfoBean);
                 }
-
 
 
                 /**
@@ -709,7 +721,7 @@ public class BookPrebookController {
                     NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
                     NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();//todo remove email and add atb's fixed email
                     result = nonStaticXMLAPISoap.bookV2(sunhotelsUsername, sunhotelspass, subAgencyBean.getCurrency(), "English",
-                            "", xmlCheckin, xmlCheckout, params.getRoomId(), params.getRooms(),
+                            "george@skamnos.com", xmlCheckin, xmlCheckout, params.getRoomId(), params.getRooms(),
                             numOfAdults, numOfChildren, params.getInfant(), "", "",
                             params.getMealId(), adults[0].getFirst_name(), adults[0].getLast_name(), adults[1].getFirst_name(), adults[1].getLast_name(),
                             adults[2].getFirst_name(), adults[2].getLast_name(), adults[3].getFirst_name(), adults[3].getLast_name(), adults[4].getFirst_name(),
@@ -798,8 +810,8 @@ public class BookPrebookController {
                         bookingsAllBean.setContactCountryCode(params.getCustomerCountry());
                     else
                         bookingsAllBean.setContactCountryCode("");
-                    if(params.getCustomerEmail()!=null)
-                        bookingsAllBean.setContactEmail(params.getCustomerEmail());
+                    if(params.getEmail()!=null)
+                        bookingsAllBean.setContactEmail(params.getEmail());
                     else
                         bookingsAllBean.setContactEmail("");
                     if(params.getInfant()>0)
@@ -869,7 +881,7 @@ public class BookPrebookController {
                                                 agentSale = gsaSale.add(gsaSale.multiply(BigDecimal.valueOf(Integer.parseInt(subAgencyBean.getOtlMkp())).divide(new BigDecimal(100)))).setScale(2, BigDecimal.ROUND_HALF_UP);
                                                 bookingsAllBean.setAgentSale(String.valueOf(agentSale));
                                                 bookingsAllBean.setAgentEndSale(String.valueOf(agentSale));
-                                                bookingsAllBean.setSupplierSale((gsaSale.multiply(new BigDecimal(100))).divide(new BigDecimal(Integer.parseInt(gsaBean.getOtlMkp()) + 100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                                bookingsAllBean.setSupplierSale((gsaSale.multiply(new BigDecimal(100))).divide(new BigDecimal(Integer.parseInt(gsaBean.getOtlMkp())+100),2, RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
                                             } else {
                                                 errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but sub agency with id:" + subAgencyBean.getId() + " has not hotel mark up");
                                             }
@@ -902,6 +914,8 @@ public class BookPrebookController {
                     prebookLogBean.setPrebookRef(prebookcode);
                     prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
                     prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
+                    prebookLogBean.setRoomTypeName("");
+                    prebookLogBean.setMealName("");
 
 
                     ObjectMapper mapper = new ObjectMapper();
@@ -944,7 +958,7 @@ public class BookPrebookController {
                      */
                     TravellerInfoBean travellerInfoBean;
                     List<TravellerInfoBean> travellers=new ArrayList<>();
-                    for(int j=0;i<numOfAdults;i++){
+                    for(int j=0;j<numOfAdults;j++){
                         travellerInfoBean= new TravellerInfoBean();
                         travellerInfoBean.setTravelName(adults[j].getFirst_name());
                         travellerInfoBean.setTravelSurname(adults[j].getLast_name());
@@ -954,7 +968,7 @@ public class BookPrebookController {
                         travellers.add(travellerInfoBean);
                         TravellerInfoDAO.storeTraveler(travellerInfoBean);
                     }
-                    for(int j=0;i<numOfChildren;i++){
+                    for(int j=0;j<numOfChildren;j++){
                         travellerInfoBean= new TravellerInfoBean();
                         travellerInfoBean.setTravelName(children[j].getFirst_name());
                         travellerInfoBean.setTravelSurname(children[j].getLast_name());

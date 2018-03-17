@@ -3,6 +3,7 @@ package DAOs.ATBDBDAOs.KalitaonSysDAOs;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import DBConnection.ATBSysHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
+import com.sun.xml.internal.ws.client.ClientTransportException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -141,5 +142,87 @@ public class CityCodeDAO {
             session.close();
         }
         return city;
+    }
+
+    public static List<CityCodeBean> getCityByName(String originalName){
+
+        Session session = ATBSysHibernateUtil.getSession();
+        List<CityCodeBean> cities=null;
+        String hql = "select cities from CityCodeBean cities  where cities.originalName like :originalName";
+        try{
+            session.beginTransaction();
+            cities= session.createQuery(hql).setParameter("originalName",  originalName ).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+        }finally {
+            session.close();
+        }
+        return cities;
+    }
+
+    public static List<CityCodeBean> getCityByNameAndIsoCode(String originalName,String isoCode){
+
+        Session session = ATBSysHibernateUtil.getSession();
+        List<CityCodeBean> cities=null;
+        String hql = "select cities from CityCodeBean cities  where cities.sanitizedName like :originalName and cities.countryCodeIso like :isoCode";
+        try{
+            session.beginTransaction();
+            cities= session.createQuery(hql).setParameter("originalName",  originalName  ).setParameter("isoCode",  isoCode ).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+        }finally {
+            session.close();
+        }
+        return cities;
+    }
+
+    public static boolean storeCityCode(CityCodeBean cityCodeBean){
+
+        boolean error=false;
+        Session session = ATBSysHibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            session.save(cityCodeBean);
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e) {
+
+        }finally{
+            session.close();
+        }
+        return error;
     }
 }

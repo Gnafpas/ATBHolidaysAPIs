@@ -20,7 +20,8 @@ public class HotelSearchPOST {
     private String customerCountry="";
     private List<Integer> hotelIDs;
     private int searchId=0;
-    private String starRatings;
+    private int minStarRating=1;
+    private int maxStarRating=5;
     private String maxPrice;
     private String minPrice;
     private String sortOrder;
@@ -168,17 +169,27 @@ public class HotelSearchPOST {
         return mealPlans;
     }
 
+    public int getMinStarRating() {
+        return minStarRating;
+    }
+
+    public void setMinStarRating(int minStarRating) {
+        this.minStarRating = minStarRating;
+    }
+
+    public int getMaxStarRating() {
+        return maxStarRating;
+    }
+
+    public void setMaxStarRating(int maxStarRating) {
+        this.maxStarRating = maxStarRating;
+    }
+
     public void setMealPlans(String mealPlans) {
         this.mealPlans = mealPlans;
     }
 
-    public String getStarRatings() {
-        return starRatings;
-    }
 
-    public void setStarRatings(String starRatings) {
-        this.starRatings = starRatings;
-    }
 
     public int getSearchId() {
         return searchId;

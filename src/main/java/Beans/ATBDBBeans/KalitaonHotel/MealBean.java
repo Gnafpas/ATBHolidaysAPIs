@@ -10,8 +10,8 @@ import javax.persistence.*;
 public class MealBean {
     private int id;
     private String name;
+    private String mealId;
     private int providerId;
-
 
 
     @Id
@@ -44,6 +44,16 @@ public class MealBean {
         this.providerId = providerId;
     }
 
+    @Basic
+    @Column(name = "meal_id")
+    public String getMealId() {
+        return mealId;
+    }
+
+    public void setMealId(String mealId) {
+        this.mealId = mealId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,7 +64,7 @@ public class MealBean {
         if (id != mealBean.id) return false;
         if (name != null ? !name.equals(mealBean.name) : mealBean.name != null) return false;
         if (providerId != mealBean.providerId) return false;
-
+        if (mealId != null ? !mealId.equals(mealBean.mealId) : mealBean.mealId != null) return false;
         return true;
     }
 
@@ -63,6 +73,7 @@ public class MealBean {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + providerId;
+        result = 31 * result + (mealId != null ? mealId.hashCode() : 0);
         return result;
     }
 }

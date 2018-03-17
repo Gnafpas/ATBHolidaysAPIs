@@ -1,21 +1,18 @@
 package Controller.AdminController;
 
-import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
-import Beans.HotelBedsAPIBeans.Destiantions.CountriesAPIJSON;
-import Beans.HotelBedsAPIBeans.Destiantions.DestinationsAPIJSON;
-import Beans.HotelBedsAPIBeans.Hotels.HotelsAPIJSON;
+import Beans.HotelBedsAPIBeans.Availability.*;
 import Beans.ViatorDBBeans.ViatorDestinationsBean;
 import Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean;
-import DAOs.ATBDBDAOs.KalitaonProductDAOs.AProductTitleDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CityCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
-import DAOs.HotelBedsAPIDAOs.DestinationsAPIDAO;
+import DAOs.HotelBedsAPIDAOs.AvailabilityDAOs;
 import DAOs.HotelBedsAPIDAOs.HotelAPIDAO;
 import DAOs.ViatorDBDAOs.ViatorDestinationsDAO;
 import DAOs.ViatorDBDAOs.ViatorNoneAvailableDatesDAO;
-import Updates.ATBDBUpdates.HotelBedsDBUpdates.UpdateHotelBedsDB;
+import Updates.ATBDBUpdates.EventsTravelDBUpdates.UpdateEventsTravelDBTimerTask;
+import Updates.ATBDBUpdates.HotelBedsDBUpdates.UpdateHotelBedsDBTimerTask;
 import Updates.ATBDBUpdates.ViatorContentUpdates.UpdateATBDBTimerTask;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
 import Updates.ATBDBUpdates.SunHotelsDBUpdates.UpdateSunHotelsDBTimerTask;
@@ -23,24 +20,11 @@ import Updates.ViatorDBUpdates.*;
 import Helper.APIKeyGeneration;
 import Helper.ProjectProperties;
 import Beans.ViatorDBBeans.UpdateDBBeans.InfoJSON;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
 
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.logging.Logger;
@@ -57,14 +41,22 @@ public class AdminController {
     private boolean viatortimerRuns = false;
     private Timer atbTimer;
     private boolean atbTimerRuns = false;
+    private Timer eventsTravelTimer;
+    private boolean eventsTravelTimerRuns = false;
     private Timer sunHotTimer;
     private boolean sunHotTimerRuns = false;
+    private Timer hotelBedsTimer;
+    private boolean hotelBedsTimerRuns = false;
     public static boolean viatorimidiateUpdateStop=false;
     public static boolean atbimidiateUpdateStop=false;
     public static boolean sunHotelsimidiateUpdateStop=false;
+    public static boolean hotelBedsimidiateUpdateStop=false;
+    public static boolean eventsTravelImidiateUpdateStop=false;
     public static boolean viatorUpdateRunning=false;
     public static boolean atbViatorUpdateRunning=false;
     public static boolean sunHotelsUpdateRunning=false;
+    public static boolean hotelBedsUpdateRunning=false;
+    public static boolean eventsTravelUpdateRunning=false;
 
     /**
      * All functions return results about the update.If there were errors in communication with viator server or DB
@@ -184,7 +176,6 @@ public class AdminController {
         }
         else
             return "Update timer task runs already.";
-        //todo combine atb and viator update to run serialized
     }
 
     @RequestMapping("/stopSunHotDBUpdate")
@@ -202,6 +193,80 @@ public class AdminController {
     @RequestMapping("/isSunHotDBUpdateTimertaskEnabled")
     public String isSunHotDBUpdateTimertaskEnabled(){
         if(!sunHotTimerRuns && !sunHotelsUpdateRunning )
+            return "False";
+        else
+            return "True";
+    }
+
+    @RequestMapping("/startHotelBedsDBUpdate")
+    public String startHotelBedsDBUpdate() {
+        hotelBedsimidiateUpdateStop=false;
+        if(!hotelBedsTimerRuns) {
+            /**
+             * Update products with timer every X hours.
+             */
+            TimerTask timerTask = new UpdateHotelBedsDBTimerTask();
+            hotelBedsTimer = new Timer(true);
+            hotelBedsTimer.scheduleAtFixedRate(timerTask, 0, Helper.ProjectProperties.runSunhotDBUpdateEveryXMillisecs);
+            hotelBedsTimerRuns=true;
+            return "Update timer task started.Runs every "+ ProjectProperties.runSunhotDBUpdateEveryXMillisecs /60 /60 /1000+" hours." ;
+        }
+        else
+            return "Update timer task runs already.";
+    }
+
+    @RequestMapping("/stopHotelBedsDBUpdate")
+    public String stopHotelBedsDBUpdate(){
+        hotelBedsimidiateUpdateStop=true;
+        if(hotelBedsTimerRuns) {
+            hotelBedsTimer.cancel();
+            hotelBedsTimer.purge();
+            hotelBedsTimerRuns = false;
+            return "Update timer task  stopped. ";
+        }else
+            return "Update timer task isn't running. ";
+    }
+
+    @RequestMapping("/isHotelBedsDBUpdateTimertaskEnabled")
+    public String isHotelBedsDBUpdateTimertaskEnabled(){
+        if(!hotelBedsTimerRuns && !hotelBedsUpdateRunning )
+            return "False";
+        else
+            return "True";
+    }
+
+    @RequestMapping("/startEventsTravelDBUpdate")
+    public String startEventsTravelDBUpdate() {
+        eventsTravelImidiateUpdateStop=false;
+        if(!eventsTravelTimerRuns) {
+            /**
+             * Update products with timer every X hours.
+             */
+            TimerTask timerTask = new UpdateEventsTravelDBTimerTask();
+            eventsTravelTimer = new Timer(true);
+            eventsTravelTimer.scheduleAtFixedRate(timerTask, 0, Helper.ProjectProperties.runDBUpdateEveryXMillisecs);
+            eventsTravelTimerRuns=true;
+            return "Update timer task started.Runs every "+ ProjectProperties.runDBUpdateEveryXMillisecs /60 /60 /1000+" hours." ;
+        }
+        else
+            return "Update timer task runs already.";
+    }
+
+    @RequestMapping("/stopEventsTravelDBUpdate")
+    public String stopEventsTravelDBUpdate(){
+        eventsTravelImidiateUpdateStop=true;
+        if(eventsTravelTimerRuns) {
+            eventsTravelTimer.cancel();
+            eventsTravelTimer.purge();
+            eventsTravelTimerRuns = false;
+            return "Update timer task  stopped. ";
+        }else
+            return "Update timer task isn't running. ";
+    }
+
+    @RequestMapping("/isEventsTravelDBUpdateTimertaskEnabled")
+    public String isEventsTravelDBUpdateTimertaskEnabled(){
+        if(!eventsTravelTimerRuns && !eventsTravelUpdateRunning && !eventsTravelUpdateRunning)
             return "False";
         else
             return "True";
@@ -241,10 +306,19 @@ public class AdminController {
 
 
 
+
+
+
+
+
+
+
+
     @RequestMapping("/updatecitycodes")
     public String updatecitycodes() {
         List<ViatorDestinationsBean> viatorDestinations=ViatorDestinationsDAO.getAllDestinations();
         List<CityCodeBean> citiesCode=CityCodeDAO.getCities();
+
         for(ViatorDestinationsBean viatorDestination:viatorDestinations){
             if(viatorDestination.getDestinationType().equals("CITY")){
                 for(CityCodeBean cityCode:citiesCode){
@@ -389,15 +463,15 @@ public class AdminController {
     @RequestMapping("/temp")
     public String temp() {
 
-        try {
-            GregorianCalendar gc = new GregorianCalendar(2018, 02, 10);
-            DatatypeFactory df = DatatypeFactory.newInstance();
-            XMLGregorianCalendar xmlGregorianCalendar = df.newXMLGregorianCalendar(gc);
-            System.out.println("sdff " + xmlGregorianCalendar.toString());
-            Date date = xmlGregorianCalendar.toGregorianCalendar().getTime();
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            System.out.println("sd " + sqlDate.toString());
-        }catch(DatatypeConfigurationException e){}
+//        try {
+//            GregorianCalendar gc = new GregorianCalendar(2018, 02, 10);
+//            DatatypeFactory df = DatatypeFactory.newInstance();
+//            XMLGregorianCalendar xmlGregorianCalendar = df.newXMLGregorianCalendar(gc);
+//            System.out.println("sdff " + xmlGregorianCalendar.toString());
+//            Date date = xmlGregorianCalendar.toGregorianCalendar().getTime();
+//            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+//            System.out.println("sd " + sqlDate.toString());
+//        }catch(DatatypeConfigurationException e){}
 //        List<String> prods= AProductTitleDAO.getAllViatorProductsCodes();
 //
 //        for(String prod:prods){
@@ -412,13 +486,15 @@ public class AdminController {
 //                }
 //            }
 //        }
-        //UpdateHotelBedsDB.updateHotelsContent(0,10);
-        String destBean="George-sd";
-        String[] dbDestName=destBean.split("( )|(\\()|(\\))|(-)");
-        for(String d:dbDestName){
-            if(!d.equals(""))
-              System.out.println(d);
-        }
+        HotelAPIDAO.status();
+
+
+//        String destBean="George-sd";
+//        String[] dbDestName=destBean.split("( )|(\\()|(\\))|(-)");
+//        for(String d:dbDestName){
+//            if(!d.equals(""))
+//              System.out.println(d);
+//        }
         return "ok";
     }
 

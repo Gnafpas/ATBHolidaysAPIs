@@ -8,5 +8,6 @@
         <id name="id" column="id"/>
         <property name="name" column="name"/>
         <property name="providerId" column="provider_id"/>
+        <property name="mealId" column="meal_id"/>
     </class>
 </hibernate-mapping>

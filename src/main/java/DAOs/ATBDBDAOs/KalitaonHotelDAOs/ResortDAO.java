@@ -52,9 +52,9 @@ public class ResortDAO {
 
 
 
-    public static boolean deleteResortBean(int resortId,StatelessSession session,StatelessSession session2 ){
+    public static boolean deleteResortBean(int resortId,int providerId,StatelessSession session,StatelessSession session2 ){
 
-        String hql = String.format("DELETE FROM ResortBean WHERE resortId='"+resortId+"' and providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM ResortBean WHERE resortId='"+resortId+"' and providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
@@ -83,11 +83,11 @@ public class ResortDAO {
         return err;
     }
 
-    public static List<Integer> getAllResortsIds(){
+    public static List<Integer> getAllResortsIds(int providerId){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         List <Integer> resortsIds=null;
-        String hql = "select resortId from ResortBean hotel where providerId='"+sanHotelsProviderId+"'";
+        String hql = "select resortId from ResortBean hotel where providerId='"+providerId+"'";
         try{
             session.beginTransaction();
             resortsIds=session.createQuery(hql).list();

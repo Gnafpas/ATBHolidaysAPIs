@@ -5,7 +5,7 @@ package APIJSONs.ATBAPIJSONs.Hotel;
  */
 public class Facility {
     private String name;
-    private int facilityId;
+    private String facilityId;
 
     public String getName() {
         return name;
@@ -15,11 +15,11 @@ public class Facility {
         this.name = name;
     }
 
-    public int getFacilityId() {
+    public String getFacilityId() {
         return facilityId;
     }
 
-    public void setFacilityId(int facilityId) {
+    public void setFacilityId(String facilityId) {
         this.facilityId = facilityId;
     }
 }

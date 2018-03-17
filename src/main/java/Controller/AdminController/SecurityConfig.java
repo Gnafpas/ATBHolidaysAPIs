@@ -44,7 +44,10 @@ public class SecurityConfig{
                     .antMatchers("/login").permitAll()
                     .antMatchers("/stopViatorDBUpdate", "/updateCategories", "/updateDestinations", "/updateAttractions", "/startViatorDBUpdate","/newAPIClient",
                                              "/startATBDBUpdate","/isViatorDBUpdateTimertaskEnabled","/stopATBDBUpdate","/isATBDBUpdateTimertaskEnabled",
-                                             "/stopSunHotDBUpdate","/startSunHotDBUpdate","/isSunHotDBUpdateTimertaskEnabled","/carnectTest","/deleteCorruptedProducts","/updatecitycodes","/blankid")
+                                             "/stopSunHotDBUpdate","/startSunHotDBUpdate","/isSunHotDBUpdateTimertaskEnabled","/startHotelBedsDBUpdate",
+                                             "/stopHotelBedsDBUpdate","/isHotelBedsDBUpdateTimertaskEnabled","/startEventsTravelDBUpdate",
+                                             "/stopEventsTravelDBUpdate","/isEventsTravelDBUpdateTimertaskEnabled","/carnectTest",
+                                             "/deleteCorruptedProducts","/updatecitycodes","/blankid")
                     .hasRole("ADMIN")
                     .and().formLogin();
             http.csrf().disable();
@@ -63,7 +66,12 @@ public class SecurityConfig{
                && !request.getServletPath().equals("/isViatorDBUpdateTimertaskEnabled") && !request.getServletPath().equals("/isATBDBUpdateTimertaskEnabled")
                && !request.getServletPath().equals("/stopATBDBUpdate") && !request.getServletPath().equals("/startATBDBUpdate")
                && !request.getServletPath().equals("/isSunHotDBUpdateTimertaskEnabled") && !request.getServletPath().equals("/startSunHotDBUpdate")
-               && !request.getServletPath().equals("/stopSunHotDBUpdate") && !request.getServletPath().equals("/carnectTest") && !request.getServletPath().equals("/deleteCorruptedProducts") && !request.getServletPath().equals("/updatecitycodes") && !request.getServletPath().equals("/blankid") && !request.getServletPath().equals("/temp") ) {
+               && !request.getServletPath().equals("/stopHotelBedsDBUpdate") &&  !request.getServletPath().equals("/isHotelBedsDBUpdateTimertaskEnabled")
+               && !request.getServletPath().equals("/startHotelBedsDBUpdate") && !request.getServletPath().equals("/stopEventsTravelDBUpdate")
+               && !request.getServletPath().equals("/isEventsTravelDBUpdateTimertaskEnabled") && !request.getServletPath().equals("/startEventsTravelDBUpdate")
+               && !request.getServletPath().equals("/stopSunHotDBUpdate") && !request.getServletPath().equals("/carnectTest")
+               && !request.getServletPath().equals("/deleteCorruptedProducts") && !request.getServletPath().equals("/updatecitycodes")
+               && !request.getServletPath().equals("/blankid") && !request.getServletPath().equals("/temp") ) {
                 String saltedPassword = Helper.ProjectProperties.SALTForKeyGeneration + request.getParameter("apiKey");
                 String hashedPassword = Helper.APIKeyGeneration.generateHash(saltedPassword);
                 subAgencyBean = SubAgencyDAO.getSubAgentByStoreKey(hashedPassword);

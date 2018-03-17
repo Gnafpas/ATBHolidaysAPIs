@@ -11,7 +11,7 @@ public class FacilityBean {
     private int id;
     private String name;
     private int providerId;
-    private int facilityId;
+    private String facilityId;
 
     @Id
     @Column(name = "id")
@@ -45,11 +45,11 @@ public class FacilityBean {
 
     @Basic
     @Column(name = "facility_id")
-    public int getFacilityId() {
+    public String getFacilityId() {
         return facilityId;
     }
 
-    public void setFacilityId(int facilityId) {
+    public void setFacilityId(String facilityId) {
         this.facilityId = facilityId;
     }
 
@@ -62,7 +62,7 @@ public class FacilityBean {
 
         if (id != that.id) return false;
         if (providerId != that.providerId) return false;
-        if (facilityId != that.facilityId) return false;
+        if (facilityId != null ? !facilityId.equals(that.facilityId) : that.facilityId != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -73,7 +73,7 @@ public class FacilityBean {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + providerId;
-        result = 31 * result + facilityId;
+        result = 31 * result + (facilityId != null ? facilityId.hashCode() : 0);
         return result;
     }
 }

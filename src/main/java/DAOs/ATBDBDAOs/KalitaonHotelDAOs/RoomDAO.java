@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -52,9 +53,9 @@ public class RoomDAO {
         return err;
     }
 
-    public static boolean deleteRoomBean(int hotelId,StatelessSession session,StatelessSession session2){
+    public static boolean deleteRoomBean(int hotelId,int providerId,StatelessSession session,StatelessSession session2){
 
-        String hql = String.format("DELETE FROM RoomBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM RoomBean WHERE hotelId='"+hotelId+"' and providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
@@ -114,6 +115,8 @@ public class RoomDAO {
             errLogger.info(errors.toString());
         }catch (NoResultException e){
 
+        }catch (PersistenceException e){
+
         }finally {
             if(externalSession)
                session.close();
@@ -121,19 +124,19 @@ public class RoomDAO {
         return rooms;
     }
 
-    public static int getOriginalRoomId(String atbhotelId,StatelessSession session) {
+    public static RoomBean getRoomBeanByOriginalId(String roomId,int hotelId,int providerId,StatelessSession session) {
 
         boolean incomingSession=true;
 
-        int originalRoomId = 0;
-        String hql = "select room.originalRoomId from RoomBean room where room.atbRoomId='" + atbhotelId + "'";
+        RoomBean roomBean = null;
+        String hql = "select room from RoomBean room where room.originalRoomId='" + roomId + "' and room.hotelId='"+hotelId+"' and room.providerId='"+providerId+"'";
         try {
             if(session==null) {
                 session = SunHotelsHibernateUtil.getSession();
                 session.beginTransaction();
                 incomingSession=false;
             }
-            originalRoomId = (int) session.createQuery(hql).getSingleResult();
+            roomBean = (RoomBean) session.createQuery(hql).getSingleResult();
         } catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
@@ -151,7 +154,45 @@ public class RoomDAO {
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (NoResultException e){
-            originalRoomId = 0;
+            roomBean = null;
+        }finally {
+            if(!incomingSession)
+                session.close();
+        }
+        return roomBean;
+    }
+
+    public static String getOriginalRoomId(String atbroomId,StatelessSession session) {
+
+        boolean incomingSession=true;
+
+        String originalRoomId = null;
+        String hql = "select room.originalRoomId from RoomBean room where room.atbRoomId='" + atbroomId + "'";
+        try {
+            if(session==null) {
+                session = SunHotelsHibernateUtil.getSession();
+                session.beginTransaction();
+                incomingSession=false;
+            }
+            originalRoomId = (String) session.createQuery(hql).getSingleResult();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+            originalRoomId = null;
         }finally {
             if(!incomingSession)
                 session.close();

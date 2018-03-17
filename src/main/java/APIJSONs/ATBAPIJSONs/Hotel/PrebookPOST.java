@@ -17,8 +17,17 @@ public class PrebookPOST {
     private int mealId;
     private String customerCountry;
     private String roomId="";
+    private String roomTypeId="";
     private String hotelId;
 
+
+    public String getRoomTypeId() {
+        return roomTypeId;
+    }
+
+    public void setRoomTypeId(String roomTypeId) {
+        this.roomTypeId = roomTypeId;
+    }
 
     public String getCheckInDate() {
         return checkInDate;

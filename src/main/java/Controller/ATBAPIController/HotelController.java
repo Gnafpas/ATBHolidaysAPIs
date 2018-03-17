@@ -56,7 +56,7 @@ public class HotelController {
                 dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                 dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute())).toString() + "+0000");
         /**
-         * Hotel Id Attribute.
+         * HotelPost Id Attribute.
          */
         List<Integer> originalHotelIds = new ArrayList<>();//todo change code here when hotelbeds will be added
         Integer originalHotelId;
@@ -76,7 +76,7 @@ public class HotelController {
          */
         int originalDestinationId = 0;
         if (params.getDestinationId() != null && !params.getDestinationId().equals("")) {
-            originalDestinationId = DestinationDAO.getOriginalDestinationId(params.getDestinationId());
+            originalDestinationId = DestinationDAO.getOriginalSunhotelsDestinationId(params.getDestinationId());
             if (originalDestinationId == 0 && (originalHotelIds==null || originalHotelIds.size()==0)) {
                 hotelSearchJSON.setSuccess(false);
                 hotelSearchJSON.setErrorMessageText("Missing Destination Id");
@@ -95,7 +95,7 @@ public class HotelController {
         int atbHotelId = 0;
         List<HotelBean> atbhotels;
         if (originalDestinationId != 0)
-            atbhotels = HotelDAO.getHotelByDestId(originalDestinationId, sanHotelsProviderId);
+            atbhotels = HotelDAO.getHotelByDestId(String.valueOf(originalDestinationId), sanHotelsProviderId);
         else {
             atbhotels = HotelDAO.getHotelByHotelIds(originalHotelIds, sanHotelsProviderId,null);
         }
@@ -130,7 +130,8 @@ public class HotelController {
                             hotelResponse.setZipCode(atbhotel.getZipCode());
                             hotelResponse.setCountryCode(atbhotel.getCountryCode());
                             hotelResponse.setResortId(atbhotel.getResortId());
-
+                            hotelResponse.setAccommodationId(atbhotel.getAccommodationId());
+                            hotelResponse.setAccommodationName(atbhotel.getAccommodationName());
 
                             roomTypesWithRoomsResponse = new ArrayList<>();
 
@@ -263,7 +264,7 @@ public class HotelController {
         List<Resort> resorts=new ArrayList<>();//todo add apikey to searchlog table
         Resort resort;
         List<ResortBean> resortbeans;
-        resortbeans=ResortDAO.getResortByDestId(DestinationDAO.getOriginalDestinationId(DestinationId),sanHotelsProviderId);
+        resortbeans=ResortDAO.getResortByDestId(DestinationDAO.getOriginalSunhotelsDestinationId(DestinationId),sanHotelsProviderId);
         if(resortbeans!=null){
              for(ResortBean resortbean:resortbeans){
                  resort=new Resort();
@@ -402,14 +403,15 @@ public class HotelController {
                 HotelSearchJSON retrieveResponse = new HotelSearchJSON();
                 try {
                     retrieveResponse = mapper.readValue(retrieveSearchLogBean.getResponse(), HotelSearchJSON.class);
-
+                    retrieveResponse.setTotalCount(retrieveResponse.getData().size());
 
                     /**
                      * Update search log.
                      */
-                    if (params.getStarRatings() != null && !params.getStarRatings().equals("")) {
-                        retrieveSearchLogBean.setCurrentStarRatings(params.getStarRatings());
-                    }
+
+                    retrieveSearchLogBean.setCurrentMinStarRating(""+params.getMinStarRating());
+                    retrieveSearchLogBean.setCurrentMaxStarRating(""+params.getMaxStarRating());
+
                     if (params.getSortBy() != null && !params.getSortBy().equals("")) {
                         retrieveSearchLogBean.setCurrentSortBy(params.getSortBy());
                     }
@@ -444,12 +446,11 @@ public class HotelController {
                         removeHotelForMinPrice = true;
                         removeHotelForDistricts = true;
                         removeHotelForMeals = true;
-                        if (retrieveSearchLogBean.getCurrentStarRatings() != null && !retrieveSearchLogBean.getCurrentStarRatings().equals("")) {
-                            String[] split = retrieveSearchLogBean.getCurrentStarRatings().split(",");//todo fix issue with 3+,4+ ratings and space in strings
-                            for (int i = 0; i < split.length; i++) {
-                                if (hotel.getStarRating().equals(split[i]))
-                                    removeHotelForStarRating = false;
-                            }
+                        if (retrieveSearchLogBean.getCurrentMinStarRating() != null && retrieveSearchLogBean.getCurrentMaxStarRating()!=null) {
+                            hotel.setStarRating(hotel.getStarRating().replace("+",""));
+                            if( Integer.parseInt(hotel.getStarRating())<=Integer.parseInt(retrieveSearchLogBean.getCurrentMaxStarRating())
+                               && Integer.parseInt(hotel.getStarRating())>=Integer.parseInt(retrieveSearchLogBean.getCurrentMinStarRating()))
+                                removeHotelForStarRating = false;
                         } else
                             removeHotelForStarRating = false;
                         if (retrieveSearchLogBean.getCurrentDistricts() != null && !retrieveSearchLogBean.getCurrentDistricts().equals("")) {
@@ -670,11 +671,12 @@ public class HotelController {
                     StringWriter errors = new StringWriter();
                     e.printStackTrace(new PrintWriter(errors));
                     errLogger.info(errors.toString());
-                    hotelSearchJSON.setErrorMessageText("Code:11.Something went wrong.Please contact at:george.nafpaktitis@atbholidays.com");
-                    hotelSearchJSON.setSuccess(false);
+                    retrieveResponse.setErrorMessageText("Code:11.Something went wrong.Please contact at:george.nafpaktitis@atbholidays.com");
+                    retrieveResponse.setSuccess(false);
                 }
 
-                hotelSearchJSON.setSuccess(true);
+                retrieveResponse.setSuccess(true);
+                retrieveResponse.setSearchId(params.getSearchId());
                 return retrieveResponse;
             }
 
@@ -706,7 +708,7 @@ public class HotelController {
             }
 
             /**
-             * Hotel Id Attribute.
+             * HotelPost Id Attribute.
              */
             String strOriginalHotelId = "";//todo change code here when hotelbeds will be added
             if (params.getHotelIDs() != null && params.getHotelIDs().size() > 0) {
@@ -739,12 +741,20 @@ public class HotelController {
             String originalDestinationIdStrFormat = "";
             if (params.getDestinationId() != null && !params.getDestinationId().equals("")) {
                 DestinationDAO.increaseSortOrderOfDestination(params.getDestinationId());
-                originalDestinationId = DestinationDAO.getOriginalDestinationId(params.getDestinationId());
+                originalDestinationId = DestinationDAO.getOriginalSunhotelsDestinationId(params.getDestinationId());
                 if (originalDestinationId == 0) {
                     return hotelSearchJSON;
                 } else
                     originalDestinationIdStrFormat = String.valueOf(originalDestinationId);
             }
+
+            /**
+             * Start rating.
+             */
+            String minStarRating = ""+params.getMinStarRating();
+            String maxStarRating = ""+params.getMaxStarRating();
+
+
 
             /**
              * Set sort by
@@ -774,7 +784,7 @@ public class HotelController {
                         params.getNumberOfChildren(), childrenAges, params.getInfant(), sortby, params.getSortOrder(),
                         "", "", params.getMealPlans(), "",
                         "", "", "", "",
-                        "", "", "", params.getMinPrice(), params.getMaxPrice(), "",
+                        minStarRating, maxStarRating, "", params.getMinPrice(), params.getMaxPrice(), "",
                         "", "", "", "",
                         "", params.getCustomerCountry(), "");
             } catch (DatatypeConfigurationException e) {//todo put also star rating
@@ -812,7 +822,7 @@ public class HotelController {
                 List<MealBean> meals = MealDAO.getMeals(sanHotelsProviderId);
                 List<HotelBean> atbhotels = null;
                 if (originalDestinationId != 0)
-                    atbhotels = HotelDAO.getHotelByDestId(originalDestinationId, sanHotelsProviderId);
+                    atbhotels = HotelDAO.getHotelByDestId(String.valueOf(originalDestinationId), sanHotelsProviderId);
                 List<HotelmappingBean> hotelsmapping = HotelmappingDAO.getAllProviderHotelsMapping(sanHotelsProviderId);
                 dbTransactionTimeElapsed = System.currentTimeMillis() - dbTransactionTimeElapsed;
 
@@ -849,7 +859,8 @@ public class HotelController {
                                         hotelResponse.setZipCode(atbhotel.getZipCode());
                                         hotelResponse.setCountryCode(atbhotel.getCountryCode());
                                         hotelResponse.setResortId(atbhotel.getResortId());
-
+                                        hotelResponse.setAccommodationId(atbhotel.getAccommodationId());
+                                        hotelResponse.setAccommodationName(atbhotel.getAccommodationName());
 
                                         roomTypesWithRoomsResponse = new ArrayList<>();
                                         roomMealsResponse = new ArrayList<>();
@@ -904,7 +915,7 @@ public class HotelController {
                                                 roomsResponse.add(roomResponse);
                                             }
                                             for (RoomtypeBean atbRoomType : atbRoomTypes) {
-                                                if (atbRoomType.getRoomtypeId() == roomtype.getRoomtypeID()) {
+                                                if (atbRoomType.getRoomtypeId().equals(String.valueOf(roomtype.getRoomtypeID()))) {
                                                     roomTypeWithRoomsResponse = new RoomTypeWithRoomsResponse();
                                                     roomtype.setRoomtypeID(atbRoomType.getId());
                                                     roomTypeWithRoomsResponse.setRoomtypeID(atbRoomType.getId());
@@ -984,7 +995,8 @@ public class HotelController {
                 stroreSearchLogBean.setCurrentMealPlans(params.getMealPlans());
                 stroreSearchLogBean.setCurrentMinPrice(params.getMinPrice());
                 stroreSearchLogBean.setCurrentSortBy(params.getSortBy());
-                stroreSearchLogBean.setCurrentStarRatings(params.getStarRatings());
+                stroreSearchLogBean.setCurrentMinStarRating(minStarRating);
+                stroreSearchLogBean.setCurrentMaxStarRating(maxStarRating);
                 hotelSearchJSON.setSearchId(ApiUsrSearchLogDAO.addSearchLogBean(stroreSearchLogBean));
 
                 /**
@@ -1009,6 +1021,18 @@ public class HotelController {
                 }
 
                 hotelSearchJSON.setData(hotelsResponse);
+            }else{
+                if(result==null)
+                    hotelSearchJSON.setErrorMessageText("Communication Error.");
+                else if(result.getError()!=null)
+                    hotelSearchJSON.setErrorMessageText(result.getError().getMessage());
+                hotelSearchJSON.setSuccess(false);
+                userlogs.info("Request Varibles: " + " hotelID:" + params.getHotelIDs() + " currencies:" + params.getCurrencyCode() +
+                        " infant:" + params.getInfant() + " childrenAges:" + childrenAges + " numberOfChildren:" +
+                        params.getNumberOfChildren() + " numberOfRooms:" + params.getNumberOfRooms() + " numberOfAdults:" +
+                        params.getNumberOfAdults() + "checkOutDate:" + params.getCheckOutDate() + " checkInDate:" + params.getCheckInDate() +
+                        " customerCountry:" + params.getCustomerCountry());
+                return hotelSearchJSON;
             }
 
 

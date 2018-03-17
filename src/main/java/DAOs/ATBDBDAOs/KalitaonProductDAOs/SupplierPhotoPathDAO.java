@@ -5,6 +5,7 @@ import DBConnection.ATBHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -48,5 +49,35 @@ public class SupplierPhotoPathDAO {
             session.close();
         }
         return supplierPhotoPath;
+    }
+
+    public static boolean addupplierPhotoPath(SupplierPhotoPathBean supplierPhotoPath){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        Transaction tx;
+        boolean err=false;
+        try{
+            tx=session.beginTransaction();
+            session.insert(supplierPhotoPath);
+            tx.commit();
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return err;
     }
 }

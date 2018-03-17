@@ -51,9 +51,9 @@ public class RoombedDAO {
         return err;
     }
 
-    public static boolean deleteRoombedBean(int hotelId,StatelessSession session,StatelessSession session2){
+    public static boolean deleteRoombedBean(int hotelId,int providerId,StatelessSession session,StatelessSession session2){
 
-        String hql = String.format("DELETE FROM RoombedBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM RoombedBean WHERE hotelId='"+hotelId+"' and providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();

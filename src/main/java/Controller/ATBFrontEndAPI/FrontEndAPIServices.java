@@ -6,19 +6,32 @@ import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsCancelat
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsRoomMealResponse;
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsRoomResponse;
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsRoomTypeWithRoomsResponse;
+import APIJSONs.ATBAPIJSONs.Product.ResponseItem;
 import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.ViatorItem;
 import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.ViatorBookPOST;
 import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.ViatorTraveller;
 import Beans.ATBDBBeans.KalitaonHotel.*;
+import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
+import Beans.ATBDBBeans.KalitaonProduct.FPricePlanBean;
+import Beans.ATBDBBeans.KalitaonProduct.GPriceMatrixBean;
+import Beans.ATBDBBeans.KalitaonSystem.GsaBean;
 import Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean;
+import Beans.HotelBedsAPIBeans.Availability.*;
 import Beans.ViatorAPIBeans.Bookings.Book.*;
 import Beans.ViatorAPIBeans.Bookings.Cancel.CancelAPIJSON;
 import Beans.ViatorAPIBeans.Bookings.Cancel.CancelPOST;
 import Beans.ViatorAPIBeans.Bookings.PastBooking.PastBookingAPIJSON;
 import Beans.ViatorDBBeans.ViatorProductTourGradeLanguageServicesBean;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.*;
+import DAOs.ATBDBDAOs.KalitaonProductDAOs.AProductTitleDAO;
+import DAOs.ATBDBDAOs.KalitaonProductDAOs.FPricePlanDAO;
+import DAOs.ATBDBDAOs.KalitaonProductDAOs.GPriceMatrixDAO;
+import DAOs.ATBDBDAOs.KalitaonSysDAOs.GsaDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
+import DAOs.HotelBedsAPIDAOs.AvailabilityDAOs;
 import DAOs.SunHotelsAPIDAOs.*;
+import DAOs.SunHotelsAPIDAOs.Hotel;
+import DAOs.SunHotelsAPIDAOs.Room;
 import DAOs.ViatorAPIDAOs.BookingsAPIDAO;
 import DAOs.ViatorDBDAOs.ViatorProductTourGradeLanguageServicesDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,6 +47,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -99,14 +113,14 @@ public class FrontEndAPIServices {
             /**
              * RoomtypeId check.Used for recognize provider
              */
-            int originalRoomTypeId;
+            String originalRoomTypeId;
             if (params.getRoomtypeId() == null) {
                 bookJSON.setSuccess(false);
                 bookJSON.setErrorMessageText("Wrong roomtypeId");
                 return bookJSON;
             } else {
                 originalRoomTypeId = RoomtypeDAO.getOriginalRoomtypeId(params.getRoomtypeId());
-                if (originalRoomTypeId == 0) {
+                if (originalRoomTypeId == null) {
                     bookJSON.setSuccess(false);
                     bookJSON.setErrorMessageText("Wrong roomtypeId");
                     return bookJSON;
@@ -241,14 +255,14 @@ public class FrontEndAPIServices {
         /**
         * RoomtypeId check.Used for recognize provider
         */
-        int originalRoomTypeId;
+        String originalRoomTypeId;
         if(params.getRoomtypeId()==null){
             prebookJSON.setSuccess(false);
             prebookJSON.setErrorMessageText("Wrong roomtypeId");
             return prebookJSON;
         }else{
             originalRoomTypeId=RoomtypeDAO.getOriginalRoomtypeId(params.getRoomtypeId());
-            if(originalRoomTypeId==0){
+            if(originalRoomTypeId==null){
                 prebookJSON.setSuccess(false);
                 prebookJSON.setErrorMessageText("Wrong roomtypeId");
                 return prebookJSON;
@@ -634,7 +648,6 @@ public class FrontEndAPIServices {
          * If the search is for first time continue to the code bellow.
          */
 
-
         /**
          * Dates request parameters
          */
@@ -656,7 +669,7 @@ public class FrontEndAPIServices {
         }
 
         /**
-         * Hotel Id Attribute.
+         * HotelPost Id Attribute.
          */
         String strOriginalHotelId="";
         if( !params.getHotelID().equals("")) {
@@ -678,12 +691,15 @@ public class FrontEndAPIServices {
         /**
          * Get original id from Destination table.
          */
+        DestinationBean  destinationBean=null;
         int originalDestinationId=0;
         String originalDestinationIdStrFormat="";
         if(params.getDestinationId()!=null && !params.getDestinationId().equals("")) {
             DestinationDAO.increaseSortOrderOfDestination(params.getDestinationId());
-            originalDestinationId = DestinationDAO.getOriginalDestinationId(params.getDestinationId());
-            if (originalDestinationId==0){
+            destinationBean=DestinationDAO.getDestinationBeanByATBId(params.getDestinationId());
+            if(destinationBean.getDestinationId()!=0)
+                originalDestinationId = destinationBean.getDestinationId();
+            if (originalDestinationId==0 && (destinationBean.getHotelBedsCode()==null || destinationBean.getHotelBedsCode().equals(""))){
                 return hotelSearchJSON;
             }else
                 originalDestinationIdStrFormat=String.valueOf(originalDestinationId);
@@ -692,172 +708,354 @@ public class FrontEndAPIServices {
         long requestTimeElapsed=0;
 
         requestTimeElapsed = System.currentTimeMillis() - requestTimeElapsed;
-        /**
-         * Search request.
-         */
-        try {
-            GregorianCalendar gregorianCheckin = GregorianCalendar.from(checkin);
-            GregorianCalendar gregorianCheckout = GregorianCalendar.from(checkout);
-            XMLGregorianCalendar xmlCheckin = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckin);
-            XMLGregorianCalendar xmlCheckout = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckout);
-            NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
-            NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
-            result=nonStaticXMLAPISoap.searchV2(sunhotelsUsername,sunhotelspass,"English",currencies,
-                    xmlCheckin,xmlCheckout, params.getNumberOfRooms(),"",originalDestinationIdStrFormat,
-                    strOriginalHotelId,"","",params.getNumberOfAdults(),
-                    params.getNumberOfChildren(), params.getChildrenAges(),params.getInfant(),"Price","Ascending",
-                    "", "","","",
-                    "","","", "",
-                    "","","",params.getMinPrice(),params.getMaxPrice(),"",
-                    "","","","",
-                    "", params.getCustomerCountry(),"");
-        }catch(DatatypeConfigurationException e){
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());}catch(NullPointerException e){}
-        requestTimeElapsed = System.currentTimeMillis() - requestTimeElapsed;
 
-        long prepareResponseTimeElapsed=0;
-        long dbTransactionTimeElapsed=0;
 
         /**
-         * Response
+         * Fix children ages because they come like this ﻿'0,0,0,5,4,0,0,0'
          */
-        if(result!=null && result.getError()==null){
+        String childrenAges="";
+        boolean firstChildAge=true;
+        String[] childrenAgesSplit=null;
+        if(params.getChildrenAges()!=null && params.getChildrenAges()!="") {
+            childrenAgesSplit = params.getChildrenAges().split(",");
+            if(childrenAgesSplit!=null && childrenAgesSplit.length>0 ){
+                for(String age:childrenAgesSplit){
+                    if(age!=null && !age.equals("0") && !age.equals("")){
+                        if(firstChildAge) {
+                            childrenAges = age;
+                            firstChildAge=false;
+                        }else {
+                            childrenAges = childrenAges + "," + age;
+                        }
+                    }
+                }
+            }
 
-            List<SunHotelsResponse> hotelsResponse=new ArrayList<>();
-            List<SunHotelsRoomTypeWithRoomsResponse> roomTypesWithRoomsResponse;
-            List<SunHotelsRoomResponse> roomsResponse;
-            List<SunHotelsRoomMealResponse> roomMealsResponse;
-            SunHotelsRoomTypeWithRoomsResponse roomTypeWithRoomsResponse;
-            SunHotelsRoomResponse roomResponse;
-            List<SunHotelsCancelationPolicy> cancelationPolicies;
-            SunHotelsRoomMealResponse roomMealResponse;
-            SunHotelsCancelationPolicy cancelationPolicy;
-            SunHotelsResponse hotelResponse;
-
-            /**
-             * Get content from DB
-             */
-            dbTransactionTimeElapsed = System.currentTimeMillis();
-            List<RoomtypeBean> atbRoomTypes=RoomtypeDAO.getRoomsTypes(sanHotelsProviderId);
-            List<MealBean> meals=MealDAO.getMeals(sanHotelsProviderId);
-            List<HotelBean> atbhotels=null;
-            if(originalDestinationId!=0)
-                atbhotels = HotelDAO.getHotelByDestId(originalDestinationId, sanHotelsProviderId);
-            List<HotelmappingBean> hotelsmapping = HotelmappingDAO.getAllProviderHotelsMapping(sanHotelsProviderId);
-            dbTransactionTimeElapsed = System.currentTimeMillis()-dbTransactionTimeElapsed;
-
-            /**
-             * Prepare the response data.
-             */
-            prepareResponseTimeElapsed = System.currentTimeMillis();
-            if ( hotelsmapping != null && atbRoomTypes != null & meals != null) {
-                for (Hotel hotel : result.getHotels().getHotel()) {
-                    if(originalDestinationId==0)
-                        atbhotels = HotelDAO.getHotelByHotelId(hotel.getHotelId(),sanHotelsProviderId,null) ;
-                    if(atbhotels!=null) {
-                        for (HotelBean atbhotel : atbhotels) {
-                            if (atbhotel.getHotelId() == hotel.getHotelId()) {
-                                int atbHotelId = 0;
-                                for (HotelmappingBean hotelmapping : hotelsmapping) {
-                                    if (atbhotel.getHotelId() == hotelmapping.getHotelId())
-                                        atbHotelId = hotelmapping.getId();
-                                }
-
-                                if (atbHotelId != 0) {
-                                    hotelResponse = new SunHotelsResponse();
-                                    hotelResponse.setAddress(atbhotel.getAddress());
-                                    hotelResponse.setCity(atbhotel.getCity());
-                                    hotelResponse.setCountry(atbhotel.getCountry());
-                                    hotelResponse.setDescription(atbhotel.getDescription());
-                                    hotelResponse.setDistrict(atbhotel.getCity());
-                                    hotelResponse.setId(atbHotelId);
-                                    hotelResponse.setLatitude(atbhotel.getLatitude());
-                                    hotelResponse.setLongitude(atbhotel.getLongitude());
-                                    hotelResponse.setName(atbhotel.getName());
-                                    hotelResponse.setStar_rating(atbhotel.getStarRating());
-                                    hotelResponse.setState(atbhotel.getState());
-                                    hotelResponse.setZip_code(atbhotel.getZipCode());
-                                    hotelResponse.setCountry_code(atbhotel.getCountryCode());
+        }
 
 
-                                    roomTypesWithRoomsResponse = new ArrayList<>();
-                                    roomMealsResponse = new ArrayList<>();
-                                    for (RoomTypeWithRooms roomtype : hotel.getRoomtypes().getRoomtype()) {
-                                        roomsResponse = new ArrayList<>();
-                                        for (Room room : roomtype.getRooms().getRoom()) {
-                                            roomResponse = new SunHotelsRoomResponse();
-                                            roomResponse.setRoomId(room.getId());
-                                            roomResponse.setBeds(room.getBeds());
-                                            cancelationPolicies = new ArrayList<>();
-                                            for (PercentageCancellationPolicy policy : room.getCancellationPolicies().getCancellationPolicy()) {
-                                                cancelationPolicy = new SunHotelsCancelationPolicy();
-                                                cancelationPolicy.setPercentage(policy.getPercentage());
-                                                if (policy.getDeadline() != null)
-                                                    cancelationPolicy.setDeadline(policy.getDeadline());
-                                                cancelationPolicies.add(cancelationPolicy);
-                                            }
-                                            roomResponse.setCancellationPolicies(cancelationPolicies);
-                                            roomResponse.setExtrabeds(room.getExtrabeds());
-                                            for (RoomMeal roomMeal : room.getMeals().getMeal()) {
-                                                roomMealsResponse = new ArrayList<>();
-                                                for (MealBean m : meals) {
-                                                    if (roomMeal.getId() == m.getId()) {
-                                                        roomMealResponse = new SunHotelsRoomMealResponse();
-                                                        roomMealResponse.setMealId(m.getId());
-                                                        roomMealResponse.setMealName(m.getName());
-                                                        for (PriceWithPaymentMethods price : roomMeal.getPrices().getPrice()) {
-                                                            roomMealResponse.setPrice(price.getValue());
-                                                        }
-                                                        roomMealsResponse.add(roomMealResponse);
-                                                    }
-                                                }
-                                            }
-                                            roomResponse.setMeals(roomMealsResponse);
-                                            roomsResponse.add(roomResponse);
+        List<SunHotelsResponse> hotelsResponse = new ArrayList<>();
+        long prepareResponseTimeElapsed = 0;
+        long dbTransactionTimeElapsed = 0;
+
+        if((destinationBean!=null && destinationBean.getHotelBedsCode()!=null && !destinationBean.getHotelBedsCode().equals("")) ||
+           (params.getHotelID()!=null && !params.getHotelID().equals(""))){
+
+            AvailabilityPOST availabilityPOST=new AvailabilityPOST();
+
+            Stay stay=new Stay();
+            stay.setCheckIn(params.getCheckInDate());
+            stay.setCheckOut(params.getCheckOutDate());
+            stay.setShiftDays("1");
+            availabilityPOST.setStay(stay);
+            Occupancy occupancy =new Occupancy();
+            List<Occupancy> occupancies=new ArrayList<>();
+            occupancy.setAdults(params.getNumberOfAdults());
+            occupancy.setChildren(params.getNumberOfChildren());
+            occupancy.setRooms(params.getNumberOfRooms());
+            List<Pax> paxes=new ArrayList<>();
+            if(childrenAgesSplit!=null && childrenAgesSplit.length>0 ){
+                for(String age:childrenAgesSplit) {
+                    if (age != null && !age.equals("0") && !age.equals("")) {
+                        Pax pax = new Pax();
+                        pax.setAge(Integer.parseInt(age));
+                        pax.setType("CH");
+                        paxes.add(pax);
+                    }
+                }
+            }
+            occupancy.setPaxes(paxes);
+            occupancies.add(occupancy);
+            availabilityPOST.setOccupancies(occupancies);
+            Filter filter=new Filter();
+            filter.setMaxRate(params.getMaxPrice());
+            filter.setMinRate(params.getMinPrice());
+            availabilityPOST.setFilter(filter);
+            List<HotelBean> hotelBeans=null;
+            HotelPost hotels = new HotelPost();
+            List<Integer> hs = new ArrayList<>();
+            if((destinationBean!=null && destinationBean.getHotelBedsCode()!=null && !destinationBean.getHotelBedsCode().equals(""))) {
+                hotelBeans = HotelDAO.getHotelByDestId(destinationBean.getHotelBedsCode(), hotelBedsProviderId);
+                if (hotelBeans != null) {
+                    for (HotelBean hotel : hotelBeans)
+                        hs.add(hotel.getHotelId());
+                }
+            }else if(params.getHotelID()!=null && !params.getHotelID().equals("") && params.getProviderId()==hotelBedsProviderId)
+                hs.add(Integer.parseInt(params.getHotelID()));
+
+            hotels.setHotel(hs);
+            availabilityPOST.setHotels(hotels);
+
+            AvailabilityAPIJSON  availabilityAPIJSON= AvailabilityDAOs.availability(availabilityPOST);
+            if(availabilityAPIJSON!=null && availabilityAPIJSON.getError()==null){
+
+                List<SunHotelsRoomTypeWithRoomsResponse> roomTypesWithRoomsResponse;
+                List<SunHotelsRoomResponse> roomsResponse;
+                List<SunHotelsRoomMealResponse> roomMealsResponse;
+                SunHotelsRoomTypeWithRoomsResponse roomTypeWithRoomsResponse;
+                SunHotelsRoomResponse roomResponse;
+                List<SunHotelsCancelationPolicy> cancelationPolicies;
+                SunHotelsRoomMealResponse roomMealResponse;
+                SunHotelsCancelationPolicy cancelationPolicy;
+                SunHotelsResponse hotelResponse;
+
+                /**
+                 * Get content from DB
+                 */
+                dbTransactionTimeElapsed = System.currentTimeMillis();
+                List<RoomtypeBean> atbRoomTypes = RoomtypeDAO.getRoomsTypes(hotelBedsProviderId);
+                List<MealBean> meals = MealDAO.getMeals(hotelBedsProviderId);
+                List<HotelBean> atbhotels = null;
+                atbhotels = hotelBeans;
+                List<HotelmappingBean> hotelsmapping = HotelmappingDAO.getAllProviderHotelsMapping(hotelBedsProviderId);
+                dbTransactionTimeElapsed = System.currentTimeMillis() - dbTransactionTimeElapsed;
+
+                /**
+                 * Prepare the response data.
+                 */
+                prepareResponseTimeElapsed = System.currentTimeMillis();
+                if (hotelsmapping != null && atbRoomTypes != null & meals != null) {
+                    if(availabilityAPIJSON.getHotels()!=null && availabilityAPIJSON.getHotels().getHotels()!=null) {
+                        for(Beans.HotelBedsAPIBeans.Availability.Hotel hotel:availabilityAPIJSON.getHotels().getHotels()) {
+
+                            if (hotelBeans == null)
+                                atbhotels = HotelDAO.getHotelByHotelId(hotel.getCode(), hotelBedsProviderId, null);
+                            if (atbhotels != null) {
+                                for (HotelBean atbhotel : atbhotels) {
+                                    if (atbhotel.getHotelId() == hotel.getCode()) {
+                                        int atbHotelId = 0;
+                                        for (HotelmappingBean hotelmapping : hotelsmapping) {
+                                            if (atbhotel.getHotelId() == hotelmapping.getHotelId())
+                                                atbHotelId = hotelmapping.getId();
                                         }
-                                        for (RoomtypeBean atbRoomType : atbRoomTypes) {
-                                            if (atbRoomType.getRoomtypeId() == roomtype.getRoomtypeID()) {
+
+                                        if (atbHotelId != 0) {
+                                            hotelResponse = new SunHotelsResponse();
+                                            hotelResponse.setAddress(atbhotel.getAddress());
+                                            hotelResponse.setCity(atbhotel.getCity());
+                                            hotelResponse.setCountry(atbhotel.getCountry());
+                                            hotelResponse.setDescription(atbhotel.getDescription());
+                                            hotelResponse.setDistrict(atbhotel.getCity());
+                                            hotelResponse.setId(atbHotelId);
+                                            hotelResponse.setLatitude(atbhotel.getLatitude());
+                                            hotelResponse.setLongitude(atbhotel.getLongitude());
+                                            hotelResponse.setName(atbhotel.getName()+" H");
+                                            hotelResponse.setStar_rating(atbhotel.getStarRating());
+                                            hotelResponse.setState(atbhotel.getState());
+                                            hotelResponse.setZip_code(atbhotel.getZipCode());
+                                            hotelResponse.setCountry_code(atbhotel.getCountryCode());
+                                            hotelResponse.setType(atbhotel.getAccommodationName());
+
+                                            roomTypesWithRoomsResponse = new ArrayList<>();
+                                            for (Beans.HotelBedsAPIBeans.Availability.Room room : hotel.getRooms()) {
+                                                roomsResponse = new ArrayList<>();
+                                                for(Rate rate:room.getRates()) {
+                                                    roomResponse = new SunHotelsRoomResponse();
+                                                    roomResponse.setRoomId(1);
+                                                    roomResponse.setBeds(0);
+                                                    roomResponse.setExtrabeds(0);
+
+
+                                                    cancelationPolicies = new ArrayList<>();
+                                                    if(rate.getCancellationPolicies()!=null) {
+                                                        for (CancellationPolicy policy : rate.getCancellationPolicies()) {//todo fix cancelation policies
+                                                            cancelationPolicy = new SunHotelsCancelationPolicy();
+                                                            cancelationPolicy.setPercentage(new BigDecimal(100));
+                                                            cancelationPolicy.setDeadline(50);
+                                                            cancelationPolicies.add(cancelationPolicy);
+                                                        }
+                                                    }
+                                                    roomResponse.setCancellationPolicies(cancelationPolicies);
+
+
+                                                    roomMealsResponse = new ArrayList<>();
+                                                    for (MealBean m : meals) {
+                                                        if (rate.getBoardCode().equals(m.getMealId())) {
+                                                            roomMealResponse = new SunHotelsRoomMealResponse();
+                                                            roomMealResponse.setMealId(m.getId());
+                                                            roomMealResponse.setMealName(m.getName());
+                                                            if(rate.getNet()!=null)
+                                                                roomMealResponse.setPrice(new BigDecimal(Double.parseDouble(rate.getNet())).setScale(2, BigDecimal.ROUND_HALF_UP));
+                                                            roomMealsResponse.add(roomMealResponse);
+                                                        }
+                                                    }
+                                                    roomResponse.setMeals(roomMealsResponse);
+                                                    roomsResponse.add(roomResponse);
+
+                                                }
                                                 roomTypeWithRoomsResponse = new SunHotelsRoomTypeWithRoomsResponse();
-                                                roomtype.setRoomtypeID(atbRoomType.getId());
-                                                roomTypeWithRoomsResponse.setRoomTypeId(atbRoomType.getId());
-                                                roomTypeWithRoomsResponse.setRoomType(atbRoomType.getRoomType());
+                                                roomTypeWithRoomsResponse.setRoomTypeId(1);
+                                                roomTypeWithRoomsResponse.setRoomType(room.getName());
                                                 roomTypeWithRoomsResponse.setRooms(roomsResponse);
                                                 roomTypesWithRoomsResponse.add(roomTypeWithRoomsResponse);
                                             }
+                                            hotelResponse.setRoom_types(roomTypesWithRoomsResponse);
+                                            hotelsResponse.add(hotelResponse);
                                         }
                                     }
-                                    hotelResponse.setRoom_types(roomTypesWithRoomsResponse);
-                                    hotelsResponse.add(hotelResponse);
                                 }
                             }
                         }
                     }
                 }
+                prepareResponseTimeElapsed = System.currentTimeMillis() - prepareResponseTimeElapsed;
             }
-            prepareResponseTimeElapsed = System.currentTimeMillis()-prepareResponseTimeElapsed;
+
+
+        }
+
+
+        if(!originalDestinationIdStrFormat.equals("") || (!strOriginalHotelId.equals("") && params.getProviderId()==sanHotelsProviderId)) {
+
+            /**
+             * Search request.
+             */
+            try {
+                GregorianCalendar gregorianCheckin = GregorianCalendar.from(checkin);
+                GregorianCalendar gregorianCheckout = GregorianCalendar.from(checkout);
+                XMLGregorianCalendar xmlCheckin = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckin);
+                XMLGregorianCalendar xmlCheckout = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckout);
+                NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
+                NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
+                result = nonStaticXMLAPISoap.searchV2(sunhotelsUsername, sunhotelspass, "English", currencies,
+                        xmlCheckin, xmlCheckout, params.getNumberOfRooms(), "", originalDestinationIdStrFormat,
+                        strOriginalHotelId, "", "", params.getNumberOfAdults(),
+                        params.getNumberOfChildren(), childrenAges, params.getInfant(), "Price", "Ascending",
+                        "", "", "", "",
+                        "", "", "", "",
+                        "", "", "", params.getMinPrice(), params.getMaxPrice(), "",
+                        "", "", "", "",
+                        "", params.getCustomerCountry(), "");
+            } catch (DatatypeConfigurationException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+            } catch (NullPointerException e) {
+            }
+            requestTimeElapsed = System.currentTimeMillis() - requestTimeElapsed;
+
 
 
             /**
-             * Set 10 4star Hotels at the beggining of the list from cheap to expensive.
+             * Response
              */
-            int foutStarHotelsCount=0;
-            for(int i=0;i<hotelsResponse.size();i++){
-                if(foutStarHotelsCount>9)
-                    break;
-                if(hotelsResponse.get(i).getStar_rating()!=null && hotelsResponse.get(i).getStar_rating().length()>0) {
-                    if (Character.getNumericValue(hotelsResponse.get(i).getStar_rating().charAt(0)) == 4) {
-                        SunHotelsResponse hotel;
-                        hotel=hotelsResponse.get(i);
-                        hotelsResponse.remove(i);
-                        hotelsResponse.add(foutStarHotelsCount,hotel);
-                        foutStarHotelsCount++;
+            if (result != null && result.getError() == null) {
+
+                List<SunHotelsRoomTypeWithRoomsResponse> roomTypesWithRoomsResponse;
+                List<SunHotelsRoomResponse> roomsResponse;
+                List<SunHotelsRoomMealResponse> roomMealsResponse;
+                SunHotelsRoomTypeWithRoomsResponse roomTypeWithRoomsResponse;
+                SunHotelsRoomResponse roomResponse;
+                List<SunHotelsCancelationPolicy> cancelationPolicies;
+                SunHotelsRoomMealResponse roomMealResponse;
+                SunHotelsCancelationPolicy cancelationPolicy;
+                SunHotelsResponse hotelResponse;
+
+                /**
+                 * Get content from DB
+                 */
+                dbTransactionTimeElapsed = System.currentTimeMillis();
+                List<RoomtypeBean> atbRoomTypes = RoomtypeDAO.getRoomsTypes(sanHotelsProviderId);
+                List<MealBean> meals = MealDAO.getMeals(sanHotelsProviderId);
+                List<HotelBean> atbhotels = null;
+                if (originalDestinationId != 0)
+                    atbhotels = HotelDAO.getHotelByDestId(String.valueOf(originalDestinationId), sanHotelsProviderId);
+                List<HotelmappingBean> hotelsmapping = HotelmappingDAO.getAllProviderHotelsMapping(sanHotelsProviderId);
+                dbTransactionTimeElapsed = System.currentTimeMillis() - dbTransactionTimeElapsed;
+
+                /**
+                 * Prepare the response data.
+                 */
+                prepareResponseTimeElapsed = System.currentTimeMillis() - prepareResponseTimeElapsed;
+                if (hotelsmapping != null && atbRoomTypes != null & meals != null) {
+                    for (Hotel hotel : result.getHotels().getHotel()) {
+                        if (originalDestinationId == 0)
+                            atbhotels = HotelDAO.getHotelByHotelId(hotel.getHotelId(), sanHotelsProviderId, null);
+                        if (atbhotels != null) {
+                            for (HotelBean atbhotel : atbhotels) {
+                                if (atbhotel.getHotelId() == hotel.getHotelId()) {
+                                    int atbHotelId = 0;
+                                    for (HotelmappingBean hotelmapping : hotelsmapping) {
+                                        if (atbhotel.getHotelId() == hotelmapping.getHotelId())
+                                            atbHotelId = hotelmapping.getId();
+                                    }
+
+                                    if (atbHotelId != 0) {
+                                        hotelResponse = new SunHotelsResponse();
+                                        hotelResponse.setAddress(atbhotel.getAddress());
+                                        hotelResponse.setCity(atbhotel.getCity());
+                                        hotelResponse.setCountry(atbhotel.getCountry());
+                                        hotelResponse.setDescription(atbhotel.getDescription());
+                                        hotelResponse.setDistrict(atbhotel.getCity());
+                                        hotelResponse.setId(atbHotelId);
+                                        hotelResponse.setLatitude(atbhotel.getLatitude());
+                                        hotelResponse.setLongitude(atbhotel.getLongitude());
+                                        hotelResponse.setName(atbhotel.getName());
+                                        hotelResponse.setStar_rating(atbhotel.getStarRating());
+                                        hotelResponse.setState(atbhotel.getState());
+                                        hotelResponse.setZip_code(atbhotel.getZipCode());
+                                        hotelResponse.setCountry_code(atbhotel.getCountryCode());
+                                        hotelResponse.setType(atbhotel.getAccommodationName());
+
+
+                                        roomTypesWithRoomsResponse = new ArrayList<>();
+                                        roomMealsResponse = new ArrayList<>();
+                                        for (RoomTypeWithRooms roomtype : hotel.getRoomtypes().getRoomtype()) {
+                                            roomsResponse = new ArrayList<>();
+                                            for (Room room : roomtype.getRooms().getRoom()) {
+                                                roomResponse = new SunHotelsRoomResponse();
+                                                roomResponse.setRoomId(room.getId());
+                                                roomResponse.setBeds(room.getBeds());
+                                                cancelationPolicies = new ArrayList<>();
+                                                for (PercentageCancellationPolicy policy : room.getCancellationPolicies().getCancellationPolicy()) {
+                                                    cancelationPolicy = new SunHotelsCancelationPolicy();
+                                                    cancelationPolicy.setPercentage(policy.getPercentage());
+                                                    if (policy.getDeadline() != null)
+                                                        cancelationPolicy.setDeadline(policy.getDeadline());
+                                                    cancelationPolicies.add(cancelationPolicy);
+                                                }
+                                                roomResponse.setCancellationPolicies(cancelationPolicies);
+                                                roomResponse.setExtrabeds(room.getExtrabeds());
+                                                for (RoomMeal roomMeal : room.getMeals().getMeal()) {
+                                                    roomMealsResponse = new ArrayList<>();
+                                                    for (MealBean m : meals) {
+                                                        if (m.getMealId().equals(String.valueOf(roomMeal.getId()))) {
+                                                            roomMealResponse = new SunHotelsRoomMealResponse();
+                                                            roomMealResponse.setMealId(m.getId());
+                                                            roomMealResponse.setMealName(m.getName());
+                                                            for (PriceWithPaymentMethods price : roomMeal.getPrices().getPrice()) {
+                                                                roomMealResponse.setPrice(price.getValue());
+                                                            }
+                                                            roomMealsResponse.add(roomMealResponse);
+                                                        }
+                                                    }
+                                                }
+                                                roomResponse.setMeals(roomMealsResponse);
+                                                roomsResponse.add(roomResponse);
+                                            }
+                                            for (RoomtypeBean atbRoomType : atbRoomTypes) {
+                                                if (atbRoomType.getRoomtypeId().equals(String.valueOf(roomtype.getRoomtypeID()))) {
+                                                    roomTypeWithRoomsResponse = new SunHotelsRoomTypeWithRoomsResponse();
+                                                    roomtype.setRoomtypeID(atbRoomType.getId());
+                                                    roomTypeWithRoomsResponse.setRoomTypeId(atbRoomType.getId());
+                                                    roomTypeWithRoomsResponse.setRoomType(atbRoomType.getRoomType());
+                                                    roomTypeWithRoomsResponse.setRooms(roomsResponse);
+                                                    roomTypesWithRoomsResponse.add(roomTypeWithRoomsResponse);
+                                                }
+                                            }
+                                        }
+                                        hotelResponse.setRoom_types(roomTypesWithRoomsResponse);
+                                        hotelsResponse.add(hotelResponse);
+
+
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            }
+                prepareResponseTimeElapsed = System.currentTimeMillis() - prepareResponseTimeElapsed;
 
-            hotelSearchJSON.setResults(hotelsResponse);
 
 //            /**
 //             * Store request response to search log.
@@ -885,23 +1083,45 @@ public class FrontEndAPIServices {
 //            stroreSearchLogBean.setCurrentStarRatings(params.getStarRatings());
 //            SearchLogDAO.addSearchLogBean(stroreSearchLogBean);
 
-            /**
-             *  Set count of total hotels.
-             */
-            hotelSearchJSON.setTotalHotelsCount(hotelsResponse.size());
 
-            /**
-             * Send only the first x hotels from the list as a response.
-             */
+
+                /**
+                 * Send only the first x hotels from the list as a response.
+                 */
 //            if(hotelsResponse!=null) {
 //                for (int i = hotelsResponse.size() - 1; i > countOfDisplayedHotels-1; i--)
 //                        hotelsResponse.remove(i);
 //            }
 
-
-            hotelSearchJSON.setResults(hotelsResponse);
+            }
         }
 
+        /**
+         * Set 10 4star Hotels at the beggining of the list from cheap to expensive.
+         */
+        int foutStarHotelsCount = 0;
+        for (int i = 0; i < hotelsResponse.size(); i++) {
+            if (foutStarHotelsCount > 9)
+                break;
+            if (hotelsResponse.get(i).getStar_rating() != null && hotelsResponse.get(i).getStar_rating().length() > 0) {
+                if (Character.getNumericValue(hotelsResponse.get(i).getStar_rating().charAt(0)) == 4) {
+                    SunHotelsResponse hotel;
+                    hotel = hotelsResponse.get(i);
+                    hotelsResponse.remove(i);
+                    hotelsResponse.add(foutStarHotelsCount, hotel);
+                    foutStarHotelsCount++;
+                }
+            }
+        }
+
+        hotelSearchJSON.setResults(hotelsResponse);
+
+        /**
+         *  Set count of total hotels.
+         */
+        hotelSearchJSON.setTotalHotelsCount(hotelsResponse.size());
+
+        hotelSearchJSON.setResults(hotelsResponse);
 
 
 
@@ -927,89 +1147,247 @@ public class FrontEndAPIServices {
 
     @RequestMapping(value = "/booking/viatorBook", method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
-    public BookAPIJSON bookViator(@RequestBody ViatorBookPOST vBookPOST){
+    public BookAPIJSON bookViator(@RequestBody APIJSONs.ATBAPIJSONs.Product.BookPOST bookPOST,@RequestParam(value="demo", defaultValue="true") boolean demo){
 
-        BookPOST bookPOST=new BookPOST();
+//        BookPOST bookPOST=new BookPOST();
+//
+//        bookPOST.setBooker(vBookPOST.getBooker());
+//        bookPOST.setCurrencyCode(vBookPOST.getCurrencyCode());
+//        bookPOST.setDemo(vBookPOST.isDemo());
+//
+//        Item item;
+//        List<Item> items=new ArrayList<>();
+//        int distributorItemRef=0;
+//        if(vBookPOST.getItems()!=null) {
+//            for (ViatorItem it : vBookPOST.getItems()) {
+//                item = new Item();
+//                item.setBookingQuestionAnswers(it.getBookingQuestionAnswers());
+//                item.setHotelId(it.getHotelId());
+//                item.setPickupPoint(it.getPickupPoint());
+//                item.setProductCode(it.getProductCode());
+//                item.setSpecialRequirements(it.getSpecialRequirements());
+//                item.setTourGradeCode(it.getTourGradeCode());
+//                item.setTravelDate(it.getTravelDate());
+//
+//
+//                /**
+//                 * Set service and language option //todo ask if viator is gonna add more languages than english in the fueature.If yes the code bellow must be changed
+//                 */
+//                boolean languageOptionCodeisSet = false;
+//                List<ViatorProductTourGradeLanguageServicesBean> tourgradeServices = ViatorProductTourGradeLanguageServicesDAO.getLanguageServicesByProductCodeAndTourGrade(it.getProductCode(), it.getTourGradeCode());
+//                if (tourgradeServices != null) {
+//                    for (ViatorProductTourGradeLanguageServicesBean tourgradeService : tourgradeServices) {
+//                        if (tourgradeService.getLanguageCodeAndService().equals("en/ENGLISH_ONLY")) {
+//                            item.setLanguageOptionCode("en/ENGLISH_ONLY");
+//                            languageOptionCodeisSet = true;
+//                            break;
+//                        }
+//                    }
+//                }
+//                if (!languageOptionCodeisSet) {
+//                    if (it.getServiceOption().equals("live"))
+//                        item.setLanguageOptionCode("en/SERVICE_GUIDE");
+//                    else if (it.getServiceOption().equals("booklet"))
+//                        item.setLanguageOptionCode("en/SERVICE_WRITTEN");
+//                    else if (it.getServiceOption().equals("audio"))
+//                        item.setLanguageOptionCode("en/SERVICE_AUDIO");
+//                }
+//
+//                PartnerItemDetail partnerItemDetail = new PartnerItemDetail();
+//                distributorItemRef++;
+//                partnerItemDetail.setDistributorItemRef("" + distributorItemRef);
+//                item.setPartnerItemDetail(partnerItemDetail);
+//
+//                Traveller traveller;
+//                List<Traveller> travellers = new ArrayList<>();
+//                for (ViatorTraveller tr : it.getTravellers()) {
+//                    traveller = new Traveller();
+//
+//                    if (tr.getPersonType().equals("adult"))
+//                        traveller.setBandId(1);
+//                    else if (tr.getPersonType().equals("child"))
+//                        traveller.setBandId(2);
+//                    else if (tr.getPersonType().equals("infant"))
+//                        traveller.setBandId(3);
+//                    else if (tr.getPersonType().equals("youth"))
+//                        traveller.setBandId(4);
+//                    else if (tr.getPersonType().equals("senior"))
+//                        traveller.setBandId(5);
+//                    traveller.setFirstname(tr.getFirstname());
+//                    traveller.setLeadTraveller(tr.isLeadTraveller());
+//                    traveller.setSurname(tr.getSurname());
+//                    traveller.setTitle(tr.getTitle());
+//                    travellers.add(traveller);
+//                }
+//                item.setTravellers(travellers);
+//                items.add(item);
+//            }
+//        }
+//        bookPOST.setItems(items);
+//        bookPOST.setNewsletterSignUp(false);
+//
+//        PartnerDetail partenerDetail=new PartnerDetail();
+//        partenerDetail.setDistributorRef(vBookPOST.getBookRef());
+//        bookPOST.setPartnerDetail(partenerDetail);
+//        return BookingsAPIDAO.book(bookPOST);
 
-        bookPOST.setBooker(vBookPOST.getBooker());
-        bookPOST.setCurrencyCode(vBookPOST.getCurrencyCode());
-        bookPOST.setDemo(vBookPOST.isDemo());
 
-        Item item;
-        List<Item> items=new ArrayList<>();
-        int distributorItemRef=0;
-        if(vBookPOST.getItems()!=null) {
-            for (ViatorItem it : vBookPOST.getItems()) {
-                item = new Item();
-                item.setBookingQuestionAnswers(it.getBookingQuestionAnswers());
-                item.setHotelId(it.getHotelId());
-                item.setPickupPoint(it.getPickupPoint());
-                item.setProductCode(it.getProductCode());
-                item.setSpecialRequirements(it.getSpecialRequirements());
-                item.setTourGradeCode(it.getTourGradeCode());
-                item.setTravelDate(it.getTravelDate());
+        BookAPIJSON  bookInfoJSON=new BookAPIJSON();
+
+        List<BigDecimal> atbProductPrices=new ArrayList<>();
+        BigDecimal atbTotalNetPrice=new BigDecimal(0);
+        BigDecimal previusAtbTotalNetPrice=new BigDecimal(0); //Used for count single item total pice.
+        BigDecimal viatorTotalPrice=new BigDecimal(0);
 
 
-                /**
-                 * Set service and language option //todo ask if viator is gonna add more languages than english in the fueature.If yes the code bellow must be changed
-                 */
-                boolean languageOptionCodeisSet = false;
-                List<ViatorProductTourGradeLanguageServicesBean> tourgradeServices = ViatorProductTourGradeLanguageServicesDAO.getLanguageServicesByProductCodeAndTourGrade(it.getProductCode(), it.getTourGradeCode());
-                if (tourgradeServices != null) {
-                    for (ViatorProductTourGradeLanguageServicesBean tourgradeService : tourgradeServices) {
-                        if (tourgradeService.getLanguageCodeAndService().equals("en/ENGLISH_ONLY")) {
-                            item.setLanguageOptionCode("en/ENGLISH_ONLY");
-                            languageOptionCodeisSet = true;
-                            break;
-                        }
+        /**
+         * Preparing items  book viator request.
+         */
+        Beans.ViatorAPIBeans.Bookings.Book.Item item;
+        List<Beans.ViatorAPIBeans.Bookings.Book.Item> atbItems = new ArrayList<>();
+        List<Beans.ViatorAPIBeans.Bookings.Book.Item> viatorItems = new ArrayList<>();
+        int distributorItemRef = 0;
+        PartnerItemDetail partnerItemDetail = new PartnerItemDetail();
+
+        for(APIJSONs.ATBAPIJSONs.Product.Item it:bookPOST.getItems()) {
+
+
+            AProductTitleBean product= AProductTitleDAO.getProductById(it.getProductId());
+            if(product==null){
+                bookInfoJSON.setSuccess(false);
+                bookInfoJSON.setErrorReference("Couldn't retrive product with id:"+it.getProductId()+" from database");
+                return bookInfoJSON;
+            }
+            FPricePlanBean priceplan= FPricePlanDAO.getfPricePlansById(Integer.parseInt(it.getPlanId()));
+            if(priceplan==null){
+                bookInfoJSON.setSuccess(false);
+                bookInfoJSON.setErrorReference("Couldn't retrive plan with id:"+it.getPlanId()+" from database");
+                return bookInfoJSON;
+            }
+
+
+            item = new Beans.ViatorAPIBeans.Bookings.Book.Item();
+            distributorItemRef++;
+            partnerItemDetail.setDistributorItemRef("" + distributorItemRef);
+            item.setPartnerItemDetail(partnerItemDetail);
+            item.setBookingQuestionAnswers(it.getBookingQuestionAnswers());
+            item.setHotelId(it.getHotelId());
+            item.setPickupPoint(it.getPickupPoint());
+            item.setSpecialRequirements(it.getSpecialRequirements());
+            item.setTravelDate(it.getTravelDate());
+            item.setProductCode(product.getProductCode());
+            item.setTourGradeCode(priceplan.getTourGradeCode());
+
+            /**
+             * Set service and language option //todo ask if viator is gonna add more languages than english in the fueature.If yes the code bellow must be changed
+             */
+            boolean languageOptionCodeisSet = false;
+            List<ViatorProductTourGradeLanguageServicesBean> tourgradeServices = ViatorProductTourGradeLanguageServicesDAO.getLanguageServicesByProductCodeAndTourGrade(product.getProductCode(), priceplan.getTourGradeCode());
+            if (tourgradeServices != null) {
+                for (ViatorProductTourGradeLanguageServicesBean tourgradeService : tourgradeServices) {
+                    if (tourgradeService.getLanguageCodeAndService().equals("en/ENGLISH_ONLY")) {
+                        item.setLanguageOptionCode("en/ENGLISH_ONLY");
+                        languageOptionCodeisSet = true;
+                        break;
                     }
                 }
-                if (!languageOptionCodeisSet) {
-                    if (it.getServiceOption().equals("live"))
-                        item.setLanguageOptionCode("en/SERVICE_GUIDE");
-                    else if (it.getServiceOption().equals("booklet"))
-                        item.setLanguageOptionCode("en/SERVICE_WRITTEN");
-                    else if (it.getServiceOption().equals("audio"))
-                        item.setLanguageOptionCode("en/SERVICE_AUDIO");
-                }
-
-                PartnerItemDetail partnerItemDetail = new PartnerItemDetail();
-                distributorItemRef++;
-                partnerItemDetail.setDistributorItemRef("" + distributorItemRef);
-                item.setPartnerItemDetail(partnerItemDetail);
-
-                Traveller traveller;
-                List<Traveller> travellers = new ArrayList<>();
-                for (ViatorTraveller tr : it.getTravellers()) {
-                    traveller = new Traveller();
-
-                    if (tr.getPersonType().equals("adult"))
-                        traveller.setBandId(1);
-                    else if (tr.getPersonType().equals("child"))
-                        traveller.setBandId(2);
-                    else if (tr.getPersonType().equals("infant"))
-                        traveller.setBandId(3);
-                    else if (tr.getPersonType().equals("youth"))
-                        traveller.setBandId(4);
-                    else if (tr.getPersonType().equals("senior"))
-                        traveller.setBandId(5);
-                    traveller.setFirstname(tr.getFirstname());
-                    traveller.setLeadTraveller(tr.isLeadTraveller());
-                    traveller.setSurname(tr.getSurname());
-                    traveller.setTitle(tr.getTitle());
-                    travellers.add(traveller);
-                }
-                item.setTravellers(travellers);
-                items.add(item);
             }
-        }
-        bookPOST.setItems(items);
-        bookPOST.setNewsletterSignUp(false);
+            if (!languageOptionCodeisSet) {
+                if (it.getServiceOption().equals("live"))
+                    item.setLanguageOptionCode("en/SERVICE_GUIDE");
+                else if (it.getServiceOption().equals("booklet"))
+                    item.setLanguageOptionCode("en/SERVICE_WRITTEN");
+                else if (it.getServiceOption().equals("audio"))
+                    item.setLanguageOptionCode("en/SERVICE_AUDIO");
+            }
 
-        PartnerDetail partenerDetail=new PartnerDetail();
-        partenerDetail.setDistributorRef(vBookPOST.getBookRef());
-        bookPOST.setPartnerDetail(partenerDetail);
-        return BookingsAPIDAO.book(bookPOST);
+            /**
+             * Prepare travellers for calculate price and booking requests and define travellers type
+             */
+            List<GPriceMatrixBean>  pricematrix= GPriceMatrixDAO.getgPriceMatrixesByProductIdAndPlanId(it.getProductId(),String.valueOf(priceplan.getId()));
+            if(pricematrix==null || pricematrix.size()==0){
+                bookInfoJSON.setSuccess(false);
+                bookInfoJSON.setErrorReference("No prices for product with id:"+it.getProductId());
+                return bookInfoJSON;
+            }
+            Beans.ViatorAPIBeans.Bookings.Book.Traveller traveller;
+            List<Beans.ViatorAPIBeans.Bookings.Book.Traveller> travellers = new ArrayList<>();
+            for(APIJSONs.ATBAPIJSONs.Product.Traveller tr:it.getTravellers()){
+                traveller=new Beans.ViatorAPIBeans.Bookings.Book.Traveller();
+                traveller.setFirstname(tr.getFirstname());
+                traveller.setLeadTraveller(tr.isLeadTraveller());
+                traveller.setSurname(tr.getSurname());
+                traveller.setTitle(tr.getTitle());
+                if(tr.getAge()==0){
+                    bookInfoJSON.setSuccess(false);
+                    bookInfoJSON.setErrorReference("Age is a required field for all travellers");
+                    return bookInfoJSON;
+                }
+
+                for(GPriceMatrixBean price:pricematrix){
+                    if(!price.getAgeFrom().equals("") && !price.getAgeTo().equals("") ){
+                        if(tr.getAge()>=Integer.parseInt(price.getAgeFrom()) && tr.getAge()<Integer.parseInt(price.getAgeTo())) {
+                            if (price.getPersonType().equals("adult")) {
+                                traveller.setBandId(1);
+                                break;
+                            } else if (price.getPersonType().equals("child")) {
+                                traveller.setBandId(2);
+                                break;
+                            } else if (price.getPersonType().equals("infant")) {
+                                traveller.setBandId(3);
+                                break;
+                            } else if (price.getPersonType().equals("youth")) {
+                                traveller.setBandId(4);
+                                break;
+                            } else if (price.getPersonType().equals("senior")) {
+                                traveller.setBandId(5);
+                                break;
+                            } else {
+                                bookInfoJSON.setSuccess(false);
+                                bookInfoJSON.setErrorReference("Couldn't find person type for traveler:" + tr.getFirstname() + "," + tr.getSurname() + " for product with id:" + it.getPlanId());
+                                return bookInfoJSON;
+                            }
+                        }
+                    }else {
+                        bookInfoJSON.setSuccess(false);
+                        bookInfoJSON.setErrorReference("Essential data are missing  for this product.Please contact at george.nafpaktitis@atbholidays.com");
+                        return bookInfoJSON;
+                    }
+                }
+                travellers.add(traveller);
+            }
+
+
+
+            item.setTravellers(travellers);
+            if(product.getMainSupplierName().equals("Viator"))
+                viatorItems.add(item);
+            else {
+                atbItems.add(item);
+                atbProductPrices.add(atbTotalNetPrice.subtract(previusAtbTotalNetPrice));
+            }
+            previusAtbTotalNetPrice=atbTotalNetPrice;
+        }
+
+        DateTime dateTime = new DateTime(DateTimeZone.UTC);
+
+        /**
+         * Make the booking in viator side.
+         */
+        if(viatorItems.size()>0) {
+            BookPOST viatorBookPOST = new BookPOST();
+            viatorBookPOST.setDemo(demo);
+            viatorBookPOST.setItems(viatorItems);
+            viatorBookPOST.setNewsletterSignUp(false);
+            viatorBookPOST.setBooker(bookPOST.getBooker());
+            viatorBookPOST.setCurrencyCode("USD");
+            PartnerDetail partenerDetail = new PartnerDetail();
+            partenerDetail.setDistributorRef(dateTime.toString());
+            viatorBookPOST.setPartnerDetail(partenerDetail);
+            bookInfoJSON = BookingsAPIDAO.book(viatorBookPOST);
+        }
+
+        return bookInfoJSON;
     }
 
     @RequestMapping(value = "/booking/viatorCancel", method = RequestMethod.POST,consumes = "application/json")

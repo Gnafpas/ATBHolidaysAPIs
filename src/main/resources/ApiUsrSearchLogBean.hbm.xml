@@ -11,7 +11,8 @@
         <property name="currentSortOrder" column="current_sort_order"/>
         <property name="currentSortBy" column="current_sort_by"/>
         <property name="currentDistricts" column="current_districts"/>
-        <property name="currentStarRatings" column="current_star_ratings"/>
+        <property name="currentMaxStarRating" column="current_max_star_rating"/>
+        <property name="currentMinStarRating" column="current_min_star_rating"/>
         <property name="currentMealPlans" column="current_meal_plans"/>
         <property name="currentMinPrice" column="current_min_price"/>
         <property name="currentMaxPrice" column="current_max_price"/>

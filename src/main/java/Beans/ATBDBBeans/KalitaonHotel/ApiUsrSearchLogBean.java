@@ -14,7 +14,8 @@ public class ApiUsrSearchLogBean {
     private String currentSortOrder;
     private String currentSortBy;
     private String currentDistricts;
-    private String currentStarRatings;
+    private String currentMinStarRating;
+    private String currentMaxStarRating;
     private String currentMealPlans;
     private String currentMinPrice;
     private String currentMaxPrice;
@@ -81,14 +82,27 @@ public class ApiUsrSearchLogBean {
     }
 
     @Basic
-    @Column(name = "current_star_ratings")
-    public String getCurrentStarRatings() {
-        return currentStarRatings;
+    @Column(name = "current_min_star_rating")
+    public String getCurrentMinStarRating() {
+        return currentMinStarRating;
     }
 
-    public void setCurrentStarRatings(String currentStarRatings) {
-        this.currentStarRatings = currentStarRatings;
+    public void setCurrentMinStarRating(String currentMinStarRating) {
+        this.currentMinStarRating = currentMinStarRating;
     }
+
+    @Basic
+    @Column(name = "current_max_star_rating")
+    public String getCurrentMaxStarRating() {
+        return currentMaxStarRating;
+    }
+
+    public void setCurrentMaxStarRating(String currentMaxStarRating) {
+        this.currentMaxStarRating = currentMaxStarRating;
+    }
+
+
+
 
     @Basic
     @Column(name = "current_meal_plans")
@@ -136,7 +150,9 @@ public class ApiUsrSearchLogBean {
             return false;
         if (currentDistricts != null ? !currentDistricts.equals(that.currentDistricts) : that.currentDistricts != null)
             return false;
-        if (currentStarRatings != null ? !currentStarRatings.equals(that.currentStarRatings) : that.currentStarRatings != null)
+        if (currentMinStarRating != null ? !currentMinStarRating.equals(that.currentMinStarRating) : that.currentMinStarRating != null)
+            return false;
+        if (currentMaxStarRating != null ? !currentMaxStarRating.equals(that.currentMaxStarRating) : that.currentMaxStarRating != null)
             return false;
         if (currentMealPlans != null ? !currentMealPlans.equals(that.currentMealPlans) : that.currentMealPlans != null)
             return false;
@@ -156,7 +172,8 @@ public class ApiUsrSearchLogBean {
         result = 31 * result + (currentSortOrder != null ? currentSortOrder.hashCode() : 0);
         result = 31 * result + (currentSortBy != null ? currentSortBy.hashCode() : 0);
         result = 31 * result + (currentDistricts != null ? currentDistricts.hashCode() : 0);
-        result = 31 * result + (currentStarRatings != null ? currentStarRatings.hashCode() : 0);
+        result = 31 * result + (currentMinStarRating != null ? currentMinStarRating.hashCode() : 0);
+        result = 31 * result + (currentMaxStarRating != null ? currentMaxStarRating.hashCode() : 0);
         result = 31 * result + (currentMealPlans != null ? currentMealPlans.hashCode() : 0);
         result = 31 * result + (currentMinPrice != null ? currentMinPrice.hashCode() : 0);
         result = 31 * result + (currentMaxPrice != null ? currentMaxPrice.hashCode() : 0);

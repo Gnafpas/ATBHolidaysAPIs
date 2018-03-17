@@ -53,9 +53,9 @@ public class HotelfacilityDAO {
 
     }
 
-    public static boolean deleteHotelfacilityBean(int hotelId,StatelessSession session,StatelessSession session2){
+    public static boolean deleteHotelfacilityBean(int hotelId,int providerId,StatelessSession session,StatelessSession session2){
 
-        String hql = String.format("DELETE FROM HotelfacilityBean WHERE hotelId='"+hotelId+"' and providerId='"+sanHotelsProviderId+"'");
+        String hql = String.format("DELETE FROM HotelfacilityBean WHERE hotelId='"+hotelId+"' and providerId='"+providerId+"'");
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();

@@ -1,8 +1,7 @@
 package DAOs.HotelBedsAPIDAOs;
 
-import Beans.HotelBedsAPIBeans.Destiantions.CountriesAPIJSON;
-import Beans.HotelBedsAPIBeans.Destiantions.DestinationsAPIJSON;
 import Beans.HotelBedsAPIBeans.Hotels.HotelsAPIJSON;
+import Beans.HotelBedsAPIBeans.StatusBean;
 import Helper.ProjectProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -64,7 +63,32 @@ public class HotelAPIDAO {
             requestHeaders.add("Api-Key", hotelBedsApiKey);
             requestHeaders.add("Accept", "application/json");
             HttpEntity<?> httpEntity = new HttpEntity<>( requestHeaders);
-            System.out.println(" sdasd "+ signature);
+            hotelsAPIJSON = restTemplate.exchange(url, HttpMethod.GET, httpEntity, HotelsAPIJSON.class).getBody();
+        } catch (HttpClientErrorException e) {
+            errLogger.info("*****************" + e.getStatusCode() + "*****************");
+            errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+        } catch (HttpServerErrorException e) {
+            errLogger.info("*****************" + e.getStatusCode() + "*****************");
+            errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+        } catch (ResourceAccessException e2) {
+            errLogger.info("*****************" + e2.getMessage() + "*****************");
+        }
+        return hotelsAPIJSON;
+    }
+
+    public static HotelsAPIJSON activeHotels(String hotelCodes) {
+        HotelsAPIJSON hotelsAPIJSON=null ;
+        final String url = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?codes="+hotelCodes+"&to=402";
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
+            ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(ProjectProperties.requestTimeOut);
+            String signature = org.apache.commons.codec.digest.DigestUtils.sha256Hex(hotelBedsApiKey + hotelBedsSecret + System.currentTimeMillis() / 1000);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.add("X-Signature", signature);
+            requestHeaders.add("Api-Key", hotelBedsApiKey);
+            requestHeaders.add("Accept", "application/json");
+            HttpEntity<?> httpEntity = new HttpEntity<>( requestHeaders);
             hotelsAPIJSON = restTemplate.exchange(url, HttpMethod.GET, httpEntity, HotelsAPIJSON.class).getBody();
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");

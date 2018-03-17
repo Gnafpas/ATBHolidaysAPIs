@@ -103,16 +103,50 @@ public class UpdateSunHotelsDB {
             if (features.getError() != null)
                 sunHotelsCommErrCounter++;
             else {
-                if(FacilityDAO.deleteAllFacilities())
+                if(FacilityDAO.deleteAllFacilities(sanHotelsProviderId))
                     atbDBErrCommCounter++;
                 else {
-                    for (FeatureWithName feature : features.getFeatures().getFeature()) {
-                        facilityBean.setName(feature.getName());
-                        facilityBean.setFacilityId(feature.getId());
-                        facilityBean.setProviderId(sanHotelsProviderId);
-                        if (FacilityDAO.addFacilityBean(facilityBean)){
-                            atbDBErrCommCounter++;
+                    StatelessSession session = SunHotelsHibernateUtil.getSession();
+                    Transaction tx;
+                    StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                     Transaction tx2;
+                    try {
+                        tx = session.beginTransaction();
+                        tx2 = session2.beginTransaction();
+                        int currentAtbDBErrCommCounter = atbDBErrCommCounter;
+                        for (FeatureWithName feature : features.getFeatures().getFeature()) {
+                            facilityBean.setName(feature.getName());
+                            facilityBean.setFacilityId(String.valueOf(feature.getId()));
+                            facilityBean.setProviderId(sanHotelsProviderId);
+                            if (FacilityDAO.addFacilityBean(facilityBean, session, session2)) {
+                                atbDBErrCommCounter++;
+                            }
                         }
+                        if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
+                            tx.commit();
+                                   tx2.commit();
+                        } else {
+                            tx.rollback();
+                            tx2.rollback();
+                        }
+                    } catch (ExceptionInInitializerError e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        atbDBErrCommCounter++;
+                    } catch (ClientTransportException e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        atbDBErrCommCounter++;
+                    } catch (CJCommunicationsException e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        atbDBErrCommCounter++;
+                    } finally {
+                        session.close();
+                        session2.close();
                     }
                 }
             }
@@ -134,20 +168,63 @@ public class UpdateSunHotelsDB {
             if (roomtypes.getError() != null)
                 sunHotelsCommErrCounter++;
             else {
-                if(RoomtypeDAO.deleteAllRoomtypes())
+                if(RoomtypeDAO.deleteAllRoomtypes(sanHotelsProviderId))//todo dont delete all roomtypes but one by one
                     atbDBErrCommCounter++;
                 else {
-                    for (RoomType roomtype : roomtypes.getRoomTypes().getRoomType()) {
-                        roomtypeBean.setRoomType(roomtype.getName());
-                        roomtypeBean.setProviderId(sanHotelsProviderId);
-                        roomtypeBean.setRoomtypeId(roomtype.getId());
-                        if(roomtype.getSharedRoom()!=0)
-                            roomtypeBean.setSharedRoom(true);
-                        else
-                            roomtypeBean.setSharedRoom(false);
-                        if (RoomtypeDAO.addRoomtypeBean(roomtypeBean)){
-                            atbDBErrCommCounter++;
+                    StatelessSession session = SunHotelsHibernateUtil.getSession();
+                    Transaction tx;
+                    StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                    Transaction tx2;
+                    try {
+                        tx = session.beginTransaction();
+                        tx2 = session2.beginTransaction();
+                        int currentAtbDBErrCommCounter = atbDBErrCommCounter;
+                        for (RoomType roomtype : roomtypes.getRoomTypes().getRoomType()) {
+                            roomtypeBean.setRoomType(roomtype.getName());
+                            roomtypeBean.setProviderId(sanHotelsProviderId);
+                            roomtypeBean.setRoomtypeId(String.valueOf(roomtype.getId()));
+                            roomtypeBean.setRoomSize(0);
+                            roomtypeBean.setSizeMeasurement("");
+                            roomtypeBean.setMaxAdultOccupation(0);
+                            roomtypeBean.setMinAdultOccupation(0);
+                            roomtypeBean.setMaxChildOccupation(0);
+                            roomtypeBean.setMinChildOccupation(0);
+                            roomtypeBean.setMaxInfantOccupation(0);
+                            roomtypeBean.setMinInfantOccupation(0);
+                            roomtypeBean.setDescription("");
+                            if (roomtype.getSharedRoom() != 0)
+                                roomtypeBean.setSharedRoom(true);
+                            else
+                                roomtypeBean.setSharedRoom(false);
+                            if (RoomtypeDAO.addRoomtypeBean(roomtypeBean,session,session2)) {
+                                atbDBErrCommCounter++;
+                            }
                         }
+                        if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
+                            tx.commit();
+                            tx2.commit();
+                        } else {
+                            tx.rollback();
+                            tx2.rollback();
+                        }
+                    } catch (ExceptionInInitializerError e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        atbDBErrCommCounter++;
+                    } catch (ClientTransportException e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        atbDBErrCommCounter++;
+                    } catch (CJCommunicationsException e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        atbDBErrCommCounter++;
+                    } finally {
+                        session.close();
+                        session2.close();
                     }
                 }
             }
@@ -219,7 +296,7 @@ public class UpdateSunHotelsDB {
                         destinationBean.setProviderRef(0);
                         destinationBean.setTimezone(dest.getTimeZone());
                         destinationBean.setCountryCode(dest.getCountryCode());
-                        if(DestinationDAO.deleteDestinationBean(dest.getDestinationId()))
+                        if(DestinationDAO.deleteDestinationBeanSunhotelsId(dest.getDestinationId()))
                             atbDBErrCommCounter++;
                         if(DestinationDAO.addDestinationBean(destinationBean))
                             atbDBErrCommCounter++;
@@ -254,7 +331,7 @@ public class UpdateSunHotelsDB {
                                         tx = session.beginTransaction();
                                         tx2 = session2.beginTransaction();
                                         int currentAtbDBErrCommCounter = atbDBErrCommCounter;
-                                        if (ResortDAO.deleteResortBean(resortBean.getResortId(), session,session2)) {
+                                        if (ResortDAO.deleteResortBean(resortBean.getResortId(),sanHotelsProviderId, session,session2)) {
                                             atbDBErrCommCounter++;
                                         } else {
                                             if (ResortDAO.addResortBean(resortBean, session, session2)) {
@@ -323,8 +400,10 @@ public class UpdateSunHotelsDB {
                                     hotelBean.setCountryCode(hotel.getHotelAddrCountrycode());
                                     hotelBean.setCurrencyId(0);//todo check this field
                                     hotelBean.setDescription(hotel.getDescription());
-                                    hotelBean.setDestinationId(hotel.getDestinationId());
+                                    hotelBean.setDestinationId(String.valueOf(hotel.getDestinationId()));
                                     hotelBean.setDistrict("");//todo check this field
+                                    hotelBean.setAccommodationId("1");
+                                    hotelBean.setAccommodationName("HotelPost");
                                     hotelBean.setActive(true);
                                     hotelBean.setResortId(hotel.getResortId());
                                     if (hotel.getCoordinates() != null && hotel.getCoordinates().getLatitude() != null && hotel.getCoordinates().getLongitude() != null) {
@@ -356,7 +435,7 @@ public class UpdateSunHotelsDB {
                                             photoBean.setCoverPhoto(false);
                                             photoBean.setPhotoPath("");
                                             photoBean.setPhotoUrl(ProjectProperties.sanHotelsImageURL + image.getFullSizeImage().getUrl());
-                                            photoBean.setRoomId(0);
+                                            photoBean.setRoomId("0");
                                             photoBean.setTitle("");
                                             photos.add(photoBean);
                                         } else if (image.getSmallImage() != null && image.getSmallImage().getUrl() != null) {
@@ -367,7 +446,7 @@ public class UpdateSunHotelsDB {
                                             photoBean.setCoverPhoto(false);
                                             photoBean.setPhotoPath("");
                                             photoBean.setPhotoUrl(ProjectProperties.sanHotelsImageURL + image.getSmallImage().getUrl());
-                                            photoBean.setRoomId(0);
+                                            photoBean.setRoomId("0");
                                             photoBean.setTitle("");
                                             photos.add(photoBean);
                                         }
@@ -379,7 +458,7 @@ public class UpdateSunHotelsDB {
                                         hotelfacilityBean.setProviderId(sanHotelsProviderId);
                                         hotelfacilityBean.setExplanation(feature.getName());
                                         hotelfacilityBean.setPrice(new BigDecimal(0.0));
-                                        hotelfacilityBean.setFacilityId(feature.getId());
+                                        hotelfacilityBean.setFacilityId(String.valueOf(feature.getId()));
                                         hotelfacilities.add(hotelfacilityBean);
                                     }
 
@@ -387,21 +466,12 @@ public class UpdateSunHotelsDB {
 
                                         for (Room room : roomtype.getRooms().getRoom()) {
                                             RoomBean roomBean = new RoomBean();
-                                            roomBean.setRoomTypeId(roomtype.getRoomtypeID());
-                                            roomBean.setDescription("");
+                                            roomBean.setRoomTypeId(String.valueOf(roomtype.getRoomtypeID()));
                                             roomBean.setDirty(false);
                                             roomBean.setHotelId(hotel.getHotelId());
-                                            roomBean.setMaxAdultOccupation(0);
-                                            roomBean.setMinAdultOccupation(0);
-                                            roomBean.setMaxChildOccupation(0);
-                                            roomBean.setMinChildOccupation(0);
-                                            roomBean.setMaxInfantOccupation(0);
-                                            roomBean.setMinInfantOccupation(0);
                                             roomBean.setProviderId(sanHotelsProviderId);
                                             roomBean.setProviderRef(0);
-                                            roomBean.setRoomSize(0);
-                                            roomBean.setSizeMeasurement("");
-                                            roomBean.setOriginalRoomId(room.getId());
+                                            roomBean.setOriginalRoomId(String.valueOf(room.getId()));
                                             rooms.add(roomBean);
 
 
@@ -442,8 +512,8 @@ public class UpdateSunHotelsDB {
                                                 }
                                                 if (RoomDAO.addRoomBean(rooms, session,session2))
                                                     atbDBErrCommCounter++;
-                                                if (RoombedDAO.addRoombedBean(roombeds, session,session2))
-                                                    atbDBErrCommCounter++;
+//                                                if (RoombedDAO.addRoombedBean(roombeds, session,session2))
+//                                                    atbDBErrCommCounter++;
                                                 if (HotelfacilityDAO.addHotelfacilityBean(hotelfacilities, session,session2))
                                                     atbDBErrCommCounter++;
                                                 if (PhotoDAO.addPhotoBean(photos, session,session2))

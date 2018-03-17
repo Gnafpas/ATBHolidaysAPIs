@@ -3,6 +3,7 @@ package DAOs.ATBDBDAOs.KalitaonSysDAOs;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 import DBConnection.ATBSysHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
+import com.sun.xml.internal.ws.client.ClientTransportException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -68,6 +69,68 @@ public class CountryCodeDAO {
             session.close();
         }
         return country;
+    }
+
+    public static CountryCodeBean getCountryBycountryName(String countryName){
+        Session session = ATBSysHibernateUtil.getSession();
+        CountryCodeBean country=null;
+        String hql = "select countries from CountryCodeBean countries where countries.countryName = :countryName";
+        try{
+            session.beginTransaction();
+            country=(CountryCodeBean)session.createQuery(hql).setParameter("countryName", countryName).getSingleResult();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+        }finally {
+            session.close();
+        }
+        return country;
+    }
+
+    public static boolean storeCountryCode(CountryCodeBean countryCodeBean){
+
+        boolean error=false;
+        Session session = ATBSysHibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            session.save(countryCodeBean);
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            error=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e) {
+
+        }finally{
+            session.close();
+        }
+        return error;
     }
 
 
