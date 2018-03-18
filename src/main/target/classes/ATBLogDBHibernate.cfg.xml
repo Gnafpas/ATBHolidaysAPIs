@@ -15,12 +15,12 @@
     <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
     <property name="hibernate.c3p0.acquireRetryDelay">250</property>
 
-      <property name="connection.username">kalitaonlinenet</property>
+      <!--<property name="connection.username">kalitaonlinenet</property>
       <property name="connection.password">Ae0qywqudn61</property>
-      <property name="connection.url">jdbc:mysql://31.169.77.202:3306/kalitaon_search_log?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>
-    <!--<property name="connection.username">root</property>
+      <property name="connection.url">jdbc:mysql://31.169.77.202:3306/kalitaon_search_log?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>-->
+    <property name="connection.username">root</property>
     <property name="connection.password">root</property>
-    <property name="connection.url">jdbc:mysql://localhost:3306/kalitaon_search_log?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>-->
+    <property name="connection.url">jdbc:mysql://localhost:3306/kalitaon_search_log?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>
     <mapping class="Beans.ATBDBBeans.KalitaonLog.PrebookLogBean"/>
     <mapping resource="PrebookLogBean.hbm.xml"/>
     <!-- <property name="connection.username"/> -->
