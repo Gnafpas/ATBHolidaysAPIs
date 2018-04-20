@@ -19,7 +19,16 @@ public class PrebookPOST {
     private String roomId="";
     private String roomTypeId="";
     private String hotelId;
+    private String currencyCode="";
 
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public String getRoomTypeId() {
         return roomTypeId;

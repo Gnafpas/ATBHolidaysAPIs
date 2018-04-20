@@ -117,4 +117,41 @@ public class AccommodationsDAO {
         }
         return accommodationsBean;
     }
+
+    public static List<AccommodationsBean> getAccommodationByproviderId( int providerId, StatelessSession session) {
+
+        boolean incomingSession = true;
+        List<AccommodationsBean> accommodationsBean = null;
+        String hql = "select accommodation from AccommodationsBean accommodation where   accommodation.providerId='" + providerId + "'";
+        try {
+            if (session == null) {
+                session = SunHotelsHibernateUtil.getSession();
+                session.beginTransaction();
+                incomingSession = false;
+            }
+            accommodationsBean = session.createQuery(hql).getResultList();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (NoResultException e) {
+
+        } finally {
+            if (!incomingSession)
+                session.close();
+        }
+        return accommodationsBean;
+    }
 }

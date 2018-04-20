@@ -62,7 +62,6 @@ public class UpdateDestinations {
                 }
             }
         }else{
-            System.out.println("********************** Communication ERROR.Did not received Destinations **********************");
             infoJason.setViatorErrorInfo("Communication ERROR.Did not received Destinations");
             infoJason.setViatorError(true);
         }

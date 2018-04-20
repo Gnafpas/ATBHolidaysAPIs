@@ -1,6 +1,8 @@
 package Updates.ATBDBUpdates.HotelBedsDBUpdates;
 
+import Beans.ATBDBBeans.KalitaonHotel.HotelBean;
 import Beans.HotelBedsAPIBeans.Hotels.HotelsAPIJSON;
+import Controller.Application;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.HotelDAO;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.HotelmappingDAO;
 import DAOs.HotelBedsAPIDAOs.HotelAPIDAO;
@@ -96,8 +98,12 @@ public class DeleteExpiredHotels {
                                 Transaction tx2;
                                 tx = session.beginTransaction();
                                 tx2 = session2.beginTransaction();
-                                if (HotelDAO.deleteHotelBean(hotelId,session,session2,hotelBedsProviderId))
-                                    totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
+                                List<HotelBean> hotelbeans=HotelDAO.getHotelByHotelId(hotelId,hotelBedsProviderId,session);
+                                if (hotelbeans!=null && hotelbeans.size()>0 && hotelbeans.get(0).isActive()){
+                                    hotelbeans.get(0).setActive(false);
+                                    if(HotelDAO.saveOrUpdateHotelBean(hotelbeans.get(0),session,session2))
+                                        totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
+                                }
                                 tx.commit();
                                 tx2.commit();
                                 session.close();
@@ -108,6 +114,8 @@ public class DeleteExpiredHotels {
                             }
                         }
                     } else {
+                        Application.agent.increment("app.web.error.updates.hotelBeds",1,0);
+                        Application.agent.notice("********************** Communication ERROR with sunHotels server while deleting expired products. **********************");
                         logger.info("********************** Communication ERROR with sunHotels server while deleting expired products. **********************");
                         totalExpiredHotels.setSunHotelsCommErrCounter(totalExpiredHotels.getSunHotelsCommErrCounter()+1);
                     }

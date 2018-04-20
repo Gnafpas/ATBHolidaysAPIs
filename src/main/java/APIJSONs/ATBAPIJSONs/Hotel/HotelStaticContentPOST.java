@@ -8,7 +8,7 @@ import java.util.List;
 public class HotelStaticContentPOST {
 
     private List<Integer>  hotelIDs;
-    private String  destinationId=null;
+    private int  destinationId=0;
     private Integer  listStartPosition =0;
     private Integer  listLastPosition =100;
 
@@ -20,11 +20,11 @@ public class HotelStaticContentPOST {
         this.hotelIDs = hotelIDs;
     }
 
-    public String getDestinationId() {
+    public int getDestinationId() {
         return destinationId;
     }
 
-    public void setDestinationId(String destinationId) {
+    public void setDestinationId(int destinationId) {
         this.destinationId = destinationId;
     }
 

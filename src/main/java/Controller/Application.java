@@ -1,5 +1,7 @@
 package Controller;
 
+import Helper.CustomErrLogger;
+import Helper.CustomInfoLogger;
 import Helper.ProjectProperties;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -9,6 +11,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import com.instrumentalapp.*;
 
 
 /**
@@ -22,17 +25,20 @@ import java.util.logging.SimpleFormatter;
 public class Application extends SpringBootServletInitializer {
 //todo change mysql driver and configure mysql for connection pooling
 
-    public static Logger errLogger;
-    public static Logger userlogs;
-
+    public static CustomErrLogger errLogger;
+    public static CustomInfoLogger userlogs;
+    public static Agent agent;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 
+        agent = new Agent(new AgentOptions().setApiKey("164825f1c19e59d34c3f32faeb88f66f").setEnabled(true));
+
         /**
          * Set up logger.
          */
-        errLogger = Logger.getLogger("Errors");
+        Logger log=Logger.getLogger("Errors");
+        errLogger = new CustomErrLogger(log.getName(),log.getResourceBundleName());
         FileHandler fh;
         try {
             for(Handler handler:errLogger.getHandlers()) {
@@ -49,7 +55,8 @@ public class Application extends SpringBootServletInitializer {
             e.printStackTrace();
         }
 
-        userlogs = Logger.getLogger("Userlog");
+        Logger log2=Logger.getLogger("Userlog");
+        userlogs = new CustomInfoLogger(log2.getName(),log2.getResourceBundleName());
         FileHandler fh2;
         try {
             for(Handler handler:userlogs.getHandlers()) {
@@ -66,8 +73,8 @@ public class Application extends SpringBootServletInitializer {
             e.printStackTrace();
         }
 
-        errLogger.info("App started...");
-        userlogs.info("App started...");
+//        errLogger.info("App started...");
+//        userlogs.info("App started...");
         return application.sources(Application.class);
     }
 }

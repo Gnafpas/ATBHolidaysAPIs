@@ -20,35 +20,99 @@ import static Controller.Application.errLogger;
  */
 public class FPricePlanDAO {
 
-    public static boolean addPriceplan(FPricePlanBean pricePlanBean){
+    public static int addPriceplan(FPricePlanBean pricePlanBean){
 
         StatelessSession session = ATBHibernateUtil.getSession();
         Transaction tx;
-        boolean err=false;
+        String hql = "select fPricePlanBean from FPricePlanBean fPricePlanBean  order by fPricePlanBean.id DESC";
+        int id=0;
         try{
             session = ATBHibernateUtil.getSession();
             tx=session.beginTransaction();
             session.insert(pricePlanBean);
+            Query query= session.createQuery(hql);
+            query.setMaxResults(1);
+            pricePlanBean=(FPricePlanBean)query.getSingleResult();
+            id=pricePlanBean.getId();
             tx.commit();
         }catch (HibernateException e) {
-            err=true;
+            id=0;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            err=true;
+            id=0;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            err=true;
+            id=0;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
+        }catch(NoResultException e){
+
         }finally {
             session.close();
         }
-        return err;
+        return id;
+    }
+
+
+    public static FPricePlanBean saveOrUpdatePriceplanViatorProductsOnly(FPricePlanBean pricePlanBean){
+        StatelessSession session = ATBHibernateUtil.getSession();
+        Transaction tx;
+        String hql ="Select fPricePlans.id FROM FPricePlanBean fPricePlans " +
+                "WHERE fPricePlans.tourGradeCode like :tourGradeCode  and  fPricePlans.productId like :productId " +
+                "and  fPricePlans.minParticipants like :minParticipants";
+        int id=0;
+        try{
+            tx=session.beginTransaction();
+            try {
+                id = (int) session.createQuery(hql).setParameter("tourGradeCode", pricePlanBean.getTourGradeCode())
+                                                   .setParameter("productId", pricePlanBean.getProductId())
+                                                   .setParameter("minParticipants", pricePlanBean.getMinParticipants())
+                                                   .getSingleResult();
+            }catch(NoResultException e){
+                id=0;
+            }
+            if(id!=0) {
+                pricePlanBean.setId(id);
+                session.update(pricePlanBean);
+            }else {
+                pricePlanBean.setId(0);
+                session.insert(pricePlanBean);
+                id=(int)session.createQuery(hql).setParameter("tourGradeCode", pricePlanBean.getTourGradeCode())
+                                                .setParameter("productId", pricePlanBean.getProductId())
+                                                .setParameter("minParticipants", pricePlanBean.getMinParticipants())
+                                                .getSingleResult();
+                if(id!=0)
+                    pricePlanBean.setId(id);
+                else
+                    return null;
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+            return null;
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+            return null;
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+            return null;
+        }catch(NoResultException e){
+
+        }finally {
+            session.close();
+        }
+        return pricePlanBean;
     }
 
     public static boolean deletePriceplan(String code){
@@ -81,36 +145,6 @@ public class FPricePlanDAO {
         return err;
     }
 
-    public static FPricePlanBean getLastRecord(){
-
-        StatelessSession session = ATBHibernateUtil.getSession();
-        String hql=     " select  a"
-                      + " from FPricePlanBean a"
-                      + " order by a.id DESC";
-        FPricePlanBean pricePlanBean=null;
-        try{
-            Query query= session.createQuery(hql);
-            query.setMaxResults(1);
-            pricePlanBean=(FPricePlanBean)query.getSingleResult();
-        }catch (HibernateException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }catch (ExceptionInInitializerError e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }catch (NoResultException  e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }catch (CJCommunicationsException e){
-            errLogger.info(e.toString());
-        }finally {
-            session.close();
-        }
-        return pricePlanBean;
-    }
 
     public static List<FPricePlanBean> getfPricePlansByProductId(String productId){
 

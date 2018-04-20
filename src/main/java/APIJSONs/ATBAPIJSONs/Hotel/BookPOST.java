@@ -16,10 +16,28 @@ public class BookPOST {
     private int roomId=0;
     private String hotelId;
     private String email;
+    private boolean demo=false;
     private String prebookcode;
     private List<Adult> adults;
     private List<Children> children;
+    private String currencyCode="";
 
+
+    public boolean isDemo() {
+        return demo;
+    }
+
+    public void setDemo(boolean demo) {
+        this.demo = demo;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public String getPrebookcode() {
         return prebookcode;

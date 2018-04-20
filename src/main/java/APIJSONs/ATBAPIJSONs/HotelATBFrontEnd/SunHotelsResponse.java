@@ -2,7 +2,6 @@ package APIJSONs.ATBAPIJSONs.HotelATBFrontEnd;
 
 
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsRoomTypeWithRoomsResponse;
-
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,6 +28,15 @@ public class SunHotelsResponse implements Comparable<SunHotelsResponse> {
     private String type;
     private int id;
     private String name;
+    private int providerId;
+
+    public int getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(int providerId) {
+        this.providerId = providerId;
+    }
 
     public String getCity() {
         return city;

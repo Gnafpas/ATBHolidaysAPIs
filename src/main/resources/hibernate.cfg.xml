@@ -99,6 +99,10 @@
         <mapping class="Beans.ViatorDBBeans.AtbUpdateProductsInfoBean"/>
         <mapping resource="SunhotelsUpdateInfoBean.hbm.xml"/>
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.SunhotelsUpdateInfoBean"/>
+        <mapping class="Beans.ViatorDBBeans.BookLogBean"/>
+        <mapping resource="BookLogBean.hbm.xml"/>
+        <mapping class="Beans.ViatorDBBeans.PrebookLogBean"/>
+        <mapping resource="PrebookAPILogBean.hbm.xml"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

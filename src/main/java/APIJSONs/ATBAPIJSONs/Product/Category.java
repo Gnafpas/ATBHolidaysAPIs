@@ -1,21 +1,12 @@
 package APIJSONs.ATBAPIJSONs.Product;
 
-import Beans.ATBDBBeans.KalitaonProduct.ProductCategoriesBean;
-
 /**
- * Created by George on 20/10/2017.
+ * Created by George on 28/03/2018.
  */
 public class Category {
-    private ProductCategoriesBean category;
-    private int productCount=0;
-
-    public ProductCategoriesBean getCategory() {
-        return category;
-    }
-
-    public void setCategory(ProductCategoriesBean category) {
-        this.category = category;
-    }
+    private int id;
+    private String categoryName;
+    private int productCount;
 
     public int getProductCount() {
         return productCount;
@@ -23,5 +14,21 @@ public class Category {
 
     public void setProductCount(int productCount) {
         this.productCount = productCount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

@@ -142,14 +142,17 @@ public class DestinationDAO {
         return err;
     }
 
-    public static DestinationBean getDestinationBean(int destinationId,int providerId) {
+    public static DestinationBean getDestinationBean(String destinationId,int providerId,StatelessSession session) {
 
-        StatelessSession session;
-        session = SunHotelsHibernateUtil.getSession();
+        boolean incomingSession=true;
         DestinationBean destinationBean = null;
         String hql = "select dest from DestinationBean dest where dest.providerId='" + providerId + "' and dest.destinationId='" + destinationId + "'";
         try {
-            session.beginTransaction();
+            if(session==null) {
+                session = SunHotelsHibernateUtil.getSession();
+                session.beginTransaction();
+                incomingSession=false;
+            }
             destinationBean = (DestinationBean) session.createQuery(hql).getSingleResult();
         } catch (HibernateException e) {
             StringWriter errors = new StringWriter();
@@ -170,7 +173,8 @@ public class DestinationDAO {
         }catch (NoResultException e){
 
         }finally {
-             session.close();
+            if(!incomingSession)
+                session.close();
         }
         return destinationBean;
     }

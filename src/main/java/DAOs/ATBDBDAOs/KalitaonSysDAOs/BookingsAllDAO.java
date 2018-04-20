@@ -131,7 +131,7 @@ public class BookingsAllDAO {
                 "where booking.bookingId like :bookingId and booking.agentId ='"+agentId+"'";
         try{
             session.beginTransaction();
-            bookings=session.createQuery(hql).setParameter("bookingId", "%" +bookingId + "%" ).list();
+            bookings=session.createQuery(hql).setParameter("bookingId", "%-" +bookingId + "-%" ).list();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));

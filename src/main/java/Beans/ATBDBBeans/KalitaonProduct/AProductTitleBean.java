@@ -37,6 +37,7 @@ public class AProductTitleBean {
     private String createdAt;
     private String updatedAt;
     private String stock;
+    private boolean shippable;
 
 
     public AProductTitleBean () {
@@ -72,6 +73,8 @@ public class AProductTitleBean {
             this.reason = "";
             this.createdAt = "";
             this.updatedAt = "";
+            this.stock = "";
+            this.shippable= false;
         }
 
     }
@@ -366,6 +369,16 @@ public class AProductTitleBean {
         this.stock = stock;
     }
 
+    @Basic
+    @Column(name = "shippable")
+    public boolean isShippable() {
+        return shippable;
+    }
+
+    public void setShippable(boolean shippable) {
+        this.shippable = shippable;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -411,6 +424,7 @@ public class AProductTitleBean {
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
         if (stock != null ? !stock.equals(that.stock) : that.stock != null) return false;
+        if (shippable != that.shippable) return false;
 
         return true;
     }
@@ -446,6 +460,7 @@ public class AProductTitleBean {
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (stock != null ? stock.hashCode() : 0);
+        result = 31 * result + (shippable ? 1 : 0);
         return result;
     }
 }

@@ -11,11 +11,19 @@ import java.util.List;
 
 public class RoomMealResponse {
 
-    private Discount discount;
     private int mealId;
     private BigDecimal price;
+    private String currencyCode;
     private String mealName;
 
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public int getMealId() {
         return mealId;
@@ -41,11 +49,5 @@ public class RoomMealResponse {
         this.mealName = mealName;
     }
 
-    public Discount getDiscount() {
-        return discount;
-    }
 
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
 }

@@ -12,7 +12,7 @@
         <property name="photoUrl" column="photo_url"/>
         <property name="facilityId" column="facility_id"/>
         <property name="hotelId" column="hotel_id"/>
-        <property name="roomId" column="room_id"/>
+        <property name="roomTypeId" column="roomType_id"/>
         <property name="providerId" column="provider_id"/>
         <property name="coverPhoto" column="cover_photo"/>
     </class>

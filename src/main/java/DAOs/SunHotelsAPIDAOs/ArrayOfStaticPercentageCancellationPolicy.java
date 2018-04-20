@@ -66,4 +66,7 @@ public class ArrayOfStaticPercentageCancellationPolicy {
         return this.cancellationPolicy;
     }
 
+    public void setCancellationPolicy(List<StaticPercentageCancellationPolicy> cancellationPolicy) {
+        this.cancellationPolicy = cancellationPolicy;
+    }
 }

@@ -1,6 +1,7 @@
 package Updates.ATBDBUpdates.ViatorContentUpdates;
 
 import Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean;
+import Controller.Application;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.*;
 import DAOs.ViatorDBDAOs.*;
 import Beans.ViatorDBBeans.UpdateDBBeans.TotalExpiredProducts;
@@ -31,7 +32,7 @@ public class DeleteATBExpiredProducts {
         /**
          * retrieve all codes of the products in DB
          */
-        logger.info("Start Deleting Expired Products...");
+        logger.info("Start setting not available Expired Products...");
         ATBProducts = AProductTitleDAO.getAllViatorProductsCodes();
         viatorProducts = ViatorProductDetailsDAO.getAllProductsCodes();
         if (ATBProducts == null || viatorProducts == null) {
@@ -39,6 +40,12 @@ public class DeleteATBExpiredProducts {
             totalExpiredProducts.setDbCommError(true);
         }
         else {
+            if(viatorProducts.size()<30000){
+                Application.agent.increment("app.web.error.updates.viatorATBUpdates",1,0);
+                Application.agent.notice("***Setting not available  Expired Products Procedure didn't accomplished because develope_viator DB has less than 30000 products currently.***");
+                logger.info("***Setting not available  Expired Products Procedure didn't accomplished because develope_viator DB has less than 30000 products currently.***");
+                return totalExpiredProducts;
+            }
             for (String code : ATBProducts) {
 
                 /**
@@ -52,21 +59,25 @@ public class DeleteATBExpiredProducts {
                 if (expired) {
 
                     product=AProductTitleDAO.getProductByCode(code,"Viator");
-                    AProductTitleDAO.deleteProduct(code,"Viator");
-                    BProductDetailDAO.deleteProduct(String.valueOf(product.getId()));
-                    CProductOptionsDAO.deleteProductOption(String.valueOf(product.getId()));
-                    DProductPhotoDAO.deletePhoto(String.valueOf(product.getId()));
-                    EPickupPointDAO.deletePickupPoint(String.valueOf(product.getId()));
-                    FPricePlanDAO.deletePriceplan(String.valueOf(product.getId()));
-                    GPriceMatrixDAO.deletePriceMatrix(String.valueOf(product.getId()));
-                    HAvailableDateDAO.deleteAvailableDate(String.valueOf(product.getId()));
-                    HStopsaleDateDAO.deleteStopsaleDate(String.valueOf(product.getId()));
-                    totalExpiredProducts.setTotalExpiredProducts(totalExpiredProducts.getTotalExpiredProducts()+1);
-                    logger.info("Deleting Product with code:" + code + " from ATBDB");
+                    if(product!=null && (product.getOnSale().equals("1") || product.getOnSale().equals("ON"))) {
+                        product.setOnSale("0");
+                        AProductTitleDAO.updateproduct(product);
+                        //BProductDetailDAO.deleteProduct(String.valueOf(product.getId()));
+                        //CProductOptionsDAO.deleteProductOption(String.valueOf(product.getId()));
+                        //DProductPhotoDAO.deletePhoto(String.valueOf(product.getId()));
+                        //EPickupPointDAO.deletePickupPoint(String.valueOf(product.getId()));
+                        //FPricePlanDAO.deletePriceplan(String.valueOf(product.getId()));
+                        //GPriceMatrixDAO.deletePriceMatrix(String.valueOf(product.getId()));
+                        HAvailableDateDAO.deleteAvailableDate(String.valueOf(product.getId()));
+                        HStopsaleDateDAO.deleteStopsaleDate(String.valueOf(product.getId()));
+                        IAvailableTimeDAO.deleteavailableTime(String.valueOf(product.getId()));
+                        totalExpiredProducts.setTotalExpiredProducts(totalExpiredProducts.getTotalExpiredProducts() + 1);
+                        logger.info("Set Product with code:" + code + " not available ");
+                    }
                 }
             }
         }
-        logger.info("Deleting Expired Products Procedure ended.");
+        logger.info("Setting not available Expired Products Procedure ended.");
         return totalExpiredProducts;
     }
 }

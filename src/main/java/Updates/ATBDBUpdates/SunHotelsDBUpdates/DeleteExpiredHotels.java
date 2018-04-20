@@ -1,6 +1,7 @@
 package Updates.ATBDBUpdates.SunHotelsDBUpdates;
 
 import Beans.ATBDBBeans.KalitaonHotel.HotelBean;
+import Controller.Application;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.*;
 import DAOs.SunHotelsAPIDAOs.GetStaticHotelsAndRoomsResult;
 import DAOs.SunHotelsAPIDAOs.NonStaticXMLAPI;
@@ -79,8 +80,12 @@ public class DeleteExpiredHotels {
                                 Transaction tx2;
                                 tx = session.beginTransaction();
                                 tx2 = session2.beginTransaction();
-                                if (HotelDAO.deleteHotelBean(hotelId,session,session2,sanHotelsProviderId))
-                                    totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
+                                List<HotelBean> hotels=HotelDAO.getHotelByHotelId(hotelId,sanHotelsProviderId,session);
+                                if (hotels!=null && hotels.size()>0 && hotels.get(0).isActive()){
+                                    hotels.get(0).setActive(false);
+                                    if(HotelDAO.saveOrUpdateHotelBean(hotels.get(0),session,session2))
+                                        totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
+                                }
                                 tx.commit();
                                 tx2.commit();
                                 session.close();
@@ -91,6 +96,8 @@ public class DeleteExpiredHotels {
                             }
                         }
                     } else {
+                        Application.agent.increment("app.web.error.updates.sunhotels",1,0);
+                        Application.agent.notice("********************** Communication ERROR with sunHotels server while deleting expired products. **********************");
                         logger.info("********************** Communication ERROR with sunHotels server while deleting expired products. **********************");
                         totalExpiredHotels.setSunHotelsCommErrCounter(totalExpiredHotels.getSunHotelsCommErrCounter()+1);
                     }

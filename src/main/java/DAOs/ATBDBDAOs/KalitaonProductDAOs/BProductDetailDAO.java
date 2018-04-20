@@ -7,6 +7,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -49,10 +50,58 @@ public class BProductDetailDAO {
         return err;
     }
 
-    public static boolean deleteProduct(String code){
+    public static boolean saveOrUpdateProductDetail(List<BProductDetailBean> products){
+        StatelessSession session = ATBHibernateUtil.getSession();
+        Transaction tx;
+        boolean err=false;
+        try{
+            tx=session.beginTransaction();
+            for(BProductDetailBean product:products) {
+                String hql ="Select product.id FROM BProductDetailBean product " +
+                        "WHERE product.productId like :productId ";
+                int id;
+                try {
+                    id = (int) session.createQuery(hql).setParameter("productId", product.getProductId())
+                            .getSingleResult();
+                } catch (NoResultException e) {
+                    id = 0;
+                }
+                if (id != 0) {
+                    product.setId(id);
+                    session.update(product);
+                } else {
+                    product.setId(0);
+                    session.insert(product);
+                }
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch(NoResultException e){
+            err=true;
+        }finally {
+            session.close();
+        }
+        return err;
+    }
+
+    public static boolean deleteProduct(String productId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
-        String hql = String.format("DELETE FROM BProductDetailBean WHERE productId='"+code+"'");
+        String hql = String.format("DELETE FROM BProductDetailBean WHERE productId='"+productId+"'");
         boolean err=false;
         try{
             session.beginTransaction();

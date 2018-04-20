@@ -12,7 +12,7 @@ public class Photo {
     private String photoUrl;
     private Integer facilityId;
     private int hotelId;
-    private String roomId;
+    private String roomTypeId;
     private boolean coverPhoto;
 
     public int getId() {
@@ -71,12 +71,12 @@ public class Photo {
         this.hotelId = hotelId;
     }
 
-    public String getRoomId() {
-        return roomId;
+    public String getRoomTypeId() {
+        return roomTypeId;
     }
 
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
+    public void setRoomTypeId(String roomTypeId) {
+        this.roomTypeId = roomTypeId;
     }
 
     public boolean isCoverPhoto() {

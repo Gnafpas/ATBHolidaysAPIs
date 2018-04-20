@@ -48,10 +48,10 @@ public class HSpecialDateDAO {
 
     }
 
-    public static boolean deleteSpecialDate(String code){
+    public static boolean deleteSpecialDate(String productId){
 
         StatelessSession session = ATBHibernateUtil.getSession();
-        String hql = String.format("DELETE FROM HSpecialDateBean WHERE productId='"+code+"'");
+        String hql = String.format("DELETE FROM HSpecialDateBean WHERE productId='"+productId+"'");
         boolean err=false;
         try{
             session.beginTransaction();

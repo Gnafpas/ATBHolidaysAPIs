@@ -1,5 +1,7 @@
 package Controller.AdminController;
 
+import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.EventsTravelBookPOST;
+import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.OrderProduct;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 import Beans.HotelBedsAPIBeans.Availability.*;
@@ -244,9 +246,9 @@ public class AdminController {
              */
             TimerTask timerTask = new UpdateEventsTravelDBTimerTask();
             eventsTravelTimer = new Timer(true);
-            eventsTravelTimer.scheduleAtFixedRate(timerTask, 0, Helper.ProjectProperties.runDBUpdateEveryXMillisecs);
+            eventsTravelTimer.scheduleAtFixedRate(timerTask, 0, Helper.ProjectProperties.runSunhotDBUpdateEveryXMillisecs);
             eventsTravelTimerRuns=true;
-            return "Update timer task started.Runs every "+ ProjectProperties.runDBUpdateEveryXMillisecs /60 /60 /1000+" hours." ;
+            return "Update timer task started.Runs every "+ ProjectProperties.runSunhotDBUpdateEveryXMillisecs /60 /60 /1000+" hours." ;
         }
         else
             return "Update timer task runs already.";
@@ -391,8 +393,6 @@ public class AdminController {
                                 }
                             }
                         }
-
-
                     }
                 }
             }
@@ -495,6 +495,8 @@ public class AdminController {
 //            if(!d.equals(""))
 //              System.out.println(d);
 //        }
+
+
         return "ok";
     }
 

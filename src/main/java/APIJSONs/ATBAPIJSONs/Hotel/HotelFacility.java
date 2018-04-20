@@ -10,7 +10,6 @@ public class HotelFacility {
     private int id;
     private BigDecimal price;
     private String explanation;
-    private String facilityId;
     private int hotelId;
 
     public int getId() {
@@ -35,14 +34,6 @@ public class HotelFacility {
 
     public void setExplanation(String explanation) {
         this.explanation = explanation;
-    }
-
-    public String getFacilityId() {
-        return facilityId;
-    }
-
-    public void setFacilityId(String facilityId) {
-        this.facilityId = facilityId;
     }
 
     public int getHotelId() {

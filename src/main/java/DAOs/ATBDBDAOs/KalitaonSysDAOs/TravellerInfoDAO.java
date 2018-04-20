@@ -56,7 +56,7 @@ public class TravellerInfoDAO {
         return error;
     }
 
-    public static List<TravellerInfoBean> getPrebookLogBeanByBookingId(String bookingId){
+    public static List<TravellerInfoBean> getTravellerInfoBeanByBookingId(String bookingId){
 
         Session session = ATBSysHibernateUtil.getSession();
         List<TravellerInfoBean> travellerInfoBean=null;

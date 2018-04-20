@@ -12,18 +12,30 @@ import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SupplierDAO;
 import DAOs.EventsTravelAPIDAO.EventsTravelProductsAPIDAO;
 import DBConnection.ATBHibernateUtil;
+import Helper.ProjectProperties;
 import org.apache.log4j.Logger;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
+import org.joda.time.DateTimeComparator;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.TextStyle;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.SimpleFormatter;
+
+import static Controller.Application.errLogger;
 
 /**
  * Created by George on 10/07/2017.
@@ -35,7 +47,7 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
     private String eventsTravelAPIkey;
     private int productId;
     private static String apiKeyJNDI = "java:comp/env/string/EventsTravelAPIkey";
-    private static final Logger logger = Logger.getLogger(UpdateEventsTravelDBTimerTask.class);
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger("UpdateEventsTravelDBTimerTask");
     private boolean addPorduct;
     private static int total ;
     private static int stored ;
@@ -58,11 +70,11 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
             logger.info("API key retrieval failed" + e.getMessage());
             e.printStackTrace();
         }
-        logger.debug("API key " + eventsTravelAPIkey);
+        //logger.debug("API key " + eventsTravelAPIkey);
         /* Build Request */
         if (eventsTravelAPIkey != null && !"".equals(eventsTravelAPIkey))
-            request.append("token="+eventsTravelAPIkey);
-       return resultSet = EventsTravelProductsAPIDAO.getProducts(request.toString()); //todo test to be removed
+            request.append("token="+eventsTravelAPIkey);//+"&test=true");
+        return resultSet = EventsTravelProductsAPIDAO.getProducts(request.toString()); //todo test to be removed
     }
 
     @Override
@@ -78,6 +90,7 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
         FPricePlanBean pricePlan = new FPricePlanBean();
         HAvailableDateBean date = new HAvailableDateBean();
         IAvailableTimeBean time = new IAvailableTimeBean();
+        HSpecialDateBean hSpecialDateBean= new HSpecialDateBean();
         DProductPhotoBean photo = null;
         SupplierPhotoPathBean photoPath = null;
         List<CityCodeBean> cities=null;
@@ -94,37 +107,72 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
         String supplierId;
         CityCodeBean cityCode ;
         int planId = 0 ;
+
+        /**
+         * Set up logger.
+         */
+        FileHandler fh;
+        try {
+            for (Handler handler : logger.getHandlers()) {
+                logger.removeHandler(handler);
+            }
+            // This block configure the logger with handler and formatter
+            fh = new FileHandler(ProjectProperties.logspath + "EventsTravel.log");
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (SecurityException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (IOException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }
+
+
+
         logger.info("Received: "+products.size()+" products. \n Inserting...");
+        currentTimestamp = Timestamp.valueOf(LocalDateTime.now());
+        session=ATBHibernateUtil.getSession();
 
         for (Map.Entry<String, EventsTravelProduct> entry : products.entrySet()){
-            session=ATBHibernateUtil.getSession();
             tx=session.beginTransaction();
             total++;
-
             EventsTravelProduct currentProduct = entry.getValue();
-            currentTimestamp = Timestamp.valueOf(LocalDateTime.now());
+            if(Integer.parseInt(currentProduct.getStock())==0) {
+                tx.rollback();
+                continue;
+            }
             AProductTitleBean atbProductTitle = AProductTitleDAO.getProductByCode(entry.getValue().getSku(), EventsTravelController.EVENTS_TRAVEL);
+            productDetailList.clear();
+            priceList.clear();
+
             if (atbProductTitle!=null){
                 //TODO delete product from all tables
                 productId = atbProductTitle.getId();
                 try {
-                    AProductTitleDAO.deleteProduct(entry.getValue().getSku(),EventsTravelController.EVENTS_TRAVEL);
-                    GPriceMatrixDAO.deletePriceMatrix(String.valueOf(productId));
                     HAvailableDateDAO.deleteAvailableDate(String.valueOf(productId));
-                    FPricePlanDAO.deletePriceplan(String.valueOf(productId));
                     IAvailableTimeDAO.deleteavailableTime(String.valueOf(productId));
-                    DProductPhotoDAO.deletePhoto(String.valueOf(productId));
+                    HSpecialDateDAO.deleteSpecialDate(String.valueOf(productId));
                 } catch (Exception e){
                     logger.info(e.getMessage());
                     tx.rollback();
                     break;
                 }
-            }
+            }else
+                productId=0;
+
             //Init - add product
             try {
+                if("Hong Kong SAR China".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCountry())) {
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCountry("Hong Kong");
+                }
                 countryCode = CountryCodeDAO.getCountryBycountryName(currentProduct.getLanguages().getLangDescription().get("EN").getCountry());
                 if (countryCode == null) {
-                    logger.info("Country not found"+currentProduct.getLanguages().getLangDescription().get("EN").getCountry());
+                    logger.info("Country not found "+currentProduct.getLanguages().getLangDescription().get("EN").getCountry());
+                    tx.rollback();
                     continue;
                 }
 //                    countryCode = new CountryCodeBean();
@@ -143,7 +191,20 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
 //                    }
 //                }
 
-                //get city code
+                //get city code New York City
+                if("New York".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCity())){
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCity("New York City");
+                } else if ("Milan".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCity())){
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCity("Milano");
+                } else if ("Rostov-On-Don".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCity())){
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCity("Rostov-na-Donu");
+                } else if ("Nizhny Novgorod".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCity())){
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCity("Nizhniy Novgorod");
+                }else if ("Kyiv".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCity())){
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCity("Kiev");
+                }else if ("Ekaterinburg".equals(currentProduct.getLanguages().getLangDescription().get("EN").getCity())){
+                    currentProduct.getLanguages().getLangDescription().get("EN").setCity("Yekaterinburg");
+                }
                 cities = CityCodeDAO.getCityByNameAndIsoCode(currentProduct.getLanguages().getLangDescription().get("EN").getCity(), countryCode.getIsoCode().trim());
                 cityCode = new CityCodeBean();
 //                if (cities.isEmpty()) {
@@ -171,19 +232,24 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
 
                 if(cities.size()>1) {
                     for (CityCodeBean city : cities) {
-                        distance = distance(Double.parseDouble(currentProduct.getLat()), Double.parseDouble(city.getLatitude()), Double.parseDouble(currentProduct.getLng()), Double.parseDouble(city.getLongitude()));
-                        if (minDistance == 0) {
-                            minDistance = distance;
-                            cityCode = city;
-                        } else if (distance < minDistance) {
-                            minDistance = distance;
+                        if (city.getLongitude().replaceAll("\\.","").substring(0,2).equals(currentProduct.getLng().replaceAll("\\.","").substring(0,2))
+                                && city.getLatitude().replaceAll("\\.","").substring(0,2).equals(currentProduct.getLat().replaceAll("\\.","").substring(0,2))){
                             cityCode = city;
                         }
+                        //distance = distance(Double.parseDouble(currentProduct.getLat()), Double.parseDouble(city.getLatitude()), Double.parseDouble(currentProduct.getLng()), Double.parseDouble(city.getLongitude()));
+                        //if (minDistance == 0) {
+                        //   minDistance = distance;
+                        //    cityCode = city;
+                        //} else if (distance < minDistance) {
+                        //    minDistance = distance;
+                        //    cityCode = city;
+                        //}
                     }
                 }else if(cities.size()==1){
                     cityCode= cities.get(0);
                 } else{
-                    logger.info("City not found" +currentProduct.getLanguages().getLangDescription().get("EN").getCity());
+                    logger.info("City not found " +currentProduct.getLanguages().getLangDescription().get("EN").getCity()+" {"+countryCode.getIsoCode().trim()+"}");
+                    tx.rollback();
                     continue;
                 }
                 photoPath = SupplierPhotoPathDAO.getSupplierPhotoPathBySupplierId(String.valueOf(SupplierDAO.getSupplierId(EventsTravelController.EVENTS_TRAVEL)));
@@ -197,45 +263,111 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
                     } catch (Exception e) {
                         logger.info(e.getMessage());
                         tx.rollback();
-                        session.close();
                         continue;
+                    }
+                }
+
+                if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory()!=null && !currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("")) {
+                    List<ProductCategoriesBean> categories=ProductCategoriesDAO.getAllCategories();
+                    if (categories != null) {
+                        boolean exists = false;
+                        for (ProductCategoriesBean category : categories) {
+                            if (category.getCategoryName().equals(currentProduct.getLanguages().getLangDescription().get("EN").getCategory()))
+                                exists = true;
+                        }
+                        if (!exists) {
+                            ProductCategoriesBean productCategoriesBean = new ProductCategoriesBean();
+                            productCategoriesBean.setCategoryName(currentProduct.getLanguages().getLangDescription().get("EN").getCategory());
+                            productCategoriesBean.setLng("");
+                            productCategoriesBean.setSubCatId("");
+                            ProductCategoriesDAO.addProductCategoriesBean(productCategoriesBean);
+                        }
                     }
                 }
 
                 distance = 0;
                 minDistance = 0;
+                EventsTravelDescription desc = currentProduct.getLanguages().getLangDescription().get("EN");
                 atbProductTitle = new AProductTitleBean(true);
                 // Assign
                 atbProductTitle.setProductCode(currentProduct.getSku());
-                atbProductTitle.setSubId("");
+                atbProductTitle.setSubId("evtTicket");
                 atbProductTitle.setTextLanguage("EN");
-                atbProductTitle.setTypeOfProduct(currentProduct.getShipping_method());
+                atbProductTitle.setTypeOfProduct("5");
                 atbProductTitle.setCountryCode(countryCode.getIsoCode());
                 atbProductTitle.setCountryName(countryCode.getCountryName());
                 atbProductTitle.setCurrencyCode("EUR");
                 atbProductTitle.setStock(currentProduct.getStock());
                 atbProductTitle.setMainSupplierId(String.valueOf(SupplierDAO.getSupplierId(EventsTravelController.EVENTS_TRAVEL)));
                 atbProductTitle.setMainSupplierName(EventsTravelController.EVENTS_TRAVEL);
-                atbProductTitle.setThumbnailUrl(currentProduct.getImage());
+                if(!currentProduct.getImage().equals("http://www.eventstravel.eu/uploads/images/products/options/variants/"))
+                    atbProductTitle.setThumbnailUrl(currentProduct.getImage());
+                else
+                    atbProductTitle.setThumbnailUrl("https://www.atbholidays.com/images/no_hotel.gif?%3E");
                 atbProductTitle.setCreatedAt(currentTimestamp.toString());
                 atbProductTitle.setUpdatedAt(currentTimestamp.toString());
                 atbProductTitle.setCityName(cityCode.getOriginalName());
                 atbProductTitle.setCityCode(String.valueOf(cityCode.getId()));
                 atbProductTitle.setMarchandNetPrice(currentProduct.getPrice());
+                atbProductTitle.setOnSale("1");
+                atbProductTitle.setShippable(true);
+
+
+                if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory()!=null && !currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("")){
+                    if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("Tennis"))
+                        atbProductTitle.setThumbnailUrl("https://nv.ua/img/article/2990/32_main.jpg");
+                    else if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("Football"))
+                        atbProductTitle.setThumbnailUrl("https://ae01.alicdn.com/kf/HTB13q.WJVXXXXXiXXXXq6xXFXXXA/Papel-pintado-de-encargo-de-la-foto-f-tbol-en-el-c-sped-para-el-sal.jpg_640x640q90.jpg");
+                    else if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("Motorsports"))
+                        atbProductTitle.setThumbnailUrl("https://i.ytimg.com/vi/rtfifEoFdVA/hqdefault.jpg");
+                    else if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("Concerts"))
+                        atbProductTitle.setThumbnailUrl("http://freedesignfile.com/upload/2016/11/The-rock-concert-cheered-the-crowd-with-yellow-light-smoke.jpg");
+                    else if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("Rugby"))
+                        atbProductTitle.setThumbnailUrl("https://www.verve.ie/wp-content/uploads/Rugby_WC.png");
+                    else if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("Darts"))
+                        atbProductTitle.setThumbnailUrl("https://static.vinepair.com/wp-content/uploads/2017/03/darts-int.jpg");
+                    else if(currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals("American Football"))
+                        atbProductTitle.setThumbnailUrl("https://www.verve.ie/wp-content/uploads/Rugby_WC.png");
+                }
+
+                if(desc.getSeating_description().contains("FIFA") && countryCode.getIsoCode().equals("RU ")) {//todo remove this code after mudial ends
+                    atbProductTitle.setCategoriesTag("World Cup 2018");
+                    atbProductTitle.setThumbnailUrl("https://www.atbholidays.com/product_data/0RUSSIA%20WORLD%20CUP%20LOGO%20KULLANILACAK.jpg");
+                }else{
+                    if (currentProduct.getLanguages().getLangDescription().get("EN").getCategory() != null && !currentProduct.getLanguages().getLangDescription().get("EN").getCategory().equals(""))
+                        atbProductTitle.setCategoriesTag(currentProduct.getLanguages().getLangDescription().get("EN").getCategory());
+                    else
+                        atbProductTitle.setCategoriesTag("");
+                }
+
+                String title="("+currentProduct.getLanguages().getLangDescription().get("EN").getName().substring(0, 1).toUpperCase()+
+                                 currentProduct.getLanguages().getLangDescription().get("EN").getName().substring(1)+") "+
+                                 currentProduct.getLanguages().getLangDescription().get("EN").getEvent();
+                if(!currentProduct.getLanguages().getLangDescription().get("EN").getEvent_guest().equals(""))
+                    title=title +" - ";//todo Upercase the first letter of tittle
+                title=title+ currentProduct.getLanguages().getLangDescription().get("EN").getEvent_guest()+" "+currentProduct.getDate();
+                atbProductTitle.setProductTitle(title);
+
                 //Execute
                 try {
-                    AProductTitleDAO.addproduct(atbProductTitle);
+                    if(productId==0)
+                        productId=AProductTitleDAO.addproduct(atbProductTitle);
+                    else {
+                        atbProductTitle.setId(productId);
+                        AProductTitleDAO.updateproduct(atbProductTitle);
+                    }
                 } catch (Exception e) {
                     logger.info(e.getMessage());
                     tx.rollback();
-                    session.close();
                     continue;
                 }
-                productId = atbProductTitle.getId();
-                EventsTravelDescription desc = currentProduct.getLanguages().getLangDescription().get("EN");
+
+
                 productDetail = new BProductDetailBean();
                 productDetail.setDescriptionSummary(desc.getName());
-                productDetail.setProductDetail(desc.getSeating()+"#"+desc.getSeating_id()+"#"+desc.getSeating_description());
+                productDetail.setProductDetail(desc.getSeating().replaceAll("Events Travel","ATB Holidays")+
+                                               "#"+desc.getSeating_id().replaceAll("Events Travel","ATB Holidays")+
+                                               "#"+desc.getSeating_description().replaceAll("Events Travel","ATB Holidays"));
                 productDetail.setProductId(String.valueOf(productId));
                 productDetail.setCategories(desc.getCategory());
                 productDetail.setAdittionalInfo(desc.getHospitality_description());
@@ -243,7 +375,7 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
                 productDetail.setInclusions("");
                 productDetail.setExclusions("");
                 productDetail.setCancellationPolicy("");
-                productDetail.setMerchantCancellable("");
+                productDetail.setMerchantCancellable("false");
                 productDetail.setVoucherInfo("");
                 productDetail.setCreatedAt(currentTimestamp.toString());
                 productDetail.setUpdatedAt(currentTimestamp.toString());
@@ -253,56 +385,74 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
                 productDetailList.add(productDetail);
 
                 try {
-                    BProductDetailDAO.addproduct(productDetailList);
+                    BProductDetailDAO.saveOrUpdateProductDetail(productDetailList);
                 } catch (Exception e) {
                     logger.info(e.getMessage());
                     tx.rollback();
-                    session.close();
                     continue;
                 }
+
+                List<DProductPhotoBean> photos = new ArrayList<>();//todo remove this code when mudial ends
+                if(desc.getSeating_description().contains("FIFA") && countryCode.getIsoCode().equals("RU ")) {
+                    photo = new DProductPhotoBean();
+                    photo.setPhotoName("0RUSSIA%20WORLD%20CUP%20LOGO%20KULLANILACAK.jpg");
+                    photo.setSupplierId("10232");
+                    photo.setProductId(String.valueOf(productId));
+                    photo.setVt("2");
+                    photo.setAtb("");
+                    photo.setCaption("");
+                    photo.setMainPhoto("ON");
+                    photo.setSubId("evtTicket");
+                    photo.setCreatedAt(currentTimestamp.toString());
+                    photo.setUpdatedAt(currentTimestamp.toString());
+                    photos.add(photo);
+                }
+
                 photo = new DProductPhotoBean();
                 photo.setPhotoName(currentProduct.getImage().replace(EventsTravelController.PHOTO_PATH,""));
                 photo.setSupplierId(String.valueOf(SupplierDAO.getSupplierId(EventsTravelController.EVENTS_TRAVEL)));
                 photo.setProductId(String.valueOf(productId));
                 photo.setVt("2");
                 photo.setAtb("");
-                photo.setCaption("");
+                photo.setCaption("seat plan");
                 photo.setMainPhoto("");
-                photo.setSubId("evt");
+                photo.setSubId("evtTicket");
                 photo.setCreatedAt(currentTimestamp.toString());
                 photo.setUpdatedAt(currentTimestamp.toString());
-                List<DProductPhotoBean> photos = new ArrayList<>();
                 photos.add(photo);
                 try {
-                    DProductPhotoDAO.addPhoto(photos);
+                    DProductPhotoDAO.saveOrUpdatePhoto(photos);
                 } catch (Exception e) {
                     logger.info(e.getMessage());
                     tx.rollback();
-                    session.close();
                     continue;
                 }
                 pricePlan = new FPricePlanBean();
                 pricePlan.setMinParticipants("1");
                 pricePlan.setPlanTitle("default");
                 pricePlan.setProductId(String.valueOf(productId));
-                pricePlan.setSubId("");
+                pricePlan.setSubId("evtTicket");
                 pricePlan.setPriceType("Price Per Person");
                 pricePlan.setRateType("net");
                 pricePlan.setTourGradeCode("");
                 pricePlan.setCreatedAt(currentTimestamp.toString());
                 pricePlan.setUpdatedAt(currentTimestamp.toString());
 
+                int pricePlanId=0;
                 try {
-                    FPricePlanDAO.addPriceplan(pricePlan);
+                    pricePlan=FPricePlanDAO.saveOrUpdatePriceplanViatorProductsOnly(pricePlan);
+                    if(pricePlan!=null)
+                        pricePlanId=pricePlan.getId();
+                    else
+                        continue;
                 } catch (Exception e) {
                     logger.info(e.getMessage());
                     tx.rollback();
-                    session.close();
                     continue;
                 }
                 price = new GPriceMatrixBean();
                 price.setAgeFrom("0");
-                price.setAgeTo("999");
+                price.setAgeTo("99");
                 price.setCommission("");
                 price.setCreatedAt(currentTimestamp.toString());
                 price.setUpdatedAt(currentTimestamp.toString());
@@ -311,59 +461,89 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
                 price.setCurrencyCode("EUR");
                 price.setPersonType("adult");
                 price.setCommission("");
-                price.setPlanId(String.valueOf(pricePlan.getId()));
+                price.setPlanId(String.valueOf(pricePlanId));
                 price.setOptionTitle("");
                 price.setMinCountRequired(1);
-                price.setMaxCountRequired(1);
+                if(Integer.parseInt(currentProduct.getStock())>4)
+                    price.setMaxCountRequired(4);
+                else
+                    price.setMaxCountRequired(Integer.parseInt(currentProduct.getStock()));
                 price.setPriceRate("");
                 priceList.add(price);
                 try {
-                    GPriceMatrixDAO.addPriceMatrix(priceList);
+                    GPriceMatrixDAO.saveOrUpdatePriceMatrix(priceList);
                 } catch (Exception e) {
                     logger.info(e.getMessage());
                     tx.rollback();
-                    session.close();
                     continue;
                 }
                 date = new HAvailableDateBean();
                 date.setCreatedAt(currentTimestamp);
                 date.setDepartimeOnOff("");
-                date.setStartDate(currentTimestamp);
-                date.setPlanId(String.valueOf(pricePlan.getId()));
+                date.setPlanId(String.valueOf(pricePlanId));
                 date.setProductId(String.valueOf(productId));
-                date.setEndDate(convertStringToDate(currentProduct.getDate()));
-                date.setAvailableTitle("Available period");
+                Timestamp timeStampDate=null;
+                try {
+                    DateFormat formatter;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    Date d = (Date) formatter.parse(currentProduct.getDate());
+                    timeStampDate = new Timestamp(d.getTime());
+                    date.setStartDate(timeStampDate);
+                    timeStampDate = new Timestamp(d.getTime()+(1000*60*60*48));
+                    date.setEndDate(timeStampDate);
+                    timeStampDate = new Timestamp(d.getTime()+(1000*60*60*24));
+                } catch (ParseException e) {
+                    //System.out.println("Exception :" + e);
+                }
+                date.setAvailableTitle(desc.getSeating());
                 date.setAvailableTimeType("Opening hours/operating hours");
                 date.setUpdatedAt(currentTimestamp);
-                date.setStartDate(currentTimestamp);
+                int dateId=0;
                 try {
-                    HAvailableDateDAO.addAvailableDate(date);
+                    dateId=HAvailableDateDAO.addAvailableDate(date);
                 } catch (Exception e) {
                     logger.info(e.getMessage());
                     tx.rollback();
-                    session.close();
                     continue;
                 }
-                for(int i = 0; i < days.length; i++) {
-                    time = new IAvailableTimeBean();
-                    time.setAvailableId(String.valueOf(date.getId()));
-                    time.setCreatedAt(currentTimestamp);
-                    time.setEndTime("23:59:59");
-                    time.setPlanId(String.valueOf(pricePlan.getId()));
-                    time.setProductId(String.valueOf(productId));
-                    time.setStartTime("00:00:00");
-                    time.setUpdatedAt(currentTimestamp);
-                    time.setWeekDay(days[i]);
-                    try {
-                        IAvailableTimeDAO.addAvailableTime(time);
-                    } catch (Exception e) {
-                        logger.info(e.getMessage());
-                        tx.rollback();
-                        continue;
-                    }
+
+                time = new IAvailableTimeBean();
+                time.setAvailableId(String.valueOf(dateId));
+                time.setCreatedAt(currentTimestamp);
+                time.setEndTime("23:59:59");
+                time.setPlanId(String.valueOf(pricePlanId));
+                time.setProductId(String.valueOf(productId));
+                time.setStartTime("00:00:00");
+                time.setUpdatedAt(currentTimestamp);
+                LocalDateTime withoutTimezone = convertStringToDate(currentProduct.getDate()).toLocalDateTime();
+                time.setWeekDay(withoutTimezone.getDayOfWeek().getDisplayName(TextStyle.FULL_STANDALONE , Locale.US));
+                try {
+                    IAvailableTimeDAO.addAvailableTime(time);
+                } catch (Exception e) {
+                    logger.info(e.getMessage());
+                    tx.rollback();
+                    continue;
                 }
+
+                hSpecialDateBean=new HSpecialDateBean();
+                hSpecialDateBean.setAvailableId(String.valueOf(dateId));
+                hSpecialDateBean.setCreatedAt(java.sql.Date.valueOf(currentTimestamp.toLocalDateTime().toLocalDate()));
+                hSpecialDateBean.setPlanId(String.valueOf(pricePlanId));
+                hSpecialDateBean.setProductId(String.valueOf(productId));
+                hSpecialDateBean.setServiceDate(java.sql.Date.valueOf(timeStampDate.toLocalDateTime().toLocalDate()));
+                hSpecialDateBean.setUpdatedAt(java.sql.Date.valueOf(currentTimestamp.toLocalDateTime().toLocalDate()));
+                try {
+                    HSpecialDateDAO.addSpecialDate(hSpecialDateBean);
+                } catch (Exception e) {
+                    logger.info(e.getMessage());
+                    tx.rollback();
+                    continue;
+                }
+
                 stored++;
+                logger.info(stored+") Product with Id: "+productId+" Sku: "+currentProduct.getSku());
                 tx.commit();
+
             }catch (Exception e) {
                 logger.info(e.getMessage());
                 e.printStackTrace();
@@ -371,11 +551,28 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
                 session.close();
                 continue;
             }
-            session.close();
         }
+        List<AProductTitleBean> outDatedproducts = AProductTitleDAO.getOutdatedProducts(EventsTravelController.EVENTS_TRAVEL, currentTimestamp.toString(),"evtTicket" );
+        for (AProductTitleBean prd : outDatedproducts){
+            tx=session.beginTransaction();
+            try {
+                prd.setOnSale("0");
+                AProductTitleDAO.updateproduct(prd);
+                HAvailableDateDAO.deleteAvailableDate(String.valueOf(prd.getId()));
+                IAvailableTimeDAO.deleteavailableTime(String.valueOf(prd.getId()));
+                HSpecialDateDAO.deleteSpecialDate(String.valueOf(prd.getId()));
+                logger.info("Removing unavailable product: "+prd.getId());
+                tx.commit();
+            } catch (Exception e){
+                logger.info(e.getMessage());
+                tx.rollback();
+                break;
+            }
 
+        }
+        currentTimestamp = Timestamp.valueOf(LocalDateTime.now());
         logger.info("Stored: "+stored+" out of: "+total+" products.\nThe update process took "+ (currentTimestamp.getTime() - startingTimestamp.getTime())+" ms");
-
+        session.close();
     }
     public static Timestamp convertStringToDate(String str_date) {
         try {
@@ -383,10 +580,9 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
             formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = (Date) formatter.parse(str_date);
             Timestamp timeStampDate = new Timestamp(date.getTime());
-
             return timeStampDate;
         } catch (ParseException e) {
-            System.out.println("Exception :" + e);
+            //System.out.println("Exception :" + e);
             return null;
         }
     }
@@ -399,7 +595,7 @@ public class UpdateEventsTravelDBTimerTask extends TimerTask {
 
             return timeStampDate;
         } catch (ParseException e) {
-            System.out.println("Exception :" + e);
+            //System.out.println("Exception :" + e);
             return null;
         }
     }

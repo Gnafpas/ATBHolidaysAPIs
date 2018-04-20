@@ -12,7 +12,7 @@ public class Availability {
     private List<HAvailableDateBean> availableDates=new ArrayList<>();
     private List<HSpecialDateBean> specialDates=new ArrayList<>();
     private List<HStopsaleDateBean> stopsaleDates=new ArrayList<>();
-    private List<IAvailableTimeBean> availableTime=new ArrayList<>();
+   // private List<IAvailableTimeBean> availableTime=new ArrayList<>();
     private String planId;
 
     public String getPlanId() {
@@ -47,11 +47,11 @@ public class Availability {
         this.stopsaleDates = stopsaleDates;
     }
 
-    public List<IAvailableTimeBean> getAvailableTime() {
-        return availableTime;
-    }
-
-    public void setAvailableTime(List<IAvailableTimeBean> availableTime) {
-        this.availableTime = availableTime;
-    }
+//    public List<IAvailableTimeBean> getAvailableTime() {
+//        return availableTime;
+//    }
+//
+//    public void setAvailableTime(List<IAvailableTimeBean> availableTime) {
+//        this.availableTime = availableTime;
+//    }
 }

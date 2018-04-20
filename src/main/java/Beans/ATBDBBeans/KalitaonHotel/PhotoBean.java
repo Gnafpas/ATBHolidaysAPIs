@@ -15,7 +15,7 @@ public class PhotoBean {
     private String photoUrl;
     private Integer facilityId;
     private int hotelId;
-    private String roomId;
+    private String roomTypeId;
     private int providerId;
     private boolean coverPhoto;
 
@@ -90,13 +90,13 @@ public class PhotoBean {
     }
 
     @Basic
-    @Column(name = "room_id")
-    public String getRoomId() {
-        return roomId;
+    @Column(name = "roomType_id")
+    public String getRoomTypeId() {
+        return roomTypeId;
     }
 
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
+    public void setRoomTypeId(String roomTypeId) {
+        this.roomTypeId = roomTypeId;
     }
 
     @Basic
@@ -136,7 +136,7 @@ public class PhotoBean {
         if (photoPath != null ? !photoPath.equals(photoBean.photoPath) : photoBean.photoPath != null) return false;
         if (photoUrl != null ? !photoUrl.equals(photoBean.photoUrl) : photoBean.photoUrl != null) return false;
         if (facilityId != null ? !facilityId.equals(photoBean.facilityId) : photoBean.facilityId != null) return false;
-        if (roomId != null ? !roomId.equals(photoBean.roomId) : photoBean.roomId != null) return false;
+        if (roomTypeId != null ? !roomTypeId.equals(photoBean.roomTypeId) : photoBean.roomTypeId != null) return false;
 
         return true;
     }
@@ -150,7 +150,7 @@ public class PhotoBean {
         result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
         result = 31 * result + (facilityId != null ? facilityId.hashCode() : 0);
         result = 31 * result + hotelId;
-        result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
+        result = 31 * result + (roomTypeId != null ? roomTypeId.hashCode() : 0);
         result = 31 * result + providerId;
         result = 31 * result + (coverPhoto ? 1 : 0);
         return result;

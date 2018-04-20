@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class PricingmatrixJSON extends StandardJSON {
 
-    private List<Pricingmatrix> data=new ArrayList<>();
+    private List<PricingmatrixWithPlanId> data=new ArrayList<>();
 
-    public List<Pricingmatrix> getData() {
+    public List<PricingmatrixWithPlanId> getData() {
         return data;
     }
 
-    public void setData(List<Pricingmatrix> data) {
+    public void setData(List<PricingmatrixWithPlanId> data) {
         this.data = data;
     }
 }

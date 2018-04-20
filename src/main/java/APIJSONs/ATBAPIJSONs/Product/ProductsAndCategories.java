@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class ProductsAndCategories {
 
-    private List<AProductTitleBean> products=new ArrayList<>();
+    private List<Product> products=new ArrayList<>();
 
-    public List<AProductTitleBean> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<AProductTitleBean> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 }

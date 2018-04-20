@@ -16,7 +16,7 @@ public class SunhotelsBookPOST {
     private int mealId;
     private String customerCountry;
     private int roomId;
-    private String roomtypeId;
+    private String hotelId;
     private String email;
     private String prebookcode;
     private List<Adult> adults;
@@ -119,13 +119,11 @@ public class SunhotelsBookPOST {
         this.roomId = roomId;
     }
 
-    public String getRoomtypeId() {
-        return roomtypeId;
+    public String getHotelId() {
+        return hotelId;
     }
 
-    public void setRoomtypeId(String roomtypeId) {
-        this.roomtypeId = roomtypeId;
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
     }
-
-
 }

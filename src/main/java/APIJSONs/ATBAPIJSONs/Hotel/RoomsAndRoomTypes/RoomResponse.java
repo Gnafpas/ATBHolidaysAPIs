@@ -11,7 +11,6 @@ public class RoomResponse {
     private int extrabeds;
     private List<RoomMealResponse> meals;
     private List<CancelationPolicyResponse> cancellationPolicies;
-    private ArrayOfCalendarNote notes;//todo maybe it has to be change to custom if searcv2 doesn't return all the details for note and it returns only ids of note types
 
 
     public int getRoomId() {
@@ -52,14 +51,6 @@ public class RoomResponse {
 
     public void setCancellationPolicies(List<CancelationPolicyResponse> cancellationPolicies) {
         this.cancellationPolicies = cancellationPolicies;
-    }
-
-    public ArrayOfCalendarNote getNotes() {
-        return notes;
-    }
-
-    public void setNotes(ArrayOfCalendarNote notes) {
-        this.notes = notes;
     }
 
 }

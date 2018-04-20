@@ -25,7 +25,6 @@ public class BookingInfoItem {
     private String itemId;
     private String pickupHotelId;
     private BigDecimal price;
-    private String supplierName;
     private String bookingStatus;
 
     public String getBookingStatus() {
@@ -90,14 +89,6 @@ public class BookingInfoItem {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
     }
 
     public String getHotelId() {

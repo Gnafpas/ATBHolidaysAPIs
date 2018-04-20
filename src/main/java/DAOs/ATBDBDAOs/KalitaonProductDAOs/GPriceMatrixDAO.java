@@ -7,6 +7,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -42,6 +44,61 @@ public class GPriceMatrixDAO {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return err;
+    }
+
+    public static boolean saveOrUpdatePriceMatrix(List<GPriceMatrixBean> priceMatrixes){
+        StatelessSession session = ATBHibernateUtil.getSession();
+        Transaction tx;
+        boolean err=false;
+        try{
+            tx=session.beginTransaction();
+            for(GPriceMatrixBean priceMatrix:priceMatrixes) {
+                String hql ="Select gPriceMatrix.id FROM GPriceMatrixBean gPriceMatrix " +
+                        "WHERE gPriceMatrix.planId like :planId  and  gPriceMatrix.productId like :productId " +
+                        "and  gPriceMatrix.ageFrom like :ageFrom and  gPriceMatrix.ageTo like :ageTo " +
+                        "and  gPriceMatrix.minCountRequired= :minCountRequired and  gPriceMatrix.maxCountRequired= :maxCountRequired";
+                int id;
+                try {
+                    id = (int) session.createQuery(hql).setParameter("planId", priceMatrix.getPlanId())
+                            .setParameter("productId", priceMatrix.getProductId())
+                            .setParameter("ageFrom", priceMatrix.getAgeFrom())
+                            .setParameter("ageTo", priceMatrix.getAgeTo())
+                            .setParameter("minCountRequired", priceMatrix.getMinCountRequired())
+                            .setParameter("maxCountRequired", priceMatrix.getMaxCountRequired())
+                            .getSingleResult();
+                } catch (NoResultException e) {
+                    id = 0;
+                }
+                if (id != 0) {
+                    priceMatrix.setId(id);
+                    session.update(priceMatrix);
+                } else {
+                    priceMatrix.setId(0);
+                    session.insert(priceMatrix);
+                }
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch(NoResultException e){
+            err=true;
         }finally {
             session.close();
         }

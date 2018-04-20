@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ViatorDBBeans.BookLogBean" table="book_log" schema="develope_viator">
+        <id name="id" column="id"/>
+        <property name="client" column="client"/>
+        <property name="clientBookingId" column="client_booking_id"/>
+        <property name="clientRequest" column="client_request"/>
+        <property name="clientResponse" column="client_response"/>
+        <property name="provider" column="provider"/>
+        <property name="providerBookingId" column="provider_booking_id"/>
+        <property name="providerRequest" column="provider_request"/>
+        <property name="providerResponse" column="provider_response"/>
+        <property name="prebookRef" column="prebook_ref"/>
+        <property name="dateTime" column="date_time"/>
+    </class>
+</hibernate-mapping>

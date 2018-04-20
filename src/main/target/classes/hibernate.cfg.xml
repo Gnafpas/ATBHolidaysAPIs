@@ -15,12 +15,12 @@
         <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
         <property name="hibernate.c3p0.acquireRetryDelay">250</property>
 
-        <!--<property name="connection.username">root</property>
-        <property name="connection.password">h3ll0mysq1</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>-->
         <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
+        <property name="connection.password">h3ll0mysq1</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>
+        <!--<property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/develope_viator?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</property>-->
         <mapping class="Beans.ViatorDBBeans.ViatorProductDetailsBean"/>
         <mapping resource="ViatorProductDetailsBean.hbm.xml"/>
         <mapping resource="ViatorProductXCategoryBean.hbm.xml"/>
@@ -99,6 +99,10 @@
         <mapping class="Beans.ViatorDBBeans.AtbUpdateProductsInfoBean"/>
         <mapping resource="SunhotelsUpdateInfoBean.hbm.xml"/>
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.SunhotelsUpdateInfoBean"/>
+        <mapping class="Beans.ViatorDBBeans.BookLogBean"/>
+        <mapping resource="BookLogBean.hbm.xml"/>
+        <mapping class="Beans.ViatorDBBeans.PrebookLogBean"/>
+        <mapping resource="PrebookAPILogBean.hbm.xml"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

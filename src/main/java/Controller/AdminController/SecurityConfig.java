@@ -2,6 +2,7 @@ package Controller.AdminController;
 
 
 import Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean;
+import Controller.Application;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
 import Helper.ProjectProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +81,8 @@ public class SecurityConfig{
                             "Failed validation of API key.");
                     return;
                 }//todo remove blank id
-            }//todo check the frequency of request
-            //todo make static variable for all the strings at project properties class
+            } //todo check the frequency of request
+             //todo make static variable for all the strings at project properties class
             //response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
            //             "The REST Security Server experienced an internal error.");
 

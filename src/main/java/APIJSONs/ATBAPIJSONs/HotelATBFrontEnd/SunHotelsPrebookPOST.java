@@ -12,16 +12,24 @@ public class SunHotelsPrebookPOST {
     private int rooms;
     private int adults;
     private int children;
-    private List<Integer> childrenAges;
+    private String childrenAges="";
     private int infant;
     private int mealId;
     private String customerCountry;
     private String searchPrice;
-    private String roomId="";
     private String roomtypeId;
     private String blockSuperDeal;
+    private String hotelId;
     private String showPriceBreakdown;
 
+
+    public String getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
+    }
 
     public String getCurrency() {
         return currency;
@@ -71,11 +79,11 @@ public class SunHotelsPrebookPOST {
         this.children = children;
     }
 
-    public List<Integer> getChildrenAges() {
+    public String getChildrenAges() {
         return childrenAges;
     }
 
-    public void setChildrenAges(List<Integer> childrenAges) {
+    public void setChildrenAges(String childrenAges) {
         this.childrenAges = childrenAges;
     }
 
@@ -109,14 +117,6 @@ public class SunHotelsPrebookPOST {
 
     public void setSearchPrice(String searchPrice) {
         this.searchPrice = searchPrice;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
     }
 
     public String getRoomtypeId() {

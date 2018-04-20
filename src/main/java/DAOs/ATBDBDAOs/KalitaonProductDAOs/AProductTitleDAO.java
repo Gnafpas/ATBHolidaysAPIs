@@ -7,16 +7,15 @@ import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
-
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import static Controller.Application.errLogger;
 
 /**
@@ -24,14 +23,48 @@ import static Controller.Application.errLogger;
  */
 public class AProductTitleDAO {
 
-    public static boolean addproduct(AProductTitleBean product){
+    public static int addproduct(AProductTitleBean product){
 
+        StatelessSession session = ATBHibernateUtil.getSession();
+        String hql = "select aProductTitleBean from AProductTitleBean aProductTitleBean  order by aProductTitleBean.id DESC";
+        Transaction tx;
+        int id=0;
+        try{
+            tx=session.beginTransaction();
+            session.insert(product);
+            Query query= session.createQuery(hql);
+            query.setMaxResults(1);
+            product=(AProductTitleBean)query.getSingleResult();
+            id=product.getId();
+            tx.commit();
+        }catch (HibernateException e) {
+            id=0;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            id=0;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            id=0;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return id;
+    }
+
+    public static boolean updateproduct(AProductTitleBean product){
         StatelessSession session = ATBHibernateUtil.getSession();
         Transaction tx;
         boolean err=false;
         try{
             tx=session.beginTransaction();
-            session.insert(product);
+            session.update(product);
             tx.commit();
         }catch (HibernateException e) {
             err=true;
@@ -85,6 +118,36 @@ public class AProductTitleDAO {
     }
 
 
+    public static boolean deleteProductById(int id){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        String hql = String.format("DELETE FROM AProductTitleBean WHERE id="+id);
+        boolean err=false;
+        try{
+            session.beginTransaction();
+            session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return err;
+    }
+
     public static  AProductTitleBean getProductByCode(String productCode, String supplierName){
 
         StatelessSession session = ATBHibernateUtil.getSession();
@@ -106,6 +169,30 @@ public class AProductTitleDAO {
             session.close();
         }
         return product;
+    }
+
+    public static List<AProductTitleBean> getOutdatedProducts(String supplierName, String timestamp, String subId){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        AProductTitleBean product=null;
+        List<AProductTitleBean> products = new ArrayList<>();
+        String hql ="Select a FROM Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean a WHERE a.createdAt not like '"+ timestamp +"' and a.mainSupplierName='"+supplierName+"' and a.subId='"+subId+"'";
+        try{
+            Query query= session.createQuery(hql);
+            //query.setMaxResults(1);
+            products = query.getResultList();
+        }catch (HibernateException e) {
+            errLogger.info(e.toString());
+        }catch (ExceptionInInitializerError e) {
+            errLogger.info(e.toString());
+        }catch (NoResultException e){
+
+        }catch (CJCommunicationsException e){
+            errLogger.info(e.toString());
+        }finally {
+            session.close();
+        }
+        return products;
     }
 
     public static  AProductTitleBean getProductById(String productId){
@@ -194,12 +281,16 @@ public class AProductTitleDAO {
      * a combination of those attributes.Capability of filtering by categories and sort by REVIEW_AVG_RATING_D,
      * REVIEW_AVG_RATING_A, POPULARITY, PRICE_D, PRICE_a, DURATION_D, DURATION_A.Also filtering by dates.
      */
-    public static List <AProductTitleBean> getProducts(ProductsAndCategoriesPOST params,ZonedDateTime startDate,ZonedDateTime endDate){
+    public static List <AProductTitleBean> getProducts(ProductsAndCategoriesPOST params,ZonedDateTime startDate,ZonedDateTime endDate,StatelessSession session){
 
         List <AProductTitleBean> products=null;
         int i;
         String hql=     " select  DISTINCT(productDetails)"
                 + " from AProductTitleBean productDetails";
+
+        if(startDate!=null && endDate!=null && (startDate.isBefore(endDate) || startDate.equals(endDate))){
+            hql=  hql + " , HAvailableDateBean hAvailableDateBean";
+        }
 
 
         /**
@@ -220,6 +311,8 @@ public class AProductTitleDAO {
             hql=hql + " and cast(productDetails.marchandNetPrice as int) >= :priceFrom ";
         if(params.getPriceTo()!=0)
             hql=hql + " and cast(productDetails.marchandNetPrice as int) <= :priceTo ";
+        if(params.isOnlyOnsaleProducts())
+            hql=hql + " and  productDetails.onSale = 1";
 
         /**
          * Categories filter hql restrictions
@@ -240,15 +333,56 @@ public class AProductTitleDAO {
         /**
          * Dates filter hql restrictions
          */
-        if(startDate!=null && endDate!=null && startDate.isBefore(endDate)){
+        if(startDate!=null && endDate!=null && (startDate.isBefore(endDate) || startDate.equals(endDate))){
+
+            hql = hql + " and hAvailableDateBean.productId= productDetails.id and ( (:startDate >= hAvailableDateBean.startDate and :startDate <= hAvailableDateBean.endDate)  or " +
+                    " (:endDate >= hAvailableDateBean.startDate and :endDate <= hAvailableDateBean.endDate) ) ";
+
+//            i=0;
+//
+//            for (ZonedDateTime date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1))
+//            {
+//                String[] splitDate=date.toString().split("T");
+//                String d=splitDate[0].replace("-","");
+//                if(i==0) {
+//                    hql = hql + " and (not exists (select stopsaleDate from HStopsaleDateBean stopsaleDate " +
+//                            " where stopsaleDate.stopDate = '"+d+"'"+
+//                            " and stopsaleDate.productId = productDetails.id)";
+//                    atLeastoneEntry=true;
+//                }else{
+//                    hql = hql + " or not exists (select stopsaleDate from HStopsaleDateBean stopsaleDate " +
+//                            " where stopsaleDate.stopDate = '"+d+"'"+
+//                            " and stopsaleDate.productId = productDetails.id)";
+//                }
+//                i++;
+//            }
+//            if(atLeastoneEntry)
+//                hql = hql +")";
+            boolean atLeastoneEntry=false;
             i=0;
+            atLeastoneEntry=false;
             for (ZonedDateTime date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1))
             {
-                hql = hql + " and not exists (select stopsaleDate from HStopsaleDateBean stopsaleDate " +
-                        " where stopsaleDate.stopDate = :date" + i +
-                        " and stopsaleDate.productId = productDetails.id)";
+                String[] splitDate=date.toString().split("T");
+                String d=splitDate[0].replace("-","");
+                if(i==0) {
+                    hql = hql + " and ( exists (select hSpecialDateBean from HSpecialDateBean hSpecialDateBean " +
+                            " where hSpecialDateBean.serviceDate = '"+d+"'"+
+                            " and hSpecialDateBean.productId = productDetails.id)";
+                    atLeastoneEntry=true;
+                }else{
+                    hql = hql + " or  exists (select hSpecialDateBean from HSpecialDateBean hSpecialDateBean " +
+                            " where hSpecialDateBean.serviceDate = '"+d+"'"+
+                            " and hSpecialDateBean.productId = productDetails.id)";
+                }
                 i++;
-            }//todo check stopsale dates to let products show up when there is even only one day available from the selected dates
+            }
+            if(atLeastoneEntry)
+                hql = hql +" or not exists (select hSpecialDateBean from HSpecialDateBean hSpecialDateBean " +
+                        " where hSpecialDateBean.productId = productDetails.id and hSpecialDateBean.planId = hAvailableDateBean.planId) )";
+
+
+
         }
 
 
@@ -275,9 +409,15 @@ public class AProductTitleDAO {
 //            hql = hql + " order by productDetails.duration ASC";
 //        }
 
-        StatelessSession session = ATBHibernateUtil.getSession();
+
+
+        boolean incomingSession=true;
+        if(session==null) {
+            session = ATBHibernateUtil.getSession();
+            incomingSession=false;
+        }
         try{
-            Query query= session.createQuery(hql)
+            org.hibernate.query.Query query= session.createQuery(hql)
                     .setParameter("title", "%" + params.getTitle() + "%")
                     .setParameter("city", "%" + params.getCity() + "%")
                     .setParameter("country", "%" + params.getCountry() + "%");
@@ -301,13 +441,9 @@ public class AProductTitleDAO {
                     i++;
                 }
             }
-            if(startDate!=null && endDate!=null && startDate.isBefore(endDate)){
-                i=0;
-                for (ZonedDateTime date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1))
-                {
-                    query.setParameter("date"+i, Date.from(date.toInstant()), TemporalType.DATE);
-                    i++;
-                }
+            if(startDate!=null && endDate!=null && (startDate.isBefore(endDate) || startDate.equals(endDate))){
+                query.setParameter("startDate", Date.from(startDate.toInstant()), TemporalType.DATE);
+                query.setParameter("endDate", Date.from(endDate.toInstant()), TemporalType.DATE);
             }
 
             /**Decreasing by 1 because the first product is at position 0.*/
@@ -317,6 +453,7 @@ public class AProductTitleDAO {
 //                query.setMaxResults(params.getLastProduct());
 
             products=query.getResultList();
+
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
@@ -326,7 +463,8 @@ public class AProductTitleDAO {
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }finally {
-            session.close();
+            if(!incomingSession)
+                session.close();
         }//todo integrade sortorders
         return products;
     }

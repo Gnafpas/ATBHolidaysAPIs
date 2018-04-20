@@ -5,9 +5,7 @@
 <hibernate-mapping>
 
     <class name="Beans.ATBDBBeans.KalitaonProduct.AProductTitleBean" table="a_product_title" schema="atb_DB">
-        <id name="id" column="id">
-        <generator class="increment"></generator>
-        </id>
+        <id name="id" column="id"/>
         <property name="subId" column="sub_id"/>
         <property name="productCode" column="product_code"/>
         <property name="textLanguage" column="text_language"/>
@@ -36,5 +34,6 @@
         <property name="createdAt" column="created_at"/>
         <property name="updatedAt" column="updated_at"/>
         <property name="stock" column="stock"/>
+        <property name="shippable" column="shippable"/>
     </class>
 </hibernate-mapping>

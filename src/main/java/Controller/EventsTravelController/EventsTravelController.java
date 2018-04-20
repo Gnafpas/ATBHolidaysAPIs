@@ -92,47 +92,47 @@ public class EventsTravelController {
         return response;
     }
 
-    @RequestMapping(value = "/eventsTravel/orders/create", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseBody
-    public void createOrder(@RequestParam(value = "test", required = false) String test,
-                            @RequestBody EventsTravelCreateOrderRequest body) {
-        //Request Data Validation
-        OrderProduct[] products;
-        AProductTitleBean atbProductTitle;
-        EventsTravelCreateOrderResponse response = null;
-        StringBuilder request= new StringBuilder("?");
-        try {
-            initialContext = new InitialContext();
-            eventsTravelAPIkey = (String) initialContext.lookup(apiKeyJNDI);
-        } catch (NamingException e) {
-            logger.info("API key retrieval failed" + e.getMessage());
-            e.printStackTrace();
-        }
-        logger.debug("API key " + eventsTravelAPIkey);
-        /* Build Request */
-        if (eventsTravelAPIkey != null && !"".equals(eventsTravelAPIkey))
-            request.append("token="+eventsTravelAPIkey);
-        if (test != null && !"".equals(test))
-            request.append("test="+test);
-
-
-        if (body.getProducts() == null || body.getProducts().length == 0)
-            logger.info("No products given");
-        else {
-            products = body.getProducts();
-            for (OrderProduct product : products){
-                if ((product.getAmount()== 0)||(product.getSku() == null || "".equals(product.getSku())))
-                    logger.info("Amount and Sku are mandatory");
-                atbProductTitle = AProductTitleDAO.getProductById(product.getSku());
-                product.setSku(String.valueOf(atbProductTitle.getProductCode()));
-                if (product.getAmount() > Double.parseDouble(atbProductTitle.getStock()))
-                    logger.info("Available stock is: "+atbProductTitle.getStock());
-
-            }
-            response = EventsTravelProductsAPIDAO.createOrder(request.toString(), body);
-        }
-        logger.info(body.toString() +"\n"+ response.toString());
-
-    }
+//    @RequestMapping(value = "/eventsTravel/orders/create", method = RequestMethod.POST, consumes = "application/json")
+//    @ResponseBody
+//    public void createOrder(@RequestParam(value = "test", required = false) String test,
+//                            @RequestBody EventsTravelCreateOrderRequest body) {
+//        //Request Data Validation
+//        EventsTravelBookPOST[] products;
+//        AProductTitleBean atbProductTitle;
+//        EventsTravelCreateOrderResponse response = null;
+//        StringBuilder request= new StringBuilder("?");
+//        try {
+//            initialContext = new InitialContext();
+//            eventsTravelAPIkey = (String) initialContext.lookup(apiKeyJNDI);
+//        } catch (NamingException e) {
+//            logger.info("API key retrieval failed" + e.getMessage());
+//            e.printStackTrace();
+//        }
+//        logger.debug("API key " + eventsTravelAPIkey);
+//        /* Build Request */
+//        if (eventsTravelAPIkey != null && !"".equals(eventsTravelAPIkey))
+//            request.append("token="+eventsTravelAPIkey);
+//        if (test != null && !"".equals(test))
+//            request.append("test="+test);
+//
+//
+//        if (body.getProducts() == null || body.getProducts().length == 0)
+//            logger.info("No products given");
+//        else {
+//            products = body.getProducts();
+//            for (EventsTravelBookPOST product : products){
+//                if ((product.getAmount()== 0)||(product.getSku() == null || "".equals(product.getSku())))
+//                    logger.info("Amount and Sku are mandatory");
+//                atbProductTitle = AProductTitleDAO.getProductById(product.getSku());
+//                product.setSku(String.valueOf(atbProductTitle.getProductCode()));
+//                if (product.getAmount() > Double.parseDouble(atbProductTitle.getStock()))
+//                    logger.info("Available stock is: "+atbProductTitle.getStock());
+//
+//            }
+//            response = EventsTravelProductsAPIDAO.createOrder(request.toString(), body);
+//        }
+//        logger.info(body.toString() +"\n"+ response.toString());
+//
+//    }
 
 }

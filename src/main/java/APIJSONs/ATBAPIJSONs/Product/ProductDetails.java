@@ -8,67 +8,67 @@ import java.util.List;
  * Created by George on 23/10/2017.
  */
 public class ProductDetails {
-    private List<AProductTitleBean> productTitle;
-    private List<BProductDetailBean> productDetails;
-    private List<CProductOptionsBean> productOptions;
-    private List<DProductPhotoBean> productPhotos;
-    private List<EPickupPointBean> pickupPoints;
-    private List<FPricePlanBean> pricePlans;
-    private List<JProductQuestionsBean> bookingQuestions;
+    private List<Product> productTitle;
+    private List<ProductMoreDetails> productDetails;
+    private List<ProductOptions> productOptions;
+    private List<Photo> productPhotos;
+    private List<PickupPoint> pickupPoints;
+    private List<PricePlan> pricePlans;
+    private List<BookingQuestion> bookingQuestions;
 
-    public List<AProductTitleBean> getProductTitle() {
+    public List<Product> getProductTitle() {
         return productTitle;
     }
 
-    public void setProductTitle(List<AProductTitleBean> productTitle) {
+    public void setProductTitle(List<Product> productTitle) {
         this.productTitle = productTitle;
     }
 
-    public List<BProductDetailBean> getProductDetails() {
+    public List<ProductMoreDetails> getProductDetails() {
         return productDetails;
     }
 
-    public void setProductDetails(List<BProductDetailBean> productDetails) {
+    public void setProductDetails(List<ProductMoreDetails> productDetails) {
         this.productDetails = productDetails;
     }
 
-    public List<CProductOptionsBean> getProductOptions() {
+    public List<ProductOptions> getProductOptions() {
         return productOptions;
     }
 
-    public void setProductOptions(List<CProductOptionsBean> productOptions) {
+    public void setProductOptions(List<ProductOptions> productOptions) {
         this.productOptions = productOptions;
     }
 
-    public List<DProductPhotoBean> getProductPhotos() {
+    public List<Photo> getProductPhotos() {
         return productPhotos;
     }
 
-    public void setProductPhotos(List<DProductPhotoBean> productPhotos) {
+    public void setProductPhotos(List<Photo> productPhotos) {
         this.productPhotos = productPhotos;
     }
 
-    public List<EPickupPointBean> getPickupPoints() {
-        return pickupPoints;
-    }
-
-    public void setPickupPoints(List<EPickupPointBean> pickupPoints) {
-        this.pickupPoints = pickupPoints;
-    }
-
-    public List<FPricePlanBean> getPricePlans() {
+    public List<PricePlan> getPricePlans() {
         return pricePlans;
     }
 
-    public void setPricePlans(List<FPricePlanBean> pricePlans) {
+    public void setPricePlans(List<PricePlan> pricePlans) {
         this.pricePlans = pricePlans;
     }
 
-    public List<JProductQuestionsBean> getBookingQuestions() {
+    public List<BookingQuestion> getBookingQuestions() {
         return bookingQuestions;
     }
 
-    public void setBookingQuestions(List<JProductQuestionsBean> bookingQuestions) {
+    public void setBookingQuestions(List<BookingQuestion> bookingQuestions) {
         this.bookingQuestions = bookingQuestions;
+    }
+
+    public List<PickupPoint> getPickupPoints() {
+        return pickupPoints;
+    }
+
+    public void setPickupPoints(List<PickupPoint> pickupPoints) {
+        this.pickupPoints = pickupPoints;
     }
 }

@@ -225,4 +225,37 @@ public class RoomtypeDAO {
         }
         return originalRoomtypeId;
     }
+
+    public static RoomtypeBean getRoomtypeATBId(String atbRoomtypeId) {
+
+        StatelessSession session;
+        session = SunHotelsHibernateUtil.getSession();
+        RoomtypeBean roomtypeBean = null;
+        String hql = "select roomType from RoomtypeBean roomType where roomType.id='" + atbRoomtypeId + "'";
+        try {
+            session.beginTransaction();
+            roomtypeBean = (RoomtypeBean) session.createQuery(hql).getSingleResult();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+
+        }finally {
+            session.close();
+        }
+        return roomtypeBean;
+    }
 }

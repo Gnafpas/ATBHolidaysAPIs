@@ -19,7 +19,7 @@ public class ResponseItem {
     private List<Traveller> Travellers;
     private BigDecimal price;
     private String productTitle;
-    private boolean merchantCancellable;
+    private String merchantCancellable;
     private String supplierName;
     private String supplierPhoneNumber;
     private String planIdDescription;
@@ -31,7 +31,15 @@ public class ResponseItem {
     private String bookingEngineId;
     private String currencyCode;
     private String departsFrom;
+    private boolean bookedSuccesfully=true;
 
+    public boolean isBookedSuccesfully() {
+        return bookedSuccesfully;
+    }
+
+    public void setBookedSuccesfully(boolean bookedSuccesfully) {
+        this.bookedSuccesfully = bookedSuccesfully;
+    }
 
     public String getPickupHotelId() {
         return pickupHotelId;
@@ -121,11 +129,11 @@ public class ResponseItem {
         this.productTitle = productTitle;
     }
 
-    public boolean isMerchantCancellable() {
+    public String getMerchantCancellable() {
         return merchantCancellable;
     }
 
-    public void setMerchantCancellable(boolean merchantCancellable) {
+    public void setMerchantCancellable(String merchantCancellable) {
         this.merchantCancellable = merchantCancellable;
     }
 

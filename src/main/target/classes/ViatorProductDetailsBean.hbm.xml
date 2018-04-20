@@ -39,6 +39,7 @@
         <property name="departureTimeEn" column="departure_time_EN"/>
         <property name="departureTimeCommentsEn" column="departure_time_comments_EN"/>
         <property name="onRequestPeriod" column="on_request_period"/>
+        <property name="sortOrder" column="sort_order"/>
         <property name="supplierName" column="supplier_name"/>
         <property name="specialReservation" column="special_reservation"/>
         <property name="specialReservationDetails" column="special_reservation_details"/>

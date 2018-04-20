@@ -15,7 +15,6 @@ public class HotelResponse implements Comparable<HotelResponse>{
     private String starRating;
     private String countryCode;
     private String zipCode;
-    private Integer currencyId;
     private Integer destinationId;
     private List<Photo> photos;
     private List<HotelFacility> facilities;
@@ -29,27 +28,18 @@ public class HotelResponse implements Comparable<HotelResponse>{
     private String address;
     private String latitude;
     private String name;
-    private String accommodationId;
-    private String accommodationName;
+    private String accommodationType;
     private int resortId;
 
-    public String getAccommodationId() {
-        return accommodationId;
+    public String getAccommodationType() {
+        return accommodationType;
     }
 
-    public void setAccommodationId(String accommodationId) {
-        this.accommodationId = accommodationId;
+    public void setAccommodationType(String accommodationType) {
+        this.accommodationType = accommodationType;
     }
 
-    public String getAccommodationName() {
-        return accommodationName;
-    }
-
-    public void setAccommodationName(String accommodationName) {
-        this.accommodationName = accommodationName;
-    }
-
-        public int getResortId() {
+    public int getResortId() {
         return resortId;
     }
 
@@ -87,14 +77,6 @@ public class HotelResponse implements Comparable<HotelResponse>{
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
-    }
-
-    public Integer getCurrencyId() {
-        return currencyId;
-    }
-
-    public void setCurrencyId(Integer currencyId) {
-        this.currencyId = currencyId;
     }
 
     public Integer getDestinationId() {

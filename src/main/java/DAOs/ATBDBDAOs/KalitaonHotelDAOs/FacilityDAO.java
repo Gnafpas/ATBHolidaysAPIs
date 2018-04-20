@@ -85,7 +85,7 @@ public class FacilityDAO {
     public static boolean deleteAllFacilities(int providerId){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
-        StatelessSession session2 = SunHotelsHibernateUtil.getSession();
+        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
         String hql = String.format("DELETE FROM FacilityBean WHERE providerId='"+providerId+"'");
         boolean err=false;
         try{

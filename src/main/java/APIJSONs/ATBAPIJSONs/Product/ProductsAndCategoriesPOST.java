@@ -11,7 +11,7 @@ public class ProductsAndCategoriesPOST {
 
     private String title="";
     private Integer firstProduct=0;
-    private Integer lastProduct=0;
+    private Integer lastProduct=100;
     private String countryCode="";
     private String cityCode="";
     private int priceFrom=0;
@@ -22,7 +22,26 @@ public class ProductsAndCategoriesPOST {
     private String startDate=null;
     private String endDate=null;
     private int typeOfProduct=0;
+    private boolean onlyOnsaleProducts=false;
     private List<String> categories=new ArrayList<>();
+    private String currencyCode="";
+
+
+    public boolean isOnlyOnsaleProducts() {
+        return onlyOnsaleProducts;
+    }
+
+    public void setOnlyOnsaleProducts(boolean onlyOnsaleProducts) {
+        this.onlyOnsaleProducts = onlyOnsaleProducts;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public int getTypeOfProduct() {
         return typeOfProduct;

@@ -58,118 +58,135 @@ public class UpdateSunHotelsDB {
         int counter = 0;
         long timeElapsed=0;
         long totalProccessWaitingTime=0;
-        AdminController.sunHotelsUpdateRunning = true;
-
-        /**
-         * Set up logger.
-         */
-        Logger logger = Logger.getLogger("UpdateSunHotels");
-        FileHandler fh;
         try {
-            for (Handler handler : logger.getHandlers()) {
-                logger.removeHandler(handler);
+            AdminController.sunHotelsUpdateRunning = true;
+
+            /**
+             * Set up logger.
+             */
+            Logger logger = Logger.getLogger("UpdateSunHotels");
+            FileHandler fh;
+            try {
+                for (Handler handler : logger.getHandlers()) {
+                    logger.removeHandler(handler);
+                }
+                // This block configure the logger with handler and formatter
+                fh = new FileHandler(ProjectProperties.logspath + "UpdateSunHotels.log");
+                logger.addHandler(fh);
+                SimpleFormatter formatter = new SimpleFormatter();
+                fh.setFormatter(formatter);
+            } catch (SecurityException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+            } catch (IOException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
             }
-            // This block configure the logger with handler and formatter
-            fh = new FileHandler(ProjectProperties.logspath + "UpdateSunHotels.log");
-            logger.addHandler(fh);
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-        } catch (SecurityException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        } catch (IOException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-        }
 
-        /**
-         * Delete expired hotels
-         */
-        logger.info("********************** Starting delete expired hotels procedure... **********************");
-        totalExpiredHotels=DeleteExpiredHotels.deleteExpiredHotels(logger);
-        logger.info("********************** Expired hotels procedure ended. **********************");
+            /**
+             * Delete expired hotels
+             */
+            logger.info("********************** Starting delete expired hotels procedure... **********************");
+            totalExpiredHotels = DeleteExpiredHotels.deleteExpiredHotels(logger);
+            logger.info("********************** Expired hotels procedure ended. **********************");
 
-        //todo update meals
-        /**
-         * Retrieve features
-         */
-        try {
-            NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
-            NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
+            //todo update meals
+            /**
+             * Retrieve features
+             */
+            try {
+                NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
+                NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
 
-            GetFeaturesResult features=nonStaticXMLAPISoap.getFeatures(ProjectProperties.sunhotelsUsername, ProjectProperties.sunhotelspass, "English");
-            if (features.getError() != null)
-                sunHotelsCommErrCounter++;
-            else {
-                if(FacilityDAO.deleteAllFacilities(sanHotelsProviderId))
-                    atbDBErrCommCounter++;
+                GetFeaturesResult features = nonStaticXMLAPISoap.getFeatures(ProjectProperties.sunhotelsUsername, ProjectProperties.sunhotelspass, "English");
+                List<FacilityBean> facilities=null;
+                if (features.getError() != null)
+                    sunHotelsCommErrCounter++;
                 else {
-                    StatelessSession session = SunHotelsHibernateUtil.getSession();
-                    Transaction tx;
-                    StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-                     Transaction tx2;
-                    try {
-                        tx = session.beginTransaction();
-                        tx2 = session2.beginTransaction();
-                        int currentAtbDBErrCommCounter = atbDBErrCommCounter;
-                        for (FeatureWithName feature : features.getFeatures().getFeature()) {
-                            facilityBean.setName(feature.getName());
-                            facilityBean.setFacilityId(String.valueOf(feature.getId()));
-                            facilityBean.setProviderId(sanHotelsProviderId);
-                            if (FacilityDAO.addFacilityBean(facilityBean, session, session2)) {
-                                atbDBErrCommCounter++;
+                    facilities=FacilityDAO.getFacilities(sanHotelsProviderId);
+                    if (facilities==null)
+                        atbDBErrCommCounter++;
+                    else {
+                        StatelessSession session = SunHotelsHibernateUtil.getSession();
+                        Transaction tx;
+                        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                        Transaction tx2;
+                        try {
+                            tx = session.beginTransaction();
+                            tx2 = session2.beginTransaction();
+                            int currentAtbDBErrCommCounter = atbDBErrCommCounter;
+                            for (FeatureWithName feature : features.getFeatures().getFeature()) {
+                                boolean newFacility=true;
+                                for(FacilityBean facility:facilities){
+                                    if(Integer.parseInt(facility.getFacilityId())==feature.getId()){
+                                        facilityBean.setName(feature.getName());
+                                        facilityBean.setId(facility.getId());
+                                        facilityBean.setFacilityId(String.valueOf(feature.getId()));
+                                        facilityBean.setProviderId(sanHotelsProviderId);
+                                        if (FacilityDAO.updateFacilityBean(facilityBean, session, session2)) {
+                                            atbDBErrCommCounter++;
+                                        }
+                                        newFacility=false;
+                                        break;
+                                    }
+                                }
+                                if(newFacility) {
+                                    facilityBean = new FacilityBean();
+                                    facilityBean.setName(feature.getName());
+                                    facilityBean.setFacilityId(String.valueOf(feature.getId()));
+                                    facilityBean.setProviderId(sanHotelsProviderId);
+                                    if (FacilityDAO.addFacilityBean(facilityBean, session, session2)) {
+                                        atbDBErrCommCounter++;
+                                    }
+                                }
                             }
+                            if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
+                                tx.commit();
+                                tx2.commit();
+                            } else {
+                                tx.rollback();
+                                tx2.rollback();
+                            }
+                        } catch (ExceptionInInitializerError e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            atbDBErrCommCounter++;
+                        } catch (ClientTransportException e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            atbDBErrCommCounter++;
+                        } catch (CJCommunicationsException e) {
+                            StringWriter errors = new StringWriter();
+                            e.printStackTrace(new PrintWriter(errors));
+                            errLogger.info(errors.toString());
+                            atbDBErrCommCounter++;
+                        } finally {
+                            session.close();
+                            session2.close();
                         }
-                        if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
-                            tx.commit();
-                                   tx2.commit();
-                        } else {
-                            tx.rollback();
-                            tx2.rollback();
-                        }
-                    } catch (ExceptionInInitializerError e) {
-                        StringWriter errors = new StringWriter();
-                        e.printStackTrace(new PrintWriter(errors));
-                        errLogger.info(errors.toString());
-                        atbDBErrCommCounter++;
-                    } catch (ClientTransportException e) {
-                        StringWriter errors = new StringWriter();
-                        e.printStackTrace(new PrintWriter(errors));
-                        errLogger.info(errors.toString());
-                        atbDBErrCommCounter++;
-                    } catch (CJCommunicationsException e) {
-                        StringWriter errors = new StringWriter();
-                        e.printStackTrace(new PrintWriter(errors));
-                        errLogger.info(errors.toString());
-                        atbDBErrCommCounter++;
-                    } finally {
-                        session.close();
-                        session2.close();
                     }
                 }
-            }
-        }catch(WebServiceException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-            sunHotelsCommErrCounter++;
-        }
-
-        /**
-         * Retrieve RoomTypes
-         */
-        try {
-            NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
-            NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
-
-            GetRoomTypesResult roomtypes=nonStaticXMLAPISoap.getRoomTypes(ProjectProperties.sunhotelsUsername, ProjectProperties.sunhotelspass, "English");
-            if (roomtypes.getError() != null)
+            } catch (WebServiceException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
                 sunHotelsCommErrCounter++;
-            else {
-                if(RoomtypeDAO.deleteAllRoomtypes(sanHotelsProviderId))//todo dont delete all roomtypes but one by one
-                    atbDBErrCommCounter++;
+            }
+
+            /**
+             * Retrieve RoomTypes
+             */
+            try {
+                NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
+                NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
+
+                GetRoomTypesResult roomtypes = nonStaticXMLAPISoap.getRoomTypes(ProjectProperties.sunhotelsUsername, ProjectProperties.sunhotelspass, "English");
+                if (roomtypes.getError() != null)
+                    sunHotelsCommErrCounter++;
                 else {
                     StatelessSession session = SunHotelsHibernateUtil.getSession();
                     Transaction tx;
@@ -180,6 +197,7 @@ public class UpdateSunHotelsDB {
                         tx2 = session2.beginTransaction();
                         int currentAtbDBErrCommCounter = atbDBErrCommCounter;
                         for (RoomType roomtype : roomtypes.getRoomTypes().getRoomType()) {
+                            roomtypeBean = new RoomtypeBean();
                             roomtypeBean.setRoomType(roomtype.getName());
                             roomtypeBean.setProviderId(sanHotelsProviderId);
                             roomtypeBean.setRoomtypeId(String.valueOf(roomtype.getId()));
@@ -196,8 +214,16 @@ public class UpdateSunHotelsDB {
                                 roomtypeBean.setSharedRoom(true);
                             else
                                 roomtypeBean.setSharedRoom(false);
-                            if (RoomtypeDAO.addRoomtypeBean(roomtypeBean,session,session2)) {
-                                atbDBErrCommCounter++;
+                            RoomtypeBean existedroomType=RoomtypeDAO.getRoomsTypesbyId(roomtypeBean.getRoomtypeId(),sanHotelsProviderId,session);
+                            if(existedroomType!=null && existedroomType.getId()!=0){
+                                roomtypeBean.setId(existedroomType.getId());
+                                if (RoomtypeDAO.updateRoomtypeBean(roomtypeBean, session, session2)) {
+                                    atbDBErrCommCounter++;
+                                }
+                            }else {
+                                if (RoomtypeDAO.addRoomtypeBean(roomtypeBean, session, session2)) {
+                                    atbDBErrCommCounter++;
+                                }
                             }
                         }
                         if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
@@ -227,368 +253,369 @@ public class UpdateSunHotelsDB {
                         session2.close();
                     }
                 }
+            } catch (WebServiceException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+                sunHotelsCommErrCounter++;
             }
-        }catch(WebServiceException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            errLogger.info(errors.toString());
-            sunHotelsCommErrCounter++;
-        }
-
-        /**
-         * Declare from which point in the destinations list start to retrieving destination's products and at which destination to stop.If  destIdToStartRetrieveProducts
-         * is 0 and destIdToStopRetrieveProducts is 0 retrieve products from all destinations.Else retrieve products for the destinations in the list which are following the one
-         * with destination Id "destIdToStartRetrieveProducts" and stop at destination with destination Id"destIdToStopRetrieveProducts".
-         */
-        boolean RetrieveProducts;
-        if (StartingDestId == 0)
-            RetrieveProducts = true;
-        else
-            RetrieveProducts = false;
-
-        try {
-            NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
-            NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
 
             /**
-             * Retrieve destinations
+             * Declare from which point in the destinations list start to retrieving destination's products and at which destination to stop.If  destIdToStartRetrieveProducts
+             * is 0 and destIdToStopRetrieveProducts is 0 retrieve products from all destinations.Else retrieve products for the destinations in the list which are following the one
+             * with destination Id "destIdToStartRetrieveProducts" and stop at destination with destination Id"destIdToStopRetrieveProducts".
              */
-            DestinationList destinationList = nonStaticXMLAPISoap.getDestinations(ProjectProperties.sunhotelsUsername,
-                                                                                  ProjectProperties.sunhotelspass, "English",
-                                                                                  "", "", "", "");
+            boolean RetrieveProducts;
+            if (StartingDestId == 0)
+                RetrieveProducts = true;
+            else
+                RetrieveProducts = false;
 
-            if (destinationList.getError() != null)
-                sunHotelsCommErrCounter++;
-            else {
-
+            try {
+                NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
+                NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
 
                 /**
-                 * Update Hotels for each destination
+                 * Retrieve destinations
                  */
-                for (Destination dest : destinationList.getDestinations().getDestination()) {
+                DestinationList destinationList = nonStaticXMLAPISoap.getDestinations(ProjectProperties.sunhotelsUsername,
+                        ProjectProperties.sunhotelspass, "English",
+                        "", "", "", "");
 
-                    if (StartingDestId == dest.getDestinationId())
-                        RetrieveProducts = true;
+                if (destinationList.getError() != null)
+                    sunHotelsCommErrCounter++;
+                else {
 
-                    if (sunHotelsimidiateUpdateStop)
-                        break;
 
                     /**
-                     * Update Destinations
+                     * Update Hotels for each destination
                      */
-                    destinationBean=DestinationDAO.getDestinationBean(dest.getDestinationId(),sanHotelsProviderId);
-                    if(destinationBean!=null){
-                        destinationBean.setDestinationId(dest.getDestinationId());
-                        destinationBean.setCountryName(dest.getCountryName());
-                        destinationBean.setName(dest.getDestinationName());
-                        destinationBean.setProviderId(sanHotelsProviderId);
-                        destinationBean.setProviderRef(0);
-                        destinationBean.setTimezone(dest.getTimeZone());
-                        destinationBean.setCountryCode(dest.getCountryCode());
-                        if(DestinationDAO.updateDestinationBean(destinationBean))
-                            atbDBErrCommCounter++;
-                    }else{
-                        destinationBean=new DestinationBean();
-                        destinationBean.setDestinationId(dest.getDestinationId());
-                        destinationBean.setCountryName(dest.getCountryName());
-                        destinationBean.setName(dest.getDestinationName());
-                        destinationBean.setProviderId(sanHotelsProviderId);
-                        destinationBean.setProviderRef(0);
-                        destinationBean.setTimezone(dest.getTimeZone());
-                        destinationBean.setCountryCode(dest.getCountryCode());
-                        if(DestinationDAO.deleteDestinationBeanSunhotelsId(dest.getDestinationId()))
-                            atbDBErrCommCounter++;
-                        if(DestinationDAO.addDestinationBean(destinationBean))
-                            atbDBErrCommCounter++;
-                    }
+                    for (Destination dest : destinationList.getDestinations().getDestination()) {
+
+                        if (StartingDestId == dest.getDestinationId())
+                            RetrieveProducts = true;
+
+                        if (sunHotelsimidiateUpdateStop)
+                            break;
+
+                        /**
+                         * Update Destinations
+                         */
+                        destinationBean = DestinationDAO.getDestinationBean(String.valueOf(dest.getDestinationId()), sanHotelsProviderId, null);
+                        if (destinationBean != null) {
+                            destinationBean.setDestinationId(dest.getDestinationId());
+                            destinationBean.setCountryName(dest.getCountryName());
+                            destinationBean.setName(dest.getDestinationName());
+                            destinationBean.setProviderId(sanHotelsProviderId);
+                            destinationBean.setProviderRef(0);
+                            destinationBean.setTimezone(dest.getTimeZone());
+                            destinationBean.setCountryCode(dest.getCountryCode());
+                            if (DestinationDAO.updateDestinationBean(destinationBean))
+                                atbDBErrCommCounter++;
+                        } else {
+                            destinationBean = new DestinationBean();
+                            destinationBean.setDestinationId(dest.getDestinationId());
+                            destinationBean.setCountryName(dest.getCountryName());
+                            destinationBean.setName(dest.getDestinationName());
+                            destinationBean.setProviderId(sanHotelsProviderId);
+                            destinationBean.setProviderRef(0);
+                            destinationBean.setTimezone(dest.getTimeZone());
+                            destinationBean.setCountryCode(dest.getCountryCode());
+                            if (DestinationDAO.deleteDestinationBeanSunhotelsId(dest.getDestinationId()))
+                                atbDBErrCommCounter++;
+                            if (DestinationDAO.addDestinationBean(destinationBean))
+                                atbDBErrCommCounter++;
+                        }
 
 
-                    if (RetrieveProducts) {
-                        try {
-                            /**
-                             * Update Resorts
-                             */
-                            ResortList resorts=nonStaticXMLAPISoap.getResorts(ProjectProperties.sunhotelsUsername, ProjectProperties.sunhotelspass,
-                                                                             "English", "", String.valueOf(dest.getDestinationId()), "",
-                                                                             "", "");
-                            if (resorts.getError() != null)
-                                sunHotelsCommErrCounter++;
-                            else {
-                                ResortBean resortBean=new ResortBean();
-                                for (Resort resort : resorts.getResorts().getResort()) {
-                                    resortBean.setCountryCode(resort.getCountryCode());
-                                    resortBean.setCountryName(resort.getCountryName());
-                                    resortBean.setDestinationId(resort.getDestinationId());
-                                    resortBean.setDestinationName(resort.getDestinationName());
-                                    resortBean.setProviderId(sanHotelsProviderId);
-                                    resortBean.setResortId(resort.getResortId());
-                                    resortBean.setResortName(resort.getResortName());
-                                    StatelessSession session = SunHotelsHibernateUtil.getSession();
-                                    Transaction tx;
-                                    StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-                                    Transaction tx2;
-                                    try {
-                                        tx = session.beginTransaction();
-                                        tx2 = session2.beginTransaction();
-                                        int currentAtbDBErrCommCounter = atbDBErrCommCounter;
-                                        if (ResortDAO.deleteResortBean(resortBean.getResortId(),sanHotelsProviderId, session,session2)) {
-                                            atbDBErrCommCounter++;
-                                        } else {
-                                            if (ResortDAO.addResortBean(resortBean, session, session2)) {
+                        if (RetrieveProducts) {
+                            try {
+                                /**
+                                 * Update Resorts
+                                 */
+                                ResortList resorts = nonStaticXMLAPISoap.getResorts(ProjectProperties.sunhotelsUsername, ProjectProperties.sunhotelspass,
+                                        "English", "", String.valueOf(dest.getDestinationId()), "",
+                                        "", "");
+                                if (resorts.getError() != null)
+                                    sunHotelsCommErrCounter++;
+                                else {
+                                    ResortBean resortBean = new ResortBean();
+                                    for (Resort resort : resorts.getResorts().getResort()) {
+                                        resortBean.setCountryCode(resort.getCountryCode());
+                                        resortBean.setCountryName(resort.getCountryName());
+                                        resortBean.setDestinationId(resort.getDestinationId());
+                                        resortBean.setDestinationName(resort.getDestinationName());
+                                        resortBean.setProviderId(sanHotelsProviderId);
+                                        resortBean.setResortId(resort.getResortId());
+                                        resortBean.setResortName(resort.getResortName());
+                                        StatelessSession session = SunHotelsHibernateUtil.getSession();
+                                        Transaction tx;
+                                        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                                        Transaction tx2;
+                                        try {
+                                            tx = session.beginTransaction();
+                                            tx2 = session2.beginTransaction();
+                                            int currentAtbDBErrCommCounter = atbDBErrCommCounter;
+                                            if (ResortDAO.deleteResortBean(resortBean.getResortId(), sanHotelsProviderId, session, session2)) {
                                                 atbDBErrCommCounter++;
                                             } else {
-                                                if (ResortMappingDAO.getATBResortId(resortBean.getResortId(), sanHotelsProviderId, session) == 0) {
-                                                    if (ResortMappingDAO.addResortMapping(String.valueOf(resortBean.getResortId()), sanHotelsProviderId, session, session2))
-                                                        atbDBErrCommCounter++;
+                                                if (ResortDAO.addResortBean(resortBean, session, session2)) {
+                                                    atbDBErrCommCounter++;
+                                                } else {
+                                                    if (ResortMappingDAO.getATBResortId(resortBean.getResortId(), sanHotelsProviderId, session) == 0) {
+                                                        if (ResortMappingDAO.addResortMapping(String.valueOf(resortBean.getResortId()), sanHotelsProviderId, session, session2))
+                                                            atbDBErrCommCounter++;
+                                                    }
                                                 }
                                             }
+                                            if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
+                                                tx.commit();
+                                                tx2.commit();
+                                            } else {
+                                                tx.rollback();
+                                                tx2.rollback();
+                                            }
+                                        } catch (ExceptionInInitializerError e) {
+                                            StringWriter errors = new StringWriter();
+                                            e.printStackTrace(new PrintWriter(errors));
+                                            errLogger.info(errors.toString());
+                                            atbDBErrCommCounter++;
+                                        } catch (ClientTransportException e) {
+                                            StringWriter errors = new StringWriter();
+                                            e.printStackTrace(new PrintWriter(errors));
+                                            errLogger.info(errors.toString());
+                                            atbDBErrCommCounter++;
+                                        } catch (CJCommunicationsException e) {
+                                            StringWriter errors = new StringWriter();
+                                            e.printStackTrace(new PrintWriter(errors));
+                                            errLogger.info(errors.toString());
+                                            atbDBErrCommCounter++;
+                                        } finally {
+                                            session.close();
+                                            session2.close();
                                         }
-                                        if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
-                                            tx.commit();
-                                            tx2.commit();
-                                        }
-                                        else {
-                                            tx.rollback();
-                                            tx2.rollback();
-                                        }
-                                    } catch (ExceptionInInitializerError e) {
-                                        StringWriter errors = new StringWriter();
-                                        e.printStackTrace(new PrintWriter(errors));
-                                        errLogger.info(errors.toString());
-                                        atbDBErrCommCounter++;
-                                    } catch (ClientTransportException e) {
-                                        StringWriter errors = new StringWriter();
-                                        e.printStackTrace(new PrintWriter(errors));
-                                        errLogger.info(errors.toString());
-                                        atbDBErrCommCounter++;
-                                    } catch (CJCommunicationsException e) {
-                                        StringWriter errors = new StringWriter();
-                                        e.printStackTrace(new PrintWriter(errors));
-                                        errLogger.info(errors.toString());
-                                        atbDBErrCommCounter++;
-                                    } finally {
-                                        session.close();
-                                        session2.close();
                                     }
                                 }
-                            }
 
 
+                                GetStaticHotelsAndRoomsResult getStaticHotelsAndRoomsResult = nonStaticXMLAPISoap.
+                                        getStaticHotelsAndRooms(ProjectProperties.sunhotelsUsername,
+                                                ProjectProperties.sunhotelspass,
+                                                "English",
+                                                String.valueOf(dest.getDestinationId()),
+                                                "", "",
+                                                "", "",
+                                                "", "");
+                                if (getStaticHotelsAndRoomsResult.getError() != null)
+                                    sunHotelsCommErrCounter++;
+                                else {
+                                    for (StaticHotel hotel : getStaticHotelsAndRoomsResult.getHotels().getHotel()) {
 
-                            GetStaticHotelsAndRoomsResult getStaticHotelsAndRoomsResult = nonStaticXMLAPISoap.
-                                                                                          getStaticHotelsAndRooms(ProjectProperties.sunhotelsUsername,
-                                                                                                                  ProjectProperties.sunhotelspass,
-                                                                                                                  "English",
-                                                                                                                  String.valueOf(dest.getDestinationId()),
-                                                                                                                  "", "",
-                                                                                                                  "", "",
-                                                                                                                  "", "");
-                            if (getStaticHotelsAndRoomsResult.getError() != null)
-                                sunHotelsCommErrCounter++;
-                            else {
-                                for (StaticHotel hotel : getStaticHotelsAndRoomsResult.getHotels().getHotel()) {
+                                        if (sunHotelsimidiateUpdateStop)
+                                            break;
 
-                                    if (sunHotelsimidiateUpdateStop)
-                                        break;
-
-                                    HotelBean hotelBean = new HotelBean();
-                                    hotelBean.setCity((hotel.getHotelAddrCity()));
-                                    hotelBean.setHotelId(hotel.getHotelId());
-                                    hotelBean.setName(hotel.getName());
-                                    hotelBean.setAddress(hotel.getHotelAddress());
-                                    hotelBean.setCountry(hotel.getHotelAddrCountry());
-                                    hotelBean.setCountryCode(hotel.getHotelAddrCountrycode());
-                                    hotelBean.setCurrencyId(0);//todo check this field
-                                    hotelBean.setDescription(hotel.getDescription());
-                                    hotelBean.setDestinationId(String.valueOf(hotel.getDestinationId()));
-                                    hotelBean.setDistrict("");//todo check this field
-                                    hotelBean.setAccommodationId("1");
-                                    hotelBean.setAccommodationName("HotelPost");
-                                    hotelBean.setActive(true);
-                                    hotelBean.setResortId(hotel.getResortId());
-                                    if (hotel.getCoordinates() != null && hotel.getCoordinates().getLatitude() != null && hotel.getCoordinates().getLongitude() != null) {
-                                        hotelBean.setLatitude(hotel.getCoordinates().getLatitude().toString());
-                                        hotelBean.setLongitude(hotel.getCoordinates().getLongitude().toString());
-                                    }
-                                    hotelBean.setMapUrl(hotel.getHotelMapurl());
-                                    hotelBean.setMealType("");
-                                    hotelBean.setProviderId(sanHotelsProviderId);
-                                    hotelBean.setProviderRef(0);
-                                    hotelBean.setStarRating(hotel.getClassification());
-                                    hotelBean.setState(hotel.getHotelAddrState());
-                                    hotelBean.setZipCode(hotel.getHotelAddrZip());
-                                    hotelBean.setCreatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                                            dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                                            dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
-                                    hotelBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                                            dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                                            dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
-
-                                    for (HotelImage image : hotel.getImages().getImage()) {
-                                        PhotoBean photoBean = new PhotoBean();
-                                        photoBean.setHotelId(hotel.getHotelId());
-                                        if (image.getFullSizeImage() != null && image.getFullSizeImage().getUrl() != null) {
-                                            photoBean.setDescription("");
-                                            photoBean.setFacilityId(0);
-                                            photoBean.setHotelId(hotel.getHotelId());
-                                            photoBean.setProviderId(sanHotelsProviderId);
-                                            photoBean.setCoverPhoto(false);
-                                            photoBean.setPhotoPath("");
-                                            photoBean.setPhotoUrl(ProjectProperties.sanHotelsImageURL + image.getFullSizeImage().getUrl());
-                                            photoBean.setRoomId("0");
-                                            photoBean.setTitle("");
-                                            photos.add(photoBean);
-                                        } else if (image.getSmallImage() != null && image.getSmallImage().getUrl() != null) {
-                                            photoBean.setDescription("");
-                                            photoBean.setFacilityId(0);
-                                            photoBean.setHotelId(hotel.getHotelId());
-                                            photoBean.setProviderId(sanHotelsProviderId);
-                                            photoBean.setCoverPhoto(false);
-                                            photoBean.setPhotoPath("");
-                                            photoBean.setPhotoUrl(ProjectProperties.sanHotelsImageURL + image.getSmallImage().getUrl());
-                                            photoBean.setRoomId("0");
-                                            photoBean.setTitle("");
-                                            photos.add(photoBean);
+                                        HotelBean hotelBean = new HotelBean();
+                                        hotelBean.setCity((hotel.getHotelAddrCity()));
+                                        hotelBean.setHotelId(hotel.getHotelId());
+                                        hotelBean.setName(hotel.getName());
+                                        hotelBean.setAddress(hotel.getHotelAddress());
+                                        hotelBean.setCountry(hotel.getHotelAddrCountry());
+                                        hotelBean.setCountryCode(hotel.getHotelAddrCountrycode());
+                                        hotelBean.setCurrencyId(0);//todo check this field
+                                        hotelBean.setDescription(hotel.getDescription());
+                                        hotelBean.setDestinationId(String.valueOf(hotel.getDestinationId()));
+                                        hotelBean.setDistrict("");//todo check this field
+                                        hotelBean.setAccommodationId("HOTEL");
+                                        hotelBean.setAccommodationName("HOTEL");
+                                        hotelBean.setActive(true);
+                                        hotelBean.setResortId(hotel.getResortId());
+                                        if (hotel.getCoordinates() != null && hotel.getCoordinates().getLatitude() != null && hotel.getCoordinates().getLongitude() != null) {
+                                            hotelBean.setLatitude(hotel.getCoordinates().getLatitude().toString());
+                                            hotelBean.setLongitude(hotel.getCoordinates().getLongitude().toString());
                                         }
-                                    }
+                                        hotelBean.setMapUrl(hotel.getHotelMapurl());
+                                        hotelBean.setMealType("");
+                                        hotelBean.setProviderId(sanHotelsProviderId);
+                                        hotelBean.setProviderRef(0);
+                                        hotelBean.setStarRating(hotel.getClassification());
+                                        hotelBean.setState(hotel.getHotelAddrState());
+                                        hotelBean.setZipCode(hotel.getHotelAddrZip());
+                                        hotelBean.setCreatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
+                                        hotelBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
 
-                                    for (FeatureWithName feature : hotel.getFeatures().getFeature()) {
-                                        hotelfacilityBean = new HotelfacilityBean();
-                                        hotelfacilityBean.setHotelId(hotel.getHotelId());
-                                        hotelfacilityBean.setProviderId(sanHotelsProviderId);
-                                        hotelfacilityBean.setExplanation(feature.getName());
-                                        hotelfacilityBean.setPrice(new BigDecimal(0.0));
-                                        hotelfacilityBean.setFacilityId(String.valueOf(feature.getId()));
-                                        hotelfacilities.add(hotelfacilityBean);
-                                    }
-
-                                    for (RoomTypeWithRooms roomtype : hotel.getRoomtypes().getRoomtype()) {
-
-                                        for (Room room : roomtype.getRooms().getRoom()) {
-                                            RoomBean roomBean = new RoomBean();
-                                            roomBean.setRoomTypeId(String.valueOf(roomtype.getRoomtypeID()));
-                                            roomBean.setDirty(false);
-                                            roomBean.setHotelId(hotel.getHotelId());
-                                            roomBean.setProviderId(sanHotelsProviderId);
-                                            roomBean.setProviderRef(0);
-                                            roomBean.setOriginalRoomId(String.valueOf(room.getId()));
-                                            rooms.add(roomBean);
-
-
-                                            RoombedBean roombedBean = new RoombedBean();
-                                            roombedBean.setBedCount(room.getBeds());
-                                            roombedBean.setBedType("");
-                                            roombedBean.setExtraBedCount(0);
-                                            roombedBean.setHotelId(hotel.getHotelId());
-                                            roombedBean.setRoomId(room.getId());
-                                            roombedBean.setProviderId(sanHotelsProviderId);
-                                            roombeds.add(roombedBean);
+                                        for (HotelImage image : hotel.getImages().getImage()) {
+                                            PhotoBean photoBean = new PhotoBean();
+                                            photoBean.setHotelId(hotel.getHotelId());
+                                            if (image.getFullSizeImage() != null && image.getFullSizeImage().getUrl() != null) {
+                                                photoBean.setDescription("");
+                                                photoBean.setFacilityId(0);
+                                                photoBean.setHotelId(hotel.getHotelId());
+                                                photoBean.setProviderId(sanHotelsProviderId);
+                                                photoBean.setCoverPhoto(false);
+                                                photoBean.setPhotoPath("");
+                                                photoBean.setPhotoUrl(ProjectProperties.sanHotelsImageURL + image.getFullSizeImage().getUrl());
+                                                photoBean.setRoomTypeId("0");
+                                                photoBean.setTitle("");
+                                                photos.add(photoBean);
+                                            } else if (image.getSmallImage() != null && image.getSmallImage().getUrl() != null) {
+                                                photoBean.setDescription("");
+                                                photoBean.setFacilityId(0);
+                                                photoBean.setHotelId(hotel.getHotelId());
+                                                photoBean.setProviderId(sanHotelsProviderId);
+                                                photoBean.setCoverPhoto(false);
+                                                photoBean.setPhotoPath("");
+                                                photoBean.setPhotoUrl(ProjectProperties.sanHotelsImageURL + image.getSmallImage().getUrl());
+                                                photoBean.setRoomTypeId("0");
+                                                photoBean.setTitle("");
+                                                photos.add(photoBean);
+                                            }
                                         }
 
-                                    }
+                                        for (FeatureWithName feature : hotel.getFeatures().getFeature()) {
+                                            hotelfacilityBean = new HotelfacilityBean();
+                                            hotelfacilityBean.setHotelId(hotel.getHotelId());
+                                            hotelfacilityBean.setProviderId(sanHotelsProviderId);
+                                            hotelfacilityBean.setExplanation(feature.getName());
+                                            hotelfacilityBean.setPrice(new BigDecimal(0.0));
+                                            hotelfacilityBean.setFacilityId(String.valueOf(feature.getId()));
+                                            hotelfacilities.add(hotelfacilityBean);
+                                        }
+
+                                        for (RoomTypeWithRooms roomtype : hotel.getRoomtypes().getRoomtype()) {
+
+                                            for (Room room : roomtype.getRooms().getRoom()) {
+                                                RoomBean roomBean = new RoomBean();
+                                                roomBean.setRoomTypeId(String.valueOf(roomtype.getRoomtypeID()));
+                                                roomBean.setDirty(false);
+                                                roomBean.setHotelId(hotel.getHotelId());
+                                                roomBean.setProviderId(sanHotelsProviderId);
+                                                roomBean.setProviderRef(0);
+                                                roomBean.setOriginalRoomId(String.valueOf(room.getId()));
+                                                rooms.add(roomBean);
 
 
-                                    /**
-                                     * Store hotel and hotel properties to DB.If something goes wrong rollback and not update anything to DB.
-                                     */
-                                    timeElapsed = System.currentTimeMillis();
-                                    StatelessSession session = SunHotelsHibernateUtil.getSession();
-                                    Transaction tx;
-                                    StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-                                    Transaction tx2;
-                                    try {
-                                        tx = session.beginTransaction();
-                                        tx2 = session2.beginTransaction();
-                                        int currentAtbDBErrCommCounter = atbDBErrCommCounter;
-                                        if (HotelDAO.deleteHotelBean(hotelBean.getHotelId(), session,session2,sanHotelsProviderId)) {
-                                            atbDBErrCommCounter++;
-                                        } else {
-                                            if (HotelDAO.addHotelBean(hotelBean, session,session2)) {
+                                                RoombedBean roombedBean = new RoombedBean();
+                                                roombedBean.setBedCount(room.getBeds());
+                                                roombedBean.setBedType("");
+                                                roombedBean.setExtraBedCount(0);
+                                                roombedBean.setHotelId(hotel.getHotelId());
+                                                roombedBean.setRoomId(room.getId());
+                                                roombedBean.setProviderId(sanHotelsProviderId);
+                                                roombeds.add(roombedBean);
+                                            }
+
+                                        }
+
+
+                                        /**
+                                         * Store hotel and hotel properties to DB.If something goes wrong rollback and not update anything to DB.
+                                         */
+                                        timeElapsed = System.currentTimeMillis();
+                                        StatelessSession session = SunHotelsHibernateUtil.getSession();
+                                        Transaction tx;
+                                        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                                        Transaction tx2;
+                                        try {
+                                            tx = session.beginTransaction();
+                                            tx2 = session2.beginTransaction();
+                                            int currentAtbDBErrCommCounter = atbDBErrCommCounter;
+                                            if (HotelDAO.deleteHotelBean(hotelBean.getHotelId(), session, session2, sanHotelsProviderId)) {
                                                 atbDBErrCommCounter++;
                                             } else {
-                                                if(HotelmappingDAO.getATBHotelId(hotelBean.getHotelId(),sanHotelsProviderId,session)==0) {
-                                                    if (HotelmappingDAO.addHotelmapping(hotelBean.getHotelId(), sanHotelsProviderId, session,session2))
-                                                        atbDBErrCommCounter++;
-                                                }
-                                                if (RoomDAO.addRoomBean(rooms, session,session2))
+                                                if (HotelDAO.addHotelBean(hotelBean, session, session2)) {
                                                     atbDBErrCommCounter++;
+                                                } else {
+                                                    if (HotelmappingDAO.getATBHotelId(hotelBean.getHotelId(), sanHotelsProviderId, session) == 0) {
+                                                        if (HotelmappingDAO.addHotelmapping(hotelBean.getHotelId(), sanHotelsProviderId, session, session2))
+                                                            atbDBErrCommCounter++;
+                                                    }
+                                                    if (RoomDAO.addRoomBean(rooms, session, session2))
+                                                        atbDBErrCommCounter++;
 //                                                if (RoombedDAO.addRoombedBean(roombeds, session,session2))
 //                                                    atbDBErrCommCounter++;
-                                                if (HotelfacilityDAO.addHotelfacilityBean(hotelfacilities, session,session2))
-                                                    atbDBErrCommCounter++;
-                                                if (PhotoDAO.addPhotoBean(photos, session,session2))
-                                                    atbDBErrCommCounter++;
+                                                    if (HotelfacilityDAO.addHotelfacilityBean(hotelfacilities, session, session2))
+                                                        atbDBErrCommCounter++;
+                                                    if (PhotoDAO.addPhotoBean(photos, session, session2))
+                                                        atbDBErrCommCounter++;
+                                                }
                                             }
+                                            if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
+                                                tx.commit();
+                                                tx2.commit();
+                                            } else {
+                                                tx.rollback();
+                                                tx2.rollback();
+                                            }
+                                        } catch (ExceptionInInitializerError e) {
+                                            StringWriter errors = new StringWriter();
+                                            e.printStackTrace(new PrintWriter(errors));
+                                            errLogger.info(errors.toString());
+                                            atbDBErrCommCounter++;
+                                        } catch (ClientTransportException e) {
+                                            StringWriter errors = new StringWriter();
+                                            e.printStackTrace(new PrintWriter(errors));
+                                            errLogger.info(errors.toString());
+                                            atbDBErrCommCounter++;
+                                        } catch (CJCommunicationsException e) {
+                                            StringWriter errors = new StringWriter();
+                                            e.printStackTrace(new PrintWriter(errors));
+                                            errLogger.info(errors.toString());
+                                            atbDBErrCommCounter++;
+                                        } finally {
+                                            session.close();
+                                            session2.close();
                                         }
-                                        if (currentAtbDBErrCommCounter == atbDBErrCommCounter) {
-                                            tx.commit();
-                                            tx2.commit();
-                                        }
-                                        else {
-                                            tx.rollback();
-                                            tx2.rollback();
-                                        }
-                                    } catch (ExceptionInInitializerError e) {
-                                        StringWriter errors = new StringWriter();
-                                        e.printStackTrace(new PrintWriter(errors));
-                                        errLogger.info(errors.toString());
-                                        atbDBErrCommCounter++;
-                                    } catch (ClientTransportException e) {
-                                        StringWriter errors = new StringWriter();
-                                        e.printStackTrace(new PrintWriter(errors));
-                                        errLogger.info(errors.toString());
-                                        atbDBErrCommCounter++;
-                                    } catch (CJCommunicationsException e) {
-                                        StringWriter errors = new StringWriter();
-                                        e.printStackTrace(new PrintWriter(errors));
-                                        errLogger.info(errors.toString());
-                                        atbDBErrCommCounter++;
-                                    } finally {
-                                        session.close();
-                                        session2.close();
+                                        totalProccessWaitingTime = totalProccessWaitingTime + (System.currentTimeMillis() - timeElapsed);
+                                        rooms.clear();
+                                        roombeds.clear();
+                                        hotelfacilities.clear();
+                                        photos.clear();
                                     }
-                                    totalProccessWaitingTime = totalProccessWaitingTime + (System.currentTimeMillis() - timeElapsed);
-                                    rooms.clear();
-                                    roombeds.clear();
-                                    hotelfacilities.clear();
-                                    photos.clear();
-                                }
 
+                                }
+                            } catch (WebServiceException e) {
+                                StringWriter errors = new StringWriter();
+                                e.printStackTrace(new PrintWriter(errors));
+                                errLogger.info(errors.toString());
+                                sunHotelsCommErrCounter++;
                             }
-                        }catch(WebServiceException e){
-                            StringWriter errors = new StringWriter();
-                            e.printStackTrace(new PrintWriter(errors));
-                            errLogger.info(errors.toString());
-                            sunHotelsCommErrCounter++;
                         }
+                        if (StopDestId != 0 && StopDestId == dest.getDestinationId())
+                            RetrieveProducts = false;
+                        counter++;
+                        logger.info("*********************Total destinations completed :" + counter + "Added destination with id:" + dest.getDestinationId() + " ,Total communication time:" + totalProccessWaitingTime / 1000 + "*********************");
                     }
-                    if (StopDestId != 0 && StopDestId == dest.getDestinationId())
-                        RetrieveProducts = false;
-                    counter++;
-                    logger.info("*********************Total destinations completed :" + counter + "Added destination with id:" + dest.getDestinationId()+" ,Total communication time:"+totalProccessWaitingTime/1000+ "*********************");
                 }
+            } catch (WebServiceException e) {
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                errLogger.info(errors.toString());
+                sunHotelsCommErrCounter++;
             }
-        } catch (WebServiceException e) {
+
+            SunhotelsUpdateInfoBean sunhotelsUpdateInfoBean = new SunhotelsUpdateInfoBean();
+            sunhotelsUpdateInfoBean.setStartDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                    dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                    dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
+            dateTime = new DateTime();
+            sunhotelsUpdateInfoBean.setEndDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                    dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                    dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
+            sunhotelsUpdateInfoBean.setAtbdbCommErrorCounter(atbDBErrCommCounter + totalExpiredHotels.getAtbDBErrCommCounter());
+            sunhotelsUpdateInfoBean.setSunhotelsCommErrorCounter(sunHotelsCommErrCounter + totalExpiredHotels.getSunHotelsCommErrCounter());
+            sunhotelsUpdateInfoBean.setTotalexpiredHotels(totalExpiredHotels.getTotalExpiredhotels());
+            SunhotelsUpdateInfoDAO.addSunhotelsUpdateInfoBean(sunhotelsUpdateInfoBean);
+
+            AdminController.sunHotelsUpdateRunning = false;
+        }catch(Exception e){
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
-            sunHotelsCommErrCounter++;
         }
-
-        SunhotelsUpdateInfoBean sunhotelsUpdateInfoBean = new SunhotelsUpdateInfoBean();
-        sunhotelsUpdateInfoBean.setStartDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
-        dateTime = new DateTime();
-        sunhotelsUpdateInfoBean.setEndDateTime(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
-                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
-                dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
-        sunhotelsUpdateInfoBean.setAtbdbCommErrorCounter(atbDBErrCommCounter+totalExpiredHotels.getAtbDBErrCommCounter());
-        sunhotelsUpdateInfoBean.setSunhotelsCommErrorCounter(sunHotelsCommErrCounter+totalExpiredHotels.getSunHotelsCommErrCounter());
-        sunhotelsUpdateInfoBean.setTotalexpiredHotels(totalExpiredHotels.getTotalExpiredhotels());
-        SunhotelsUpdateInfoDAO.addSunhotelsUpdateInfoBean(sunhotelsUpdateInfoBean);
-
-        AdminController.sunHotelsUpdateRunning = false;
 
     }
 }

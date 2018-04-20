@@ -14,6 +14,33 @@ public class BookPOST {
     private Booker Booker =new Booker();
     private List<Item> Items;
     private String customerCountry;
+    private String currencyCode="";
+    private ShippingDetails shippingDetails;
+    private boolean demo=false;
+
+    public boolean isDemo() {
+        return demo;
+    }
+
+    public void setDemo(boolean demo) {
+        this.demo = demo;
+    }
+
+    public ShippingDetails getShippingDetails() {
+        return shippingDetails;
+    }
+
+    public void setShippingDetails(ShippingDetails shippingDetails) {
+        this.shippingDetails = shippingDetails;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public Beans.ViatorAPIBeans.Bookings.Book.Booker getBooker() {
         return Booker;

@@ -20,34 +20,39 @@ import static Controller.Application.errLogger;
  */
 public class HAvailableDateDAO {
 
-    public static boolean addAvailableDate(HAvailableDateBean availableDate) {
+    public static int addAvailableDate(HAvailableDateBean availableDate) {
         StatelessSession session = ATBHibernateUtil.getSession();
+        String hql = "select hAvailableDateBean from HAvailableDateBean hAvailableDateBean  order by hAvailableDateBean.id DESC";
         Transaction tx;
-        boolean err = false;
+        int id=0;
         try {
             session = ATBHibernateUtil.getSession();
             tx = session.beginTransaction();
             session.insert(availableDate);
+            Query query= session.createQuery(hql);
+            query.setMaxResults(1);
+            availableDate=(HAvailableDateBean)query.getSingleResult();
+            id=availableDate.getId();
             tx.commit();
         } catch (HibernateException e) {
-            err = true;
+            id = 0;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         } catch (ExceptionInInitializerError e) {
-            err = true;
+            id = 0;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (CJCommunicationsException e) {
-            err = true;
+            id = 0;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }finally {
                 session.close();
             }
-        return err;
+        return id;
 
     }
 

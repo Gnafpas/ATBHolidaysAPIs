@@ -45,12 +45,13 @@ public class DeleteCorruptedProducts {
             productCodesWithFailedAvailDates=ViatorUpdateFailedAvailDatesDAO.getProductCodeByUpdateRid(lastUpdateRid);
             productCodesWithFailedPricematrixes=ViatorUpdateFailedPricematrixesDAO.getProductCodeByUpdateRid(lastUpdateRid);
 
+
             /**
              * Adding to corruptedProducts list products with failed availability dates and pricematrixes.
              */
             if(corruptedProducts==null)
                 corruptedProducts=new ArrayList<>();
-            if(productCodesWithFailedAvailDates!=null) {
+            if (productCodesWithFailedAvailDates != null) {
                 for (String code : productCodesWithFailedAvailDates) {
                     exist = false;
                     for (String code2 : corruptedProducts) {
@@ -61,7 +62,7 @@ public class DeleteCorruptedProducts {
                         corruptedProducts.add(code);
                 }
             }
-            if(productCodesWithFailedPricematrixes!=null) {
+            if (productCodesWithFailedPricematrixes != null) {
                 for (String code : productCodesWithFailedPricematrixes) {
                     exist = false;
                     for (String code2 : corruptedProducts) {
@@ -73,42 +74,43 @@ public class DeleteCorruptedProducts {
                 }
             }
 
-
-            for (String code:corruptedProducts) {
-                StatelessSession session = HibernateUtil.getSession();
-                Transaction tx;
-                try {
-                    tx = session.beginTransaction();
-                    if (ViatorProductDetailsDAO.deleteProduct(code,session)) {
+            if(corruptedProducts.size()>10000) {
+                logger.info("********************** Deleting expired products procedure stopped because more than 10000 products was ready to removed.They didn't updated to the last update. **********************");
+            }else{
+                for (String code : corruptedProducts) {
+                    StatelessSession session = HibernateUtil.getSession();
+                    Transaction tx;
+                    try {
+                        tx = session.beginTransaction();
+                        if (ViatorProductDetailsDAO.deleteProduct(code, session)) {
+                            errorWhileDeleting = true;
+                            tx.rollback();
+                        } else {
+                            tx.commit();
+                        }
+                    } catch (HibernateException e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
                         errorWhileDeleting = true;
-                        tx.rollback();
-                    } else {
-                        tx.commit();
+                    } catch (ExceptionInInitializerError e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        errorWhileDeleting = true;
+                    } catch (CJCommunicationsException e) {
+                        StringWriter errors = new StringWriter();
+                        e.printStackTrace(new PrintWriter(errors));
+                        errLogger.info(errors.toString());
+                        errorWhileDeleting = true;
+                    } finally {
+                        session.close();
                     }
-                } catch (HibernateException e) {
-                    StringWriter errors = new StringWriter();
-                    e.printStackTrace(new PrintWriter(errors));
-                    errLogger.info(errors.toString());
-                    errorWhileDeleting = true;
-                } catch (ExceptionInInitializerError e) {
-                    StringWriter errors = new StringWriter();
-                    e.printStackTrace(new PrintWriter(errors));
-                    errLogger.info(errors.toString());
-                    errorWhileDeleting = true;
-                } catch (CJCommunicationsException e) {
-                    StringWriter errors = new StringWriter();
-                    e.printStackTrace(new PrintWriter(errors));
-                    errLogger.info(errors.toString());
-                    errorWhileDeleting = true;
-                } finally {
-                    session.close();
+                    counter++;
+                    logger.info("********************** Deleting corrupted product with code: " + code + " **********************");
+
                 }
-                counter++;
-                logger.info("********************** Deleting corrupted product with code: " + code + " **********************");
-
             }
-
-
         }else
             errorWhileDeleting=true;
 

@@ -50,6 +50,47 @@ public class HotelDAO {
         return err;
     }
 
+    public static boolean saveOrUpdateHotelBean(HotelBean hotelBean, StatelessSession session,StatelessSession session2){
+
+        boolean err=false;
+        try{
+            List<HotelBean> hotels=null;
+            String hql = "select hotel from HotelBean hotel where  hotel.hotelId='"+hotelBean.getHotelId()+"' and providerId='"+hotelBean.getProviderId()+"'";
+            try {
+                hotels = session.createQuery(hql).getResultList();
+                if(hotels!=null && hotels.size()>0){
+                    session.update(hotelBean);
+                    session2.insert(hotelBean);
+                }
+            }catch (NoResultException e){
+                session.insert(hotelBean);
+                session2.insert(hotelBean);
+            }
+
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ClientTransportException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }
+        return err;
+    }
+
 
 
     public static boolean deleteHotelBean(int hotelId,StatelessSession session,StatelessSession session2,int provider ){

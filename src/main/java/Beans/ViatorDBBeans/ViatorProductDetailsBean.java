@@ -45,6 +45,7 @@ public class ViatorProductDetailsBean {
     private String departureTimeEn;
     private String departureTimeCommentsEn;
     private Integer onRequestPeriod;
+    private Integer sortOrder;
     private String supplierName;
     private boolean specialReservation;
     private String specialReservationDetails;
@@ -469,6 +470,16 @@ public class ViatorProductDetailsBean {
     }
 
     @Basic
+    @Column(name = "sort_order")
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    @Basic
     @Column(name = "on_sale")
     public boolean getOnSale() {
         return onSale;
@@ -690,6 +701,8 @@ public class ViatorProductDetailsBean {
             return false;
         if (onRequestPeriod != null ? !onRequestPeriod.equals(that.onRequestPeriod) : that.onRequestPeriod != null)
             return false;
+        if (sortOrder != null ? !sortOrder.equals(that.sortOrder) : that.sortOrder != null)
+            return false;
         if (supplierName != null ? !supplierName.equals(that.supplierName) : that.supplierName != null) return false;
         if (specialReservationDetails != null ? !specialReservationDetails.equals(that.specialReservationDetails) : that.specialReservationDetails != null)
             return false;
@@ -751,6 +764,7 @@ public class ViatorProductDetailsBean {
         result = 31 * result + (departureTimeEn != null ? departureTimeEn.hashCode() : 0);
         result = 31 * result + (departureTimeCommentsEn != null ? departureTimeCommentsEn.hashCode() : 0);
         result = 31 * result + (onRequestPeriod != null ? onRequestPeriod.hashCode() : 0);
+        result = 31 * result + (sortOrder != null ? sortOrder.hashCode() : 0);
         result = 31 * result + (supplierName != null ? supplierName.hashCode() : 0);
         result = 31 * result + help(specialReservation);
         result = 31 * result + (specialReservationDetails != null ? specialReservationDetails.hashCode() : 0);

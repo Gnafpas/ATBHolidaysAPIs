@@ -186,4 +186,37 @@ public class MealDAO {
         }
         return meal;
     }
+
+    public static String getOriginalMealId(String mealId) {
+
+        StatelessSession session=SunHotelsHibernateUtil.getSession();
+        String originalMealId = null;
+        String hql = "select meal.mealId from MealBean meal where  meal.id='" + mealId + "'";
+        try {
+            session.beginTransaction();
+            originalMealId = (String)session.createQuery(hql).getSingleResult();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (NoResultException e) {
+
+        } finally {
+            session.close();
+        }
+        return originalMealId;
+    }
+
 }

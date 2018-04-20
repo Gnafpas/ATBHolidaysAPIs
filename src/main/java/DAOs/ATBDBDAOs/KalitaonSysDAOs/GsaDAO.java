@@ -5,6 +5,7 @@ import DBConnection.ATBSysHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 
 import javax.persistence.NoResultException;
 import java.io.PrintWriter;
@@ -17,14 +18,17 @@ import static Controller.Application.errLogger;
  */
 public class GsaDAO {
 
-    public static GsaBean getGsaById(int id){
+    public static GsaBean getGsaById(int id,StatelessSession session){
 
-        Session session = ATBSysHibernateUtil.getSession();
+        boolean incomingSession=true;
         GsaBean gsaBean=null;
-        String hql = "select gsaBean from GsaBean gsaBean " +
-                "where gsaBean.id = :id";
+        String hql = "select gsaBean from GsaBean gsaBean where gsaBean.id = :id";
         try{
-            session.beginTransaction();
+            if (session == null) {
+                session = ATBSysHibernateUtil.getStatelessSession();
+                session.beginTransaction();
+                incomingSession = false;
+            }
             gsaBean=(GsaBean)session.createQuery(hql).setParameter("id",id ).getSingleResult();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
@@ -38,7 +42,8 @@ public class GsaDAO {
         }catch (CJCommunicationsException e){
             e.printStackTrace();
         }finally {
-            session.close();
+            if(!incomingSession)
+                session.close();
         }
         return gsaBean;
     }

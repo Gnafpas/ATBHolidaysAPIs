@@ -16,7 +16,7 @@ public class HotelSearchPOST {
     private int numberOfChildren=0;
     private int infant=0;
     private String mealPlans;
-    private String destinationId=null;
+    private int destinationId=0;
     private String customerCountry="";
     private List<Integer> hotelIDs;
     private int searchId=0;
@@ -117,11 +117,12 @@ public class HotelSearchPOST {
         this.currencyCode = currencyCode;
     }
 
-    public String getDestinationId() {
+
+    public int getDestinationId() {
         return destinationId;
     }
 
-    public void setDestinationId(String destinationId) {
+    public void setDestinationId(int destinationId) {
         this.destinationId = destinationId;
     }
 
