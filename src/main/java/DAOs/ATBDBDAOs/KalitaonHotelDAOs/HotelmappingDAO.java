@@ -29,7 +29,7 @@ public class HotelmappingDAO {
         boolean err=false;
         try{
             session.insert(hotelmappingBean);
-            session2.insert(hotelmappingBean);
+         //   session2.insert(hotelmappingBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -60,7 +60,7 @@ public class HotelmappingDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+         //   session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

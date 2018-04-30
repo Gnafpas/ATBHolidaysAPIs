@@ -5,6 +5,7 @@ import DBConnection.SunHotelsHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import com.sun.xml.internal.ws.client.ClientTransportException;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.StatelessSession;
 
 import javax.persistence.NoResultException;
@@ -25,7 +26,7 @@ public class HotelDAO {
         boolean err=false;
         try{
             session.insert(hotelBean);
-            session2.insert(hotelBean);
+        //    session2.insert(hotelBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -50,23 +51,11 @@ public class HotelDAO {
         return err;
     }
 
-    public static boolean saveOrUpdateHotelBean(HotelBean hotelBean, StatelessSession session,StatelessSession session2){
-
+    public static boolean updateHotelBean(HotelBean hotelBean, StatelessSession session, StatelessSession session2){
         boolean err=false;
         try{
-            List<HotelBean> hotels=null;
-            String hql = "select hotel from HotelBean hotel where  hotel.hotelId='"+hotelBean.getHotelId()+"' and providerId='"+hotelBean.getProviderId()+"'";
-            try {
-                hotels = session.createQuery(hql).getResultList();
-                if(hotels!=null && hotels.size()>0){
-                    session.update(hotelBean);
-                    session2.insert(hotelBean);
-                }
-            }catch (NoResultException e){
-                session.insert(hotelBean);
-                session2.insert(hotelBean);
-            }
-
+            session.update(hotelBean);
+       //     session2.update(hotelBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -99,7 +88,7 @@ public class HotelDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+        //    session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

@@ -108,7 +108,6 @@ public class BookController {
         BookLogDAO.addBookLogBean(bookLogBean);
     }
 
-//todo add events travel to book and cancel booking
     @RequestMapping(value = "/product/booking/book", method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
     public APIJSONs.ATBAPIJSONs.Product.BookAPIJSON bookViator(@RequestBody APIJSONs.ATBAPIJSONs.Product.BookPOST bookPOST,@RequestParam("apiKey") String apiKey) {
@@ -1194,7 +1193,7 @@ public class BookController {
                             responseItem.setCountry(product.getCountryName());
                             responseItem.setDepartsFrom(product.getaPoint());
                             responseItem.setDeparturePoint(product.getaPoint());
-                            responseItem.setDeparturePointAddress(product.getaPoint());
+                            responseItem.setDeparturePointAddress(product.getaPoint());//todo see if this is correct
                             responseItem.setItemId(String.valueOf(atbItems.indexOf(atbItem)));
                             responseItem.setLanguage(requestItem.getLanguage());
                             List<BProductDetailBean> bProductDetailBean = BProductDetailDAO.getBProductDetailsByProductId(requestItem.getProductId());
@@ -1213,7 +1212,7 @@ public class BookController {
                             responseItem.setProductTitle(product.getProductTitle());
                             responseItem.setServiceOption(requestItem.getServiceOption());
                             responseItem.setSupplierName(product.getMainSupplierName());
-                            responseItem.setSupplierPhoneNumber("");
+                            responseItem.setSupplierPhoneNumber("");//todo add atb support number
                             responseItem.setTravelDate(requestItem.getTravelDate());
                             responseItem.setTravellers(requestItem.getTravellers());
                             /**

@@ -14,6 +14,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import static Controller.Application.errLogger;
+import static Helper.ProjectProperties.hotelBedsProviderId;
 
 /**
  * Created by George on 24/11/2017.
@@ -23,17 +24,17 @@ public class DestinationDAO {
     public static boolean addDestinationBean(DestinationBean destinationBean){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
-        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+       // StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
         Transaction tx;
-        Transaction tx2;
+       // Transaction tx2;
         boolean err=false;
         try{
             tx=session.beginTransaction();
             session.insert(destinationBean);
             tx.commit();
-            tx2=session2.beginTransaction();
-            session2.insert(destinationBean);
-            tx2.commit();
+          //  tx2=session2.beginTransaction();
+          //  session2.insert(destinationBean);
+          //  tx2.commit();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -56,7 +57,7 @@ public class DestinationDAO {
             errLogger.info(errors.toString());
         }finally {
             session.close();
-            session2.close();
+         //   session2.close();
         }
         return err;
     }
@@ -64,17 +65,17 @@ public class DestinationDAO {
     public static boolean updateDestinationBean(DestinationBean destinationBean){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
-        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+      ///  StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
         Transaction tx;
-        Transaction tx2;
+      //  Transaction tx2;
         boolean err=false;
         try{
             tx=session.beginTransaction();
             session.update(destinationBean);
             tx.commit();
-            tx2=session2.beginTransaction();
-            session2.update(destinationBean);
-            tx2.commit();
+        //    tx2=session2.beginTransaction();
+         //   session2.update(destinationBean);
+         //   tx2.commit();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -97,7 +98,7 @@ public class DestinationDAO {
             errLogger.info(errors.toString());
         }finally {
             session.close();
-            session2.close();
+          //  session2.close();
         }
         return err;
     }
@@ -105,16 +106,16 @@ public class DestinationDAO {
     public static boolean deleteDestinationBeanSunhotelsId(int destinationId){
 
         StatelessSession session = SunHotelsHibernateUtil.getSession();
-        StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+        //StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
         String hql = String.format("DELETE FROM DestinationBean WHERE destinationId='"+destinationId+"'");
         boolean err=false;
         try{
             session.beginTransaction();
             session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
-            session2.beginTransaction();
-            session2.createQuery(hql).executeUpdate();
-            session2.getTransaction().commit();
+         //   session2.beginTransaction();
+         //   session2.createQuery(hql).executeUpdate();
+         //   session2.getTransaction().commit();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -137,7 +138,7 @@ public class DestinationDAO {
             errLogger.info(errors.toString());
         }finally {
             session.close();
-            session2.close();
+          //  session2.close();
         }
         return err;
     }
@@ -146,7 +147,11 @@ public class DestinationDAO {
 
         boolean incomingSession=true;
         DestinationBean destinationBean = null;
-        String hql = "select dest from DestinationBean dest where dest.providerId='" + providerId + "' and dest.destinationId='" + destinationId + "'";
+        String hql="";
+        if(providerId==hotelBedsProviderId)
+            hql = "select dest from DestinationBean dest where  dest.hotelBedsCode='" + destinationId + "'";
+        else
+            hql = "select dest from DestinationBean dest where  dest.destinationId='" + destinationId + "'";
         try {
             if(session==null) {
                 session = SunHotelsHibernateUtil.getSession();

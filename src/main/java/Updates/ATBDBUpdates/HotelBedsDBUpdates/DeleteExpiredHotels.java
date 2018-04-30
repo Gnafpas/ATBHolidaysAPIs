@@ -10,6 +10,7 @@ import DBConnection.SunHotelsHibernateUtil;
 import DBConnection.SunHotelsMainServerHibernateUtil;
 import Helper.ProjectProperties;
 import Updates.ATBDBUpdates.SunHotelsDBUpdates.TotalExpiredHotels;
+import org.hibernate.Session;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
@@ -92,25 +93,26 @@ public class DeleteExpiredHotels {
                                     expired = false;
                             }
                             if (expired) {
-                                StatelessSession session = SunHotelsHibernateUtil.getSession();
-                                Transaction tx;
-                                StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
-                                Transaction tx2;
-                                tx = session.beginTransaction();
-                                tx2 = session2.beginTransaction();
-                                List<HotelBean> hotelbeans=HotelDAO.getHotelByHotelId(hotelId,hotelBedsProviderId,session);
+                                List<HotelBean> hotelbeans=HotelDAO.getHotelByHotelId(hotelId,hotelBedsProviderId,null);
                                 if (hotelbeans!=null && hotelbeans.size()>0 && hotelbeans.get(0).isActive()){
+
                                     hotelbeans.get(0).setActive(false);
-                                    if(HotelDAO.saveOrUpdateHotelBean(hotelbeans.get(0),session,session2))
+                                    StatelessSession session = SunHotelsHibernateUtil.getSession();
+                                    Transaction tx;
+                                  //  StatelessSession session2 = SunHotelsMainServerHibernateUtil.getSession();
+                                   // Transaction tx2;
+                                    tx = session.beginTransaction();
+                                   // tx2 = session2.beginTransaction();
+                                    if(HotelDAO.updateHotelBean(hotelbeans.get(0),session,null))
                                         totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
+                                    tx.commit();
+                                   // tx2.commit();
+                                    session.close();
+                                  //  session2.close();
+                                    logger.info("********************** Deleting expired hotel with id: " + hotelId + " **********************");
+                                    totalExpiredHotelsList.add(hotelId);
+                                    totalExpiredHotels.setTotalExpiredhotels(totalExpiredHotels.getTotalExpiredhotels() + 1);
                                 }
-                                tx.commit();
-                                tx2.commit();
-                                session.close();
-                                session2.close();
-                                logger.info("********************** Deleting expired hotel with id: " + hotelId + " **********************");
-                                totalExpiredHotelsList.add(hotelId);
-                                totalExpiredHotels.setTotalExpiredhotels(totalExpiredHotels.getTotalExpiredhotels() + 1);
                             }
                         }
                     } else {

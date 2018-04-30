@@ -261,12 +261,14 @@ public class BookPrebookController {
                                         prebookJSON.setSuccess(false);
                                         prebookJSON.setErrorMessageText("Code:1.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                                         storePrebookLog(params, sunHotelsRequest, prebookJSON, result, subAgencyBean, result.getPreBookCode(), "SunHotels");
+                                        errLogger.info(prebookJSON.getErrorMessageText());
                                         return prebookJSON;
                                     }
                                 } else {
                                     prebookJSON.setSuccess(false);
                                     prebookJSON.setErrorMessageText("Code:2.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                                     storePrebookLog(params, sunHotelsRequest, prebookJSON, result, subAgencyBean, result.getPreBookCode(), "SunHotels");
+                                    errLogger.info(prebookJSON.getErrorMessageText());
                                     return prebookJSON;
                                 }
                             } else {
@@ -278,12 +280,14 @@ public class BookPrebookController {
                         } else {
                             prebookJSON.setSuccess(false);
                             prebookJSON.setErrorMessageText("Code:3.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
+                            errLogger.info(prebookJSON.getErrorMessageText());
                             storePrebookLog(params, sunHotelsRequest, prebookJSON, result, subAgencyBean, result.getPreBookCode(), "SunHotels");
                             return prebookJSON;
                         }
                     } else {
                         prebookJSON.setSuccess(false);
                         prebookJSON.setErrorMessageText("Code:4.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
+                        errLogger.info(prebookJSON.getErrorMessageText());
                         storePrebookLog(params, sunHotelsRequest, prebookJSON, result, subAgencyBean, result.getPreBookCode(), "SunHotels");
                         return prebookJSON;
                     }
@@ -301,7 +305,7 @@ public class BookPrebookController {
                             if (policy.getDeadline() > atbPolicy.getDeadline())
                                 atbPolicy = policy;
                         }
-                        cancelationPolicy.setPercentage(new BigDecimal(100));
+                        cancelationPolicy.setPercentage(new BigDecimal(100));//todo fix cancelation policies(search in the whole class to fix all the references)
                         if (atbPolicy.getDeadline() != null) {
                             cancelationPolicy.setDeadline(atbPolicy.getDeadline() + plusCancelationPolicyHours);
                             cancelationPolicy.setText("Cancellation made less than " + (atbPolicy.getDeadline() + plusCancelationPolicyHours) + " hours (12:00) prior to the arrival will be charged with 100% of the total booking value.");
@@ -320,14 +324,15 @@ public class BookPrebookController {
 
                     prebookJSON.setNotes(result.getNotes());
                     prebookJSON.setRoomId(result.getRoomId());
-                    prebookJSON.setPreBookCode(result.getPreBookCode());
+                    prebookJSON.setPreBookCode(result.getPreBookCode()+"ID:"+sanHotelsProviderId);
                     prebookJSON.setSuccess(true);
                 }
-                storePrebookLog(params, sunHotelsRequest, prebookJSON, result, subAgencyBean, result.getPreBookCode(), "SunHotels");
+                storePrebookLog(params, sunHotelsRequest, prebookJSON, result, subAgencyBean, result.getPreBookCode()+"ID:"+sanHotelsProviderId, "SunHotels");
             } else {
                 prebookJSON.setSuccess(false);
                 prebookJSON.setErrorMessageText("Code:5.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                 storePrebookLog(params, "", prebookJSON, null, subAgencyBean, "", "SunHotels");
+                errLogger.info(prebookJSON.getErrorMessageText());
                 return prebookJSON;
             }
 
@@ -451,36 +456,21 @@ public class BookPrebookController {
 
 
                 /**
-                 * Prebook request.Used for checking if booking price exceeds sub_agency's deposit amount.
+                 * Retrieving Prebook response from prebook log.Used for checking if booking price exceeds sub_agency's deposit amount.
                  */
-                PrebookPOST prebookPOST = new PrebookPOST();
-                if (params.getAdults() != null)
-                    prebookPOST.setAdults(params.getAdults().size());
-                else {
+                PrebookJSON prebookJSON = null;
+                Beans.ViatorDBBeans.PrebookLogBean prebook=DAOs.ViatorDBDAOs.PrebookLogDAO.getPrebookLogByRefAndProvider(params.getPrebookcode(),null);
+                if(prebook==null){
                     bookJSON.setSuccess(false);
-                    bookJSON.setErrorType("Incomplete Request");
-                    bookJSON.setErrorMessageText("Empty Adults parameter");
+                    bookJSON.setErrorMessageText("");
+                    bookJSON.setErrorType("Code 52:Couldn't extract essential data.");
+                    errLogger.info(bookJSON.getErrorMessageText());
                     storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                     return bookJSON;
                 }
-                List<Integer> childrenAges = new ArrayList<>();
-                if (params.getChildren() != null) {
-                    for (Children children : params.getChildren()) {
-                        if (children.getAge() != null)
-                            childrenAges.add(Integer.parseInt(children.getAge()));
-                    }
-                }
-                prebookPOST.setChildrenAges(childrenAges);
-                prebookPOST.setChildren(childrenAges.size());
-                prebookPOST.setCheckInDate(params.getCheckInDate());
-                prebookPOST.setCheckOutDate(params.getCheckOutDate());
-                prebookPOST.setCustomerCountry(params.getCustomerCountry());
-                prebookPOST.setInfant(params.getInfant());
-                prebookPOST.setMealId(params.getMealId());
-                prebookPOST.setRoomId(String.valueOf(params.getRoomId()));
-                prebookPOST.setHotelId(params.getHotelId());
-                prebookPOST.setRooms(params.getRooms());
-                PrebookJSON prebookJSON = hotelPrebook(prebookPOST, apiKey);
+                ObjectMapper mapper = new ObjectMapper();
+                prebookJSON = mapper.readValue(prebook.getClientResponse(), PrebookJSON.class);
+
                 if (prebookJSON != null) {
                     if (prebookJSON.isSuccess()) {
                         if ((subAgencyBean.getDeposit() == null || BigDecimal.valueOf(Double.parseDouble(subAgencyBean.getDeposit())).compareTo(prebookJSON.getPrice().getValue()) == -1) && subAgencyBean.getXmlStatus().equals("1")) {
@@ -494,13 +484,15 @@ public class BookPrebookController {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorMessageText(prebookJSON.getErrorMessageText());
                         bookJSON.setErrorType("Comunication Error");
+                        errLogger.info(bookJSON.getErrorMessageText());
                         storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                         return bookJSON;
                     }
                 } else {
                     bookJSON.setSuccess(false);
                     bookJSON.setErrorMessageText("");
-                    bookJSON.setErrorType("Communication Error");
+                    bookJSON.setErrorType("Code 51:Couldn't extract essential data.");
+                    errLogger.info(bookJSON.getErrorMessageText());
                     storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                     return bookJSON;
                 }
@@ -614,6 +606,49 @@ public class BookPrebookController {
                     BigDecimal agentSale;
 
                     /**
+                     * Store Booking Results(Cancelation policies and prebookcode) prebookLog table.
+                     */
+                    PrebookLogBean prebookLogBean = new PrebookLogBean();
+                    prebookLogBean.setHotelId(String.valueOf(HotelmappingDAO.getOriginalHotelId(Integer.parseInt(params.getHotelId()), null)));
+                    prebookLogBean.setPrebookDate(prebookJSON.getDateStamp());
+                    prebookLogBean.setPrebookRef(params.getPrebookcode());
+                    prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
+                    prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
+                    prebookLogBean.setRoomTypeName("");
+                    prebookLogBean.setMealName("");
+
+
+                    mapper = new ObjectMapper();
+                    try {
+                        prebookLogBean.setNotes(mapper.writeValueAsString(prebookJSON.getNotes()));
+                    } catch (JsonProcessingException e) {
+                        bookJSON.setSuccess(false);
+                        bookJSON.setErrorMessageText("Code:5.Couldn't store essential data to database.Please contact at:george.nafpaktitis@atbholidays.com");
+                        bookJSON.setErrorType("Internal Error");
+                        errLogger.info(bookJSON.getErrorMessageText());
+                        storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels/AtbHolidays");
+                        return bookJSON;
+                    }
+
+
+                    if (prebookJSON.getCancelationPolicies() != null && prebookJSON.getCancelationPolicies() != null && prebookJSON.getCancelationPolicies().size() > 0) {
+                        prebookLogBean.setCancelPolicy("");
+                        prebookLogBean.setAtbCancelPolicy(prebookJSON.getCancelationPolicies().get(0).getText());
+                        prebookLogBean.setDeadline(String.valueOf(prebookJSON.getCancelationPolicies().get(0).getDeadline()));
+                        prebookLogBean.setPercentage(String.valueOf(prebookJSON.getCancelationPolicies().get(0).getPercentage()));
+                    }
+                    int prebooklogId=PrebookLogDAO.storePrebookLog(prebookLogBean);
+                    if(prebooklogId==0){
+                        bookJSON.setSuccess(false);
+                        bookJSON.setErrorMessageText("Code:20.Couldn't store essential data to database.Please contact at:george.nafpaktitis@atbholidays.com");
+                        bookJSON.setErrorType("Internal Error");
+                        errLogger.info(bookJSON.getErrorMessageText());
+                        storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels/AtbHolidays");
+                        return bookJSON;
+                    }
+
+
+                    /**
                      * Store Booking Results to Hotel_Bookings_All table
                      */
                     String bookingCode = "HTL-API-TEST-SN-" + params.getPrebookcode();
@@ -648,7 +683,7 @@ public class BookPrebookController {
                     bookingsAllBean.setCommon3("");
                     bookingsAllBean.setCommon4("");
                     bookingsAllBean.setCommon5("");
-                    bookingsAllBean.setCommon6("");
+                    bookingsAllBean.setCommon6(String.valueOf(prebooklogId));
                     bookingsAllBean.setCommon7("");
                     bookingsAllBean.setCommon8("");
                     bookingsAllBean.setCommon9(params.getPrebookcode());
@@ -713,6 +748,7 @@ public class BookPrebookController {
                             bookJSON.setSuccess(false);
                             bookJSON.setErrorMessageText("Code:6.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                             bookJSON.setErrorType("Internal Error");
+                            errLogger.info(bookJSON.getErrorMessageText());
                             storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                             return bookJSON;
                         }
@@ -720,6 +756,7 @@ public class BookPrebookController {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorMessageText("Code:7.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                         bookJSON.setErrorType("Internal Error");
+                        errLogger.info(bookJSON.getErrorMessageText());
                         storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                         return bookJSON;
                     }
@@ -746,6 +783,7 @@ public class BookPrebookController {
                                         bookJSON.setSuccess(false);
                                         bookJSON.setErrorMessageText("Code:1.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                                         bookJSON.setErrorType("Internal Error");
+                                        errLogger.info(bookJSON.getErrorMessageText());
                                         storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                                         return bookJSON;
                                     }
@@ -753,6 +791,7 @@ public class BookPrebookController {
                                     bookJSON.setSuccess(false);
                                     bookJSON.setErrorMessageText("Code:2.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                                     bookJSON.setErrorType("Internal Error");
+                                    errLogger.info(bookJSON.getErrorMessageText());
                                     storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                                     return bookJSON;
                                 }
@@ -760,6 +799,7 @@ public class BookPrebookController {
                                 bookJSON.setSuccess(false);
                                 bookJSON.setErrorMessageText("");
                                 bookJSON.setErrorType("Communication Error");
+                                errLogger.info(bookJSON.getErrorMessageText());
                                 storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                                 return bookJSON;
                             }
@@ -767,6 +807,7 @@ public class BookPrebookController {
                             bookJSON.setSuccess(false);
                             bookJSON.setErrorMessageText("Code:3.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                             bookJSON.setErrorType("Internal Error");
+                            errLogger.info(bookJSON.getErrorMessageText());
                             storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                             return bookJSON;
                         }
@@ -774,6 +815,7 @@ public class BookPrebookController {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorMessageText("Code:4.Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                         bookJSON.setErrorType("Internal Error");
+                        errLogger.info(bookJSON.getErrorMessageText());
                         storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                         return bookJSON;
                     }
@@ -781,38 +823,6 @@ public class BookPrebookController {
                     Integer bookingId = BookingsAllDAO.storeBooking(bookingsAllBean);
 
 
-                    /**
-                     * Store Booking Results(Cancelation policies and prebookcode) prebookLog table.
-                     */
-                    PrebookLogBean prebookLogBean = new PrebookLogBean();
-                    prebookLogBean.setHotelId(String.valueOf(HotelmappingDAO.getOriginalHotelId(Integer.parseInt(params.getHotelId()), null)));
-                    prebookLogBean.setPrebookDate(prebookJSON.getDateStamp());
-                    prebookLogBean.setPrebookRef(params.getPrebookcode());
-                    prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
-                    prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
-                    prebookLogBean.setRoomTypeName("");
-                    prebookLogBean.setMealName("");
-
-
-                    ObjectMapper mapper = new ObjectMapper();
-                    try {
-                        prebookLogBean.setNotes(mapper.writeValueAsString(prebookJSON.getNotes()));
-                    } catch (JsonProcessingException e) {
-                        bookJSON.setSuccess(false);
-                        bookJSON.setErrorMessageText("Code:5.Couldn't store essential data to database.Please contact at:george.nafpaktitis@atbholidays.com");
-                        bookJSON.setErrorType("Internal Error");
-                        storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
-                        return bookJSON;
-                    }
-
-
-                    if (prebookJSON.getCancelationPolicies() != null && prebookJSON.getCancelationPolicies() != null && prebookJSON.getCancelationPolicies().size() > 0) {
-                        prebookLogBean.setCancelPolicy("");
-                        prebookLogBean.setAtbCancelPolicy(prebookJSON.getCancelationPolicies().get(0).getText());
-                        prebookLogBean.setDeadline(String.valueOf(prebookJSON.getCancelationPolicies().get(0).getDeadline()));
-                        prebookLogBean.setPercentage(String.valueOf(prebookJSON.getCancelationPolicies().get(0).getPercentage()));
-                    }
-                    PrebookLogDAO.storePrebookLog(prebookLogBean);
 
                     /**
                      * Store travellers to TravellerInfo table.
@@ -856,6 +866,7 @@ public class BookPrebookController {
                             bookJSON.setSuccess(false);
                             bookJSON.setErrorMessageText("Code:8.Please contact at:george.nafpaktitis@atbholidays.com");
                             bookJSON.setErrorType("Internal Error");
+                            errLogger.info(bookJSON.getErrorMessageText());
                             storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                             return bookJSON;
                         }
@@ -899,6 +910,7 @@ public class BookPrebookController {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorMessageText("Code:9.Couldn't store essential data to database.Please contact at:george.nafpaktitis@atbholidays.com");
                         bookJSON.setErrorType("Internal Error");
+                        errLogger.info(bookJSON.getErrorMessageText());
                         storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
                         return bookJSON;
                     }
@@ -917,6 +929,14 @@ public class BookPrebookController {
                         GregorianCalendar gregorianCheckin = GregorianCalendar.from(checkin);
                         GregorianCalendar gregorianCheckout = GregorianCalendar.from(checkout);
 
+                        String[]  prebookCode=params.getPrebookcode().split("ID:");
+                        if(prebookCode==null || prebookCode.length==0){
+                            bookJSON.setErrorMessageText("");
+                            bookJSON.setErrorType("Code 32:Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
+                            storeBookLog(params, sunHotelsRequest, bookJSON, null, subAgencyBean, "", "SunHotels");
+                            errLogger.info(bookJSON.getErrorMessageText());
+                            return bookJSON;
+                        }
                         XMLGregorianCalendar xmlCheckin = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckin);
                         XMLGregorianCalendar xmlCheckout = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckout);
                         NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
@@ -933,7 +953,7 @@ public class BookPrebookController {
                                 children[3].getAge() + "" + children[4].getFirst_name() + "" + children[4].getLast_name() + "" + children[4].getAge() + "" + children[5].getFirst_name() + "" +
                                 children[5].getLast_name() + "" + children[5].getAge() + "" + children[6].getFirst_name() + "" + children[6].getLast_name() + "" + children[6].getAge() + "" +
                                 children[7].getFirst_name() + "" + children[7].getLast_name() + "" + children[7].getAge() + "" + children[8].getFirst_name() + "" + children[8].getLast_name() + "" +
-                                children[8].getAge() + "" + 1 + "," + params.getEmail() + "," + params.getCustomerCountry() + "" + params.getPrebookcode();
+                                children[8].getAge() + "" + 1 + "," + params.getEmail() + "," + params.getCustomerCountry() + "" + prebookCode[0];
                         result = nonStaticXMLAPISoap.bookV2(sunhotelsUsername, sunhotelspass, subAgencyBean.getCurrency(), "English",//todo change email to info@atbholidays
                                 "george@skamnos.com", xmlCheckin, xmlCheckout, params.getRoomId(), params.getRooms(),
                                 numOfAdults, numOfChildren, params.getInfant(), "", "",
@@ -947,18 +967,20 @@ public class BookPrebookController {
                                 children[5].getLast_name(), children[5].getAge(), children[6].getFirst_name(), children[6].getLast_name(), children[6].getAge(),
                                 children[7].getFirst_name(), children[7].getLast_name(), children[7].getAge(), children[8].getFirst_name(), children[8].getLast_name(),
                                 children[8].getAge(), 1, "", "", "", "", "",
-                                "", params.getEmail(), "", params.getCustomerCountry(), "", "", params.getPrebookcode());
+                                "", params.getEmail(), "", params.getCustomerCountry(), "", "", prebookCode[0]);
                     } catch (DatatypeConfigurationException e) {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorMessageText("");
                         bookJSON.setErrorType("Communication Error");
                         storeBookLog(params, sunHotelsRequest, bookJSON, null, subAgencyBean, "", "SunHotels");
+                        errLogger.info(bookJSON.getErrorMessageText());
                         return bookJSON;
                     } catch (NullPointerException e) {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorMessageText("");
                         bookJSON.setErrorType("Communication Error");
                         storeBookLog(params, sunHotelsRequest, bookJSON, null, subAgencyBean, "", "SunHotels");
+                        errLogger.info(bookJSON.getErrorMessageText());
                         return bookJSON;
                     }
 
@@ -970,6 +992,57 @@ public class BookPrebookController {
                         bookJSON.setSuccess(false);
                         bookJSON.setErrorType(result.getError().getErrorType());
                     } else {
+
+                        /**
+                         * Store Booking Results(Cancelation policies and prebookcode) prebookLog table.
+                         */
+                        PrebookLogBean prebookLogBean = new PrebookLogBean();
+                        prebookLogBean.setHotelId(String.valueOf(HotelmappingDAO.getOriginalHotelId(Integer.parseInt(params.getHotelId()), null)));
+                        prebookLogBean.setPrebookDate(prebookJSON.getDateStamp());
+                        prebookLogBean.setPrebookRef(params.getPrebookcode());
+                        prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
+                        prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
+                        prebookLogBean.setRoomTypeName("");
+                        prebookLogBean.setMealName("");
+
+
+                        mapper = new ObjectMapper();
+                        try {
+                            prebookLogBean.setNotes(mapper.writeValueAsString(result.getBooking().getHotelNotes()));
+                        } catch (JsonProcessingException e) {
+                            errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but failed to store correctly to databse(HotelNotes)");
+                        }
+
+
+                        if (result.getBooking().getCancellationpolicies() != null && result.getBooking().getCancellationpolicies().size() > 0) {
+                            StaticPercentageCancellationPolicy atbPolicy = new StaticPercentageCancellationPolicy();
+                            atbPolicy.setDeadline(0);
+                            for (StaticPercentageCancellationPolicy policy : result.getBooking().getCancellationpolicies()) {
+                                if (policy.getDeadline() == null) {
+                                    atbPolicy = policy;
+                                    break;
+                                }
+                                if (policy.getDeadline() > atbPolicy.getDeadline())
+                                    atbPolicy = policy;
+                            }
+                            prebookLogBean.setPercentage("100");
+                            prebookLogBean.setCancelPolicy(atbPolicy.getText());
+                            if (atbPolicy.getDeadline() != null) {
+                                prebookLogBean.setAtbCancelPolicy("Cancellation made less than " + (atbPolicy.getDeadline() + plusCancelationPolicyHours) + " hours (12:00) prior to the arrival will be charged with 100% of the total booking value.");
+                                prebookLogBean.setDeadline(String.valueOf(atbPolicy.getDeadline() + plusCancelationPolicyHours));
+                            } else {
+                                prebookLogBean.setAtbCancelPolicy("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
+                                prebookLogBean.setDeadline("null");
+                            }
+                        } else {
+                            prebookLogBean.setAtbCancelPolicy("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
+                            prebookLogBean.setDeadline("null");
+                            prebookLogBean.setPercentage("100");
+                        }
+                        int prebookLogId=PrebookLogDAO.storePrebookLog(prebookLogBean);
+
+                        if(prebookLogId==0)
+                            errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but failed to get preeboklogId");
 
                         /**
                          * Store Booking Results to Hotel_Bookings_All table
@@ -1005,7 +1078,7 @@ public class BookPrebookController {
                         bookingsAllBean.setCommon3("");
                         bookingsAllBean.setCommon4("");
                         bookingsAllBean.setCommon5("");
-                        bookingsAllBean.setCommon6("");
+                        bookingsAllBean.setCommon6(String.valueOf(prebookLogId));
                         bookingsAllBean.setCommon7(result.getBooking().getHotelAddress());
                         bookingsAllBean.setCommon8(result.getBooking().getHotelPhone());
                         bookingsAllBean.setCommon9(params.getPrebookcode());
@@ -1121,53 +1194,6 @@ public class BookPrebookController {
                             errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but failed to store correctly to databse");
 
 
-                        /**
-                         * Store Booking Results(Cancelation policies and prebookcode) prebookLog table.
-                         */
-                        PrebookLogBean prebookLogBean = new PrebookLogBean();
-                        prebookLogBean.setHotelId(String.valueOf(HotelmappingDAO.getOriginalHotelId(Integer.parseInt(params.getHotelId()), null)));
-                        prebookLogBean.setPrebookDate(prebookJSON.getDateStamp());
-                        prebookLogBean.setPrebookRef(params.getPrebookcode());
-                        prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
-                        prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
-                        prebookLogBean.setRoomTypeName("");
-                        prebookLogBean.setMealName("");
-
-
-                        ObjectMapper mapper = new ObjectMapper();
-                        try {
-                            prebookLogBean.setNotes(mapper.writeValueAsString(result.getBooking().getHotelNotes()));
-                        } catch (JsonProcessingException e) {
-                            errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but failed to store correctly to databse(HotelNotes)");
-                        }
-
-
-                        if (result.getBooking().getCancellationpolicies() != null && result.getBooking().getCancellationpolicies().size() > 0) {
-                            StaticPercentageCancellationPolicy atbPolicy = new StaticPercentageCancellationPolicy();
-                            atbPolicy.setDeadline(0);
-                            for (StaticPercentageCancellationPolicy policy : result.getBooking().getCancellationpolicies()) {
-                                if (policy.getDeadline() == null) {
-                                    atbPolicy = policy;
-                                    break;
-                                }
-                                if (policy.getDeadline() > atbPolicy.getDeadline())
-                                    atbPolicy = policy;
-                            }
-                            prebookLogBean.setPercentage("100");
-                            prebookLogBean.setCancelPolicy(atbPolicy.getText());
-                            if (atbPolicy.getDeadline() != null) {
-                                prebookLogBean.setAtbCancelPolicy("Cancellation made less than " + (atbPolicy.getDeadline() + plusCancelationPolicyHours) + " hours (12:00) prior to the arrival will be charged with 100% of the total booking value.");
-                                prebookLogBean.setDeadline(String.valueOf(atbPolicy.getDeadline() + plusCancelationPolicyHours));
-                            } else {
-                                prebookLogBean.setAtbCancelPolicy("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
-                                prebookLogBean.setDeadline("null");
-                            }
-                        } else {
-                            prebookLogBean.setAtbCancelPolicy("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
-                            prebookLogBean.setDeadline("null");
-                            prebookLogBean.setPercentage("100");
-                        }
-                        PrebookLogDAO.storePrebookLog(prebookLogBean);
 
                         /**
                          * Store travellers to TravellerInfo table.
@@ -1325,6 +1351,7 @@ public class BookPrebookController {
             } else {
                 bookJSON.setSuccess(false);
                 bookJSON.setErrorType("Internal Error");
+                errLogger.info(bookJSON.getErrorMessageText());
                 bookJSON.setErrorMessageText("Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
                 storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "SunHotels");
             }

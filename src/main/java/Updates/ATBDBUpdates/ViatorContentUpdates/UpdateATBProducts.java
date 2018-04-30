@@ -751,11 +751,37 @@ public class UpdateATBProducts {
                         /**
                          * Store  pickupHotels of product to ATB DB e_Pickup_Point table.
                          */
+
+                        if(products.get(0).getDeparturePoint()!=null && !products.get(0).getDeparturePoint().equals("")) {
+                            ePickupPointBean = new EPickupPointBean();
+                            ePickupPointBean.setPickupType("Meeting Point");
+                            ePickupPointBean.setMapZoom("");
+                            ePickupPointBean.setPrecisionType("");
+                            ePickupPointBean.setPickupNote("");
+                            ePickupPointBean.setHotelPickupPoint("");
+                            ePickupPointBean.setLatitude("");
+                            ePickupPointBean.setLongitude("");
+                            ePickupPointBean.setHotelId("");
+                            ePickupPointBean.setLatitude("");
+                            ePickupPointBean.setLongitude("");
+                            ePickupPointBean.setMeetingPoint(products.get(0).getDeparturePoint());
+                            ePickupPointBean.setDropOfEndPoint(products.get(0).getDeparturePoint());
+                            ePickupPointBean.setStartingPoint(products.get(0).getDeparturePoint());
+                            ePickupPointBean.setProductId(String.valueOf(productTitleRecord.getId()));
+                            ePickupPointBean.setCreatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                    dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                    dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
+                            ePickupPointBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
+                                    dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                    dateTime.getHourOfDay(), dateTime.getMinuteOfHour())).toString());
+                            ePickupPoints.add(ePickupPointBean);
+                        }
+
                         pickupHotels = ViatorPickupHotelsDAO.getPickupHotelsByProductCode(products.get(0).getCode());
                         if (pickupHotels != null && pickupHotels.size() > 0) {
                             for (ViatorPickupHotelsBean pickupHotel : pickupHotels) {
                                 ePickupPointBean = new EPickupPointBean();
-                                ePickupPointBean.setPickupType("");
+                                ePickupPointBean.setPickupType("Hotel");
                                 ePickupPointBean.setMeetingPoint("");
                                 ePickupPointBean.setMapZoom("13");
                                 ePickupPointBean.setDropOfEndPoint("");

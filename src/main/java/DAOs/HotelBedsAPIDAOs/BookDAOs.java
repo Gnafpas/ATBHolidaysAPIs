@@ -1,7 +1,9 @@
 package DAOs.HotelBedsAPIDAOs;
 
 import Beans.HotelBedsAPIBeans.Availability.AvailabilityAPIJSON;
+import Beans.HotelBedsAPIBeans.Book.BookAPIJSON;
 import Beans.HotelBedsAPIBeans.Book.BookPost;
+import Beans.HotelBedsAPIBeans.Book.CheckRateAPIJSON;
 import Beans.HotelBedsAPIBeans.Book.CheckRatePost;
 import Helper.ProjectProperties;
 import org.springframework.http.HttpEntity;
@@ -21,8 +23,8 @@ import static Helper.ProjectProperties.hotelBedsSecret;
  */
 public class BookDAOs {
 
-    public static AvailabilityAPIJSON checkRate(CheckRatePost checkRatePost) {
-        AvailabilityAPIJSON availabilityAPIJSON=null ;
+    public static CheckRateAPIJSON checkRate(CheckRatePost checkRatePost) {
+        CheckRateAPIJSON checkRateAPIJSON=null ;
         final String url = "https://api.test.hotelbeds.com/hotel-api/1.0/checkrates";
         try {
             RestTemplate restTemplate = new RestTemplate();
@@ -34,7 +36,7 @@ public class BookDAOs {
             requestHeaders.add("Api-Key", hotelBedsApiKey);
             requestHeaders.add("Accept", "application/json");
             HttpEntity<CheckRatePost> request = new HttpEntity<CheckRatePost>(checkRatePost, requestHeaders);
-            availabilityAPIJSON=restTemplate.postForObject(url, request, AvailabilityAPIJSON.class);
+            checkRateAPIJSON=restTemplate.postForObject(url, request, CheckRateAPIJSON.class);
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
@@ -44,11 +46,11 @@ public class BookDAOs {
         } catch (ResourceAccessException e2) {
             errLogger.info("*****************" + e2.getMessage() + "*****************");
         }
-        return availabilityAPIJSON;
+        return checkRateAPIJSON;
     }
 
-    public static AvailabilityAPIJSON book(BookPost bookPost) {
-        AvailabilityAPIJSON availabilityAPIJSON=null ;
+    public static BookAPIJSON book(BookPost bookPost) {
+        BookAPIJSON bookAPIJSON=null ;
         final String url = "https://api.test.hotelbeds.com/hotel-api/1.2/bookings";
         try {
             RestTemplate restTemplate = new RestTemplate();
@@ -60,7 +62,7 @@ public class BookDAOs {
             requestHeaders.add("Api-Key", hotelBedsApiKey);
             requestHeaders.add("Accept", "application/json");
             HttpEntity<BookPost> request = new HttpEntity<BookPost>(bookPost, requestHeaders);
-            availabilityAPIJSON=restTemplate.postForObject(url, request, AvailabilityAPIJSON.class);
+            bookAPIJSON=restTemplate.postForObject(url, request, BookAPIJSON.class);
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
@@ -70,7 +72,7 @@ public class BookDAOs {
         } catch (ResourceAccessException e2) {
             errLogger.info("*****************" + e2.getMessage() + "*****************");
         }
-        return availabilityAPIJSON;
+        return bookAPIJSON;
     }
 
 

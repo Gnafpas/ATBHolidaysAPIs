@@ -27,4 +27,8 @@ public class ATBHibernateUtil {
             return ourSessionFactory.openStatelessSession();
         }
 
+    public static Session getNormalSession() throws HibernateException {
+        return ourSessionFactory.openSession();
+    }
+
 }

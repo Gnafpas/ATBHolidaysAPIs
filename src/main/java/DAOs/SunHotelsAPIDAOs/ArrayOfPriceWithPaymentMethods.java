@@ -66,4 +66,7 @@ public class ArrayOfPriceWithPaymentMethods {
         return this.price;
     }
 
+    public void setPrice(List<PriceWithPaymentMethods> price) {
+        this.price = price;
+    }
 }

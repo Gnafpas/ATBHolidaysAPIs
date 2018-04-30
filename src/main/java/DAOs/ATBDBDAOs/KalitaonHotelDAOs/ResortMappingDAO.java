@@ -28,7 +28,7 @@ public class ResortMappingDAO {
         boolean err=false;
         try{
             session.insert(resortMappingBean);
-            session2.insert(resortMappingBean);
+          //  session2.insert(resortMappingBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -59,7 +59,7 @@ public class ResortMappingDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+         //   session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

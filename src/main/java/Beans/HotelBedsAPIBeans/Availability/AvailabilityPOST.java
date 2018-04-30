@@ -9,7 +9,16 @@ public class AvailabilityPOST {
     private Stay stay;
     private List<Occupancy> occupancies;
     private HotelPost hotels;
+    private Board boards;
     private Filter filter;
+
+    public Board getBoards() {
+        return boards;
+    }
+
+    public void setBoards(Board boards) {
+        this.boards = boards;
+    }
 
     public Stay getStay() {
         return stay;

@@ -26,7 +26,7 @@ public class PhotoDAO {
         try{
             for(PhotoBean photo:photos) {
                 session.insert(photo);
-                session2.insert(photo);
+           //     session2.insert(photo);
             }
         }catch (HibernateException e) {
             err=true;
@@ -58,7 +58,7 @@ public class PhotoDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+        //    session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

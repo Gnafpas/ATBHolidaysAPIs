@@ -17,12 +17,21 @@ public class Rate {
     private String paymentType;
     private boolean packaging;
     private String boardCode;
+    private String rateComments;
     private String boardName;
     private int rooms;
     private int adults;
     private int children;
     private List<CancellationPolicy> cancellationPolicies;
     private Taxes taxes;
+
+    public String getRateComments() {
+        return rateComments;
+    }
+
+    public void setRateComments(String rateComments) {
+        this.rateComments = rateComments;
+    }
 
     public String getRateKey() {
         return rateKey;

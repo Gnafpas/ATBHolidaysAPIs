@@ -26,7 +26,7 @@ public class AccommodationsDAO {
         boolean err=false;
         try{
             session.insert(accommodationsBean);
-            session2.insert(accommodationsBean);
+          //  session2.insert(accommodationsBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -56,7 +56,7 @@ public class AccommodationsDAO {
         boolean err=false;
         try{
             session.update(accommodationsBean);
-            session2.update(accommodationsBean);
+         //   session2.update(accommodationsBean);
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

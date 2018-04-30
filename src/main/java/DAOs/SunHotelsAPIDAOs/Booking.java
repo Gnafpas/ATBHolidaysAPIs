@@ -623,6 +623,10 @@ public class Booking
         return this.cancellationpolicies;
     }
 
+    public void setCancellationpolicies(List<StaticPercentageCancellationPolicy> cancellationpolicies) {
+        this.cancellationpolicies = cancellationpolicies;
+    }
+
     /**
      * Gets the value of the earliestNonFreeCancellationDateCET property.
      * 

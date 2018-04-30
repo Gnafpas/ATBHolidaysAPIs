@@ -66,4 +66,7 @@ public class ArrayOfCalendarNote5 {
         return this.note;
     }
 
+    public void setNote(List<CalendarNote> note) {
+        this.note = note;
+    }
 }

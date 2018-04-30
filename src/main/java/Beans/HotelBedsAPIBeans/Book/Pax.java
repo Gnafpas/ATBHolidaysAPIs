@@ -8,6 +8,24 @@ public class Pax {
     private String type;
     private int  age;
     private int roomId;
+    private String name;
+    private String surname;
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getRoomId() {
         return roomId;
@@ -33,3 +51,4 @@ public class Pax {
         this.age = age;
     }
 }
+

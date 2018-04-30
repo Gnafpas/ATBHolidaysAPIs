@@ -230,7 +230,7 @@ public class SunHotelsSearchThread  implements Runnable {
                                                         roomTypeWithRoomsResponse = new SunHotelsRoomTypeWithRoomsResponse();
                                                         roomtype.setRoomtypeID(atbRoomType.getId());
                                                         roomTypeWithRoomsResponse.setRoomTypeId(atbRoomType.getId());
-                                                        roomTypeWithRoomsResponse.setRoomType(atbRoomType.getRoomType());
+                                                        roomTypeWithRoomsResponse.setRoomType(atbRoomType.getRoomType().toUpperCase());
                                                         roomTypeWithRoomsResponse.setRooms(roomsResponse);
                                                         roomTypesWithRoomsResponse.add(roomTypeWithRoomsResponse);
                                                     }

@@ -9,6 +9,7 @@ import DAOs.SunHotelsAPIDAOs.NonStaticXMLAPISoap;
 import DBConnection.SunHotelsHibernateUtil;
 import DBConnection.SunHotelsMainServerHibernateUtil;
 import Helper.ProjectProperties;
+import org.hibernate.Session;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 import java.util.ArrayList;
@@ -80,10 +81,10 @@ public class DeleteExpiredHotels {
                                 Transaction tx2;
                                 tx = session.beginTransaction();
                                 tx2 = session2.beginTransaction();
-                                List<HotelBean> hotels=HotelDAO.getHotelByHotelId(hotelId,sanHotelsProviderId,session);
+                                List<HotelBean> hotels=HotelDAO.getHotelByHotelId(hotelId,sanHotelsProviderId,null);
                                 if (hotels!=null && hotels.size()>0 && hotels.get(0).isActive()){
                                     hotels.get(0).setActive(false);
-                                    if(HotelDAO.saveOrUpdateHotelBean(hotels.get(0),session,session2))
+                                    if(HotelDAO.updateHotelBean(hotels.get(0),session,session2))
                                         totalExpiredHotels.setAtbDBErrCommCounter(totalExpiredHotels.getAtbDBErrCommCounter() + 1);
                                 }
                                 tx.commit();

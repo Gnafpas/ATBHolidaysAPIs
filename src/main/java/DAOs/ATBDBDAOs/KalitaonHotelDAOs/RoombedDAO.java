@@ -25,7 +25,7 @@ public class RoombedDAO {
         try{
             for(RoombedBean roombed :roombeds) {
                 session.insert(roombed);
-                session2.insert(roombed);
+             //   session2.insert(roombed);
             }
         }catch (HibernateException e) {
             err=true;
@@ -57,7 +57,7 @@ public class RoombedDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+         //   session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

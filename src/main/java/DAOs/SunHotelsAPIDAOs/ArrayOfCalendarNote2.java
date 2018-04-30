@@ -66,4 +66,7 @@ public class ArrayOfCalendarNote2 {
         return this.englishHotelNote;
     }
 
+    public void setEnglishHotelNote(List<CalendarNote> englishHotelNote) {
+        this.englishHotelNote = englishHotelNote;
+    }
 }

@@ -89,7 +89,7 @@ public class UpdateSunHotelsDB {
              * Delete expired hotels
              */
             logger.info("********************** Starting delete expired hotels procedure... **********************");
-            totalExpiredHotels = DeleteExpiredHotels.deleteExpiredHotels(logger);
+           // totalExpiredHotels = DeleteExpiredHotels.deleteExpiredHotels(logger);
             logger.info("********************** Expired hotels procedure ended. **********************");
 
             //todo update meals

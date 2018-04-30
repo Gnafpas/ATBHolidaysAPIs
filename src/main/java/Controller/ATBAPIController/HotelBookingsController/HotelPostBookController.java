@@ -116,7 +116,7 @@ public class HotelPostBookController {
                     for (BookingsAllBean booking : bookingsBeans) {
                         PrebookLogBean prebookLogBean = null;
                         if (booking.getCommon9() != null && !booking.getCommon9().equals(""))
-                            prebookLogBean = PrebookLogDAO.getPrebookLogBeanByPrebookRef(booking.getCommon9());
+                            prebookLogBean = PrebookLogDAO.getPrebooklogBeanByPrebookRef(booking.getCommon6(),booking.getCommon9());
                         List<TravellerInfoBean> travellersInfoBean;
                         travellersInfoBean = TravellerInfoDAO.getTravellerInfoBeanByBookingId(booking.getBookingId());
 
@@ -274,7 +274,7 @@ public class HotelPostBookController {
                 BookingsAllBean booking = BookingsAllDAO.getBookingsAllBeanById(bookingId, subAgencyBean.getId());
                 if (booking != null) {
 
-                    PrebookLogBean prebook = PrebookLogDAO.getPrebookLogBeanByPrebookRef(booking.getCommon9());
+                    PrebookLogBean prebook = PrebookLogDAO.getPrebooklogBeanByPrebookRef(booking.getCommon6(),booking.getCommon9());
                     if (prebook != null) {
 
 
@@ -283,7 +283,7 @@ public class HotelPostBookController {
                             deadlineDate = null;
                         else {
                             long i = booking.getCheckIn().getTime() - (Integer.parseInt(prebook.getDeadline() + 24) * 60 * 60 * 1000);//todo
-                            deadlineDate = new DateTime(i);
+                            deadlineDate = new DateTime(i);//todo see what we ll do with multiple cancelation policies
                         }
 
                         if (booking.getStatus().equals("4")) {
@@ -324,7 +324,7 @@ public class HotelPostBookController {
                                                 BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
                                                 bookingTransactionBean.setAgentId(String.valueOf(subAgencyBean.getId()));
                                                 bookingTransactionBean.setAgentName(subAgencyBean.getAgentName());
-                                                bookingTransactionBean.setBookingId(String.valueOf(booking.getId()));
+                                                bookingTransactionBean.setBookingId(booking.getBookingId());
                                                 bookingTransactionBean.setGsaId(subAgencyBean.getGsaId());
                                                 bookingTransactionBean.setTransactionType("Refund");
                                                 bookingTransactionBean.setTransCur(subAgencyBean.getCurrency());

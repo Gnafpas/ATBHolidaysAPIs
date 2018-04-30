@@ -13,6 +13,7 @@ import DAOs.ATBDBDAOs.KalitaonHotelDAOs.HotelmappingDAO;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.MealDAO;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.RoomtypeDAO;
 import DAOs.HotelBedsAPIDAOs.AvailabilityDAOs;
+import Helper.CurrencyConverter;
 import org.hibernate.StatelessSession;
 
 import java.io.PrintWriter;
@@ -26,6 +27,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 import static Controller.Application.errLogger;
+import static Helper.ProjectProperties.hotelBedsDeafultCurrency;
 import static Helper.ProjectProperties.hotelBedsProviderId;
 import static java.math.RoundingMode.HALF_UP;
 
@@ -72,7 +74,7 @@ public class HotelBedsSearchThread  implements Runnable {
 
         public void run() {
             try {
-                if ((destinationBean != null && destinationBean.getHotelBedsCode() != null && destinationBean.getHotelBedsCode().equals("BRU")) ||
+                if ((destinationBean != null && destinationBean.getHotelBedsCode() != null && (destinationBean.getHotelBedsCode().equals("BRU") || destinationBean.getHotelBedsCode().equals("BER")) ) ||
                         (params.getHotelID() != null && !params.getHotelID().equals(""))) {
 
                     long dbTransactionTimeElapsed = 0;
@@ -96,6 +98,7 @@ public class HotelBedsSearchThread  implements Runnable {
                         for (String age : childrenAgesSplit) {
                             if (age != null && !age.equals("0") && !age.equals("")) {
                                 Pax pax = new Pax();
+                                age=age.replaceAll("\\s+","");
                                 pax.setAge(Integer.parseInt(age));
                                 pax.setType("CH");
                                 paxes.add(pax);
@@ -106,8 +109,17 @@ public class HotelBedsSearchThread  implements Runnable {
                     occupancies.add(occupancy);
                     availabilityPOST.setOccupancies(occupancies);
                     Filter filter = new Filter();
-                    filter.setMaxRate(params.getMaxPrice());
-                    filter.setMinRate(params.getMinPrice());
+
+                    BigDecimal maxMinprice=null;
+                    if(params.getMaxPrice()!=null && !params.getMaxPrice().equals("") && params.getCurrencies()!=null && params.getCurrencies().size()>0)
+                        maxMinprice= CurrencyConverter.findExchangeRateAndConvert( params.getCurrencies().get(0),hotelBedsDeafultCurrency, Double.parseDouble(params.getMaxPrice()));
+                    if(maxMinprice!=null)
+                        filter.setMaxRate(maxMinprice.toString());
+                    maxMinprice=null;
+                    if(params.getMinPrice()!=null && !params.getMinPrice().equals("") && params.getCurrencies()!=null && params.getCurrencies().size()>0)
+                        maxMinprice= CurrencyConverter.findExchangeRateAndConvert( params.getCurrencies().get(0),hotelBedsDeafultCurrency, Double.parseDouble(params.getMinPrice()));
+                    if(maxMinprice!=null)
+                        filter.setMinRate(maxMinprice.toString());
                     availabilityPOST.setFilter(filter);
                     List<HotelBean> hotelBeans = null;
                     HotelPost hotels = new HotelPost();
@@ -181,7 +193,7 @@ public class HotelBedsSearchThread  implements Runnable {
                                                         hotelResponse.setId(atbHotelId);
                                                         hotelResponse.setLatitude(atbhotel.getLatitude());
                                                         hotelResponse.setLongitude(atbhotel.getLongitude());
-                                                        hotelResponse.setName(atbhotel.getName() + ".");
+                                                        hotelResponse.setName(atbhotel.getName());
                                                         hotelResponse.setStar_rating(atbhotel.getStarRating());
                                                         hotelResponse.setState(atbhotel.getState());
                                                         hotelResponse.setZip_code(atbhotel.getZipCode());
@@ -216,10 +228,8 @@ public class HotelBedsSearchThread  implements Runnable {
                                                                                             LocalTime.of(9, 30), ZoneId.of("America/New_York"));
 
                                                                                     ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());
-                                                                                    System.out.println("sssd " + strCancelationDate[0] + "  " + date.getYear() + "  " + strCancelationDate[1] + "  " + date.getMonth() + "  " + strCancelationDate[2] + "  " + date.getDayOfMonth());
                                                                                     if (strCancelationDate[0].equals(date.getYear()) && strCancelationDate[1].equals(date.getMonth()) && strCancelationDate[2].equals(date.getDayOfMonth())) {
                                                                                         cancelationPolicy.setDeadline(0);
-                                                                                        System.out.println("empeneeeeee ");
                                                                                     } else
                                                                                         cancelationPolicy.setDeadline((int) Duration.between(cancelationDate, checkin).getSeconds() / 60 / 60);
                                                                                     cancelationPolicies.add(cancelationPolicy);
@@ -243,8 +253,15 @@ public class HotelBedsSearchThread  implements Runnable {
                                                                         roomMealResponse = new SunHotelsRoomMealResponse();
                                                                         roomMealResponse.setMealId(m.getId());
                                                                         roomMealResponse.setMealName(m.getName());
-                                                                        if (rate.getNet() != null)
-                                                                            roomMealResponse.setPrice(new BigDecimal(Double.parseDouble(rate.getNet())).setScale(2, BigDecimal.ROUND_HALF_UP));
+                                                                        if (rate.getNet() != null) {
+                                                                            BigDecimal price=null;
+                                                                            if(params.getCurrencies()!=null && params.getCurrencies().size()>0)
+                                                                                price= CurrencyConverter.findExchangeRateAndConvert(hotel.getCurrency(), params.getCurrencies().get(0), Double.parseDouble(rate.getNet()));
+                                                                            if(price!=null)
+                                                                                roomMealResponse.setPrice(price.setScale(2, BigDecimal.ROUND_HALF_UP));
+                                                                            else
+                                                                                roomMealResponse.setPrice(null);
+                                                                        }
                                                                         if (roomMealResponse.getPrice() != null && roomMealResponse.getPrice().compareTo(new BigDecimal(0)) != 0) {
                                                                             roomMealsResponse.add(roomMealResponse);
                                                                             hotelHasPrices = true;

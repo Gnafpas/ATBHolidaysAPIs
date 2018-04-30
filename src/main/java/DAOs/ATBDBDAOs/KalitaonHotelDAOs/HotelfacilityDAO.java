@@ -26,7 +26,7 @@ public class HotelfacilityDAO {
         try{
             for(HotelfacilityBean hotelfacility:hotelfacilities) {
                 session.insert(hotelfacility);
-                session2.insert(hotelfacility);
+         //       session2.insert(hotelfacility);
             }
         }catch (HibernateException e) {
             err=true;
@@ -59,8 +59,7 @@ public class HotelfacilityDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+         //   session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();

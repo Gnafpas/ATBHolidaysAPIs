@@ -84,7 +84,7 @@ public class UpdateHotelBedsDB {
              * Delete expired hotels
              */
             logger.info("********************** Starting delete expired hotels procedure... **********************");
-            totalExpiredHotels = Updates.ATBDBUpdates.HotelBedsDBUpdates.DeleteExpiredHotels.deleteExpiredHotels(logger);
+           // totalExpiredHotels = Updates.ATBDBUpdates.HotelBedsDBUpdates.DeleteExpiredHotels.deleteExpiredHotels(logger);
             logger.info("********************** Expired hotels procedure ended. **********************");
 
 

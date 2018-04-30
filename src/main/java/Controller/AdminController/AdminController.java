@@ -5,11 +5,15 @@ import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.OrderProduct;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 import Beans.HotelBedsAPIBeans.Availability.*;
+import Beans.HotelBedsAPIBeans.Book.BookAPIJSON;
+import Beans.HotelBedsAPIBeans.Book.Holder;
+import Beans.ViatorAPIBeans.Bookings.Book.BookPOST;
 import Beans.ViatorDBBeans.ViatorDestinationsBean;
 import Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CityCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
 import DAOs.HotelBedsAPIDAOs.AvailabilityDAOs;
+import DAOs.HotelBedsAPIDAOs.BookDAOs;
 import DAOs.HotelBedsAPIDAOs.HotelAPIDAO;
 import DAOs.ViatorDBDAOs.ViatorDestinationsDAO;
 import DAOs.ViatorDBDAOs.ViatorNoneAvailableDatesDAO;
@@ -461,7 +465,7 @@ public class AdminController {
 
 
     @RequestMapping("/temp")
-    public String temp() {
+    public String  temp() {
 
 //        try {
 //            GregorianCalendar gc = new GregorianCalendar(2018, 02, 10);
@@ -487,7 +491,6 @@ public class AdminController {
 //            }
 //        }
         HotelAPIDAO.status();
-
 
 //        String destBean="George-sd";
 //        String[] dbDestName=destBean.split("( )|(\\()|(\\))|(-)");

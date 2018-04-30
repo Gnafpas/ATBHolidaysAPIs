@@ -27,7 +27,7 @@ public class RoomDAO {
         try{
             for(RoomBean room:rooms) {
                 session.insert(room);
-                session2.insert(room);
+            //    session2.insert(room);
             }
         }catch (HibernateException e) {
             err=true;
@@ -59,7 +59,7 @@ public class RoomDAO {
         boolean err=false;
         try{
             session.createQuery(hql).executeUpdate();
-            session2.createQuery(hql).executeUpdate();
+         //   session2.createQuery(hql).executeUpdate();
         }catch (HibernateException e) {
             err=true;
             StringWriter errors = new StringWriter();
@@ -82,6 +82,46 @@ public class RoomDAO {
             errLogger.info(errors.toString());
         }
         return err;
+    }
+
+    public static List<RoomBean> getRoomsByRoomTypeId(String roomTypeId,int providerId,StatelessSession session){
+
+        boolean externalSession=false;
+        if(session==null) {
+            session = SunHotelsHibernateUtil.getSession();
+            externalSession =true;
+        }
+        List<RoomBean> rooms=null;
+        String hql = "select room from RoomBean room where  room.roomTypeId='"+roomTypeId+"' and room.providerId='"+providerId+"'";
+        try{
+            if(externalSession)
+                session.beginTransaction();
+            rooms=session.createQuery(hql).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+
+        }catch (PersistenceException e){
+
+        }finally {
+            if(externalSession)
+                session.close();
+        }
+        return rooms;
     }
 
     public static List<RoomBean> getRoomsByHotelId(int hotelId,int providerId,StatelessSession session){

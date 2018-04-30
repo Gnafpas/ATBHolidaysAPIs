@@ -19,31 +19,31 @@ import static Controller.Application.errLogger;
  */
 public class PrebookLogDAO {
 
-    public static boolean storePrebookLog(PrebookLogBean prebookLogBean){
+    public static int storePrebookLog(PrebookLogBean prebookLogBean){
 
-        boolean error=false;
+        String hql ="Select prebookLog.id FROM PrebookLogBean prebookLog " +
+               " order by prebookLog.id desc";
         Session session = ATBLogHibernateUtil.getSession();
+        int id=0;
         try{
             session.beginTransaction();
             session.save(prebookLogBean);
+            id = (int) session.createQuery(hql).setMaxResults(1)//todo check if this is safe and there is no possibility to get other record than the coorect one
+                    .getSingleResult();
             session.getTransaction().commit();
         }catch (HibernateException e) {
-            error=true;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (ExceptionInInitializerError e) {
-            error=true;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         } catch (ClientTransportException e) {
-            error=true;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
         }catch (CJCommunicationsException e){
-            error=true;
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             errLogger.info(errors.toString());
@@ -52,18 +52,24 @@ public class PrebookLogDAO {
         }finally{
             session.close();
         }
-        return error;
+        return id;
     }
 
-    public static PrebookLogBean getPrebookLogBeanByPrebookRef(String prebookRef){
+    public static PrebookLogBean getPrebooklogBeanByPrebookRef(String prebooklogId,String prebookRef){
 
         Session session = ATBLogHibernateUtil.getSession();
         PrebookLogBean prebookLogBean=null;
-        String hql = "select prebookLogBean from PrebookLogBean prebookLogBean " +
-                "where prebookLogBean.prebookRef like :prebookRef";
+        String hql="";
+        if(prebooklogId!=null && !prebooklogId.equals("")) {
+            hql= "select prebookLogBean from PrebookLogBean prebookLogBean " +
+                    "where prebookLogBean.id = " + prebooklogId;
+        }else {
+            hql = "select prebookLogBean from PrebookLogBean prebookLogBean " +
+                    "where prebookLogBean.prebookRef like  '" + prebookRef+"'";
+        }
         try{
             session.beginTransaction();
-            prebookLogBean=(PrebookLogBean)session.createQuery(hql).setParameter("prebookRef",prebookRef ).getSingleResult();
+            prebookLogBean=(PrebookLogBean)session.createQuery(hql).getSingleResult();
         }catch (HibernateException e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
