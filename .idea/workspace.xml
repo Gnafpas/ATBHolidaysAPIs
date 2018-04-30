@@ -2,98 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Availability/Board.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/Booking.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/CancelationPolicy.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/CheckRateAPIJSON.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/Hotel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/InvoiceCompany.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/ModificationPolicies.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/Rate.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/RoomBookResponse.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/Supplier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/service/service.war" afterPath="$PROJECT_DIR$/out/artifacts/service/service.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Availability/AvailabilityPOST.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Availability/AvailabilityPOST.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Availability/Rate.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Availability/Rate.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Book/BookAPIJSON.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Book/BookAPIJSON.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Book/Pax.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Beans/HotelBedsAPIBeans/Book/Pax.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/ProductBookingsControler/BookController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/ProductBookingsControler/BookController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/FrontEndAPIServices.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/FrontEndAPIServices.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/HotelBedsSearchThread.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/HotelBedsSearchThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/SunHotelsSearchThread.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/SunHotelsSearchThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController/AdminController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController/AdminController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/AccommodationsDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/AccommodationsDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/DestinationDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/DestinationDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelfacilityDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelfacilityDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelmappingDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelmappingDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/MealDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/MealDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/PhotoDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/PhotoDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortMappingDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortMappingDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoombedDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoombedDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomtypeDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomtypeDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonLogDAOs/PrebookLogDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonLogDAOs/PrebookLogDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/HotelBedsAPIDAOs/BookDAOs.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/HotelBedsAPIDAOs/BookDAOs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote1.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote2.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote5.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfPriceWithPaymentMethods.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfPriceWithPaymentMethods.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/Booking.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/Booking.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ViatorDBDAOs/PrebookLogDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ViatorDBDAOs/PrebookLogDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DBConnection/ATBHibernateUtil.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DBConnection/ATBHibernateUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DBConnection/SunHotelsMainServerHibernateUtil.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DBConnection/SunHotelsMainServerHibernateUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Helper/ProjectProperties.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Helper/ProjectProperties.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/HotelBedsDBUpdates/DeleteExpiredHotels.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/HotelBedsDBUpdates/DeleteExpiredHotels.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/SunHotelsDBUpdates/DeleteExpiredHotels.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/SunHotelsDBUpdates/DeleteExpiredHotels.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/SunHotelsDBUpdates/UpdateSunHotelsDB.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/SunHotelsDBUpdates/UpdateSunHotelsDB.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Availability/AvailabilityPOST.java" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Availability/AvailabilityPOST.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Availability/Rate.java" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Availability/Rate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/BookAPIJSON.java" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/BookAPIJSON.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/Pax.java" afterPath="$PROJECT_DIR$/src/main/java/Beans/HotelBedsAPIBeans/Book/Pax.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductBookingsControler/BookController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductBookingsControler/BookController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/HotelBedsSearchThread.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/HotelBedsSearchThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/SunHotelsSearchThread.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/SunHotelsSearchThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/AdminController/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/AdminController/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/AccommodationsDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/AccommodationsDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/DestinationDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/DestinationDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelfacilityDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelfacilityDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelmappingDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelmappingDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/MealDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/MealDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/PhotoDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/PhotoDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortMappingDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ResortMappingDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoombedDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoombedDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomtypeDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomtypeDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonLogDAOs/PrebookLogDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonLogDAOs/PrebookLogDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/HotelBedsAPIDAOs/BookDAOs.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/HotelBedsAPIDAOs/BookDAOs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote1.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote2.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote5.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfCalendarNote5.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfPriceWithPaymentMethods.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/ArrayOfPriceWithPaymentMethods.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/Booking.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/Booking.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DAOs/ViatorDBDAOs/PrebookLogDAO.java" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ViatorDBDAOs/PrebookLogDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DBConnection/ATBHibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/DBConnection/ATBHibernateUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/DBConnection/SunHotelsMainServerHibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/DBConnection/SunHotelsMainServerHibernateUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java" afterPath="$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/HotelBedsDBUpdates/DeleteExpiredHotels.java" afterPath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/HotelBedsDBUpdates/DeleteExpiredHotels.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.java" afterPath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/SunHotelsDBUpdates/DeleteExpiredHotels.java" afterPath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/SunHotelsDBUpdates/DeleteExpiredHotels.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/SunHotelsDBUpdates/UpdateSunHotelsDB.java" afterPath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/SunHotelsDBUpdates/UpdateSunHotelsDB.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.java" afterPath="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/src/main/target/" />
@@ -1161,7 +1070,7 @@
       <workItem from="1522832940064" duration="116391000" />
       <workItem from="1523470055781" duration="105387000" />
       <workItem from="1524485753397" duration="98937000" />
-      <workItem from="1525107359869" duration="364000" />
+      <workItem from="1525107359869" duration="392000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -1254,7 +1163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524234493108</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="HotelBeds booking operations for frontend assistance.Store prebook and retrieve it at booking operations to determine provider cost etc.">
+      <created>1525107896248</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1525107896249</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1281,7 +1197,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2926390000" />
+    <option name="totallyTimeSpent" value="2926418000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
