@@ -202,6 +202,44 @@ public class RoomDAO {
         return roomBean;
     }
 
+    public static RoomBean getRoomBeanByAtbRoomId(String atbroomId,int hotelId,int providerId,StatelessSession session) {
+
+        boolean incomingSession=true;
+
+        RoomBean roomBean = null;
+        String hql = "select room from RoomBean room where room.atbRoomId='" + atbroomId + "' and room.hotelId='"+hotelId+"' and room.providerId='"+providerId+"'";
+        try {
+            if(session==null) {
+                session = SunHotelsHibernateUtil.getSession();
+                session.beginTransaction();
+                incomingSession=false;
+            }
+            roomBean = (RoomBean) session.createQuery(hql).getSingleResult();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+            roomBean = null;
+        }finally {
+            if(!incomingSession)
+                session.close();
+        }
+        return roomBean;
+    }
+
     public static String getOriginalRoomId(String atbroomId,StatelessSession session) {
 
         boolean incomingSession=true;

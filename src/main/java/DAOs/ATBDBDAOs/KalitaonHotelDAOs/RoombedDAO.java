@@ -1,11 +1,13 @@
 package DAOs.ATBDBDAOs.KalitaonHotelDAOs;
 
 import Beans.ATBDBBeans.KalitaonHotel.RoombedBean;
+import DBConnection.SunHotelsHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import com.sun.xml.internal.ws.client.ClientTransportException;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 
+import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -80,5 +82,40 @@ public class RoombedDAO {
             errLogger.info(errors.toString());
         }
         return err;
+    }
+
+
+    public static RoombedBean getRoombed(int hotelId, String roomId,int providerId) {
+
+        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        RoombedBean roombed=null;
+        String hql = "select roombedBean from RoombedBean roombedBean  where roombedBean.hotelId="+hotelId+" and roombedBean.roomId="+roomId+" and roombedBean.providerId="+providerId;
+
+        try {
+            session.beginTransaction();
+            roombed = (RoombedBean)session.createQuery(hql).getSingleResult();
+        } catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (CJCommunicationsException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        } catch (NoResultException e) {
+
+        } finally {
+            session.close();
+        }
+
+        return roombed;
     }
 }

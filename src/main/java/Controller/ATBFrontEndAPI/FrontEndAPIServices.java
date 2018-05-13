@@ -1306,7 +1306,7 @@ public class FrontEndAPIServices {
                                                     cancelationPolicies = new ArrayList<>();
                                                     if (rate.getCancellationPolicies() != null) {
                                                         for (CancellationPolicy policy : rate.getCancellationPolicies()) {//todo fix cancelation policies,ask about roomtypes codes whichare not comming all,ask about currency
-                                                            BigDecimal percentange = new BigDecimal((Double.parseDouble(policy.getAmount()) * 100) / Double.parseDouble(rate.getNet())).setScale(2, BigDecimal.ROUND_HALF_UP);
+                                                            BigDecimal percentange = new BigDecimal((Double.parseDouble(policy.getAmount()) * 100) / Double.parseDouble(rate.getNet())).setScale(0, BigDecimal.ROUND_HALF_UP);
                                                             cancelationPolicy = new StaticPercentageCancellationPolicy();
                                                             cancelationPolicy.setPercentage(percentange);
 
@@ -1351,7 +1351,7 @@ public class FrontEndAPIServices {
                                                     prebookJSON.setPriceBreakDown(null);
                                                     prebookJSON.setRoomId(String.valueOf(roomtypeBean.getId()));
                                                     prebookJSON.setSuccess(true);
-                                                } else if (rate.getRateType().equals("RECHECK")) {
+                                                } else{ //if (rate.getRateType().equals("RECHECK")) {
                                                     CheckRatePost checkRatePost=new CheckRatePost();
                                                     RateKey rateKey =new RateKey();
                                                     rateKey.setRateKey(rate.getRateKey());
@@ -1965,16 +1965,22 @@ public class FrontEndAPIServices {
 
                     }
 
+                    if(params.getCurrencies()==null || params.getCurrencies().size()!=1){
+                        return;
+                    }
+
 
                     /**
                      * Prepare and run threads for different Providers
                      */
                     List<SunHotelsResponse> hotelsResponse = new ArrayList<>();
-                    CountDownLatch latch = new CountDownLatch(2);
+                    CountDownLatch latch = new CountDownLatch(3);
                     HotelBedsSearchThread hotelBedsSearchThread = new HotelBedsSearchThread(destinationBean, childrenAgesSplit, checkout, checkin, session, params, latch);
                     new Thread(hotelBedsSearchThread).start();
                     SunHotelsSearchThread sunHotelsSearchThread = new SunHotelsSearchThread(originalDestinationId, checkout, checkin, currencies, originalDestinationIdStrFormat, childrenAges, session, params, latch);
                     new Thread(sunHotelsSearchThread).start();
+                    ATBHotelsSearchThread aTBHotelsSearchThread = new ATBHotelsSearchThread(destinationBean, childrenAgesSplit, checkout, checkin, session, params, latch);
+                    new Thread(aTBHotelsSearchThread).start();
                     try {
                         latch.await();
                     } catch (InterruptedException e) {
@@ -1993,6 +1999,14 @@ public class FrontEndAPIServices {
                         prepareResponseTimeElapsed = prepareResponseTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getPrepareResponseTimeElapsed();
                         requestTimeElapsed = requestTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getRequestTimeElapsed();
                     }
+                    if (aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse() != null) {
+                        if (aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse() != null && aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getHotelsResponse() != null)
+                            hotelsResponse.addAll(aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getHotelsResponse());
+                        dbTransactionTimeElapsed = dbTransactionTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getDbTransactionTimeElapsed();
+                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getPrepareResponseTimeElapsed();
+                        requestTimeElapsed = requestTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getRequestTimeElapsed();
+                    }
+
                     session.close();
 
 

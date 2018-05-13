@@ -74,7 +74,7 @@ public class HotelBedsSearchThread  implements Runnable {
 
         public void run() {
             try {
-                if ((destinationBean != null && destinationBean.getHotelBedsCode() != null && (destinationBean.getHotelBedsCode().equals("BRU") || destinationBean.getHotelBedsCode().equals("BER")) ) ||
+                if ((destinationBean != null && destinationBean.getHotelBedsCode() != null && (destinationBean.getHotelBedsCode().equals("BRU") || destinationBean.getHotelBedsCode().equals("BER") || destinationBean.getHotelBedsCode().equals("KUL") ) ) ||
                         (params.getHotelID() != null && !params.getHotelID().equals(""))) {
 
                     long dbTransactionTimeElapsed = 0;
@@ -214,7 +214,7 @@ public class HotelBedsSearchThread  implements Runnable {
                                                                 cancelationPolicies = new ArrayList<>();
                                                                 if (rate.getCancellationPolicies() != null) {
                                                                     for (CancellationPolicy policy : rate.getCancellationPolicies()) {//todo fix cancelation policies,ask about roomtypes codes whichare not comming all,ask about currency
-                                                                        BigDecimal percentange = new BigDecimal((Double.parseDouble(policy.getAmount()) * 100) / Double.parseDouble(rate.getNet())).setScale(2, BigDecimal.ROUND_HALF_UP);
+                                                                        BigDecimal percentange = new BigDecimal((Double.parseDouble(policy.getAmount()) * 100) / Double.parseDouble(rate.getNet())).setScale(0, BigDecimal.ROUND_HALF_UP);
                                                                         cancelationPolicy = new SunHotelsCancelationPolicy();
                                                                         cancelationPolicy.setPercentage(percentange);
 

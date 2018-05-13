@@ -14,6 +14,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import static Controller.Application.errLogger;
+import static Helper.ProjectProperties.hotelBedsProviderId;
 import static Helper.ProjectProperties.sanHotelsProviderId;
 
 /**
@@ -230,6 +231,40 @@ public class HotelDAO {
         StatelessSession session = SunHotelsHibernateUtil.getSession();
         List<HotelBean> hotels=null;
         String hql = "select hotel from HotelBean hotel where  hotel.destinationId='"+destId+"' and providerId='"+providerId+"'";
+        try{
+            session.beginTransaction();
+            hotels=session.createQuery(hql).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ClientTransportException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e){
+
+        }finally {
+            session.close();
+        }
+        return hotels;
+    }
+
+    public static List<HotelBean> getATBHotelByDestId(String destId) {
+
+        StatelessSession session = SunHotelsHibernateUtil.getSession();
+        List<HotelBean> hotels=null;
+        String hql = "select hotel from HotelBean hotel where  hotel.destinationId='"+destId+"' " +
+                                                               "and hotel.providerId!='"+sanHotelsProviderId+"'" +
+                                                               " and hotel.providerId!='"+hotelBedsProviderId+"'" ;
         try{
             session.beginTransaction();
             hotels=session.createQuery(hql).list();

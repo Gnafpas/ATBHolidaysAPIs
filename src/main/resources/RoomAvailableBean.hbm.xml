@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.RoomAvailableBean" table="room_available" schema="Sunhotels">
+        <id name="id" column="id"/>
+        <property name="startDate" column="start_date"/>
+        <property name="endDate" column="end_date"/>
+        <property name="mealType" column="meal_type"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="roomId" column="room_id"/>
+        <property name="providerId" column="provider_id"/>
+    </class>
+</hibernate-mapping>
