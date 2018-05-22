@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.RoomPriceBean" table="room_price" schema="Sunhotels">
+        <id name="id" column="id"/>
+        <property name="date" column="date"/>
+        <property name="marketType" column="market_type"/>
+        <property name="roomPrice" column="room_price"/>
+        <property name="children1Price" column="children_1_price"/>
+        <property name="children2Price" column="children_2_price"/>
+        <property name="children3Price" column="children_3_price"/>
+        <property name="infantPrice" column="infant_price"/>
+        <property name="currency" column="currency"/>
+        <property name="minStay" column="min_stay"/>
+        <property name="releaseDay" column="release_day"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="roomId" column="room_id"/>
+        <property name="availableId" column="available_id"/>
+        <property name="providerId" column="provider_id"/>
+        <property name="allocation" column="allocation"/>
+    </class>
+</hibernate-mapping>

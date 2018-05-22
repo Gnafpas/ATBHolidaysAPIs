@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Beans.ATBDBBeans.KalitaonHotel.RoomPolicyBean" table="room_policy" schema="Sunhotels">
+        <id name="id" column="id"/>
+        <property name="policyType" column="policy_type"/>
+        <property name="night" column="night"/>
+        <property name="nightDeadline" column="night_deadline"/>
+        <property name="percent" column="percent"/>
+        <property name="perDeadline" column="per_deadline"/>
+        <property name="hotelId" column="hotel_id"/>
+        <property name="roomId" column="room_id"/>
+        <property name="providerId" column="provider_id"/>
+    </class>
+</hibernate-mapping>
