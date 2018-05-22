@@ -19,6 +19,7 @@ public class ApiUsrSearchLogBean {
     private String currentMealPlans;
     private String currentMinPrice;
     private String currentMaxPrice;
+    private String clientApiKey;
 
     @Id
     @Column(name = "search_id")
@@ -134,6 +135,17 @@ public class ApiUsrSearchLogBean {
         this.currentMaxPrice = currentMaxPrice;
     }
 
+    @Basic
+    @Column(name = "client_api_key")
+    public String getClientApiKey() {
+        return clientApiKey;
+    }
+
+    public void setClientApiKey(String clientApiKey) {
+        this.clientApiKey = clientApiKey;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -160,6 +172,8 @@ public class ApiUsrSearchLogBean {
             return false;
         if (currentMaxPrice != null ? !currentMaxPrice.equals(that.currentMaxPrice) : that.currentMaxPrice != null)
             return false;
+        if (clientApiKey != null ? !clientApiKey.equals(that.clientApiKey) : that.clientApiKey != null)
+            return false;
 
         return true;
     }
@@ -177,6 +191,7 @@ public class ApiUsrSearchLogBean {
         result = 31 * result + (currentMealPlans != null ? currentMealPlans.hashCode() : 0);
         result = 31 * result + (currentMinPrice != null ? currentMinPrice.hashCode() : 0);
         result = 31 * result + (currentMaxPrice != null ? currentMaxPrice.hashCode() : 0);
+        result = 31 * result + (clientApiKey != null ? clientApiKey.hashCode() : 0);
         return result;
     }
 }

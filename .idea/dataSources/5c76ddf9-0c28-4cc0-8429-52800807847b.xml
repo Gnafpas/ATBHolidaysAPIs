@@ -13,12 +13,12 @@
     <schema id="7" parent="1" name="sdi0900238"/>
     <schema id="8" parent="1" name="atb_DB"/>
     <schema id="9" parent="1" name="atb_System_DB"/>
-    <schema id="10" parent="1" name="atb_DBV2"/>
-    <schema id="11" parent="1" name="pythia"/>
-    <schema id="12" parent="1" name="Sunhotels"/>
-    <schema id="13" parent="1" name="TAZE"/>
-    <schema id="14" parent="1" name="kalitaon_search_log"/>
-    <schema id="15" parent="1" name="tazedoga_vt1"/>
+    <schema id="10" parent="1" name="pythia"/>
+    <schema id="11" parent="1" name="Sunhotels"/>
+    <schema id="12" parent="1" name="TAZE"/>
+    <schema id="13" parent="1" name="kalitaon_search_log"/>
+    <schema id="14" parent="1" name="tazedoga_vt1"/>
+    <schema id="15" parent="1" name="Sunhotels2"/>
     <table id="16" parent="2" name="atb_update_failed_product"/>
     <table id="17" parent="2" name="atb_update_products_info"/>
     <table id="18" parent="2" name="book_log"/>
@@ -168,7 +168,7 @@
     </column>
     <column id="74" parent="19" name="prebook_ref">
       <Position>2</Position>
-      <DataType>varchar(100)|0</DataType>
+      <DataType>varchar(250)|0</DataType>
     </column>
     <column id="75" parent="19" name="client">
       <Position>3</Position>

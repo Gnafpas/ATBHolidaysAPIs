@@ -2065,6 +2065,9 @@ public class FrontEndAPIServices {
                     }
 
 
+                    /**
+                     * Match same hotels from different providers.Add to hotelbeds provider hotel roomtypes from all providers
+                     */
                     for (int i = 0; i < hotelsResponse.size(); i++) {
                         String[] hoteNameWithoutBrackets1 = hotelsResponse.get(i).getName().split("(\\()");
                         String[] hotelName1 = null;

@@ -2,7 +2,13 @@ package Updates.ATBDBUpdates.SunHotelsDBUpdates;
 
 
 import Beans.ATBDBBeans.KalitaonHotel.*;
+import Beans.GoogleAPIBeans.AddressComponent;
+import Beans.GoogleAPIBeans.ReverseGeoCodeResponse;
+import Beans.HereAPIBeans.ReverseGeocodeResponse;
+import Beans.HereAPIBeans.View;
 import Controller.AdminController.AdminController;
+import DAOs.GoogleAPIDAOs.HereAPIDAO;
+import DAOs.GoogleAPIDAOs.ReverseGeoCodeAPIDAO;
 import DAOs.SunHotelsAPIDAOs.*;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.*;
 import DBConnection.SunHotelsHibernateUtil;
@@ -424,7 +430,7 @@ public class UpdateSunHotelsDB {
                                         hotelBean.setCurrencyId(0);//todo check this field
                                         hotelBean.setDescription(hotel.getDescription());
                                         hotelBean.setDestinationId(String.valueOf(hotel.getDestinationId()));
-                                        hotelBean.setDistrict("");//todo check this field
+                                        hotelBean.setDistrict("");
                                         hotelBean.setAccommodationId("HOTEL");
                                         hotelBean.setAccommodationName("HOTEL");
                                         hotelBean.setActive(true);
@@ -433,6 +439,26 @@ public class UpdateSunHotelsDB {
                                             hotelBean.setLatitude(hotel.getCoordinates().getLatitude().toString());
                                             hotelBean.setLongitude(hotel.getCoordinates().getLongitude().toString());
                                         }
+                                        /**
+                                         * Get District from google reverse geocode
+                                         */
+                                        if(hotelBean.getLatitude()!=null && !hotelBean.getLatitude().equals("") && hotelBean.getLongitude()!=null && !hotelBean.getLongitude().equals("")) {
+                                            ReverseGeocodeResponse reverseGeocodeResponse = HereAPIDAO.getReverseGeoCode(hotelBean.getLatitude(), hotelBean.getLongitude());
+                                            if (reverseGeocodeResponse != null ) {
+                                                if(reverseGeocodeResponse.getResponse().getView()!=null && reverseGeocodeResponse.getResponse().getView().size()>0) {
+                                                    for (View view : reverseGeocodeResponse.getResponse().getView()) {
+                                                        if(view.getResult()!=null && view.getResult().size()>0) {
+                                                            for (Beans.HereAPIBeans.Result res : view.getResult()) {
+                                                                if(res.getLocation()!=null && res.getLocation().getAddress()!=null ){
+                                                                    hotelBean.setDistrict(res.getLocation().getAddress().getDistrict());
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
                                         hotelBean.setMapUrl(hotel.getHotelMapurl());
                                         hotelBean.setMealType("");
                                         hotelBean.setProviderId(sanHotelsProviderId);

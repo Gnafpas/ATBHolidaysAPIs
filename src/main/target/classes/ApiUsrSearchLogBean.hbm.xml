@@ -16,5 +16,6 @@
         <property name="currentMealPlans" column="current_meal_plans"/>
         <property name="currentMinPrice" column="current_min_price"/>
         <property name="currentMaxPrice" column="current_max_price"/>
+        <property name="clientApiKey" column="client_api_key"/>
     </class>
 </hibernate-mapping>

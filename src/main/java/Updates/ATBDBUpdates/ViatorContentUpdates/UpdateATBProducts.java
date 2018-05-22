@@ -174,12 +174,28 @@ public class UpdateATBProducts {
              * Retrieving all viator products codes.
              */
             List<String> codes = ViatorProductDetailsDAO.getAllProductsCodes();
+            List<String> bannedViatorProductCodes= AProductTitleDAO.getAllBannedViatorProductsCodes();
             if (codes != null) {
                 /**
                  * For each product retrieve details and store to ATB DB a_product_title table.
                  */
 
                 for (String code : codes) {
+
+                    /**
+                     * Don't Update products that we have direct contract and we have skipped Viator for them.
+                     */
+                    if(bannedViatorProductCodes!=null){
+                        boolean bannedProduct=false;
+                        for(String c:bannedViatorProductCodes){
+                            if(c.equals(code)){
+                                bannedProduct=true;
+                                break;
+                            }
+                        }
+                        if(bannedProduct)
+                            continue;
+                    }
 
                     if (atbimidiateUpdateStop)
                         break;
@@ -197,8 +213,9 @@ public class UpdateATBProducts {
 
                     products = ViatorProductDetailsDAO.getProducts(code);
                     if (products != null && products.size() > 0) {
+
                         aProductTitleBean.setBookingEngine("");
-                        aProductTitleBean.setShowPrice("");
+                        aProductTitleBean.setShowPrice((products.get(0).getMerchantNetPriceFrom().add(products.get(0).getMerchantNetPriceFrom().multiply(viatorComission)).setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
                         aProductTitleBean.setReason("");
                         aProductTitleBean.setProductReferenceCode("");
                         if (products.get(0).getSortOrder() != null)
@@ -308,6 +325,12 @@ public class UpdateATBProducts {
                                     aProductTitleBean.setTypeOfProduct("2");
                                 }
                             }
+
+                            /**
+                             * Do not store multiday tours for turkey
+                             */
+                            if(products.get(0).getCountryEn().toUpperCase().equals("TURKEY") && aProductTitleBean.getTypeOfProduct().equals("3"))
+                                continue;
 
                             /**
                              * Add categories to  "categories_tag" field at ATB DB.
@@ -1233,21 +1256,33 @@ public class UpdateATBProducts {
                                             }
                                         }
                                         gPriceMatrixBean.setCurrencyCode(pricingMatrix.getCurrencyCode());
-                                        gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
-                                        // if (pricingMatrix.getMaximumCountRequired() == 100)//|| pricingMatrix.getMaximumCountRequired() > 9)//todo check if it must be only below 10
-                                        //    gPriceMatrixBean.setMaxCountRequired(9);
-                                        //else
-                                        gPriceMatrixBean.setMaxCountRequired(pricingMatrix.getMaximumCountRequired());
-                                        if (pricingMatrix.getBandId() == 1)
+                                        if (pricingMatrix.getMaximumCountRequired() > 9)
+                                            gPriceMatrixBean.setMaxCountRequired(9);
+                                        else
+                                            gPriceMatrixBean.setMaxCountRequired(pricingMatrix.getMaximumCountRequired());
+                                        if (pricingMatrix.getBandId() == 1) {
                                             gPriceMatrixBean.setPersonType("adult");
-                                        else if (pricingMatrix.getBandId() == 2)
+                                            if(pricingMatrix.getMinimumCountRequired()<1)
+                                                gPriceMatrixBean.setMinCountRequired(1);
+                                            else
+                                                gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
+                                        }
+                                        else if (pricingMatrix.getBandId() == 2) {
                                             gPriceMatrixBean.setPersonType("child");
-                                        else if (pricingMatrix.getBandId() == 3)
+                                            gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
+                                        }
+                                        else if (pricingMatrix.getBandId() == 3) {
                                             gPriceMatrixBean.setPersonType("infant");
-                                        else if (pricingMatrix.getBandId() == 4)
+                                            gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
+                                        }
+                                        else if (pricingMatrix.getBandId() == 4) {
                                             gPriceMatrixBean.setPersonType("youth");
-                                        else if (pricingMatrix.getBandId() == 5)
+                                            gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
+                                        }
+                                        else if (pricingMatrix.getBandId() == 5) {
                                             gPriceMatrixBean.setPersonType("senior");
+                                            gPriceMatrixBean.setMinCountRequired(pricingMatrix.getMinimumCountRequired());
+                                        }
                                         gPriceMatrixBean.setPriceNet(String.valueOf(pricingMatrix.getMerchantNetPrice().add(pricingMatrix.getMerchantNetPrice().multiply(viatorComission).setScale(2, BigDecimal.ROUND_HALF_UP))));
                                         gPriceMatrixBean.setUpdatedAt(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:00",
                                                 dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),

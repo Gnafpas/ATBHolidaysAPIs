@@ -7,6 +7,11 @@ import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.RoomsAndRoomTypes.SunHotelsRoomType
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.SunHotelsResponse;
 import APIJSONs.ATBAPIJSONs.HotelATBFrontEnd.SunHotelsSearchPOST;
 import Beans.ATBDBBeans.KalitaonHotel.*;
+import Beans.GoogleAPIBeans.AddressComponent;
+import Beans.GoogleAPIBeans.Result;
+import Beans.GoogleAPIBeans.ReverseGeoCodeResponse;
+import Beans.HereAPIBeans.ReverseGeocodeResponse;
+import Beans.HereAPIBeans.View;
 import Beans.HotelBedsAPIBeans.Availability.*;
 import Beans.HotelBedsAPIBeans.Availability.Hotel;
 import Beans.HotelBedsAPIBeans.Availability.Room;
@@ -14,6 +19,8 @@ import DAOs.ATBDBDAOs.KalitaonHotelDAOs.HotelDAO;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.HotelmappingDAO;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.MealDAO;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.RoomtypeDAO;
+import DAOs.GoogleAPIDAOs.HereAPIDAO;
+import DAOs.GoogleAPIDAOs.ReverseGeoCodeAPIDAO;
 import DAOs.HotelBedsAPIDAOs.AvailabilityDAOs;
 import DAOs.SunHotelsAPIDAOs.*;
 import org.hibernate.StatelessSession;
@@ -177,7 +184,10 @@ public class SunHotelsSearchThread  implements Runnable {
                                             hotelResponse.setCity(atbhotel.getCity());
                                             hotelResponse.setCountry(atbhotel.getCountry());
                                             hotelResponse.setDescription(atbhotel.getDescription());
-                                            hotelResponse.setDistrict(atbhotel.getCity());
+                                            if(atbhotel.getDistrict()!=null && !atbhotel.getDistrict().equals(""))
+                                                hotelResponse.setDistrict(atbhotel.getDistrict());
+                                            else
+                                                hotelResponse.setDistrict(atbhotel.getCity());
                                             hotelResponse.setId(atbHotelId);
                                             hotelResponse.setLatitude(atbhotel.getLatitude());
                                             hotelResponse.setLongitude(atbhotel.getLongitude());
@@ -189,6 +199,26 @@ public class SunHotelsSearchThread  implements Runnable {
                                             hotelResponse.setType(atbhotel.getAccommodationName());
                                             hotelResponse.setProviderId(sanHotelsProviderId);
 
+
+//                                            /**
+//                                             * Get District from google reverse geocode
+//                                             */
+//                                            if(atbhotel.getLatitude()!=null && !atbhotel.getLatitude().equals("") && atbhotel.getLongitude()!=null && !atbhotel.getLongitude().equals("")) {
+//                                                ReverseGeocodeResponse reverseGeocodeResponse = HereAPIDAO.getReverseGeoCode(atbhotel.getLatitude(), atbhotel.getLongitude());
+//                                                if (reverseGeocodeResponse != null ) {
+//                                                    if(reverseGeocodeResponse.getResponse().getView()!=null && reverseGeocodeResponse.getResponse().getView().size()>0) {
+//                                                        for (View view : reverseGeocodeResponse.getResponse().getView()) {
+//                                                            if(view.getResult()!=null && view.getResult().size()>0) {
+//                                                                for (Beans.HereAPIBeans.Result res : view.getResult()) {
+//                                                                    if(res.getLocation()!=null && res.getLocation().getAddress()!=null ){
+//                                                                        hotelResponse.setDistrict(res.getLocation().getAddress().getDistrict());
+//                                                                    }
+//                                                                }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
 
                                             roomTypesWithRoomsResponse = new ArrayList<>();
                                             roomMealsResponse = new ArrayList<>();

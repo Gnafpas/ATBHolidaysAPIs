@@ -487,6 +487,7 @@ public class HotelController {
                     dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                     dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute())).toString() + "+0000");
             if (subAgencyBean != null) {
+                Application.agent.notice(subAgencyBean.getAgentName());
                 if (subAgencyBean.getGsaId() != null && !subAgencyBean.getGsaId().equals("")) {
                     gsaBean = GsaDAO.getGsaById(Integer.parseInt(subAgencyBean.getGsaId()), systemDBSession);
                     if (gsaBean != null) {
@@ -505,7 +506,6 @@ public class HotelController {
                                     /**
                                      * Update search log.
                                      */
-
                                     retrieveSearchLogBean.setCurrentMinStarRating("" + params.getMinStarRating());
                                     retrieveSearchLogBean.setCurrentMaxStarRating("" + params.getMaxStarRating());
 
@@ -789,7 +789,7 @@ public class HotelController {
                         ZonedDateTime checkin = null;
                         ZonedDateTime checkout = null;
                         SearchResult result = null;
-                        if (!params.getCheckInDate().equals("") && !params.getCheckOutDate().equals("")) {
+                        if (params.getCheckInDate()!=null && params.getCheckOutDate()!=null && !params.getCheckInDate().equals("") && !params.getCheckOutDate().equals("")) {
                             String checkIndate[] = params.getCheckInDate().split("-");
                             String checkOutdate[] = params.getCheckOutDate().split("-");
                             if (checkIndate.length == 3 && checkOutdate.length == 3) {
@@ -1114,6 +1114,7 @@ public class HotelController {
                             stroreSearchLogBean.setCurrentSortBy(params.getSortBy());
                             stroreSearchLogBean.setCurrentMinStarRating(minStarRating);
                             stroreSearchLogBean.setCurrentMaxStarRating(maxStarRating);
+                            stroreSearchLogBean.setClientApiKey(subAgencyBean.getAgentName());
                             hotelSearchJSON.setSearchId(ApiUsrSearchLogDAO.addSearchLogBean(stroreSearchLogBean));
 
                             /**

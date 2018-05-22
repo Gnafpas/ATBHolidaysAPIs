@@ -70,6 +70,7 @@ public class ProductController {
                     gsaBean.getEvtMkp() != null && !gsaBean.getEvtMkp().equals("")) {
 
 
+                Application.agent.notice(subAgencyBean.getAgentName());
                 if (!params.getCountryCode().equals(""))
                     params.setCountryCode(params.getCountryCode() + " ");//todo fix isocode at the database(Remove the space at the end of the code) or live it like this
                 DateTime dateTime = new DateTime(DateTimeZone.UTC);
@@ -277,6 +278,7 @@ public class ProductController {
                     gsaBean.getMtrMkp() != null && !gsaBean.getMtrMkp().equals("") &&
                     gsaBean.getEvtMkp() != null && !gsaBean.getEvtMkp().equals("")) {
 
+                Application.agent.notice(subAgencyBean.getAgentName());
                 ProductsAndCategoriesPOST params = new ProductsAndCategoriesPOST();
                 params.setProductId(Integer.valueOf(productId));
                 if (currencyCode != null)

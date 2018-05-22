@@ -189,7 +189,10 @@ public class HotelBedsSearchThread  implements Runnable {
                                                         hotelResponse.setCity(atbhotel.getCity());
                                                         hotelResponse.setCountry(atbhotel.getCountry());
                                                         hotelResponse.setDescription(atbhotel.getDescription());
-                                                        hotelResponse.setDistrict(atbhotel.getCity());
+                                                        if(atbhotel.getDistrict()!=null &&!atbhotel.getDistrict().equals(""))
+                                                            hotelResponse.setDistrict(atbhotel.getDistrict());
+                                                        else
+                                                            hotelResponse.setDistrict(atbhotel.getCity());
                                                         hotelResponse.setId(atbHotelId);
                                                         hotelResponse.setLatitude(atbhotel.getLatitude());
                                                         hotelResponse.setLongitude(atbhotel.getLongitude());

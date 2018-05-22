@@ -221,7 +221,33 @@ public class AProductTitleDAO {
 
         StatelessSession session = ATBHibernateUtil.getSession();
         List <String> products=null;
-        String hql = "select productCode from AProductTitleBean  where main_supplier_name = 'Viator'";
+        String hql = "select productCode from AProductTitleBean  where mainSupplierName = 'Viator'";
+        try{
+            session.beginTransaction();
+            products=session.createQuery(hql).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return products;
+    }
+
+    public static List<String> getAllBannedViatorProductsCodes(){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        List <String> products=null;
+        String hql = "select productCode from AProductTitleBean  where mainSupplierName = 'Viator' and updatable=0";
         try{
             session.beginTransaction();
             products=session.createQuery(hql).list();

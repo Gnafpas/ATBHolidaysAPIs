@@ -35,5 +35,6 @@
         <property name="updatedAt" column="updated_at"/>
         <property name="stock" column="stock"/>
         <property name="shippable" column="shippable"/>
+        <property name="updatable" column="updatable"/>
     </class>
 </hibernate-mapping>
