@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.">
+    <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java" afterPath="$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/src/main/target/" />
@@ -1156,7 +1155,7 @@
       <workItem from="1527070828232" duration="14714000" />
       <workItem from="1527095038195" duration="84685000" />
       <workItem from="1527866676187" duration="877000" />
-      <workItem from="1528022120083" duration="11768000" />
+      <workItem from="1528022120083" duration="11799000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -1277,7 +1276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528212098213</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.2">
+      <created>1528213896848</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1528213896848</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1304,7 +1310,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3160742000" />
+    <option name="totallyTimeSpent" value="3160773000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1419,7 +1425,8 @@
     <MESSAGE value="ATB Hotels Integration almost complete.(Only for frontend services)" />
     <MESSAGE value="ATB Hotels Integration complete except children/infant additional fees and market type.(Only for frontend services)" />
     <MESSAGE value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed." />
+    <MESSAGE value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
