@@ -20,6 +20,7 @@
         <property name="roomId" column="room_id"/>
         <property name="availableId" column="available_id"/>
         <property name="providerId" column="provider_id"/>
-        <property name="allocation" column="allocation"/>
+        <property name="stock" column="stock"/>
+        <property name="extraBedPrice" column="extra_bed_price"/>
     </class>
 </hibernate-mapping>

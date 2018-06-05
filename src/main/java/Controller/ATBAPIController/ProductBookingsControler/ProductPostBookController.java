@@ -2,19 +2,13 @@ package Controller.ATBAPIController.ProductBookingsControler;
 
 import APIJSONs.ATBAPIJSONs.Product.*;
 import Beans.ATBDBBeans.KalitaonProduct.BProductDetailBean;
-import Beans.ATBDBBeans.KalitaonSystem.BookingTransactionBean;
-import Beans.ATBDBBeans.KalitaonSystem.BookingsAllBean;
-import Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean;
-import Beans.ATBDBBeans.KalitaonSystem.TravellerInfoBean;
+import Beans.ATBDBBeans.KalitaonSystem.*;
 import Beans.ViatorAPIBeans.Bookings.Cancel.CancelAPIJSON;
 import Beans.ViatorAPIBeans.Bookings.Cancel.CancelItem;
 import Beans.ViatorAPIBeans.Bookings.Cancel.CancelPOST;
 import Controller.Application;
 import DAOs.ATBDBDAOs.KalitaonProductDAOs.BProductDetailDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.BookingTransactionDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.BookingsAllDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.TravellerInfoDAO;
+import DAOs.ATBDBDAOs.KalitaonSysDAOs.*;
 import DAOs.ViatorAPIDAOs.BookingsAPIDAO;
 import Helper.CurrencyConverter;
 import org.joda.time.DateTime;
@@ -300,7 +294,7 @@ public class ProductPostBookController {
                                                             errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to update bookingsall table.");
                                                         }
 
-                                                        //todo refund also at gsa table
+
                                                         subAgencyBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(subAgencyBean.getDeposit())).
                                                                 add(new BigDecimal(Double.parseDouble(booking.getAgentSale()))).
                                                                 setScale(2, BigDecimal.ROUND_HALF_UP)));
@@ -308,7 +302,7 @@ public class ProductPostBookController {
                                                             BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
                                                             bookingTransactionBean.setAgentId(String.valueOf(subAgencyBean.getId()));
                                                             bookingTransactionBean.setAgentName(subAgencyBean.getAgentName());
-                                                            bookingTransactionBean.setBookingId(String.valueOf(booking.getId()));
+                                                            bookingTransactionBean.setBookingId(booking.getBookingId());
                                                             bookingTransactionBean.setGsaId(subAgencyBean.getGsaId());
                                                             bookingTransactionBean.setTransactionType("Refund");
                                                             bookingTransactionBean.setTransCur(subAgencyBean.getCurrency());
@@ -322,6 +316,38 @@ public class ProductPostBookController {
                                                             }
                                                         } else {
                                                             errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to refund the price at subagency table.");
+                                                        }
+
+                                                        GsaBean gsaBean = GsaDAO.getGsaById(Integer.parseInt(subAgencyBean.getGsaId()), null);
+                                                        if(gsaBean!=null) {
+                                                            BigDecimal gsaSaleInGsaCur = CurrencyConverter.findExchangeRateAndConvert(booking.getSaleCurrency(), gsaBean.getCurrency(), Double.parseDouble(booking.getGsaSale().toString()));
+                                                            if (gsaSaleInGsaCur != null) {
+                                                                gsaBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(gsaBean.getDeposit())).
+                                                                        add(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP)).
+                                                                        setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                                if (!GsaDAO.updateGsaBean(gsaBean)) {
+                                                                    BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                                    bookingTransactionBean.setAgentId("");
+                                                                    bookingTransactionBean.setAgentName("");
+                                                                    bookingTransactionBean.setBookingId(booking.getBookingId());
+                                                                    bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                                    bookingTransactionBean.setTransactionType("Refund");
+                                                                    bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                                    bookingTransactionBean.setTransDate(dateTime.toString());
+                                                                    bookingTransactionBean.setTransRate(String.valueOf(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                                    bookingTransactionBean.setTransType("Deposit");
+                                                                    bookingTransactionBean.setTransNote("");
+                                                                    if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                                        errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to store transaction at BookingTransaction table for gsa transaction.");
+                                                                    }
+                                                                } else {
+                                                                    errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to refund the price at gsa table.");
+                                                                }
+                                                            }else{
+                                                                errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to detuct the price from gsaBean deposit at database because of currency converting issue.");
+                                                            }
+                                                        }else{
+                                                            errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to detuct the price from gsaBean deposit at database.*********");
                                                         }
                                                     } else {
                                                         itemCancellationResult.setCancellationSucceed(false);
@@ -356,7 +382,7 @@ public class ProductPostBookController {
                                                 errLogger.info("Booking with Id :" + booking.getId() + " cancelled  but failed to update bookings_all table.");
                                             }
 
-                                            //todo refund also at gsa table
+
                                             subAgencyBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(subAgencyBean.getDeposit())).
                                                     add(new BigDecimal(Double.parseDouble(booking.getAgentSale()))).
                                                     setScale(2, BigDecimal.ROUND_HALF_UP)));
@@ -364,7 +390,7 @@ public class ProductPostBookController {
                                                 BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
                                                 bookingTransactionBean.setAgentId(String.valueOf(subAgencyBean.getId()));
                                                 bookingTransactionBean.setAgentName(subAgencyBean.getAgentName());
-                                                bookingTransactionBean.setBookingId(String.valueOf(booking.getId()));
+                                                bookingTransactionBean.setBookingId(booking.getBookingId());
                                                 bookingTransactionBean.setGsaId(subAgencyBean.getGsaId());
                                                 bookingTransactionBean.setTransactionType("Refund");
                                                 bookingTransactionBean.setTransCur(subAgencyBean.getCurrency());
@@ -378,6 +404,38 @@ public class ProductPostBookController {
                                                 }
                                             } else {
                                                 errLogger.info("Booking with Id :" + booking.getId() + " cancelled but failed to refund the price at subagency table.");
+                                            }
+
+                                            GsaBean gsaBean = GsaDAO.getGsaById(Integer.parseInt(subAgencyBean.getGsaId()), null);
+                                            if(gsaBean!=null) {
+                                                BigDecimal gsaSaleInGsaCur = CurrencyConverter.findExchangeRateAndConvert(booking.getSaleCurrency(), gsaBean.getCurrency(), Double.parseDouble(booking.getGsaSale().toString()));
+                                                if (gsaSaleInGsaCur != null) {
+                                                    gsaBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(gsaBean.getDeposit())).
+                                                            add(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP)).
+                                                            setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                    if (!GsaDAO.updateGsaBean(gsaBean)) {
+                                                        BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                        bookingTransactionBean.setAgentId("");
+                                                        bookingTransactionBean.setAgentName("");
+                                                        bookingTransactionBean.setBookingId(booking.getBookingId());
+                                                        bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                        bookingTransactionBean.setTransactionType("Refund");
+                                                        bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                        bookingTransactionBean.setTransDate(dateTime.toString());
+                                                        bookingTransactionBean.setTransRate(String.valueOf(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                        bookingTransactionBean.setTransType("Deposit");
+                                                        bookingTransactionBean.setTransNote("");
+                                                        if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                            errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to store transaction at BookingTransaction table for gsa transaction.");
+                                                        }
+                                                    } else {
+                                                        errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to refund the price at gsa table.");
+                                                    }
+                                                }else{
+                                                    errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to detuct the price from gsaBean deposit at database because of currency converting issue.");
+                                                }
+                                            }else{
+                                                errLogger.info("Booking with Id :" + booking.getId() + " cancelled at viator side but failed to detuct the price from gsaBean deposit at database.*********");
                                             }
                                         }
                                     } else if (deadlineDate != null) {

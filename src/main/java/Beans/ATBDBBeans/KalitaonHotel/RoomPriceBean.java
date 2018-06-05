@@ -23,7 +23,8 @@ public class RoomPriceBean {
     private String roomId;
     private String availableId;
     private String providerId;
-    private String allocation;
+    private int stock;
+    private String extraBedPrice;
 
     @Id
     @Column(name = "id")
@@ -175,14 +176,26 @@ public class RoomPriceBean {
         this.providerId = providerId;
     }
 
+
+
     @Basic
-    @Column(name = "allocation")
-    public String getAllocation() {
-        return allocation;
+    @Column(name = "stock")
+    public int getStock() {
+        return stock;
     }
 
-    public void setAllocation(String allocation) {
-        this.allocation = allocation;
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    @Basic
+    @Column(name = "extra_bed_price")
+    public String getExtraBedPrice() {
+        return extraBedPrice;
+    }
+
+    public void setExtraBedPrice(String extraBedPrice) {
+        this.extraBedPrice = extraBedPrice;
     }
 
     @Override
@@ -210,7 +223,8 @@ public class RoomPriceBean {
         if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
         if (availableId != null ? !availableId.equals(that.availableId) : that.availableId != null) return false;
         if (providerId != null ? !providerId.equals(that.providerId) : that.providerId != null) return false;
-        if (allocation != null ? !allocation.equals(that.allocation) : that.allocation != null) return false;
+        if (stock != that.stock) return false;
+        if (extraBedPrice != null ? !extraBedPrice.equals(that.extraBedPrice) : that.extraBedPrice != null) return false;
 
         return true;
     }
@@ -232,7 +246,8 @@ public class RoomPriceBean {
         result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
         result = 31 * result + (availableId != null ? availableId.hashCode() : 0);
         result = 31 * result + (providerId != null ? providerId.hashCode() : 0);
-        result = 31 * result + (allocation != null ? allocation.hashCode() : 0);
+        result = 31 * result + stock;
+        result = 31 * result + (extraBedPrice != null ? extraBedPrice.hashCode() : 0);
         return result;
     }
 }

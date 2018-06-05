@@ -14,12 +14,6 @@ public class RoomtypeBean {
     private boolean sharedRoom;
     private String roomtypeId;
     private String sizeMeasurement;
-    private int minAdultOccupation;
-    private int maxAdultOccupation;
-    private int minChildOccupation;
-    private int maxChildOccupation;
-    private int minInfantOccupation;
-    private int maxInfantOccupation;
     private String description;
     private Integer roomSize;
 
@@ -74,66 +68,6 @@ public class RoomtypeBean {
     }
 
     @Basic
-    @Column(name = "min_adult_occupation")
-    public int getMinAdultOccupation() {
-        return minAdultOccupation;
-    }
-
-    public void setMinAdultOccupation(int minAdultOccupation) {
-        this.minAdultOccupation = minAdultOccupation;
-    }
-
-    @Basic
-    @Column(name = "max_adult_occupation")
-    public int getMaxAdultOccupation() {
-        return maxAdultOccupation;
-    }
-
-    public void setMaxAdultOccupation(int maxAdultOccupation) {
-        this.maxAdultOccupation = maxAdultOccupation;
-    }
-
-    @Basic
-    @Column(name = "min_child_occupation")
-    public int getMinChildOccupation() {
-        return minChildOccupation;
-    }
-
-    public void setMinChildOccupation(int minChildOccupation) {
-        this.minChildOccupation = minChildOccupation;
-    }
-
-    @Basic
-    @Column(name = "max_child_occupation")
-    public int getMaxChildOccupation() {
-        return maxChildOccupation;
-    }
-
-    public void setMaxChildOccupation(int maxChildOccupation) {
-        this.maxChildOccupation = maxChildOccupation;
-    }
-
-    @Basic
-    @Column(name = "min_infant_occupation")
-    public int getMinInfantOccupation() {
-        return minInfantOccupation;
-    }
-
-    public void setMinInfantOccupation(int minInfantOccupation) {
-        this.minInfantOccupation = minInfantOccupation;
-    }
-
-    @Basic
-    @Column(name = "max_infant_occupation")
-    public int getMaxInfantOccupation() {
-        return maxInfantOccupation;
-    }
-
-    public void setMaxInfantOccupation(int maxInfantOccupation) {
-        this.maxInfantOccupation = maxInfantOccupation;
-    }
-
-    @Basic
     @Column(name = "provider_id")
     public int getProviderId() {
         return providerId;
@@ -175,12 +109,6 @@ public class RoomtypeBean {
         if (sharedRoom != that.sharedRoom) return false;
         if (roomtypeId != null ? !roomtypeId.equals(that.roomtypeId) : that.roomtypeId != null)
             return false;
-        if (minAdultOccupation != that.minAdultOccupation) return false;
-        if (maxAdultOccupation != that.maxAdultOccupation) return false;
-        if (minChildOccupation != that.minChildOccupation) return false;
-        if (maxChildOccupation != that.maxChildOccupation) return false;
-        if (minInfantOccupation != that.minInfantOccupation) return false;
-        if (maxInfantOccupation != that.maxInfantOccupation) return false;
         if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
         if (roomSize != null ? !roomSize.equals(that.roomSize) : that.roomSize != null) return false;
@@ -200,12 +128,6 @@ public class RoomtypeBean {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (roomSize != null ? roomSize.hashCode() : 0);
         result = 31 * result + (sizeMeasurement != null ? sizeMeasurement.hashCode() : 0);
-        result = 31 * result + (int) minAdultOccupation;
-        result = 31 * result + (int) maxAdultOccupation;
-        result = 31 * result + (int) minChildOccupation;
-        result = 31 * result + (int) maxChildOccupation;
-        result = 31 * result + (int) minInfantOccupation;
-        result = 31 * result + (int) maxInfantOccupation;
         result = 31 * result + (roomtypeId != null ? roomtypeId.hashCode() : 0);
         return result;
     }

@@ -5,17 +5,11 @@ import APIJSONs.ATBAPIJSONs.Hotel.BookResult;
 import APIJSONs.ATBAPIJSONs.Hotel.RoomsAndRoomTypes.CancelationPolicyResponse;
 import Beans.ATBDBBeans.KalitaonHotel.MealBean;
 import Beans.ATBDBBeans.KalitaonLog.PrebookLogBean;
-import Beans.ATBDBBeans.KalitaonSystem.BookingTransactionBean;
-import Beans.ATBDBBeans.KalitaonSystem.BookingsAllBean;
-import Beans.ATBDBBeans.KalitaonSystem.SubAgencyBean;
-import Beans.ATBDBBeans.KalitaonSystem.TravellerInfoBean;
+import Beans.ATBDBBeans.KalitaonSystem.*;
 import Controller.Application;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.MealDAO;
 import DAOs.ATBDBDAOs.KalitaonLogDAOs.PrebookLogDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.BookingTransactionDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.BookingsAllDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
-import DAOs.ATBDBDAOs.KalitaonSysDAOs.TravellerInfoDAO;
+import DAOs.ATBDBDAOs.KalitaonSysDAOs.*;
 import DAOs.SunHotelsAPIDAOs.*;
 import Helper.CurrencyConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -270,117 +264,152 @@ public class HotelPostBookController {
 
 
             if (subAgencyBean != null) {
+                GsaBean gsaBean = GsaDAO.getGsaById(Integer.parseInt(subAgencyBean.getGsaId()), null);
+                if(gsaBean!=null) {
+                    BookingsAllBean booking = BookingsAllDAO.getBookingsAllBeanById(bookingId, subAgencyBean.getId());
+                    if (booking != null) {
 
-                BookingsAllBean booking = BookingsAllDAO.getBookingsAllBeanById(bookingId, subAgencyBean.getId());
-                if (booking != null) {
-
-                    PrebookLogBean prebook = PrebookLogDAO.getPrebooklogBeanByPrebookRef(booking.getCommon6(),booking.getCommon9());
-                    if (prebook != null) {
+                        PrebookLogBean prebook = PrebookLogDAO.getPrebooklogBeanByPrebookRef(booking.getCommon6(), booking.getCommon9());
+                        if (prebook != null) {
 
 
-                        DateTime deadlineDate;
-                        if (prebook.getDeadline().equals("null"))
-                            deadlineDate = null;
-                        else {
-                            long i = booking.getCheckIn().getTime() - (Integer.parseInt(prebook.getDeadline() + 24) * 60 * 60 * 1000);//todo
-                            deadlineDate = new DateTime(i);//todo see what we ll do with multiple cancelation policies
-                        }
+                            DateTime deadlineDate;
+                            if (prebook.getDeadline().equals("null"))
+                                deadlineDate = null;
+                            else {
+                                long i = booking.getCheckIn().getTime() - (Integer.parseInt(prebook.getDeadline() + 24) * 60 * 60 * 1000);//todo
+                                deadlineDate = new DateTime(i);//todo see what we ll do with multiple cancelation policies
+                            }
 
-                        if (booking.getStatus().equals("4")) {
+                            if (booking.getStatus().equals("4")) {
 
-                            if (deadlineDate == null || dateTime.compareTo(deadlineDate) < 0) {
+                                if (deadlineDate == null || dateTime.compareTo(deadlineDate) < 0) {
 
-                                CancellationResult result = null;
-                                try {
-                                    NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
-                                    NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
-                                    result = nonStaticXMLAPISoap.cancelBooking(sunhotelsUsername, sunhotelspass, booking.getCommon10(), "English");
-                                } catch (NullPointerException e) {
-                                }
+                                    CancellationResult result = null;
+                                    try {
+                                        NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
+                                        NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
+                                        result = nonStaticXMLAPISoap.cancelBooking(sunhotelsUsername, sunhotelspass, booking.getCommon10(), "English");
+                                    } catch (NullPointerException e) {
+                                    }
 
-                                if (result != null) {
-                                    if (result.getError() != null) {
+                                    if (result != null) {
+                                        if (result.getError() != null) {
+                                            cancellResult.setCancellationSucceed(false);
+                                            cancellResult.setCancellationNote("Cancelation couldn't completed.");
+                                            cancelJSON.setCancellationResult(cancellResult);
+                                            cancelJSON.setErrorMessageText(result.getError().getMessage());
+                                            cancelJSON.setSuccess(false);
+                                            return cancelJSON;
+                                        } else {
+                                            if (result.getCode() == 1) {
+
+                                                cancellResult.setCancellationSucceed(true);
+                                                cancellResult.setRefund(new BigDecimal((Double.parseDouble(booking.getAgentSale()) * Double.parseDouble(prebook.getPercentage()) / 100)).setScale(2, BigDecimal.ROUND_HALF_UP));
+                                                booking.setStatus("3");
+                                                if (BookingsAllDAO.updateBooking(booking)) {
+                                                    errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to update bookingsall table.");
+                                                }
+
+
+                                                subAgencyBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(subAgencyBean.getDeposit())).
+                                                        add(new BigDecimal((Double.parseDouble(booking.getAgentSale()) * Double.parseDouble(prebook.getPercentage()) / 100))).
+                                                        setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                if (!SubAgencyDAO.updateSubAgentByName(subAgencyBean)) {
+                                                    BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                    bookingTransactionBean.setAgentId(String.valueOf(subAgencyBean.getId()));
+                                                    bookingTransactionBean.setAgentName(subAgencyBean.getAgentName());
+                                                    bookingTransactionBean.setBookingId(booking.getBookingId());
+                                                    bookingTransactionBean.setGsaId(subAgencyBean.getGsaId());
+                                                    bookingTransactionBean.setTransactionType("Refund");
+                                                    bookingTransactionBean.setTransCur(subAgencyBean.getCurrency());
+                                                    bookingTransactionBean.setTransDate(dateTime.toString());
+                                                    bookingTransactionBean.setTransRate(String.valueOf(new BigDecimal((Double.parseDouble(booking.getAgentSale()) * Double.parseDouble(prebook.getPercentage()) / 100)).setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                    bookingTransactionBean.setTransType("Deposit");
+                                                    bookingTransactionBean.setTransNote("");
+
+                                                    if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                        errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to store subagency transaction at BookingTransaction table.");
+                                                    }
+                                                } else {
+                                                    errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to refund the price at subagency table.");
+                                                }
+
+
+                                                BigDecimal gsaSaleInGsaCur=CurrencyConverter.findExchangeRateAndConvert(booking.getSaleCurrency(), gsaBean.getCurrency(), Double.parseDouble(booking.getGsaSale().toString()));
+                                                if(gsaSaleInGsaCur!=null) {
+                                                    gsaBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(gsaBean.getDeposit())).
+                                                            add(new BigDecimal((Double.parseDouble(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).toString()) * Double.parseDouble(prebook.getPercentage()) / 100))).
+                                                            setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                    if (!GsaDAO.updateGsaBean(gsaBean)) {
+                                                        BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                        bookingTransactionBean.setAgentId("");
+                                                        bookingTransactionBean.setAgentName("");
+                                                        bookingTransactionBean.setBookingId(booking.getBookingId());
+                                                        bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                        bookingTransactionBean.setTransactionType("Refund");
+                                                        bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                        bookingTransactionBean.setTransDate(dateTime.toString());
+                                                        bookingTransactionBean.setTransRate(String.valueOf(new BigDecimal((Double.parseDouble(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).toString()) * Double.parseDouble(prebook.getPercentage()) / 100)).setScale(2, BigDecimal.ROUND_HALF_UP)));
+                                                        bookingTransactionBean.setTransType("Deposit");
+                                                        bookingTransactionBean.setTransNote("");
+
+                                                        if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                            errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to store gsa transaction at BookingTransaction table.");
+                                                        }
+                                                    } else {
+                                                        errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to refund the price at gsa table.");
+                                                    }
+                                                }else{
+                                                    errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to refund the price at gsa table.");
+                                                }
+                                            } else {
+                                                cancellResult.setCancellationSucceed(false);
+                                                cancellResult.setCancellationNote("Cancelation couldn't completed.Please contact at:george.nafpaktitis@atbholidays.com");
+                                                cancelJSON.setCancellationResult(cancellResult);
+                                                cancelJSON.setSuccess(true);
+                                                return cancelJSON;
+                                            }
+
+                                        }
+                                    } else {
                                         cancellResult.setCancellationSucceed(false);
                                         cancellResult.setCancellationNote("Cancelation couldn't completed.");
                                         cancelJSON.setCancellationResult(cancellResult);
-                                        cancelJSON.setErrorMessageText(result.getError().getMessage());
                                         cancelJSON.setSuccess(false);
+                                        cancelJSON.setErrorMessageText("Communication error");
                                         return cancelJSON;
-                                    } else {
-                                        if (result.getCode() == 1) {
-
-                                            cancellResult.setCancellationSucceed(true);
-                                            cancellResult.setRefund(new BigDecimal((Double.parseDouble(booking.getAgentSale()) * Double.parseDouble(prebook.getPercentage()) / 100)).setScale(2, BigDecimal.ROUND_HALF_UP));
-                                            booking.setStatus("3");
-                                            if (BookingsAllDAO.updateBooking(booking)) {
-                                                errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to update bookingsall table.");
-                                            }
-
-                                            //todo refund also at gsa table
-                                            subAgencyBean.setDeposit(String.valueOf(new BigDecimal(Double.parseDouble(subAgencyBean.getDeposit())).
-                                                    add(new BigDecimal((Double.parseDouble(booking.getAgentSale()) * Double.parseDouble(prebook.getPercentage()) / 100))).
-                                                    setScale(2, BigDecimal.ROUND_HALF_UP)));
-                                            if (!SubAgencyDAO.updateSubAgentByName(subAgencyBean)) {
-                                                BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
-                                                bookingTransactionBean.setAgentId(String.valueOf(subAgencyBean.getId()));
-                                                bookingTransactionBean.setAgentName(subAgencyBean.getAgentName());
-                                                bookingTransactionBean.setBookingId(booking.getBookingId());
-                                                bookingTransactionBean.setGsaId(subAgencyBean.getGsaId());
-                                                bookingTransactionBean.setTransactionType("Refund");
-                                                bookingTransactionBean.setTransCur(subAgencyBean.getCurrency());
-                                                bookingTransactionBean.setTransDate(dateTime.toString());
-                                                bookingTransactionBean.setTransRate(String.valueOf(new BigDecimal((Double.parseDouble(booking.getAgentSale()) * Double.parseDouble(prebook.getPercentage()) / 100)).setScale(2, BigDecimal.ROUND_HALF_UP)));
-                                                bookingTransactionBean.setTransType("Deposit");
-                                                bookingTransactionBean.setTransNote("");
-
-                                                if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
-                                                    errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to store transaction at BookingTransaction table.");
-                                                }
-                                            } else {
-                                                errLogger.info("Booking with Id :" + booking.getId() + " cancelled at sunhotels side but failed to refund the price at subagency table.");
-                                            }
-                                        } else {
-                                            cancellResult.setCancellationSucceed(false);
-                                            cancellResult.setCancellationNote("Cancelation couldn't completed.Please contact at:george.nafpaktitis@atbholidays.com");
-                                            cancelJSON.setCancellationResult(cancellResult);
-                                            cancelJSON.setSuccess(true);
-                                            return cancelJSON;
-                                        }
-
                                     }
                                 } else {
                                     cancellResult.setCancellationSucceed(false);
-                                    cancellResult.setCancellationNote("Cancelation couldn't completed.");
-                                    cancelJSON.setCancellationResult(cancellResult);
-                                    cancelJSON.setSuccess(false);
-                                    cancelJSON.setErrorMessageText("Communication error");
-                                    return cancelJSON;
+                                    cancellResult.setCancellationNote("The booking could not be cancelled due to the cancellation deadline having expired.");
+                                }
+                            } else if (booking.getStatus().equals("7")) {
+                                booking.setStatus("3");
+                                if (!BookingsAllDAO.updateBooking(booking)) {
+                                    cancellResult.setCancellationSucceed(true);
                                 }
                             } else {
+                                cancellResult.setCancellationNote("This booking isn't active");
                                 cancellResult.setCancellationSucceed(false);
-                                cancellResult.setCancellationNote("The booking could not be cancelled due to the cancellation deadline having expired.");
+                                cancelJSON.setCancellationResult(cancellResult);
+                                cancelJSON.setSuccess(true);
+                                return cancelJSON;
                             }
-                        } else if (booking.getStatus().equals("7")) {
-                            booking.setStatus("3");
-                            if (!BookingsAllDAO.updateBooking(booking)) {
-                                cancellResult.setCancellationSucceed(true);
-                            }
+
                         } else {
-                            cancellResult.setCancellationNote("This booking isn't active");
-                            cancellResult.setCancellationSucceed(false);
-                            cancelJSON.setCancellationResult(cancellResult);
-                            cancelJSON.setSuccess(true);
+                            cancelJSON.setSuccess(false);
+                            cancelJSON.setErrorMessageText("Internal error.Couldn't extract essential data.");
                             return cancelJSON;
                         }
-
                     } else {
                         cancelJSON.setSuccess(false);
-                        cancelJSON.setErrorMessageText("Internal error.Couldn't extract essential data.");
+                        cancelJSON.setErrorMessageText("Internal error.Couldn't extract essential data or bookingId doesn't exists.");
                         return cancelJSON;
                     }
-                } else {
+                }else{
                     cancelJSON.setSuccess(false);
-                    cancelJSON.setErrorMessageText("Internal error.Couldn't extract essential data or bookingId doesn't exists.");
+                    cancelJSON.setErrorMessageText("Internal error.Couldn't extract essential data.");
                     return cancelJSON;
                 }
             } else {

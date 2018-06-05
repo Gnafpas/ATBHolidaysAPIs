@@ -23,6 +23,7 @@ import java.util.concurrent.CountDownLatch;
 import static Controller.Application.errLogger;
 import static Helper.ProjectProperties.atbHotelsProvider;
 import static Helper.ProjectProperties.mattHotelsProvider;
+import static Helper.ProjectProperties.sanHotelsProviderId;
 
 /**
  * Created by George on 06/05/2018.
@@ -73,16 +74,27 @@ public class ATBHotelsSearchThread implements Runnable {
             if (destinationBean != null && destinationBean.getDestinationId()!=0 ) {
                 hotels=HotelDAO.getATBHotelByDestId(String.valueOf(destinationBean.getDestinationId()));
                 if(hotels!=null)
-                    rooms=RoomAvailableDAO.getRoomAvailable(hotels,params.getCheckInDate(),params.getCheckOutDate(),0);
+                    rooms=RoomAvailableDAO.getRoomAvailable(hotels,params.getCheckInDate(),params.getCheckOutDate(),null);
             }else if(params.getHotelID() != null && !params.getHotelID().equals("") && (params.getProviderId()==atbHotelsProvider || params.getProviderId()==mattHotelsProvider)){
                 hotels=HotelDAO.getHotelByHotelId(Integer.parseInt(params.getHotelID()),params.getProviderId(),null);
                 if(hotels!=null)
-                    rooms=RoomAvailableDAO.getRoomAvailable(hotels,params.getCheckInDate(),params.getCheckOutDate(),0);
+                    rooms=RoomAvailableDAO.getRoomAvailable(hotels,params.getCheckInDate(),params.getCheckOutDate(),null);
             }
 
-            if(hotels!=null && rooms!=null) {
+
+            if(hotels!=null && rooms!=null && rooms.size()>0) {
+                List<HotelmappingBean> hotelsmapping = HotelmappingDAO.getAllProviderHotelsMapping(mattHotelsProvider);
+                List<HotelmappingBean> hotelsmapping2 = HotelmappingDAO.getAllProviderHotelsMapping(atbHotelsProvider);
+                hotelsmapping.addAll(hotelsmapping2);
                 for (HotelBean hotel : hotels) {
                     if (hotel.isActive()) {
+
+                        int atbHotelId=0;
+                        for (HotelmappingBean hotelmapping : hotelsmapping) {
+                            if (hotel.getHotelId() == hotelmapping.getHotelId())
+                                atbHotelId = hotelmapping.getId();
+                        }
+
                         SunHotelsResponse hotelResponse = new SunHotelsResponse();
                         hotelResponse.setState(hotel.getState());
                         hotelResponse.setLongitude(hotel.getLongitude());
@@ -91,7 +103,7 @@ public class ATBHotelsSearchThread implements Runnable {
                         hotelResponse.setDescription(hotel.getDescription());
                         hotelResponse.setCity(hotel.getCity());
                         hotelResponse.setAddress(hotel.getAddress());
-                        hotelResponse.setId(hotel.getHotelId());
+                        hotelResponse.setId(atbHotelId);
                         hotelResponse.setStar_rating(hotel.getStarRating());
                         hotelResponse.setZip_code(hotel.getZipCode());
                         hotelResponse.setName(hotel.getName());
@@ -100,7 +112,7 @@ public class ATBHotelsSearchThread implements Runnable {
                         hotelResponse.setCountry_code(hotel.getCountryCode());
                         hotelResponse.setCountry(hotel.getCountry());
                         hotelResponse.setLatitude(hotel.getLatitude());
-                        hotelResponse.setTimezone(null);//todo include in atbhotels search all the factors from room_price table(market_type,chlid/infant extra fee)
+                        hotelResponse.setTimezone(null);
                         List<SunHotelsRoomTypeWithRoomsResponse> roomsTypes = new ArrayList<>();
                         for (RoomAvailableBean roomAvailableBean : rooms) {
                             if (Integer.compare(roomAvailableBean.getHotelId(), hotel.getHotelId()) == 0) {
@@ -112,10 +124,10 @@ public class ATBHotelsSearchThread implements Runnable {
                                         int adultsPerRoom = (params.getNumberOfAdults() + params.getNumberOfRooms() - 1) / params.getNumberOfRooms();
                                         int childsPerRoom = (params.getNumberOfChildren() + params.getNumberOfRooms() - 1) / params.getNumberOfRooms();
                                         int infantPerRoom = (params.getInfant() + params.getNumberOfRooms() - 1) / params.getNumberOfRooms();
-                                        if (adultsPerRoom <= roomtypeBean.getMaxAdultOccupation() && childsPerRoom <= roomtypeBean.getMaxChildOccupation() &&
-                                                adultsPerRoom >= roomtypeBean.getMinAdultOccupation() && childsPerRoom >= roomtypeBean.getMinChildOccupation() &&
-                                                infantPerRoom >= roomtypeBean.getMinInfantOccupation() && infantPerRoom <= roomtypeBean.getMaxInfantOccupation() &&
-                                                adultsPerRoom + childsPerRoom <= roomtypeBean.getMaxAdultOccupation()) {
+                                        if (adultsPerRoom <= room.getMaxAdultOccupation() && childsPerRoom <= room.getMaxChildOccupation() &&
+                                                adultsPerRoom >= room.getMinAdultOccupation() && childsPerRoom >= room.getMinChildOccupation() &&
+                                                infantPerRoom >= room.getMinInfantOccupation() && infantPerRoom <= room.getMaxInfantOccupation() &&
+                                                adultsPerRoom + childsPerRoom <= room.getMaxAdultOccupation()) {
 
 
                                             ZonedDateTime checkin = null;
@@ -150,7 +162,7 @@ public class ATBHotelsSearchThread implements Runnable {
                                                     if (roomPrices != null && roomPrices.size() == dates.size()) {
                                                         for (RoomPriceBean roomPrice : roomPrices) {
                                                             Double price = Double.parseDouble(CurrencyConverter.findExchangeRateAndConvert(roomPrice.getCurrency(), params.getCurrencies().get(0), Double.parseDouble(roomPrice.getRoomPrice())).toString());
-                                                            Period period = Period.between(LocalDate.now(), LocalDate.parse("2018-07-01"));
+                                                            Period period = Period.between(LocalDate.now(), LocalDate.parse(params.getCheckInDate()));
                                                             period.getDays();
                                                             if (price == null || Integer.valueOf(roomPrice.getMinStay()).compareTo(dates.size()) == 1 ||
                                                                     (period != null && period.getYears() == 0 && period.getMonths() == 0 &&
@@ -158,10 +170,15 @@ public class ATBHotelsSearchThread implements Runnable {
                                                                 sumPrice = 0.0;
                                                                 break;
                                                             }
-                                                            sumPrice = sumPrice + price;
+                                                            Double priceforRooms=price * params.getNumberOfRooms();
+                                                            Double priceforextrabeds=(((params.getNumberOfAdults() + params.getNumberOfChildren()) - (params.getNumberOfRooms() * room.getBedCount()))* Double.parseDouble(roomPrice.getExtraBedPrice()));
+                                                            priceforextrabeds= Double.parseDouble(CurrencyConverter.findExchangeRateAndConvert(roomPrice.getCurrency(), params.getCurrencies().get(0),priceforextrabeds).toString());
+                                                            Double proceForInfants=(Double.parseDouble(roomPrice.getInfantPrice()) * params.getInfant());
+                                                            proceForInfants=Double.parseDouble(CurrencyConverter.findExchangeRateAndConvert(roomPrice.getCurrency(), params.getCurrencies().get(0),proceForInfants).toString());
+                                                            sumPrice = sumPrice + (priceforRooms) + priceforextrabeds  + proceForInfants;
                                                         }
                                                     }
-                                                    sumPrice = sumPrice * params.getNumberOfRooms();
+
 
                                                     List<SunHotelsRoomResponse> roomsresponse = new ArrayList<>();
                                                     SunHotelsRoomResponse roomResponse = new SunHotelsRoomResponse();
@@ -179,11 +196,10 @@ public class ATBHotelsSearchThread implements Runnable {
                                                         }
                                                     }
 
-                                                    RoombedBean roombed = RoombedDAO.getRoombed(room.getHotelId(), String.valueOf(room.getAtbRoomId()), room.getProviderId());
-                                                    if (roombed != null) {
-                                                        roomResponse.setExtrabeds(roombed.getExtraBedCount());
-                                                        roomResponse.setBeds(roombed.getBedCount());
-                                                    }
+
+                                                    roomResponse.setExtrabeds(room.getExtraBedCount());
+                                                    roomResponse.setBeds(room.getBedCount());
+
 
 
                                                     List<SunHotelsCancelationPolicy> policiesResponse = new ArrayList<>();
@@ -221,7 +237,8 @@ public class ATBHotelsSearchThread implements Runnable {
                                                         roomsTypes.add(tempRoomtype);
                                                     }
                                                 } catch (NumberFormatException e) {
-                                                }
+
+                                                }//todo check for stock and allocation on
                                             }
                                         }
                                     }

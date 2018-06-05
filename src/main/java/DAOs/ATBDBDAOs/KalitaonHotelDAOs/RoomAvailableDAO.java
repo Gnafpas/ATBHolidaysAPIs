@@ -23,7 +23,7 @@ import static Helper.ProjectProperties.sanHotelsProviderId;
  */
 public class RoomAvailableDAO {
 
-    public static List<RoomAvailableBean> getRoomAvailable(List<HotelBean> hotels, String startDate, String endDate, int mealId) {
+    public static List<RoomAvailableBean> getRoomAvailable(List<HotelBean> hotels, String startDate, String endDate, String mealId) {
 
         StatelessSession session =SunHotelsHibernateUtil.getSession();
         List<RoomAvailableBean> rooms=null;
@@ -35,8 +35,8 @@ public class RoomAvailableDAO {
             hql = hql + " )";
             hql=hql + " and roomAvailable.startDate<='" + startDate + "'" +
                       " and roomAvailable.endDate>='" + endDate + "'" ;
-            if (mealId != 0) {
-                hql = hql + " and roomAvailable.mealType=" + mealId;//todo change mealtype with meal id in db
+            if (mealId!=null && !mealId.equals("")) {
+                hql = hql + " and roomAvailable.mealType= '" + mealId+"'";//todo change mealtype with meal id in db
             }
             try {
                 session.beginTransaction();
@@ -65,4 +65,5 @@ public class RoomAvailableDAO {
         }
         return rooms;
     }
+
 }

@@ -4,6 +4,7 @@ import Beans.ATBDBBeans.KalitaonHotel.PhotoBean;
 import DBConnection.SunHotelsHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import com.sun.xml.internal.ws.client.ClientTransportException;
+import org.hibernate.AssertionFailure;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 

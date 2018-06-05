@@ -251,6 +251,7 @@ public class UpdateATBProducts {
                         aProductTitleBean.setSubSupplierName(products.get(0).getSupplierName());
                         aProductTitleBean.setThumbnailUrl(products.get(0).getThumbnailHiResUrl());
                         aProductTitleBean.setCityName(products.get(0).getCityEn().toUpperCase());
+                        aProductTitleBean.setUpdatable(true);
                         if (products.get(0).getBookingEngineId() != null)
                             aProductTitleBean.setBookingEngine(products.get(0).getBookingEngineId());
 

@@ -54,7 +54,6 @@ public class UpdateSunHotelsDB {
         List<PhotoBean> photos=new ArrayList<>();
         List<HotelfacilityBean> hotelfacilities=new ArrayList<>();
         List<RoomBean> rooms=new  ArrayList<>();
-        List<RoombedBean> roombeds=new  ArrayList<>();
 
 
         DateTime dateTime = new DateTime(DateTimeZone.UTC);
@@ -209,12 +208,6 @@ public class UpdateSunHotelsDB {
                             roomtypeBean.setRoomtypeId(String.valueOf(roomtype.getId()));
                             roomtypeBean.setRoomSize(0);
                             roomtypeBean.setSizeMeasurement("");
-                            roomtypeBean.setMaxAdultOccupation(0);
-                            roomtypeBean.setMinAdultOccupation(0);
-                            roomtypeBean.setMaxChildOccupation(0);
-                            roomtypeBean.setMinChildOccupation(0);
-                            roomtypeBean.setMaxInfantOccupation(0);
-                            roomtypeBean.setMinInfantOccupation(0);
                             roomtypeBean.setDescription("");
                             if (roomtype.getSharedRoom() != 0)
                                 roomtypeBean.setSharedRoom(true);
@@ -521,17 +514,14 @@ public class UpdateSunHotelsDB {
                                                 roomBean.setProviderId(sanHotelsProviderId);
                                                 roomBean.setProviderRef(0);
                                                 roomBean.setOriginalRoomId(String.valueOf(room.getId()));
+                                                roomBean.setMinAdultOccupation(0);
+                                                roomBean.setMinChildOccupation(0);
+                                                roomBean.setMinInfantOccupation(0);
+                                                roomBean.setMaxAdultOccupation(0);
+                                                roomBean.setMaxChildOccupation(0);
+                                                roomBean.setMaxInfantOccupation(0);
                                                 rooms.add(roomBean);
 
-
-                                                RoombedBean roombedBean = new RoombedBean();
-                                                roombedBean.setBedCount(room.getBeds());
-                                                roombedBean.setBedType("");
-                                                roombedBean.setExtraBedCount(0);
-                                                roombedBean.setHotelId(hotel.getHotelId());
-                                                roombedBean.setRoomId(room.getId());
-                                                roombedBean.setProviderId(sanHotelsProviderId);
-                                                roombeds.add(roombedBean);
                                             }
 
                                         }
@@ -561,8 +551,6 @@ public class UpdateSunHotelsDB {
                                                     }
                                                     if (RoomDAO.addRoomBean(rooms, session, session2))
                                                         atbDBErrCommCounter++;
-//                                                if (RoombedDAO.addRoombedBean(roombeds, session,session2))
-//                                                    atbDBErrCommCounter++;
                                                     if (HotelfacilityDAO.addHotelfacilityBean(hotelfacilities, session, session2))
                                                         atbDBErrCommCounter++;
                                                     if (PhotoDAO.addPhotoBean(photos, session, session2))
@@ -597,7 +585,6 @@ public class UpdateSunHotelsDB {
                                         }
                                         totalProccessWaitingTime = totalProccessWaitingTime + (System.currentTimeMillis() - timeElapsed);
                                         rooms.clear();
-                                        roombeds.clear();
                                         hotelfacilities.clear();
                                         photos.clear();
                                     }

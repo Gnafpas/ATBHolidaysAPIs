@@ -13,11 +13,5 @@
         <property name="description" column="description"/>
         <property name="roomSize" column="room_size"/>
         <property name="sizeMeasurement" column="size_measurement"/>
-        <property name="minAdultOccupation" column="min_adult_occupation"/>
-        <property name="maxAdultOccupation" column="max_adult_occupation"/>
-        <property name="minChildOccupation" column="min_child_occupation"/>
-        <property name="maxChildOccupation" column="max_child_occupation"/>
-        <property name="minInfantOccupation" column="min_infant_occupation"/>
-        <property name="maxInfantOccupation" column="max_infant_occupation"/>
     </class>
 </hibernate-mapping>

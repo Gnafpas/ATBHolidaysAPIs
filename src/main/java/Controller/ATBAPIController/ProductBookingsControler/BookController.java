@@ -854,9 +854,40 @@ public class BookController {
                                                             dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
                                                     bookingTransactionBean.setTransRate(agentSale.toString());
                                                     bookingTransactionBean.setTransType("Deposit");
-                                                    BookingTransactionDAO.storeTransaction(bookingTransactionBean);
+                                                    if(BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                        errLogger.info("**********Booking with number :Booking with itineraryID :" + viatorBookResponse.getData().getItineraryId() + "and item itineraryID:" + viatorItem.getItineraryId() + " completed at viator side but failed to store transaction to the table.*********");
+                                                    }
                                                 }
-                                            }
+                                            } else
+                                                errLogger.info("**********Booking with number :Booking with itineraryID :" + viatorBookResponse.getData().getItineraryId() + "and item itineraryID:" + viatorItem.getItineraryId() + " completed at viator side but failed to detuct the price from sub agency deposit at database.*********");
+                                            if (gsaSale != null) {
+                                                BigDecimal gsaSaleInGsaCur = CurrencyConverter.findExchangeRateAndConvert(subAgencyBean.getCurrency(), gsaBean.getCurrency(), Double.parseDouble(gsaSale.toString()));
+                                                if (gsaSaleInGsaCur != null) {
+                                                    gsaBean.setDeposit(BigDecimal.valueOf(Double.parseDouble(gsaBean.getDeposit())).subtract(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+                                                    if (GsaDAO.updateGsaBean(gsaBean)) {
+                                                        errLogger.info("**********Booking with number :Booking with itineraryID :" + viatorBookResponse.getData().getItineraryId() + "and item itineraryID:" + viatorItem.getItineraryId() + " completed at viator side but failed to detuct the price from gsa deposit at database.*********");
+                                                    } else {
+                                                        BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                        bookingTransactionBean.setAgentId(String.valueOf(""));
+                                                        bookingTransactionBean.setAgentName("");
+                                                        bookingTransactionBean.setBookingId(bookingCode);
+                                                        bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                        bookingTransactionBean.setTransactionType("Charge");
+                                                        bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                        bookingTransactionBean.setTransNote("");
+                                                        bookingTransactionBean.setTransDate(String.format("%04d-%02d-%02d %02d:%02d:%02d",
+                                                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
+                                                        bookingTransactionBean.setTransRate(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                                        bookingTransactionBean.setTransType("Deposit");
+                                                        if(BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                            errLogger.info("**********Booking with number :Booking with itineraryID :" + viatorBookResponse.getData().getItineraryId() + "and item itineraryID:" + viatorItem.getItineraryId() + " completed at viator side but failed to store transaction to the table.*********");
+                                                        }
+                                                    }
+                                                } else
+                                                    errLogger.info("**********Booking with number :Booking with itineraryID :" + viatorBookResponse.getData().getItineraryId() + "and item itineraryID:" + viatorItem.getItineraryId() + " completed at viator side but failed to detuct the price from gsaBean deposit at database because of currency converting issue.");
+                                            } else
+                                                errLogger.info("**********Booking with number :Booking with itineraryID :" + viatorBookResponse.getData().getItineraryId() + "and item itineraryID:" + viatorItem.getItineraryId() + " completed at viator side but failed to detuct the price from gsaBean deposit at database.*********");
                                         }
 
 
@@ -1160,9 +1191,42 @@ public class BookController {
                                                             dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
                                                     bookingTransactionBean.setTransRate(agentSale.toString());
                                                     bookingTransactionBean.setTransType("Deposit");
-                                                    BookingTransactionDAO.storeTransaction(bookingTransactionBean);
+                                                    if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                        errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed  but failed to store transaction to the table.*********");
+                                                    }
                                                 }
-                                            }
+                                            } else
+                                                errLogger.info("**********Booking  with bookingCode :" + bookingCode + "  completed  but failed to detuct the price from sub agency deposit at database.*********");
+
+
+                                            if (gsaSale != null) {
+                                                BigDecimal gsaSaleInGsaCur = CurrencyConverter.findExchangeRateAndConvert(subAgencyBean.getCurrency(), gsaBean.getCurrency(), Double.parseDouble(gsaSale.toString()));
+                                                if (gsaSaleInGsaCur != null) {
+                                                    gsaBean.setDeposit(BigDecimal.valueOf(Double.parseDouble(gsaBean.getDeposit())).subtract(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+                                                    if (GsaDAO.updateGsaBean(gsaBean)) {
+                                                        errLogger.info("**********Booking  with bookingCode :" + bookingCode  + " completed  but failed to detuct the price from gsa deposit at database.*********");
+                                                    } else {
+                                                        BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                        bookingTransactionBean.setAgentId(String.valueOf(""));
+                                                        bookingTransactionBean.setAgentName("");
+                                                        bookingTransactionBean.setBookingId(bookingCode);
+                                                        bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                        bookingTransactionBean.setTransactionType("Charge");
+                                                        bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                        bookingTransactionBean.setTransNote("");
+                                                        bookingTransactionBean.setTransDate(String.format("%04d-%02d-%02d %02d:%02d:%02d",
+                                                                dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                                dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
+                                                        bookingTransactionBean.setTransRate(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                                        bookingTransactionBean.setTransType("Deposit");
+                                                        if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                            errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed  but failed to store transaction to the table.*********");
+                                                        }
+                                                    }
+                                                } else
+                                                    errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed  but failed to detuct the price from gsaBean deposit at database because of currency converting issue.");
+                                            } else
+                                                errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed  but failed to detuct the price from gsaBean deposit at database.*********");
                                         }
                                     } else {
                                         responseItem.setBookedSuccesfully(false);
@@ -1537,9 +1601,42 @@ public class BookController {
                                                     dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
                                             bookingTransactionBean.setTransRate(agentSale.toString());
                                             bookingTransactionBean.setTransType("Deposit");
-                                            BookingTransactionDAO.storeTransaction(bookingTransactionBean);
+                                            if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed at events travel side but failed to store transaction to the table.*********");
+                                            }
                                         }
-                                    }
+                                    } else
+                                        errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed at events travel side but failed to detuct the price from sub agency deposit at database.*********");
+
+
+                                    if (gsaSale != null) {
+                                        BigDecimal gsaSaleInGsaCur = CurrencyConverter.findExchangeRateAndConvert(subAgencyBean.getCurrency(), gsaBean.getCurrency(), Double.parseDouble(gsaSale.toString()));
+                                        if (gsaSaleInGsaCur != null) {
+                                            gsaBean.setDeposit(BigDecimal.valueOf(Double.parseDouble(gsaBean.getDeposit())).subtract(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+                                            if (GsaDAO.updateGsaBean(gsaBean)) {
+                                                errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed at events travel side but failed to detuct the price from gsa deposit at database.*********");
+                                            } else {
+                                                BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                bookingTransactionBean.setAgentId(String.valueOf(""));
+                                                bookingTransactionBean.setAgentName("");
+                                                bookingTransactionBean.setBookingId(bookingCode);
+                                                bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                bookingTransactionBean.setTransactionType("Charge");
+                                                bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                bookingTransactionBean.setTransNote("");
+                                                bookingTransactionBean.setTransDate(String.format("%04d-%02d-%02d %02d:%02d:%02d",
+                                                        dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
+                                                        dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
+                                                bookingTransactionBean.setTransRate(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                                bookingTransactionBean.setTransType("Deposit");
+                                                if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                    errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed at events travel side but failed to store transaction to the table.*********");
+                                                }
+                                            }
+                                        } else
+                                            errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed at events travel side but failed to detuct the price from gsaBean deposit at database because of currency converting issue.");
+                                    } else
+                                        errLogger.info("**********Booking  with bookingCode :" + bookingCode + " completed at events travel side but failed to detuct the price from gsaBean deposit at database.*********");
                                 }
                             }
 

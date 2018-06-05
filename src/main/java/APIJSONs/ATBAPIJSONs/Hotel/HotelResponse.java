@@ -12,6 +12,7 @@ import java.util.List;
 public class HotelResponse implements Comparable<HotelResponse>{
 
     private int hotelId;
+    private int providerId;
     private String starRating;
     private String countryCode;
     private String zipCode;
@@ -30,6 +31,14 @@ public class HotelResponse implements Comparable<HotelResponse>{
     private String name;
     private String accommodationType;
     private int resortId;
+
+    public int getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(int providerId) {
+        this.providerId = providerId;
+    }
 
     public String getAccommodationType() {
         return accommodationType;

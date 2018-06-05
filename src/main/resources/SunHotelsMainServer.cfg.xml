@@ -31,8 +31,6 @@
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.FacilityBean"/>
         <mapping resource="RoomBean.hbm.xml"/>
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.RoomBean"/>
-        <mapping resource="RoombedBean.hbm.xml"/>
-        <mapping class="Beans.ATBDBBeans.KalitaonHotel.RoombedBean"/>
         <mapping resource="RoomtypeBean.hbm.xml"/>
         <mapping class="Beans.ATBDBBeans.KalitaonHotel.RoomtypeBean"/>
         <mapping resource="DestinationBean.hbm.xml"/>

@@ -195,12 +195,6 @@ public class UpdateHotelBedsDB {
                         roomtypeBean = new RoomtypeBean();
                         roomtypeBean.setRoomtypeId(room.getCode());
                         roomtypeBean.setDescription(room.getDescription());
-                        roomtypeBean.setMaxAdultOccupation(Integer.parseInt(room.getMaxAdults()));
-                        roomtypeBean.setMaxChildOccupation(Integer.parseInt(room.getMaxChildren()));
-                        roomtypeBean.setMaxInfantOccupation(0);
-                        roomtypeBean.setMinAdultOccupation(Integer.parseInt(room.getMinAdults()));
-                        roomtypeBean.setMinChildOccupation(Integer.parseInt(room.getMaxChildren()));
-                        roomtypeBean.setMinInfantOccupation(0);
                         roomtypeBean.setProviderId(hotelBedsProviderId);
                         roomtypeBean.setRoomSize(0);
                         roomtypeBean.setRoomType(room.getTypeDescription().getContent());
@@ -597,6 +591,13 @@ public class UpdateHotelBedsDB {
                                 room.setProviderId(hotelBedsProviderId);
                                 room.setProviderRef(0);
                                 room.setRoomTypeId(r.getRoomType());
+                                room.setMinAdultOccupation(0);
+                                room.setMinChildOccupation(0);
+                                room.setMinInfantOccupation(0);
+                                room.setMaxAdultOccupation(0);
+                                room.setMaxChildOccupation(0);
+                                room.setMaxInfantOccupation(0);
+
                                 rooms.add(room);
                             }
                         }

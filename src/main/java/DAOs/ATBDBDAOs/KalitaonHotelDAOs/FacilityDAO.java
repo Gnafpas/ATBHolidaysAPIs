@@ -5,6 +5,7 @@ import DBConnection.SunHotelsHibernateUtil;
 import DBConnection.SunHotelsMainServerHibernateUtil;
 import com.mysql.cj.core.exceptions.CJCommunicationsException;
 import com.sun.xml.internal.ws.client.ClientTransportException;
+import org.hibernate.AssertionFailure;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
@@ -184,7 +185,7 @@ public class FacilityDAO {
             errLogger.info(errors.toString());
         } catch (NoResultException e) {
 
-        } finally {
+        }finally {
             if (!incomingSession)
                 session.close();
         }

@@ -12,5 +12,13 @@
         <property name="roomTypeId" column="room_type_id"/>
         <property name="dirty" column="dirty"/>
         <property name="originalRoomId" column="original_room_id"/>
+        <property name="bedCount" column="bed_count"/>
+        <property name="extraBedCount" column="extra_bed_count"/>
+        <property name="minAdultOccupation" column="min_adult_occupation"/>
+        <property name="maxAdultOccupation" column="max_adult_occupation"/>
+        <property name="minChildOccupation" column="min_child_occupation"/>
+        <property name="maxChildOccupation" column="max_child_occupation"/>
+        <property name="minInfantOccupation" column="min_infant_occupation"/>
+        <property name="maxInfantOccupation" column="max_infant_occupation"/>
     </class>
 </hibernate-mapping>

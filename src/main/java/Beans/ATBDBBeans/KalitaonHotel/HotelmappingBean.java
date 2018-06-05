@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "hotelmapping", schema = "Sunhotels", catalog = "")
 public class HotelmappingBean {
     private int id;
-    private int providerRef;
+    private Integer providerRef;
     private Integer providerResortRef;
     private int hotelId;
     private int providerId;
@@ -27,11 +27,11 @@ public class HotelmappingBean {
 
     @Basic
     @Column(name = "provider_ref")
-    public int getProviderRef() {
+    public Integer getProviderRef() {
         return providerRef;
     }
 
-    public void setProviderRef(int providerRef) {
+    public void setProviderRef(Integer providerRef) {
         this.providerRef = providerRef;
     }
 
