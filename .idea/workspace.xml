@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -1157,7 +1156,7 @@
       <workItem from="1527070828232" duration="14714000" />
       <workItem from="1527095038195" duration="84685000" />
       <workItem from="1527866676187" duration="877000" />
-      <workItem from="1528022120083" duration="12454000" />
+      <workItem from="1528022120083" duration="12487000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -1285,7 +1284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528213896848</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.3">
+      <created>1528218765400</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1528218765400</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1312,7 +1318,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3161428000" />
+    <option name="totallyTimeSpent" value="3161461000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1428,7 +1434,8 @@
     <MESSAGE value="ATB Hotels Integration complete except children/infant additional fees and market type.(Only for frontend services)" />
     <MESSAGE value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed." />
     <MESSAGE value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.2" />
+    <MESSAGE value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hotelbeds integration for API client complete.Some extra functionality at booking service needed.3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
