@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/service/service.war" afterPath="$PROJECT_DIR$/out/artifacts/service/service.war" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Helper/CurrencyConverter.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Helper/CurrencyConverter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Helper/ProjectProperties.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Helper/ProjectProperties.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductController.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" afterPath="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/src/main/target/" />
@@ -48,36 +53,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HotelController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13110">
-              <caret line="921" column="27" lean-forward="false" selection-start-line="906" selection-start-column="26" selection-end-line="921" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BookPrebookController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BookPrebookController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
+            <state relative-caret-position="1620">
               <caret line="1768" column="86" lean-forward="false" selection-start-line="1768" selection-start-column="69" selection-end-line="1768" selection-end-column="86" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HotelPostBookController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HotelPostBookController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4935">
+            <state relative-caret-position="457">
               <caret line="364" column="49" lean-forward="false" selection-start-line="364" selection-start-column="49" selection-end-line="364" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,7 +87,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>childrenAgesSplit</find>
       <find>event</find>
       <find>rror in hoteldetailed Search sunhotels request</find>
       <find>Wrong currrency code</find>
@@ -126,6 +116,7 @@
       <find>Code 52:Couldn't extract essential data</find>
       <find>CurrencyConverter</find>
       <find>gsaSaleInGsaCur</find>
+      <find>code:14</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -158,7 +149,6 @@
         <option value="$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonProduct/AProductTitleBean.java" />
         <option value="$PROJECT_DIR$/src/main/resources/AProductTitleBean.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/AProductTitleDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductController.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProvidersSearchRequestResponse.java" />
         <option value="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/PhotoDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.java" />
@@ -186,7 +176,6 @@
         <option value="$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/RoomPriceBean.java" />
         <option value="$PROJECT_DIR$/src/main/resources/RoomPriceBean.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/SunHotelsMainServer.cfg.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelController.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" />
         <option value="$PROJECT_DIR$/src/main/resources/ATBDBHibernate.cfg.xml" />
@@ -197,6 +186,8 @@
         <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java" />
         <option value="$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductController.java" />
       </list>
     </option>
   </component>
@@ -248,104 +239,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Helper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBAPIController" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBAPIController" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HotelBookingsController" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1154,7 +1047,7 @@
       <workItem from="1527095038195" duration="84685000" />
       <workItem from="1527866676187" duration="877000" />
       <workItem from="1528022120083" duration="11209000" />
-      <workItem from="1528225068666" duration="1551000" />
+      <workItem from="1528225068666" duration="2821000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -1316,7 +1209,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3161734000" />
+    <option name="totallyTimeSpent" value="3163004000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1446,21 +1339,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoombedDAO.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/RoomAvailableDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="38" column="58" lean-forward="false" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/GenerateRandomString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelmappingDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2446">
@@ -1689,6 +1567,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="32" column="66" lean-forward="false" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1730,18 +1609,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="31" column="18" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/HotelBedsSearchThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-713">
           <caret line="115" column="137" lean-forward="false" selection-start-line="115" selection-start-column="113" selection-end-line="115" selection-end-column="137" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1805,6 +1677,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1620">
+          <caret line="1768" column="86" lean-forward="false" selection-start-line="1768" selection-start-column="69" selection-end-line="1768" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/ATBDBHibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
@@ -1819,38 +1707,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductBookingsControler/PrebookController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="244" column="72" lean-forward="true" selection-start-line="244" selection-start-column="72" selection-end-line="244" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="236" column="69" lean-forward="false" selection-start-line="236" selection-start-column="69" selection-end-line="236" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/CurrencyJSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13110">
+        <state relative-caret-position="872">
           <caret line="921" column="27" lean-forward="false" selection-start-line="906" selection-start-column="26" selection-end-line="921" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4935">
+        <state relative-caret-position="457">
           <caret line="364" column="49" lean-forward="false" selection-start-line="364" selection-start-column="49" selection-end-line="364" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="1768" column="86" lean-forward="false" selection-start-line="1768" selection-start-column="69" selection-end-line="1768" selection-end-column="86" />
           <folding />
         </state>
       </provider>

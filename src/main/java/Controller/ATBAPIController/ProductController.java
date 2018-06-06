@@ -71,7 +71,7 @@ public class ProductController {
 
 
                 Application.agent.notice(subAgencyBean.getAgentName());
-                if (!params.getCountryCode().equals(""))
+                if (params.getCountryCode()!=null && !params.getCountryCode().equals(""))
                     params.setCountryCode(params.getCountryCode() + " ");//todo fix isocode at the database(Remove the space at the end of the code) or live it like this
                 DateTime dateTime = new DateTime(DateTimeZone.UTC);
                 productsAndCategoriesJSON.setDateStamp(Timestamp.valueOf(String.format("%04d-%02d-%02d %02d:%02d:%02d",

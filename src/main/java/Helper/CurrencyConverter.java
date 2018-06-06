@@ -31,10 +31,9 @@ public class CurrencyConverter {
         if(from.equals(to))
             return new BigDecimal(amount);
 
-        final String url ="https://api.fixer.io/latest?base="+ from;//todo get premium account
+        final String url ="https://data.fixer.io/api/latest?access_key=053fe954f02ec01ee0a467fb84c76cdd&base="+ from;
         CurrencyJSON currencyJSON =new CurrencyJSON();
-        //http://data.fixer.io/api/latest?access_key=053fe954f02ec01ee0a467fb84c76cdd
-        //053fe954f02ec01ee0a467fb84c76cdd
+
         if(from.equals("EUR")) {
             if (System.currentTimeMillis() - lastupdateForEUR >  1000*60 || lastcurrencyJSONForEUR == null) {
                 try {
