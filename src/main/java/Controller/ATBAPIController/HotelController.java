@@ -82,14 +82,14 @@ public class HotelController {
             }
 
             /**
-             * Get original id from Destination table.
+             * Get original id from Object table.
              */
             int originalDestinationId = 0;
             if (params.getDestinationId() != 0 ) {
                 originalDestinationId = DestinationDAO.getOriginalSunhotelsDestinationId(String.valueOf(params.getDestinationId()));
                 if (originalDestinationId == 0 && (originalHotelIds == null || originalHotelIds.size() == 0)) {
                     hotelSearchJSON.setSuccess(false);
-                    hotelSearchJSON.setErrorMessageText("Missing Destination Id");
+                    hotelSearchJSON.setErrorMessageText("Missing Object Id");
                     return hotelSearchJSON;
                 }
             }
@@ -839,7 +839,7 @@ public class HotelController {
 
 
                         /**
-                         * Get original id from Destination table.
+                         * Get original id from Object table.
                          */
                         int originalDestinationId = 0;
                         String originalDestinationIdStrFormat = "";
@@ -1085,10 +1085,10 @@ public class HotelController {
 
 //                        if (hotelSearchJSON.getData() != null) {
 //                            userlogs.info(" Db transactions time:" + dbTransactionTimeElapsed + ". Sunhotel communication and transactions time:" + requestTimeElapsed +
-//                                    ". Processing time:" + prepareResponseTimeElapsed + " Retrieve pictures time:" + retrievePicturesTimeElapsed + " Retrieve hotelFacilities time:" + retrieveHotelFacilitiesTimeElapsed + " longest query time:" + longestQueryTime + " Response Hotels count:" + hotelSearchJSON.getData().size() + ". Destination:" + originalDestinationId);
+//                                    ". Processing time:" + prepareResponseTimeElapsed + " Retrieve pictures time:" + retrievePicturesTimeElapsed + " Retrieve hotelFacilities time:" + retrieveHotelFacilitiesTimeElapsed + " longest query time:" + longestQueryTime + " Response Hotels count:" + hotelSearchJSON.getData().size() + ". Object:" + originalDestinationId);
 //                        } else
 //                            userlogs.info(" Db transactions time:" + dbTransactionTimeElapsed + ". Sunhotel communication and transactions time:" + requestTimeElapsed +
-//                                    ". Processing time:" + prepareResponseTimeElapsed + " Retrieve pictures time:" + retrievePicturesTimeElapsed + " Retrieve hotelFacilities time:" + retrieveHotelFacilitiesTimeElapsed + " longest query time:" + longestQueryTime + " Response Hotels count:" + 0 + ". Destination:" + originalDestinationId);
+//                                    ". Processing time:" + prepareResponseTimeElapsed + " Retrieve pictures time:" + retrievePicturesTimeElapsed + " Retrieve hotelFacilities time:" + retrieveHotelFacilitiesTimeElapsed + " longest query time:" + longestQueryTime + " Response Hotels count:" + 0 + ". Object:" + originalDestinationId);
 
                     } else {
                         hotelSearchJSON.setErrorMessageText("Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");

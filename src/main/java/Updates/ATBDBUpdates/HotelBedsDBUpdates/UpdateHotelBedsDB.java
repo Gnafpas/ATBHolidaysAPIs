@@ -512,22 +512,22 @@ public class UpdateHotelBedsDB {
                         /**
                          * Get District from google reverse geocode
                          */
-                        if(hotelBean.getLatitude()!=null && !hotelBean.getLatitude().equals("") && hotelBean.getLongitude()!=null && !hotelBean.getLongitude().equals("")) {
-                            ReverseGeocodeResponse reverseGeocodeResponse = HereAPIDAO.getReverseGeoCode(hotelBean.getLatitude(), hotelBean.getLongitude());
-                            if (reverseGeocodeResponse != null ) {
-                                if(reverseGeocodeResponse.getResponse().getView()!=null && reverseGeocodeResponse.getResponse().getView().size()>0) {
-                                    for (View view : reverseGeocodeResponse.getResponse().getView()) {
-                                        if(view.getResult()!=null && view.getResult().size()>0) {
-                                            for (Beans.HereAPIBeans.Result res : view.getResult()) {
-                                                if(res.getLocation()!=null && res.getLocation().getAddress()!=null ){
-                                                    hotelBean.setDistrict(res.getLocation().getAddress().getDistrict());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+//                        if(hotelBean.getLatitude()!=null && !hotelBean.getLatitude().equals("") && hotelBean.getLongitude()!=null && !hotelBean.getLongitude().equals("")) {
+//                            ReverseGeocodeResponse reverseGeocodeResponse = HereAPIDAO.getReverseGeoCode(hotelBean.getLatitude(), hotelBean.getLongitude());
+//                            if (reverseGeocodeResponse != null ) {
+//                                if(reverseGeocodeResponse.getResponse().getView()!=null && reverseGeocodeResponse.getResponse().getView().size()>0) {
+//                                    for (View view : reverseGeocodeResponse.getResponse().getView()) {
+//                                        if(view.getResult()!=null && view.getResult().size()>0) {
+//                                            for (Beans.HereAPIBeans.Result res : view.getResult()) {
+//                                                if(res.getLocation()!=null && res.getLocation().getAddress()!=null ){
+//                                                    hotelBean.setDistrict(res.getLocation().getAddress().getDistrict());
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }//todo
 
                         hotelBean.setMapUrl("");
                         hotelBean.setMealType("");

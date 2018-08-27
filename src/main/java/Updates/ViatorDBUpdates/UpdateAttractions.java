@@ -137,7 +137,7 @@ public class  UpdateAttractions {
 
             /**
              * Check if current destination is a leaf.Only leaf destinations have Attractions.Parerent
-             * Destination have same Attractions as their child.
+             * Object have same Attractions as their child.
              */
             boolean leafNodeDest = true;
             for (TaxonomyDestinationsData d : taxonomyDestinationsAPIJSON.getData()) {
@@ -304,7 +304,7 @@ public class  UpdateAttractions {
                 "\n**********************     " + " Total process Sleep(in milliseconds): " + updateAttractionsInfoJSON.getTotalProcessSleep() +
                 "\n**********************     " + " Total Leaf Nodes: " + updateAttractionsInfoJSON.getTotalLeafNodes() +
                 "\n**********************     " + " Total Attractions updated/added: " + updateAttractionsInfoJSON.getTotalAttractions() +
-                "\n**********************     " + " Last Leaf Node Destination Id: " + updateAttractionsInfoJSON.getLastLeafDestid() +
+                "\n**********************     " + " Last Leaf Node Object Id: " + updateAttractionsInfoJSON.getLastLeafDestid() +
                 "\n**********************     " + " Failed Destinations Id: " + updateAttractionsInfoJSON.getFailedDestinations());
         for (int i = 0; i < updateAttractionsInfoJSON.getFailedAttractions().size(); i++) {
             logger.info("**********************     " + " Failed Attraction seoId,DestId: " +

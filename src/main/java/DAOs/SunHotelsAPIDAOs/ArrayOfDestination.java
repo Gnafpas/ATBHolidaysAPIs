@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Destination" type="{http://xml.sunhotels.net/15/}Destination" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="Object" type="{http://xml.sunhotels.net/15/}Object" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ArrayOfDestination {
 
-    @XmlElement(name = "Destination", nillable = true)
+    @XmlElement(name = "Object", nillable = true)
     protected List<Destination> destination;
 
     /**

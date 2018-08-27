@@ -53,6 +53,38 @@ public class FacilityDAO {
         return err;
     }
 
+    public static boolean addFacilities(List<FacilityBean> facilities, StatelessSession session,StatelessSession session2){
+
+        boolean err=false;
+        try{
+            for(FacilityBean facility:facilities) {
+                session.insert(facility);
+            }
+            //   session2.insert(facilityBean);
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ClientTransportException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }
+        return err;
+    }
+
     public static boolean updateFacilityBean(FacilityBean facilityBean, StatelessSession session,StatelessSession session2){
 
         boolean err=false;

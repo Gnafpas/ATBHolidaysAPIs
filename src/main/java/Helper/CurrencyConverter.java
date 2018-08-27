@@ -34,6 +34,8 @@ public class CurrencyConverter {
         final String url ="https://data.fixer.io/api/latest?access_key=053fe954f02ec01ee0a467fb84c76cdd&base="+ from;
         CurrencyJSON currencyJSON =new CurrencyJSON();
 
+
+
         if(from.equals("EUR")) {
             if (System.currentTimeMillis() - lastupdateForEUR >  1000*60 || lastcurrencyJSONForEUR == null) {
                 try {

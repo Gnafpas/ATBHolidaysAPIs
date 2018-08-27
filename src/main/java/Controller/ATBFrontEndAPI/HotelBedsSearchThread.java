@@ -75,9 +75,8 @@ public class HotelBedsSearchThread  implements Runnable {
         
         public void run() {
             try {
-                if ((destinationBean != null && destinationBean.getHotelBedsCode() != null && (destinationBean.getHotelBedsCode().equals("BRU") || destinationBean.getHotelBedsCode().equals("BER") || destinationBean.getHotelBedsCode().equals("KUL") || destinationBean.getHotelBedsCode().equals("ATH") ) ) ||
-                        (params.getHotelID() != null && !params.getHotelID().equals(""))) {
-
+                if ((destinationBean != null && destinationBean.getHotelBedsCode() != null) || (params.getHotelID() != null && !params.getHotelID().equals(""))) {
+//destinationBean.getHotelBedsCode().equals("BRU") || destinationBean.getHotelBedsCode().equals("BER") || destinationBean.getHotelBedsCode().equals("KUL") || destinationBean.getHotelBedsCode().equals("ATH")
                     long dbTransactionTimeElapsed = 0;
                     long prepareResponseTimeElapsed = 0;
                     long requestTimeElapsed = 0;

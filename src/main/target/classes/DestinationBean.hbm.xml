@@ -9,6 +9,7 @@
         <property name="name" column="name"/>
         <property name="destinationId" column="destination_id"/>
         <property name="hotelBedsCode" column="hotel_beds_code"/>
+        <property name="travelXGateCode" column="travel_x_gate_code"/>
         <property name="providerRef" column="provider_ref"/>
         <property name="countryName" column="country_name"/>
         <property name="countryCode" column="country_code"/>

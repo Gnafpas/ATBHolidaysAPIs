@@ -15,6 +15,10 @@
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-c3p0:5.2.12.Final" />
           <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1.2" />
           <element id="library" level="project" name="Maven: com.instrumentalapp:instrumental_agent:1.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.9" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.3.6" />
+          <element id="library" level="project" name="Maven: org.codehaus.woodstox:stax2-api:3.1.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.8" />
         </element>
         <element id="directory" name="classes">
           <element id="module-output" name="main" />

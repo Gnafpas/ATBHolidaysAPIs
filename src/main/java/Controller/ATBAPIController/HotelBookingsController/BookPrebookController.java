@@ -3,10 +3,7 @@ package Controller.ATBAPIController.HotelBookingsController;
 import APIJSONs.ATBAPIJSONs.Hotel.*;
 import APIJSONs.ATBAPIJSONs.Hotel.BookResult;
 import APIJSONs.ATBAPIJSONs.Hotel.RoomsAndRoomTypes.CancelationPolicyResponse;
-import Beans.ATBDBBeans.KalitaonHotel.DestinationBean;
-import Beans.ATBDBBeans.KalitaonHotel.HotelBean;
-import Beans.ATBDBBeans.KalitaonHotel.HotelmappingBean;
-import Beans.ATBDBBeans.KalitaonHotel.RoomtypeBean;
+import Beans.ATBDBBeans.KalitaonHotel.*;
 import Beans.ATBDBBeans.KalitaonLog.PrebookLogBean;
 import Beans.ATBDBBeans.KalitaonSystem.*;
 import Beans.HotelBedsAPIBeans.Availability.*;
@@ -36,6 +33,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
 import java.sql.Timestamp;
@@ -902,6 +900,14 @@ public class BookPrebookController {
                         bookJSON.setErrorMessageText("Prebook code not defined");
                         storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "");
                         return bookJSON;
+                    } else{
+                        List<BookingsAllBean> booking=BookingsAllDAO.getBookingsAllByPrebookCode(params.getPrebookcode(),subAgencyBean.getId());
+                        if(booking!=null && booking.size()>0){
+                            bookJSON.setSuccess(false);
+                            bookJSON.setErrorMessageText("Prebook code already used");
+                            storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "");
+                            return bookJSON;
+                        }
                     }
 
                     if (!params.getCurrencyCode().equals("")) {
@@ -1100,10 +1106,10 @@ public class BookPrebookController {
                     /**
                      * Get original meal id
                      */
-                    int originalMealId = 0;
+                    String originalMealId = "";
                     String id = MealDAO.getOriginalMealId(String.valueOf(params.getMealId()));
                     if (id != null)
-                        originalMealId = Integer.parseInt(id);
+                        originalMealId = id;
 
                     if (subAgencyBean.getXmlStatus().equals("0") || params.isDemo()) {
 
@@ -1443,6 +1449,9 @@ public class BookPrebookController {
                                 BigDecimal agentSale = null;
                                 BigDecimal gsaSale = null;
 
+                                int sunHotelsOriginalMealId=0;
+                                sunHotelsOriginalMealId= Integer.parseInt(originalMealId);
+
                                 /**
                                  * Book request.
                                  */
@@ -1458,7 +1467,7 @@ public class BookPrebookController {
                                     sunHotelsRequest = subAgencyBean.getCurrency() + "" + "English" + "" +
                                             "george@skamnos.com" + "" + xmlCheckin + "" + xmlCheckout + "" + params.getRoomId() + "" + params.getRooms() + "" +
                                             numOfAdults + "" + numOfChildren + "" + params.getInfant() + "" +
-                                            originalMealId + "" + adults[0].getFirst_name() + "" + adults[0].getLast_name() + "" + adults[1].getFirst_name() + "" + adults[1].getLast_name() + "" +
+                                            sunHotelsOriginalMealId + "" + adults[0].getFirst_name() + "" + adults[0].getLast_name() + "" + adults[1].getFirst_name() + "" + adults[1].getLast_name() + "" +
                                             adults[2].getFirst_name() + "" + adults[2].getLast_name() + "" + adults[3].getFirst_name() + "" + adults[3].getLast_name() + "" + adults[4].getFirst_name() + "" +
                                             adults[4].getLast_name() + "" + adults[5].getFirst_name() + "" + adults[5].getLast_name() + "" + adults[6].getFirst_name() + "" + adults[6].getLast_name() + "" +
                                             adults[7].getFirst_name() + "" + adults[7].getLast_name() + "" + adults[8].getFirst_name() + "" + adults[8].getLast_name() + "" + children[0].getFirst_name() + "" +
@@ -1471,7 +1480,7 @@ public class BookPrebookController {
                                     result = nonStaticXMLAPISoap.bookV2(sunhotelsUsername, sunhotelspass, subAgencyBean.getCurrency(), "English",//todo change email to info@atbholidays
                                             "george@skamnos.com", xmlCheckin, xmlCheckout, params.getRoomId(), params.getRooms(),
                                             numOfAdults, numOfChildren, params.getInfant(), "", "",
-                                            originalMealId, adults[0].getFirst_name(), adults[0].getLast_name(), adults[1].getFirst_name(), adults[1].getLast_name(),
+                                            sunHotelsOriginalMealId, adults[0].getFirst_name(), adults[0].getLast_name(), adults[1].getFirst_name(), adults[1].getLast_name(),
                                             adults[2].getFirst_name(), adults[2].getLast_name(), adults[3].getFirst_name(), adults[3].getLast_name(), adults[4].getFirst_name(),
                                             adults[4].getLast_name(), adults[5].getFirst_name(), adults[5].getLast_name(), adults[6].getFirst_name(), adults[6].getLast_name(),
                                             adults[7].getFirst_name(), adults[7].getLast_name(), adults[8].getFirst_name(), adults[8].getLast_name(), children[0].getFirst_name(),
@@ -1888,6 +1897,10 @@ public class BookPrebookController {
                                     bookJSON.setBookResult(bookResult);
                                     bookJSON.setSuccess(true);
                                 }
+                                if (result != null && result.getBooking() != null)
+                                    storeBookLog(params, sunHotelsRequest, bookJSON, result, subAgencyBean, result.getBooking().getBookingnumber(), "SunHotels");
+                                else
+                                    storeBookLog(params, sunHotelsRequest, bookJSON, result, subAgencyBean, "", "SunHotels");
                             }else if(prebookCode[1].equals(String.valueOf(hotelBedsProviderId))){
                                 if(numOfAdults>0) {
                                     bookPOST = new Beans.HotelBedsAPIBeans.Book.BookPost();
@@ -1939,29 +1952,142 @@ public class BookPrebookController {
                                     bookAPIJSON = BookDAOs.book(bookPOST);
                                     if (bookAPIJSON != null && bookAPIJSON.getError() == null) {
 
-                                        /**
-                                         * Store Booking Results(Cancelation policies and prebookcode) prebookLog table.
-                                         */
-                                        PrebookLogBean prebookLogBean = new PrebookLogBean();
-                                        prebookLogBean.setHotelId(String.valueOf(HotelmappingDAO.getOriginalHotelId(Integer.parseInt(params.getHotelId()), null)));
-                                        prebookLogBean.setPrebookDate(prebookJSON.getDateStamp());
-                                        prebookLogBean.setPrebookRef(params.getPrebookcode());
-                                        prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
-                                        prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
-                                        prebookLogBean.setRoomTypeName("");
-                                        prebookLogBean.setMealName("");
-
-
-                                        mapper = new ObjectMapper();
-                                        try {
-                                            prebookLogBean.setNotes(mapper.writeValueAsString(result.getBooking().getHotelNotes()));
-                                        } catch (JsonProcessingException e) {
-                                            errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but failed to store correctly to databse(HotelNotes)");
-                                        }
 
 
                                         if(bookAPIJSON.getBooking()!=null && bookAPIJSON.getBooking().getHotel()!=null &&
                                                 bookAPIJSON.getBooking().getHotel().getRooms()!=null && bookAPIJSON.getBooking().getHotel().getRooms().size()==1) {
+
+
+                                            int prebookLogId=0;
+                                            for (Beans.HotelBedsAPIBeans.Book.Rate checkRate : bookAPIJSON.getBooking().getHotel().getRooms().get(0).getRates()) {
+
+
+                                                List<StaticPercentageCancellationPolicy> cancelationPolicies;
+                                                StaticPercentageCancellationPolicy cancelationPolicy;
+                                                cancelationPolicies = new ArrayList<>();
+                                                if (checkRate.getCancellationPolicies() != null) {
+                                                    for (Beans.HotelBedsAPIBeans.Book.CancelationPolicy policy : checkRate.getCancellationPolicies()) {//todo fix cancelation policies,ask about roomtypes codes whichare not comming all,ask about currency
+                                                        BigDecimal percentange = new BigDecimal((Double.parseDouble(policy.getAmount()) * 100) / Double.parseDouble(checkRate.getNet())).setScale(2, BigDecimal.ROUND_HALF_UP);
+                                                        cancelationPolicy = new StaticPercentageCancellationPolicy();
+                                                        cancelationPolicy.setPercentage(percentange);
+
+                                                        Date date1=null;
+                                                        SimpleDateFormat simpleDateFormat;
+                                                        GregorianCalendar gregorianCalendar;
+                                                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                                        String[] from= policy.getFrom().split(Pattern.quote("+"));
+                                                        if(from!=null && from.length>0)
+                                                            date1 = simpleDateFormat.parse(from[0]);
+                                                        gregorianCalendar = (GregorianCalendar)GregorianCalendar.getInstance();
+                                                        gregorianCalendar.setTime(date1);
+                                                        ZonedDateTime cancelationDate = null;
+                                                        String str[] = policy.getFrom().split("T");
+                                                        if (str != null && str.length > 0) {
+                                                            String strCancelationDate[] = str[0].split("-");
+                                                            if (strCancelationDate.length == 3) {
+                                                                try {
+                                                                    cancelationDate = ZonedDateTime.of(LocalDate.of(Integer.parseInt(strCancelationDate[0]), Integer.parseInt(strCancelationDate[1]), Integer.parseInt(strCancelationDate[2])),
+                                                                            LocalTime.of(9, 30), ZoneId.of("America/New_York"));
+                                                                    ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());
+                                                                    if (strCancelationDate[0].equals(date.getYear()) && strCancelationDate[1].equals(date.getMonth()) && strCancelationDate[2].equals(date.getDayOfMonth())) {
+                                                                        cancelationPolicy.setDeadline(0);
+                                                                    } else
+                                                                        cancelationPolicy.setDeadline((int) Duration.between(cancelationDate, checkin).getSeconds() / 60 / 60);
+                                                                    cancelationPolicies.add(cancelationPolicy);
+                                                                } catch (NumberFormatException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            } else {
+                                                                cancelationPolicies.add(cancelationPolicy);
+                                                            }
+                                                        } else {
+                                                            cancelationPolicies.add(cancelationPolicy);
+                                                        }
+                                                    }
+                                                }
+
+                                                List<Note> hotelnotes = new ArrayList<>();
+                                                Note hotelnote;
+                                                if (checkRate.getRateComments() != null ) {
+                                                        hotelnote = new Note();
+                                                        hotelnote.setEndDate(null);
+                                                        hotelnote.setStartDate(null);
+                                                        hotelnote.setText(checkRate.getRateComments());
+                                                        hotelnotes.add(hotelnote);
+                                                }
+                                                bookResult.setHotelNotes(hotelnotes);
+                                                List<Note> roomnotes = new ArrayList<>();
+                                                Note roomnote;
+                                                bookResult.setRoomNotes(roomnotes);
+
+
+
+                                                /**
+                                                 * Store Booking Results(Cancelation policies and prebookcode) prebookLog table.
+                                                 */
+                                                PrebookLogBean prebookLogBean = new PrebookLogBean();
+                                                prebookLogBean.setHotelId(String.valueOf(HotelmappingDAO.getOriginalHotelId(Integer.parseInt(params.getHotelId()), null)));
+                                                prebookLogBean.setPrebookDate(prebookJSON.getDateStamp());
+                                                prebookLogBean.setPrebookRef(params.getPrebookcode());
+                                                prebookLogBean.setPrice(String.valueOf(prebookJSON.getPrice().getValue()));
+                                                prebookLogBean.setRoomId(String.valueOf(params.getRoomId()));
+                                                prebookLogBean.setRoomTypeName("");
+                                                prebookLogBean.setMealName("");
+
+
+                                                mapper = new ObjectMapper();
+                                                try {
+                                                    prebookLogBean.setNotes(mapper.writeValueAsString(hotelnotes));
+                                                } catch (JsonProcessingException e) {
+                                                    errLogger.info("Booking with number :" +bookAPIJSON.getBooking().getReference()+ " completed at hotelbeds side but failed to store correctly to databse(HotelNotes)");
+                                                }
+
+                                                List<CancelationPolicyResponse> cancelationPoliciesResponse = new ArrayList<>();
+                                                CancelationPolicyResponse cancelationPolicyResponse = new CancelationPolicyResponse();
+                                                if (cancelationPolicies != null && cancelationPolicies.size() > 0) {
+                                                    StaticPercentageCancellationPolicy atbPolicy = new StaticPercentageCancellationPolicy();
+                                                    atbPolicy.setDeadline(0);
+                                                    for (StaticPercentageCancellationPolicy policy : cancelationPolicies) {
+                                                        if (policy.getDeadline() == null) {
+                                                            atbPolicy = policy;
+                                                            break;
+                                                        }
+                                                        if (policy.getDeadline() > atbPolicy.getDeadline())
+                                                            atbPolicy = policy;
+                                                    }
+                                                    prebookLogBean.setPercentage("100");
+                                                    if(atbPolicy.getText()!=null)
+                                                        prebookLogBean.setCancelPolicy(atbPolicy.getText());
+                                                    else
+                                                        prebookLogBean.setCancelPolicy("");
+                                                    cancelationPolicyResponse.setPercentage(new BigDecimal(100));
+                                                    if (atbPolicy.getDeadline() != null) {
+                                                        prebookLogBean.setAtbCancelPolicy("Cancellation made less than " + (atbPolicy.getDeadline() + plusCancelationPolicyHours) + " hours (12:00) prior to the arrival will be charged with 100% of the total booking value.");
+                                                        prebookLogBean.setDeadline(String.valueOf(atbPolicy.getDeadline() + plusCancelationPolicyHours));
+                                                        cancelationPolicyResponse.setDeadline(atbPolicy.getDeadline() + plusCancelationPolicyHours);
+                                                        cancelationPolicyResponse.setText("Cancellation made less than " + (atbPolicy.getDeadline() + plusCancelationPolicyHours) + " hours (12:00) prior to the arrival will be charged with 100% of the total booking value.");
+
+                                                    } else {
+                                                        prebookLogBean.setAtbCancelPolicy("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
+                                                        prebookLogBean.setDeadline("null");
+                                                        cancelationPolicyResponse.setText("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
+                                                        cancelationPolicyResponse.setDeadline(null);
+                                                    }
+                                                } else {
+                                                    prebookLogBean.setAtbCancelPolicy("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
+                                                    prebookLogBean.setDeadline("null");
+                                                    prebookLogBean.setPercentage("100");
+                                                    cancelationPolicyResponse.setText("Please note that this room is non-refundable. If the booking is cancelled, no money will be refunded.");
+                                                    cancelationPolicyResponse.setDeadline(null);
+                                                    cancelationPolicyResponse.setPercentage(new BigDecimal(100));
+                                                }
+                                                cancelationPoliciesResponse.add(cancelationPolicyResponse);
+                                                bookResult.setCancellationpolicies(cancelationPoliciesResponse);
+                                                prebookLogId = PrebookLogDAO.storePrebookLog(prebookLogBean);
+
+                                                break;
+
+                                            }
 
                                             /**
                                              * Store Booking Results to Hotel_Bookings_All table
@@ -1997,12 +2123,12 @@ public class BookPrebookController {
                                             bookingsAllBean.setCommon3("");
                                             bookingsAllBean.setCommon4("");
                                             bookingsAllBean.setCommon5("");
-                                            //bookingsAllBean.setCommon6(String.valueOf(prebookLogId));
-                                            //bookingsAllBean.setCommon7(bookAPIJSON.getBooking().getHotel().get);
-                                            //bookingsAllBean.setCommon8(bookAPIJSON.getBooking().getHotel().get);
+                                            bookingsAllBean.setCommon13("");
+                                            bookingsAllBean.setCommon6(String.valueOf(prebookLogId));
+                                            bookingsAllBean.setCommon8("");
                                             bookingsAllBean.setCommon9(params.getPrebookcode());
                                             bookingsAllBean.setCommon10(bookAPIJSON.getBooking().getReference());
-                                            //bookingsAllBean.setCommon11(bookAPIJSON.getBooking().get);
+                                            bookingsAllBean.setCommon11("");//todo
                                             bookingsAllBean.setCommon15(String.valueOf(params.getMealId()));
                                             bookingsAllBean.setInvoiceAmount("");
                                             bookingsAllBean.setInvoiceNo("");
@@ -2014,6 +2140,7 @@ public class BookPrebookController {
                                             bookingsAllBean.setSupplierReferences("");//todo
                                             bookingsAllBean.setSupplierName("HOTELBEDS");//todo
                                             bookingsAllBean.setSupplierId("1771");//todo
+                                            bookingsAllBean.setPriceId(String.valueOf(bookAPIJSON.getBooking().getHotel().getRooms().size()));
                                             if (params.getCustomerCountry() != null)
                                                 bookingsAllBean.setContactCountryCode(params.getCustomerCountry());
                                             else
@@ -2030,17 +2157,39 @@ public class BookPrebookController {
                                                 bookingsAllBean.setCommon14(params.getCustomerCountry());
                                             else
                                                 bookingsAllBean.setCommon14("");
-                                            //if (bookAPIJSON.getBooking().getHotel().getRooms().get(0).get != null && !result.getBooking().getNumberofrooms().equals(""))
-                                            //    bookingsAllBean.setPriceId(String.valueOf(Integer.parseInt(result.getBooking().getNumberofrooms())));
 
-                                            XMLGregorianCalendar xmlGregorianCalendar = result.getBooking().getCheckindate();
-                                            Timestamp timestamp = new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTimeInMillis() + 1000 * 60 * 60 * 10);
-                                            bookingsAllBean.setCheckIn(new java.sql.Date(timestamp.getTime()));
-                                            xmlGregorianCalendar = result.getBooking().getCheckoutdate();
-                                            timestamp = new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTimeInMillis() + 1000 * 60 * 60 * 10);
-                                            bookingsAllBean.setCheckOut(new java.sql.Date(timestamp.getTime()));
-                                            xmlGregorianCalendar = result.getBooking().getBookingdate();
-                                            timestamp = new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTimeInMillis());
+                                            PrebookPOST prebookPOST = mapper.readValue(prebook.getClientRequest(), PrebookPOST.class);
+                                            if(prebookPOST!=null){
+                                                String orealId=MealDAO.getOriginalMealId(String.valueOf(prebookPOST.getMealId()));
+                                                if(orealId!=null) {
+                                                    MealBean meal = MealDAO.getMealByMealId(orealId, hotelBedsProviderId, null);
+                                                    if (meal != null)
+                                                        bookResult.setMeal(meal.getName());
+                                                }
+                                                bookResult.setMealId(prebookPOST.getMealId());
+                                                String originalRoomTypeId=RoomtypeDAO.getOriginalRoomtypeId(prebookPOST.getRoomTypeId());
+                                                if(originalRoomTypeId!=null) {
+                                                    RoomtypeBean roomtypeBean = RoomtypeDAO.getRoomsTypesbyId(originalRoomTypeId, hotelBedsProviderId, null);
+                                                    if(roomtypeBean!=null) {
+                                                        bookResult.setRoomType(roomtypeBean.getRoomType());
+                                                        bookingsAllBean.setCommon13(roomtypeBean.getRoomType());
+                                                    }
+                                                }
+                                            }else{
+                                                bookResult.setMeal("");
+                                                bookResult.setMealId(0);
+                                                bookResult.setRoomType("");
+                                            }
+
+                                            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                                            java.util.Date date = sdf1.parse(bookAPIJSON.getBooking().getHotel().getCheckIn());
+                                            java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+                                            bookingsAllBean.setCheckIn(sqlStartDate);
+                                            date = sdf1.parse(bookAPIJSON.getBooking().getHotel().getCheckOut());
+                                            sqlStartDate = new java.sql.Date(date.getTime());
+                                            bookingsAllBean.setCheckOut(sqlStartDate);
+                                            date = sdf1.parse(bookAPIJSON.getBooking().getCreationDate());
+                                            Timestamp timestamp = new Timestamp(date.getTime());
                                             bookingsAllBean.setBookingDate(timestamp);
                                             bookingsAllBean.setUpdateDate(String.format("%04d-%02d-%02d %02d:%02d:%02d",
                                                     dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
@@ -2054,7 +2203,8 @@ public class BookPrebookController {
                                             if (hotelmappingBean != null) {
                                                 List<HotelBean> hotelsbean = HotelDAO.getHotelByHotelId(hotelmappingBean.getHotelId(), hotelmappingBean.getProviderId(), null);
                                                 if (hotelsbean != null && hotelsbean.size() == 1) {
-                                                    bookingsAllBean.setCommon13(result.getBooking().getRoomType());//todo roomtypeId
+                                                    bookingsAllBean.setCommon13("");
+                                                    bookingsAllBean.setCommon7(hotelsbean.get(0).getAddress());
                                                     bookingsAllBean.setCityName(hotelsbean.get(0).getCity());
                                                     bookingsAllBean.setProductTitle(hotelsbean.get(0).getName());
                                                     bookingsAllBean.setCountryName(hotelsbean.get(0).getCountry());
@@ -2062,41 +2212,204 @@ public class BookPrebookController {
                                                     bookResult.setHotelAddress(hotelsbean.get(0).getAddress());
                                                     bookResult.setHotelId(Integer.parseInt(params.getHotelId()));
                                                     bookResult.setHotelName(hotelsbean.get(0).getName());
-                                                    bookResult.setHotelPhone(result.getBooking().getHotelPhone());
+                                                    bookResult.setHotelPhone("");
                                                 } else {
-                                                    errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels side but failed to store correctly to databse");
+                                                    errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store correctly to databse");
                                                 }
                                             } else {
-                                                errLogger.info("Booking with number :" + result.getBooking().getBookingnumber() + " completed at sunhotels  side but failed to store correctly to databse");
+                                                errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds  side but failed to store correctly to databse");
+                                            }
+
+                                            BigDecimal gsaSale=null;
+                                            BigDecimal agentSale=null;
+                                            if (subAgencyBean.getGsaId() != null && !subAgencyBean.getGsaId().equals("")) {
+                                                bookingsAllBean.setGsaId(subAgencyBean.getGsaId());
+                                                if (gsaBean != null) {
+                                                    bookingsAllBean.setGsaMarkup(gsaBean.getOtlMkp());
+                                                    bookingsAllBean.setTopGsaName(gsaBean.getGsaName());
+                                                        if (gsaBean.getOtlMkp() != null && !gsaBean.getOtlMkp().equals("")) {
+
+                                                            BigDecimal convertedPrice = CurrencyConverter.findExchangeRateAndConvert(bookAPIJSON.getBooking().getCurrency(), subAgencyBean.getCurrency(), bookAPIJSON.getBooking().getTotalNet());
+                                                            if (convertedPrice!=null) {
+                                                                    gsaSale = convertedPrice.add(convertedPrice.multiply(BigDecimal.valueOf(Integer.parseInt(gsaBean.getOtlMkp())).divide(new BigDecimal(100)))).setScale(2, BigDecimal.ROUND_HALF_UP);
+                                                                    bookingsAllBean.setGsaSale(String.valueOf(gsaSale));
+                                                                    if (subAgencyBean.getOtlMkp() != null && !subAgencyBean.getOtlMkp().equals("")) {
+                                                                        bookingsAllBean.setAgentMarkup(subAgencyBean.getOtlMkp());
+                                                                        bookingsAllBean.setAgentName(subAgencyBean.getAgentName());
+                                                                        agentSale = gsaSale.add(gsaSale.multiply(BigDecimal.valueOf(Integer.parseInt(subAgencyBean.getOtlMkp())).divide(new BigDecimal(100)))).setScale(2, BigDecimal.ROUND_HALF_UP);
+                                                                        bookingsAllBean.setAgentSale(String.valueOf(agentSale));
+                                                                        bookingsAllBean.setAgentEndSale(String.valueOf(agentSale));
+                                                                        bookingsAllBean.setSupplierSale((gsaSale.multiply(new BigDecimal(100))).divide(new BigDecimal(Integer.parseInt(gsaBean.getOtlMkp()) + 100), 2, RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                                                    } else {
+                                                                        errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but sub agency with id:" + subAgencyBean.getId() + " has not hotel mark up");
+                                                                    }
+                                                            } else {
+                                                                errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store correctly to databse");
+                                                            }
+                                                        } else {
+                                                            errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store correctly to databse");
+                                                        }
+                                                } else {
+                                                    errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store correctly to databse");
+                                                }
+                                            } else {
+                                                errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store correctly to databse");
+                                            }
+
+                                            Integer bookingId = BookingsAllDAO.storeBooking(bookingsAllBean);
+                                            if (bookingId == 0)
+                                                errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store correctly to databse");
+
+
+                                            /**
+                                             * Store travellers to TravellerInfo table.
+                                             */
+                                            TravellerInfoBean travellerInfoBean;
+                                            List<TravellerInfoBean> travellers = new ArrayList<>();
+                                            for (int j = 0; j < numOfAdults; j++) {
+                                                travellerInfoBean = new TravellerInfoBean();
+                                                travellerInfoBean.setTravelName(adults[j].getFirst_name());
+                                                travellerInfoBean.setTravelSurname(adults[j].getLast_name());
+                                                travellerInfoBean.setTravelType("adult");
+                                                travellerInfoBean.setBookingId(bookingCode);
+                                                travellerInfoBean.setTravelBirdthDate("");
+                                                travellers.add(travellerInfoBean);
+                                                TravellerInfoDAO.storeTraveler(travellerInfoBean);
+                                            }
+                                            for (int j = 0; j < numOfChildren; j++) {
+                                                travellerInfoBean = new TravellerInfoBean();
+                                                travellerInfoBean.setTravelName(children[j].getFirst_name());
+                                                travellerInfoBean.setTravelSurname(children[j].getLast_name());
+                                                travellerInfoBean.setTravelType("child");
+                                                travellerInfoBean.setBookingId(bookingCode);//todo change to other bookig id
+                                                travellerInfoBean.setTravelBirdthDate("");
+                                                travellers.add(travellerInfoBean);
+                                                TravellerInfoDAO.storeTraveler(travellerInfoBean);
                                             }
 
 
-                                        }
+                                            /**
+                                             * Detuct price from sub agency's deposit
+                                             */
+                                            if (agentSale != null) {
+                                                subAgencyBean.setDeposit(BigDecimal.valueOf(Double.parseDouble(subAgencyBean.getDeposit())).subtract(agentSale).toString());
+                                                if (SubAgencyDAO.updateSubAgentByName(subAgencyBean)) {
+                                                    errLogger.info("**********Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to detuct the price from sub agency deposit at database.*********");
+                                                } else {
+                                                    /**
+                                                     * Store transaction to BookingTransaction table
+                                                     */
+                                                    BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                    bookingTransactionBean.setAgentId(String.valueOf(subAgencyBean.getId()));
+                                                    bookingTransactionBean.setAgentName(subAgencyBean.getAgentName());
+                                                    bookingTransactionBean.setBookingId(bookingCode);
+                                                    bookingTransactionBean.setGsaId(subAgencyBean.getGsaId());
+                                                    bookingTransactionBean.setTransactionType("Charge");
+                                                    bookingTransactionBean.setTransCur(subAgencyBean.getCurrency());
+                                                    bookingTransactionBean.setTransNote("");
+                                                    bookingTransactionBean.setTransDate(timestamp.toString());
+                                                    bookingTransactionBean.setTransRate(agentSale.toString());
+                                                    bookingTransactionBean.setTransType("Deposit");
+                                                    if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                        errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store transaction at bookingtransaction table.");
+                                                    }
+                                                }
 
+
+                                            } else
+                                                errLogger.info("**********Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to detuct the price from sub agency deposit at database.*********");
+
+                                            if (gsaSale != null) {
+                                                BigDecimal gsaSaleInGsaCur = CurrencyConverter.findExchangeRateAndConvert(subAgencyBean.getCurrency(), gsaBean.getCurrency(), Double.parseDouble(gsaSale.toString()));
+                                                if(gsaSaleInGsaCur!=null) {
+                                                    if (gsaSaleInGsaCur != null) {
+                                                        gsaBean.setDeposit(BigDecimal.valueOf(Double.parseDouble(gsaBean.getDeposit())).subtract(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+                                                        if (GsaDAO.updateGsaBean(gsaBean)) {
+                                                            errLogger.info("**********Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to detuct the price from gsa deposit at database.*********");
+                                                        } else {
+                                                            /**
+                                                             * Store transaction to BookingTransaction table
+                                                             */
+                                                            BookingTransactionBean bookingTransactionBean = new BookingTransactionBean();
+                                                            bookingTransactionBean.setAgentId("");
+                                                            bookingTransactionBean.setAgentName("");
+                                                            bookingTransactionBean.setBookingId(bookingCode);
+                                                            bookingTransactionBean.setGsaId(String.valueOf(gsaBean.getId()));
+                                                            bookingTransactionBean.setTransactionType("Charge");
+                                                            bookingTransactionBean.setTransCur(gsaBean.getCurrency());
+                                                            bookingTransactionBean.setTransNote("");
+                                                            bookingTransactionBean.setTransDate(timestamp.toString());
+                                                            bookingTransactionBean.setTransRate(gsaSaleInGsaCur.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                                                            bookingTransactionBean.setTransType("Deposit");
+                                                            if (BookingTransactionDAO.storeTransaction(bookingTransactionBean)) {
+                                                                errLogger.info("Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to store transaction at bookingtransaction table.");
+                                                            }
+                                                        }
+                                                    } else
+                                                        errLogger.info("**********Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to detuct the price from gsaBean deposit at database because of currency converting issue.*********");
+                                                }else
+                                                    errLogger.info("**********Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to detuct the price from gsaBean deposit at database because of currency converting issue.*********");
+                                            } else
+                                                errLogger.info("**********Booking with number :" + bookAPIJSON.getBooking().getReference() + " completed at hotelbeds side but failed to detuct the price from gsaBean deposit at database.*********");
+
+                                            /**
+                                             * Prepare response
+                                             */
+
+
+                                            XMLGregorianCalendar xmlCheckin = null;
+                                            XMLGregorianCalendar xmlCheckout = null;
+                                            XMLGregorianCalendar currentDateTime = null;
+                                            try {
+                                                GregorianCalendar gregorianCheckin = GregorianCalendar.from(checkin);
+                                                GregorianCalendar gregorianCheckout = GregorianCalendar.from(checkout);
+                                                GregorianCalendar gregorianCurrentDateTime = new GregorianCalendar();
+                                                xmlCheckin = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckin);
+                                                xmlCheckout = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCheckout);
+                                                currentDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCurrentDateTime);
+                                                bookResult.setBookingdate(currentDateTime);
+                                                bookResult.setCheckindate(xmlCheckin);
+                                                bookResult.setCheckoutdate(xmlCheckout);
+                                            } catch (DatatypeConfigurationException e) {
+                                                bookResult.setBookingdate(null);
+                                                bookResult.setCheckindate(null);
+                                                bookResult.setCheckoutdate(null);
+                                            }
+                                            bookResult.setBookingdateTimezone(null);
+                                            bookResult.setBookingnumber(String.valueOf(bookingId));
+                                            bookResult.setCurrency(bookAPIJSON.getBooking().getCurrency());
+                                            bookResult.setEarliestNonFreeCancellationDateUTC(null);//todo
+                                            bookResult.setInvoiceref("");
+                                            bookResult.setNumberofrooms(String.valueOf(bookAPIJSON.getBooking().getHotel().getRooms().size()));
+                                            bookResult.setPrice(agentSale);
+                                            bookResult.setPaymentmethod("Deposit");
+                                            bookResult.setBookingStatus("Active");
+                                            bookResult.setTravellerInfo(travellers);
+                                            bookResult.setVoucher("");
+                                            //todo fix booklog storring for hotelbeds
+                                            bookJSON.setBookResult(bookResult);
+                                            bookJSON.setSuccess(true);
+
+                                        }
                                     }else{
                                         if(bookAPIJSON!=null && bookAPIJSON.getError()!=null) {
                                             bookJSON.setErrorMessageText(bookAPIJSON.getError().getCode()+" "+bookAPIJSON.getError().getMessage());
                                             bookJSON.setSuccess(false);
-                                            bookJSON.setErrorType(result.getError().getErrorType());
+                                            bookJSON.setErrorType(bookAPIJSON.getError().getMessage());
                                         }else{
                                             bookJSON.setErrorMessageText("Communication Error");
                                             bookJSON.setSuccess(false);
-                                            bookJSON.setErrorType(result.getError().getErrorType());
+                                            bookJSON.setErrorType("");
                                         }
                                     }
                                 }
+                                if (bookAPIJSON != null && bookAPIJSON.getBooking() != null)
+                                    storeBookLog(params, "", bookJSON, null, subAgencyBean, "", "HotelBeds");
+                                else
+                                    storeBookLog(params, sunHotelsRequest, bookJSON, null, subAgencyBean, "", "HotelBeds");
                             }
                         }
-
-
-
                     }
-
-                    if (result != null && result.getBooking() != null)
-                        storeBookLog(params, sunHotelsRequest, bookJSON, result, subAgencyBean, result.getBooking().getBookingnumber(), "SunHotels");
-                    else
-                        storeBookLog(params, sunHotelsRequest, bookJSON, result, subAgencyBean, "", "SunHotels");
-
                 } else {
                     bookJSON.setSuccess(false);
                     bookJSON.setErrorType("Internal Error");

@@ -9,6 +9,8 @@ import Beans.HereAPIBeans.View;
 import Controller.AdminController.AdminController;
 import DAOs.GoogleAPIDAOs.HereAPIDAO;
 import DAOs.GoogleAPIDAOs.ReverseGeoCodeAPIDAO;
+import DAOs.JuniperAPIDAOs.StaticDataTransactions;
+import DAOs.JuniperAPIDAOs.WebServiceJP;
 import DAOs.SunHotelsAPIDAOs.*;
 import DAOs.ATBDBDAOs.KalitaonHotelDAOs.*;
 import DBConnection.SunHotelsHibernateUtil;
@@ -435,22 +437,22 @@ public class UpdateSunHotelsDB {
                                         /**
                                          * Get District from google reverse geocode
                                          */
-                                        if(hotelBean.getLatitude()!=null && !hotelBean.getLatitude().equals("") && hotelBean.getLongitude()!=null && !hotelBean.getLongitude().equals("")) {
-                                            ReverseGeocodeResponse reverseGeocodeResponse = HereAPIDAO.getReverseGeoCode(hotelBean.getLatitude(), hotelBean.getLongitude());
-                                            if (reverseGeocodeResponse != null ) {
-                                                if(reverseGeocodeResponse.getResponse().getView()!=null && reverseGeocodeResponse.getResponse().getView().size()>0) {
-                                                    for (View view : reverseGeocodeResponse.getResponse().getView()) {
-                                                        if(view.getResult()!=null && view.getResult().size()>0) {
-                                                            for (Beans.HereAPIBeans.Result res : view.getResult()) {
-                                                                if(res.getLocation()!=null && res.getLocation().getAddress()!=null ){
-                                                                    hotelBean.setDistrict(res.getLocation().getAddress().getDistrict());
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+//                                        if(hotelBean.getLatitude()!=null && !hotelBean.getLatitude().equals("") && hotelBean.getLongitude()!=null && !hotelBean.getLongitude().equals("")) {
+//                                            ReverseGeocodeResponse reverseGeocodeResponse = HereAPIDAO.getReverseGeoCode(hotelBean.getLatitude(), hotelBean.getLongitude());
+//                                            if (reverseGeocodeResponse != null ) {
+//                                                if(reverseGeocodeResponse.getResponse().getView()!=null && reverseGeocodeResponse.getResponse().getView().size()>0) {
+//                                                    for (View view : reverseGeocodeResponse.getResponse().getView()) {
+//                                                        if(view.getResult()!=null && view.getResult().size()>0) {
+//                                                            for (Beans.HereAPIBeans.Result res : view.getResult()) {
+//                                                                if(res.getLocation()!=null && res.getLocation().getAddress()!=null ){
+//                                                                    hotelBean.setDistrict(res.getLocation().getAddress().getDistrict());
+//                                                                }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                        }//todo
 
                                         hotelBean.setMapUrl(hotel.getHotelMapurl());
                                         hotelBean.setMealType("");

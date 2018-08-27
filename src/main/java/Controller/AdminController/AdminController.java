@@ -1,26 +1,25 @@
 package Controller.AdminController;
 
-import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.EventsTravelBookPOST;
-import APIJSONs.ATBAPIJSONs.ViatorATBFrontEnd.Book.OrderProduct;
 import Beans.ATBDBBeans.KalitaonSystem.CityCodeBean;
 import Beans.ATBDBBeans.KalitaonSystem.CountryCodeBean;
 import Beans.HereAPIBeans.ReverseGeocodeResponse;
-import Beans.HotelBedsAPIBeans.Availability.*;
-import Beans.HotelBedsAPIBeans.Book.BookAPIJSON;
-import Beans.HotelBedsAPIBeans.Book.Holder;
-import Beans.ViatorAPIBeans.Bookings.Book.BookPOST;
+import Beans.TourCMSAPIBeans.RateLimitStatusBean;
+import Beans.TravelGateXBeans.ResponseAPIJSON;
 import Beans.ViatorDBBeans.ViatorDestinationsBean;
 import Beans.ViatorDBBeans.ViatorNoneAvailableDatesBean;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CityCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
 import DAOs.GoogleAPIDAOs.HereAPIDAO;
-import DAOs.HotelBedsAPIDAOs.AvailabilityDAOs;
-import DAOs.HotelBedsAPIDAOs.BookDAOs;
 import DAOs.HotelBedsAPIDAOs.HotelAPIDAO;
+import DAOs.TourCMSAPIDAOs.RateLimitStatus;
+import DAOs.TravelGateXDAOs.CurlRequest;
+import DAOs.TravelGateXDAOs.StaticContentDAOs;
 import DAOs.ViatorDBDAOs.ViatorDestinationsDAO;
 import DAOs.ViatorDBDAOs.ViatorNoneAvailableDatesDAO;
 import Updates.ATBDBUpdates.EventsTravelDBUpdates.UpdateEventsTravelDBTimerTask;
 import Updates.ATBDBUpdates.HotelBedsDBUpdates.UpdateHotelBedsDBTimerTask;
+import Updates.ATBDBUpdates.JuniperDBUpdates.UpdateJuniperDB;
+import Updates.ATBDBUpdates.TravelXGateUpdates.UpdateTravelXGateDB;
 import Updates.ATBDBUpdates.ViatorContentUpdates.UpdateATBDBTimerTask;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.SubAgencyDAO;
 import Updates.ATBDBUpdates.SunHotelsDBUpdates.UpdateSunHotelsDBTimerTask;
@@ -467,7 +466,7 @@ public class AdminController {
 
 
     @RequestMapping("/temp")
-    public ReverseGeocodeResponse  temp() {
+    public ResponseAPIJSON temp() {
 
 //        try {
 //            GregorianCalendar gc = new GregorianCalendar(2018, 02, 10);
@@ -492,17 +491,25 @@ public class AdminController {
 //                }
 //            }
 //        }
-        HotelAPIDAO.status();
-        ReverseGeocodeResponse ReverseGeocodeResponse=HereAPIDAO.getReverseGeoCode("48.84172994","2.330485517");
+//        HotelAPIDAO.status();
+//        ReverseGeocodeResponse ReverseGeocodeResponse=HereAPIDAO.getReverseGeoCode("48.84172994","2.330485517");
 //        String destBean="George-sd";
 //        String[] dbDestName=destBean.split("( )|(\\()|(\\))|(-)");
 //        for(String d:dbDestName){
 //            if(!d.equals(""))
 //              System.out.println(d);
+//
+//        UpdateJuniperDB updateJuniperDB=new UpdateJuniperDB();
+
+//        RateLimitStatusBean bla=null;
+//        try {
+//            bla= RateLimitStatus.checkAvailability();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//
 //        }
-
-
-        return ReverseGeocodeResponse;
+   //     UpdateTravelXGateDB.test();
+        return StaticContentDAOs.search("2018-08-15","2018-08-16","\\\"23\\\"","US","{ age: 30 }","USD");
     }
 
 
@@ -511,7 +518,7 @@ public class AdminController {
 
     @RequestMapping("/carnectTest")
     public String carnectTest() {
-//        Destination destination=new Destination();
+//        Object destination=new Object();
 //        destination.setHandlerResolver(new JaxWsHandlerResolver());
 //        DestinationSoap destinationSoap = destination.getDestinationSoap();
 //        VehicleCountryRequest vehicleCountryRequest=new VehicleCountryRequest();

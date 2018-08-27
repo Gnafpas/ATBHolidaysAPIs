@@ -86,6 +86,36 @@ public class HAvailableDateDAO {
         return err;
     }
 
+    public static boolean deleteAvailableDateWithPlanId(String code,String pricePlan){
+
+        StatelessSession session = ATBHibernateUtil.getSession();
+        String hql = String.format("DELETE FROM HAvailableDateBean WHERE productId='"+code+"' and planId='"+pricePlan+"'");
+        boolean err=false;
+        try{
+            session.beginTransaction();
+            session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        }catch (HibernateException e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (CJCommunicationsException e){
+            err=true;
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }finally {
+            session.close();
+        }
+        return err;
+    }
+
     public static HAvailableDateBean getLastRecord(){
         StatelessSession session = ATBHibernateUtil.getSession();
         String hql=     " select  a"

@@ -111,7 +111,6 @@ public class BookController {
     @RequestMapping(value = "/product/booking/book", method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
     public APIJSONs.ATBAPIJSONs.Product.BookAPIJSON bookViator(@RequestBody APIJSONs.ATBAPIJSONs.Product.BookPOST bookPOST,@RequestParam("apiKey") String apiKey) {
-
         Application.agent.increment("app.web.request.api.product.book");
         APIJSONs.ATBAPIJSONs.Product.BookAPIJSON bookInfoJSON=new APIJSONs.ATBAPIJSONs.Product.BookAPIJSON();
         try {

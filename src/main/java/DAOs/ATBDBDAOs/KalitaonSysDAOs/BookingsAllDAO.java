@@ -149,6 +149,32 @@ public class BookingsAllDAO {
         return bookings;
     }
 
+    public static  List<BookingsAllBean> getBookingsAllByPrebookCode(String prebookCode,int agentId){
+
+        Session session = ATBSysHibernateUtil.getSession();
+        List<BookingsAllBean>  bookings=null;
+        String hql = "select booking from BookingsAllBean booking " +
+                "where booking.common9 like :prebookCode and booking.agentId ='"+agentId+"'";
+        try{
+            session.beginTransaction();
+            bookings=session.createQuery(hql).setParameter("prebookCode",  prebookCode  ).list();
+        }catch (HibernateException e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (ExceptionInInitializerError e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            errLogger.info(errors.toString());
+        }catch (NoResultException e) {
+        }catch (CJCommunicationsException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return bookings;
+    }
+
     public static List<BookingsAllBean> getAllHotelBookingsByDate(ZonedDateTime dateFrom,ZonedDateTime dateTo,int agentId){
 
         Session session = ATBSysHibernateUtil.getSession();

@@ -224,7 +224,7 @@ public class HotelPostBookController {
                         }
                     }
                 }
-            } else {
+            }else {
                 bookInfoJSON.setSuccess(false);
                 bookInfoJSON.setErrorType("Internal Error");
                 bookInfoJSON.setErrorMessageText("Couldn't extract essential data from database.Please contact at:george.nafpaktitis@atbholidays.com");
@@ -428,7 +428,6 @@ public class HotelPostBookController {
             cancelJSON.setErrorMessageText(errors.toString());
         }
         return cancelJSON;
-
     }
 
 

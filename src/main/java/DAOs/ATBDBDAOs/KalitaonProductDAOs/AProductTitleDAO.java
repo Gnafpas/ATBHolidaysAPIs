@@ -325,9 +325,9 @@ public class AProductTitleDAO {
         hql=hql + " where productDetails.productTitle LIKE :title "
                 + " and productDetails.cityName LIKE :city "
                 + " and productDetails.countryName LIKE :country ";
-        if(!params.getCityCode().equals(""))
+        if(params.getCityCode()!=null && !params.getCityCode().equals(""))
             hql=hql + " and productDetails.cityCode LIKE :cityCode ";
-        if(!params.getCountryCode().equals(""))
+        if(params.getCountryCode()!=null && !params.getCountryCode().equals(""))
             hql=hql + " and productDetails.countryCode LIKE :countryCode ";
         if(params.getProductId()!=0)
             hql=hql + " and productDetails.id = :productId ";
@@ -447,9 +447,9 @@ public class AProductTitleDAO {
                     .setParameter("title", "%" + params.getTitle() + "%")
                     .setParameter("city", "%" + params.getCity() + "%")
                     .setParameter("country", "%" + params.getCountry() + "%");
-            if(!params.getCityCode().equals(""))
+            if(params.getCityCode()!=null && !params.getCityCode().equals(""))
                 query.setParameter("cityCode",  params.getCityCode());
-            if(!params.getCountryCode().equals(""))
+            if(params.getCountryCode()!=null && !params.getCountryCode().equals(""))
                 query.setParameter("countryCode", params.getCountryCode());
             if(params.getProductId()!=0)
                 query.setParameter("productId", params.getProductId());

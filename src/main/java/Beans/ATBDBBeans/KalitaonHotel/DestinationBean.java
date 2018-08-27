@@ -12,6 +12,7 @@ public class DestinationBean {
     private String name;
     private int destinationId;
     private String hotelBedsCode;
+    private String travelXGateCode;
     private int providerRef;
     private String countryName;
     private String countryCode;
@@ -57,6 +58,16 @@ public class DestinationBean {
 
     public void setHotelBedsCode(String hotelBedsCode) {
         this.hotelBedsCode = hotelBedsCode;
+    }
+
+    @Basic
+    @Column(name = "travel_x_gate_code")
+    public String getTravelXGateCode() {
+        return travelXGateCode;
+    }
+
+    public void setTravelXGateCode(String travelXGateCode) {
+        this.travelXGateCode = travelXGateCode;
     }
 
     @Basic

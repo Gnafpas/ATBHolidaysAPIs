@@ -4,6 +4,7 @@ import Beans.HotelBedsAPIBeans.Availability.AvailabilityAPIJSON;
 import Beans.HotelBedsAPIBeans.Availability.AvailabilityPOST;
 import Beans.ViatorAPIBeans.Bookings.Book.BookAPIJSON;
 import Helper.ProjectProperties;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -41,11 +42,23 @@ public class AvailabilityDAOs {
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+            availabilityAPIJSON=new AvailabilityAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e.getResponseBodyAsString());
+            availabilityAPIJSON.setError(err);
         } catch (HttpServerErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+            availabilityAPIJSON=new AvailabilityAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e.getResponseBodyAsString());
+            availabilityAPIJSON.setError(err);
         } catch (ResourceAccessException e2) {
             errLogger.info("*****************" + e2.getMessage() + "*****************");
+            availabilityAPIJSON=new AvailabilityAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e2.getMessage());
+            availabilityAPIJSON.setError(err);
         }
         return availabilityAPIJSON;
     }

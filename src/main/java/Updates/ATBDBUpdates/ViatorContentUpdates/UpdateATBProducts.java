@@ -1077,7 +1077,7 @@ public class UpdateATBProducts {
                                                     dateTime.getHourOfDay(), dateTime.getMinuteOfHour())));
 
                                             if (updatedProduct != null) {
-                                                if (HAvailableDateDAO.deleteAvailableDate(String.valueOf(updatedProduct.getId()))) {
+                                                if (HAvailableDateDAO.deleteAvailableDateWithPlanId(String.valueOf(updatedProduct.getId()),hAvailableDateBean.getPlanId())) {
                                                     failedProductCodeExist = false;
                                                     for (String failedProductCode : failedProductCodes) {
                                                         if (failedProductCode.equals(hAvailableDateBean.getProductId()))

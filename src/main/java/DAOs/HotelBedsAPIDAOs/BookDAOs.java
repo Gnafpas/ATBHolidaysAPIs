@@ -40,11 +40,23 @@ public class BookDAOs {
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+            checkRateAPIJSON=new CheckRateAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e.getResponseBodyAsString());
+            checkRateAPIJSON.setError(err);
         } catch (HttpServerErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+            checkRateAPIJSON=new CheckRateAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e.getResponseBodyAsString());
+            checkRateAPIJSON.setError(err);
         } catch (ResourceAccessException e2) {
             errLogger.info("*****************" + e2.getMessage() + "*****************");
+            checkRateAPIJSON=new CheckRateAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e2.getMessage());
+            checkRateAPIJSON.setError(err);
         }
         return checkRateAPIJSON;
     }
@@ -66,11 +78,23 @@ public class BookDAOs {
         } catch (HttpClientErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+            bookAPIJSON=new BookAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e.getResponseBodyAsString());
+            bookAPIJSON.setError(err);
         } catch (HttpServerErrorException e) {
             errLogger.info("*****************" + e.getStatusCode() + "*****************");
             errLogger.info("*****************" + e.getResponseBodyAsString() + "*****************");
+            bookAPIJSON=new BookAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e.getResponseBodyAsString());
+            bookAPIJSON.setError(err);
         } catch (ResourceAccessException e2) {
             errLogger.info("*****************" + e2.getMessage() + "*****************");
+            bookAPIJSON=new BookAPIJSON();
+            Beans.HotelBedsAPIBeans.Error err=new Beans.HotelBedsAPIBeans.Error();
+            err.setMessage(e2.getMessage());
+            bookAPIJSON.setError(err);
         }
         return bookAPIJSON;
     }

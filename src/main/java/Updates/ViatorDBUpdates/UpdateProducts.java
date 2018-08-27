@@ -247,7 +247,7 @@ public class UpdateProducts {
 
                 /**
                  * Check if current destination is a leaf.Only leaf destinations have products.Parerent
-                 * Destination have same products as their child.
+                 * Object have same products as their child.
                  */
                 boolean leafNodeDest = true;
                 for (TaxonomyDestinationsData d : taxonomyDestinationsAPIJSON.getData()) {
@@ -1154,7 +1154,7 @@ public class UpdateProducts {
                     "\n**********************     " + " Total Leaf Nodes: " + updateProductsInfoJSON.getTotalLeafNodes() +
                     "\n**********************     " + " Total Products updated/added: " + updateProductsInfoJSON.getTotalProducts() +
                     "\n**********************     " + " Total Expired Products deleted: " + updateProductsInfoJSON.getTotalExpiredProducts().getTotalExpiredProducts() +
-                    "\n**********************     " + " Last Leaf Node Destination Id: " + updateProductsInfoJSON.getLastLeafDestid() +
+                    "\n**********************     " + " Last Leaf Node Object Id: " + updateProductsInfoJSON.getLastLeafDestid() +
                     "\n**********************     " + " Failed Destinations Id: " + updateProductsInfoJSON.getFailedDestinations());
             for (int i = 0; i < updateProductsInfoJSON.getFailedProducts().size(); i++) {
                 logger.info("**********************     " + " Failed Product code/Dest Id: " + updateProductsInfoJSON.getFailedProducts().get(i).getProductCode()

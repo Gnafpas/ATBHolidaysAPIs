@@ -70,6 +70,7 @@ public class ProductController {
                     gsaBean.getEvtMkp() != null && !gsaBean.getEvtMkp().equals("")) {
 
 
+                //todo prevent abstract request(request without defining any parameter.country,city,freetext etc )
                 Application.agent.notice(subAgencyBean.getAgentName());
                 if (params.getCountryCode()!=null && !params.getCountryCode().equals(""))
                     params.setCountryCode(params.getCountryCode() + " ");//todo fix isocode at the database(Remove the space at the end of the code) or live it like this
@@ -80,10 +81,11 @@ public class ProductController {
                 /**
                  * Limit Max products per request.
                  */
-                if (params.getLastProduct() == 0)
+                if (params.getLastProduct()!=null && params.getFirstProduct()!=null && params.getLastProduct().compareTo(params.getFirstProduct())==-1)
                     params.setLastProduct(params.getFirstProduct() + 1000);
-                else if (params.getLastProduct() - params.getFirstProduct() > 1000)
+                else if (params.getLastProduct()!=null && params.getFirstProduct()!=null &&(params.getLastProduct() - params.getFirstProduct() > 1000))
                     params.setLastProduct(params.getFirstProduct() + 1000);
+
 
                 ZonedDateTime startDate = null;
                 ZonedDateTime endDate = null;
@@ -112,7 +114,7 @@ public class ProductController {
                     }
                 }
 
-                if (!params.getCurrencyCode().equals("")) {
+                if (params.getCurrencyCode()!=null && !params.getCurrencyCode().equals("")) {
                     if (CurrencyConverter.findExchangeRateAndConvert("EUR", params.getCurrencyCode(), new Double(1)) == null) {
                         productsAndCategoriesJSON.setSuccess(false);
                         productsAndCategoriesJSON.setErrorMessageText("Wrong currrency code");
@@ -201,10 +203,16 @@ public class ProductController {
                         products.add(product);
                     }
                     productsAndCategoriesJSON.setTotalCount(products.size());
-                    if (params.getLastProduct() >= aProductTitlebeans.size() || params.getLastProduct() <= 0) {
-                        productsAndCategoriesJSON.getData().setProducts(products.subList(params.getFirstProduct(), aProductTitlebeans.size()));
-                    } else
-                        productsAndCategoriesJSON.getData().setProducts(products.subList(params.getFirstProduct(), params.getLastProduct()));
+
+                    if (params.getLastProduct().compareTo(aProductTitlebeans.size())>=0 || params.getLastProduct() <= 0) {
+                        if(params.getFirstProduct().compareTo(aProductTitlebeans.size())<=0){
+                            productsAndCategoriesJSON.getData().setProducts(products.subList(params.getFirstProduct(), aProductTitlebeans.size()));
+                        }
+                    } else {
+                        if (params.getFirstProduct().compareTo( params.getLastProduct()) <= 0) {
+                            productsAndCategoriesJSON.getData().setProducts(products.subList(params.getFirstProduct(), params.getLastProduct()));
+                        }
+                    }
                 }
 
                 /**

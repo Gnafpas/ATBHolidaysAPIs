@@ -2284,7 +2284,7 @@ public class FrontEndAPIServices {
                     }
 
                     /**
-                     * Get original id from Destination table.
+                     * Get original id from Object table.
                      */
                     if (params.getDestinationId() != null && !params.getDestinationId().equals("")) {
                         DestinationDAO.increaseSortOrderOfDestination(params.getDestinationId());
@@ -2331,13 +2331,15 @@ public class FrontEndAPIServices {
                      * Prepare and run threads for different Providers
                      */
                     List<SunHotelsResponse> hotelsResponse = new ArrayList<>();
-                    CountDownLatch latch = new CountDownLatch(2);
+                    CountDownLatch latch = new CountDownLatch(1);
 //                    HotelBedsSearchThread hotelBedsSearchThread = new HotelBedsSearchThread(destinationBean, childrenAgesSplit, checkout, checkin, session, params, latch);
 //                    new Thread(hotelBedsSearchThread).start();
-                    SunHotelsSearchThread sunHotelsSearchThread = new SunHotelsSearchThread(originalDestinationId, checkout, checkin, currencies, originalDestinationIdStrFormat, childrenAges, session, params, latch);
-                    new Thread(sunHotelsSearchThread).start();
-                    ATBHotelsSearchThread aTBHotelsSearchThread = new ATBHotelsSearchThread(destinationBean, childrenAgesSplit, checkout, checkin, session, params, latch);
-                    new Thread(aTBHotelsSearchThread).start();
+//                    SunHotelsSearchThread sunHotelsSearchThread = new SunHotelsSearchThread(originalDestinationId, checkout, checkin, currencies, originalDestinationIdStrFormat, childrenAges, session, params, latch);
+//                    new Thread(sunHotelsSearchThread).start();
+//                    ATBHotelsSearchThread aTBHotelsSearchThread = new ATBHotelsSearchThread(destinationBean, childrenAgesSplit, checkout, checkin, session, params, latch);
+//                    new Thread(aTBHotelsSearchThread).start();
+                    TravelGateXSearchThread travelGateXSearchThread = new TravelGateXSearchThread(destinationBean, childrenAgesSplit, checkout, checkin, session, params, latch);
+                    new Thread(travelGateXSearchThread).start();
                     try {
                         latch.await();
                     } catch (InterruptedException e) {
@@ -2349,19 +2351,27 @@ public class FrontEndAPIServices {
 //                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + hotelBedsSearchThread.getHotelBedsSearchRequestResponse().getPrepareResponseTimeElapsed();
 //                        requestTimeElapsed = requestTimeElapsed + hotelBedsSearchThread.getHotelBedsSearchRequestResponse().getRequestTimeElapsed();
 //                    }
-                    if (sunHotelsSearchThread.getSunHotelsSearchRequestResponse() != null) {
-                        if (sunHotelsSearchThread.getSunHotelsSearchRequestResponse() != null && sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getHotelsResponse() != null)
-                            hotelsResponse.addAll(sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getHotelsResponse());
-                        dbTransactionTimeElapsed = dbTransactionTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getDbTransactionTimeElapsed();
-                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getPrepareResponseTimeElapsed();
-                        requestTimeElapsed = requestTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getRequestTimeElapsed();
-                    }
-                    if (aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse() != null) {
-                        if (aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse() != null && aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getHotelsResponse() != null)
-                            hotelsResponse.addAll(aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getHotelsResponse());
-                        dbTransactionTimeElapsed = dbTransactionTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getDbTransactionTimeElapsed();
-                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getPrepareResponseTimeElapsed();
-                        requestTimeElapsed = requestTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getRequestTimeElapsed();
+//                    if (sunHotelsSearchThread.getSunHotelsSearchRequestResponse() != null) {
+//                        if (sunHotelsSearchThread.getSunHotelsSearchRequestResponse() != null && sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getHotelsResponse() != null)
+//                            hotelsResponse.addAll(sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getHotelsResponse());
+//                        dbTransactionTimeElapsed = dbTransactionTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getDbTransactionTimeElapsed();
+//                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getPrepareResponseTimeElapsed();
+//                        requestTimeElapsed = requestTimeElapsed + sunHotelsSearchThread.getSunHotelsSearchRequestResponse().getRequestTimeElapsed();
+//                    }
+//                    if (aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse() != null) {
+//                        if (aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse() != null && aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getHotelsResponse() != null)
+//                            hotelsResponse.addAll(aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getHotelsResponse());
+//                        dbTransactionTimeElapsed = dbTransactionTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getDbTransactionTimeElapsed();
+//                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getPrepareResponseTimeElapsed();
+//                        requestTimeElapsed = requestTimeElapsed + aTBHotelsSearchThread.getaTBHotelsSearchRequestResponse().getRequestTimeElapsed();
+//                    }
+
+                    if (travelGateXSearchThread.getTravelGateXSearchRequestResponse() != null) {
+                        if (travelGateXSearchThread.getTravelGateXSearchRequestResponse() != null && travelGateXSearchThread.getTravelGateXSearchRequestResponse().getHotelsResponse() != null)
+                            hotelsResponse.addAll(travelGateXSearchThread.getTravelGateXSearchRequestResponse().getHotelsResponse());
+                        dbTransactionTimeElapsed = dbTransactionTimeElapsed + travelGateXSearchThread.getTravelGateXSearchRequestResponse().getDbTransactionTimeElapsed();
+                        prepareResponseTimeElapsed = prepareResponseTimeElapsed + travelGateXSearchThread.getTravelGateXSearchRequestResponse().getPrepareResponseTimeElapsed();
+                        requestTimeElapsed = requestTimeElapsed + travelGateXSearchThread.getTravelGateXSearchRequestResponse().getRequestTimeElapsed();
                     }
 
                     session.close();
@@ -2607,10 +2617,10 @@ public class FrontEndAPIServices {
 
                     if (hotelSearchJSON.getResults() != null) {
                         userlogs.info(" Db transactions time:" + dbTransactionTimeElapsed / 2 + ". Sunhotel communication and transactions time:" + requestTimeElapsed / 2 +
-                                ". Processing time:" + prepareResponseTimeElapsed / 2 + " Response Hotels count:" + hotelSearchJSON.getResults().size() + ". Destination:" + originalDestinationId);
+                                ". Processing time:" + prepareResponseTimeElapsed / 2 + " Response Hotels count:" + hotelSearchJSON.getResults().size() + ". Object:" + originalDestinationId);
                     } else
                         userlogs.info(" Db transactions time:" + dbTransactionTimeElapsed / 2 + ". Sunhotel communication and transactions time:" + requestTimeElapsed / 2 +
-                                ". Processing time:" + prepareResponseTimeElapsed / 2 + " Response Hotels count:" + 0 + ". Destination:" + originalDestinationId);
+                                ". Processing time:" + prepareResponseTimeElapsed / 2 + " Response Hotels count:" + 0 + ". Object:" + originalDestinationId);
                 } catch (Exception e) {
                     StringWriter errors = new StringWriter();
                     e.printStackTrace(new PrintWriter(errors));
