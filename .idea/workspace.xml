@@ -2,36 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb0d0e57-f239-452e-a5f9-1645aeba43d0" name="Default" comment="TravelGateX Integration.">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/service/service 2.war" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/service/service.war" afterPath="$PROJECT_DIR$/out/artifacts/service/service.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Beans/ATBDBBeans/KalitaonHotel/DestinationBean.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Beans/ATBDBBeans/KalitaonHotel/DestinationBean.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/ProductController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/ProductController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBedsSearchThread.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/HotelBedsSearchThread.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/ProductBookingsControler/BookController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBAPIController/ProductBookingsControler/BookController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/FrontEndAPIServices$1.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/FrontEndAPIServices$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/FrontEndAPIServices.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/FrontEndAPIServices.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/HotelBedsSearchThread.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/ATBFrontEndAPI/HotelBedsSearchThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController/AdminController.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Controller/AdminController/AdminController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonHotelDAOs/FacilityDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonProductDAOs/AProductTitleDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonProductDAOs/AProductTitleDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonProductDAOs/HAvailableDateDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonProductDAOs/HAvailableDateDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonSysDAOs/BookingsAllDAO.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/ATBDBDAOs/KalitaonSysDAOs/BookingsAllDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/HotelBedsAPIDAOs/AvailabilityDAOs.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/HotelBedsAPIDAOs/AvailabilityDAOs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/HotelBedsAPIDAOs/BookDAOs.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/HotelBedsAPIDAOs/BookDAOs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfDestination.class" afterPath="$PROJECT_DIR$/src/main/target/classes/DAOs/SunHotelsAPIDAOs/ArrayOfDestination.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Helper/ProjectProperties.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Helper/ProjectProperties.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/SunHotelsDBUpdates/UpdateSunHotelsDB.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/SunHotelsDBUpdates/UpdateSunHotelsDB.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ViatorDBUpdates/UpdateAttractions.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ViatorDBUpdates/UpdateAttractions.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Updates/ViatorDBUpdates/UpdateProducts.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Updates/ViatorDBUpdates/UpdateProducts.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/main_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/main_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/service.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/service.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/bdf23856-5c65-4e19-8f70-fcfd46a14320.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/bdf23856-5c65-4e19-8f70-fcfd46a14320.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/Helper/CurrencyConverter.class" afterPath="$PROJECT_DIR$/src/main/target/classes/Helper/CurrencyConverter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBedsSearchThread.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBedsSearchThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" afterPath="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" afterPath="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/pom.xml" afterPath="$PROJECT_DIR$/src/main/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ATBDBHibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/ATBDBHibernate.cfg.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ATBLogDBHibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/ATBLogDBHibernate.cfg.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/ATBSysDBHibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/ATBSysDBHibernate.cfg.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/SunHotels.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/SunHotels.cfg.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ATBDBHibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ATBDBHibernate.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ATBLogDBHibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ATBLogDBHibernate.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/ATBSysDBHibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/ATBSysDBHibernate.cfg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/DestinationBean.hbm.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/DestinationBean.hbm.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/SunHotels.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/SunHotels.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/target/classes/hibernate.cfg.xml" />
     </list>
@@ -67,95 +56,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StaticContentDAOs.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/TravelGateXDAOs/StaticContentDAOs.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1215">
-              <caret line="85" column="147" lean-forward="false" selection-start-line="85" selection-start-column="147" selection-end-line="85" selection-end-column="147" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TravelGateXSearchThread.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/TravelGateXSearchThread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="64" column="35" lean-forward="false" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FrontEndAPIServices.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34440">
-              <caret line="2373" column="127" lean-forward="false" selection-start-line="2373" selection-start-column="127" selection-end-line="2373" selection-end-column="127" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AdminController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Controller/AdminController/AdminController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="105" column="33" lean-forward="false" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
+            <state relative-caret-position="118">
+              <caret line="169" column="41" lean-forward="false" selection-start-line="169" selection-start-column="22" selection-end-line="169" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DestinationBean.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/DestinationBean.java">
+      <file leaf-file-name="HotelBedsSearchThread.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBedsSearchThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="62" lean-forward="false" selection-start-line="8" selection-start-column="62" selection-end-line="8" selection-end-column="62" />
+            <state relative-caret-position="4948">
+              <caret line="390" column="10" lean-forward="false" selection-start-line="390" selection-start-column="10" selection-end-line="390" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BookPrebookController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java">
+      <file leaf-file-name="CurrencyConverter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4974">
-              <caret line="1741" column="56" lean-forward="false" selection-start-line="1741" selection-start-column="53" selection-end-line="1741" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProjectProperties.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="50" lean-forward="false" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BookingsAllDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonSysDAOs/BookingsAllDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HotelPostBookController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+            <state relative-caret-position="191">
+              <caret line="39" column="78" lean-forward="false" selection-start-line="39" selection-start-column="78" selection-end-line="39" selection-end-column="78" />
               <folding />
             </state>
           </provider>
@@ -175,9 +100,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>retrieveResponse</find>
-      <find>mapper</find>
-      <find>allDestinationBeans</find>
       <find>atbDBErrCommCounter</find>
       <find>count</find>
       <find>destinationId</find>
@@ -205,6 +127,9 @@
       <find>lastupdateForEUR</find>
       <find>events</find>
       <find>DAO</find>
+      <find>Communication Error in hoteldetailed Search sunhotels request</find>
+      <find>genera</find>
+      <find>travelGateXSearchThread</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -225,9 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/DestinationsData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Destination.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/DestinationBean.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/DestinationBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Roomtypes/Rooms.java" />
@@ -264,18 +186,21 @@
         <option value="$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/HotelXData.java" />
         <option value="$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Search.java" />
         <option value="$PROJECT_DIR$/src/main/java/DAOs/TravelGateXDAOs/StaticContentDAOs.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/HAvailableDateDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/TravelGateXSearchThread.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductBookingsControler/BookController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBedsSearchThread.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" />
         <option value="$PROJECT_DIR$/src/main/resources/ATBDBHibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/ATBLogDBHibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/ATBSysDBHibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/SunHotels.cfg.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/TravelGateXSearchThread.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/AdminController/AdminController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductBookingsControler/BookController.java" />
+        <option value="$PROJECT_DIR$/src/main/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/AccommodationsDAO.java" />
       </list>
     </option>
   </component>
@@ -296,9 +221,8 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="777" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -318,7 +242,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -328,34 +251,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ATBHolidaysAPIs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -417,6 +312,7 @@
       </pane>
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -437,6 +333,20 @@
     <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="ImportMappingsDialog.RecentPackages">
+      <recent name="" />
+      <recent name="Beans.ATBDBBeans.KalitaonHotel" />
+      <recent name="Beans.ViatorDBBeans" />
+      <recent name="Beans.ATBDBBeans.KalitaonProduct" />
+      <recent name="Beans.ATBDBBeans.KalitaonSystem" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/DAOs" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonSysDAOs" />
+      <recent name="$PROJECT_DIR$/src/main/java/Controller" />
+      <recent name="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="Controller.ATBFrontEndAPI" />
       <recent name="Controller.ATBAPIController" />
@@ -450,20 +360,6 @@
       <recent name="$PROJECT_DIR$/src/main/java/DAOs/CarnectAPIDAOs/ServiceDAOs" />
       <recent name="$PROJECT_DIR$/src/main/java/DAOs/CarnectAPIDAOs/DestinationsDAOs" />
       <recent name="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs" />
-    </key>
-    <key name="ImportMappingsDialog.RecentPackages">
-      <recent name="Beans.ATBDBBeans.KalitaonHotel" />
-      <recent name="Beans.ViatorDBBeans" />
-      <recent name="" />
-      <recent name="Beans.ATBDBBeans.KalitaonProduct" />
-      <recent name="Beans.ATBDBBeans.KalitaonSystem" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/DAOs" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonSysDAOs" />
-      <recent name="$PROJECT_DIR$/src/main/java/Controller" />
-      <recent name="$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1228,7 +1124,9 @@
       <workItem from="1530644448075" duration="51810000" />
       <workItem from="1531723682952" duration="25874000" />
       <workItem from="1532960425933" duration="3177000" />
-      <workItem from="1533994161774" duration="3406000" />
+      <workItem from="1533994161774" duration="4909000" />
+      <workItem from="1535442456803" duration="9040000" />
+      <workItem from="1537276353578" duration="3975000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.Dump all products from viator">
       <created>1498483006660</created>
@@ -1404,7 +1302,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3341837000" />
+    <option name="totallyTimeSpent" value="3356355000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1417,7 +1315,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="777" extended-state="6" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1433,28 +1331,28 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28301886" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776934" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3262519" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2085954" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20738636" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776934" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24236874" sideWeight="0.4821803" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2657512" sideWeight="0.5178197" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26979" sideWeight="0.48863637" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27382874" sideWeight="0.5113636" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32809225" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25946277" sideWeight="0.44339624" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3262519" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32809225" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1498,6 +1396,42 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -1536,283 +1470,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/TravelGateXDAOs/CurlRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="80" lean-forward="false" selection-start-line="26" selection-start-column="80" selection-end-line="26" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/TravelXGateUpdates/UpdateTravelXGateDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7650">
-          <caret line="510" column="8" lean-forward="false" selection-start-line="510" selection-start-column="8" selection-end-line="510" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Bed.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="29" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Price.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/RoomPrice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="29" lean-forward="false" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/RoomSearchData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="29" lean-forward="false" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/RoomData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/CancelPenalty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/CancelPolicy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/RatePlan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="29" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Option.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Object.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Edge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Error.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="2" lean-forward="true" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/HotelXData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="31" lean-forward="false" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/TravelGateXBeans/Search.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="36" lean-forward="false" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/ProvidersSearchRequestResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34440">
-          <caret line="2373" column="127" lean-forward="false" selection-start-line="2373" selection-start-column="127" selection-end-line="2373" selection-end-column="127" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ViatorDBDAOs/ViatorProductDetailsDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="112" column="86" lean-forward="false" selection-start-line="112" selection-start-column="66" selection-end-line="112" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/EventsTravelDBUpdates/UpdateEventsTravelDBTimerTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="155" column="37" lean-forward="false" selection-start-line="155" selection-start-column="37" selection-end-line="155" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/HSpecialDateDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/HStopsaleDateDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/IAvailableTimeDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/JProductQuestionsDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-118">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/GPriceMatrixDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-950">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/FPricePlanDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1158">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/EPickupPointDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1243">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonProductDAOs/HAvailableDateDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="91" column="120" lean-forward="false" selection-start-line="91" selection-start-column="120" selection-end-line="91" selection-end-column="120" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ATBLogDBHibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="10" lean-forward="false" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="10" />
-          <folding>
-            <marker date="1532005353718" expanded="true" signature="1177:1182" ph="&amp;" />
-            <marker date="1532005353718" expanded="true" signature="1200:1205" ph="&amp;" />
-            <marker date="1532005353718" expanded="true" signature="1223:1228" ph="&amp;" />
-            <marker date="1532005353718" expanded="true" signature="1284:1340" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ATBSysDBHibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="8" />
-          <folding>
-            <element signature="e#1486#1491#0" expanded="false" />
-            <element signature="e#1509#1514#0" expanded="false" />
-            <element signature="e#1532#1537#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="12" />
-          <folding>
-            <marker date="1532005353673" expanded="true" signature="1210:1215" ph="&amp;" />
-            <marker date="1532005353673" expanded="true" signature="1233:1238" ph="&amp;" />
-            <marker date="1532005353673" expanded="true" signature="1256:1261" ph="&amp;" />
-            <marker date="1532005353673" expanded="true" signature="1318:7365" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/SunHotels.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="12" />
-          <folding>
-            <marker date="1532005353665" expanded="true" signature="1210:1215" ph="&amp;" />
-            <marker date="1532005353665" expanded="true" signature="1233:1238" ph="&amp;" />
-            <marker date="1532005353665" expanded="true" signature="1256:1261" ph="&amp;" />
-            <marker date="1532005353665" expanded="true" signature="1318:1633" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/TravelGateXDAOs/StaticContentDAOs.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="85" column="147" lean-forward="false" selection-start-line="85" selection-start-column="147" selection-end-line="85" selection-end-column="147" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/ViatorContentUpdates/UpdateATBProducts.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
@@ -1825,15 +1482,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="245" column="62" lean-forward="false" selection-start-line="245" selection-start-column="31" selection-end-line="245" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/TravelGateXSearchThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="64" column="35" lean-forward="false" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1844,19 +1492,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="33" column="108" lean-forward="false" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/ProductBookingsControler/BookController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="836" column="97" lean-forward="false" selection-start-line="836" selection-start-column="89" selection-end-line="836" selection-end-column="97" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1869,9 +1508,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/HotelPostBookController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="645">
           <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1879,23 +1517,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4974">
-          <caret line="1741" column="56" lean-forward="false" selection-start-line="1741" selection-start-column="53" selection-end-line="1741" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="50" lean-forward="false" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1903,15 +1524,194 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/DestinationBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="62" lean-forward="false" selection-start-line="8" selection-start-column="62" selection-end-line="8" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="73" column="49" lean-forward="false" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/TravelGateXSearchThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="15">
+          <caret line="64" column="35" lean-forward="false" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="210" lean-forward="false" selection-start-line="22" selection-start-column="210" selection-end-line="22" selection-end-column="210" />
+          <folding>
+            <marker date="1535790722752" expanded="true" signature="1206:1211" ph="&amp;" />
+            <marker date="1535790722752" expanded="true" signature="1229:1234" ph="&amp;" />
+            <marker date="1535790722752" expanded="true" signature="1252:1257" ph="&amp;" />
+            <marker date="1535790722752" expanded="true" signature="1315:7365" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/SunHotels.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="204" lean-forward="false" selection-start-line="22" selection-start-column="204" selection-end-line="22" selection-end-column="204" />
+          <folding>
+            <marker date="1535790722760" expanded="true" signature="1206:1211" ph="&amp;" />
+            <marker date="1535790722760" expanded="true" signature="1229:1234" ph="&amp;" />
+            <marker date="1535790722760" expanded="true" signature="1252:1257" ph="&amp;" />
+            <marker date="1535790722760" expanded="true" signature="1315:1630" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/SunHotelsSearchThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4630">
+          <caret line="359" column="101" lean-forward="false" selection-start-line="359" selection-start-column="40" selection-end-line="359" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/TravelGateXDAOs/StaticContentDAOs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="85" column="147" lean-forward="false" selection-start-line="85" selection-start-column="147" selection-end-line="85" selection-end-column="147" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/StoreImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/APIKeyGeneration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/AccommodationsBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="6" lean-forward="true" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/GenerateRandomString.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/HotelBedsSearchThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-370">
+          <caret line="36" column="13" lean-forward="false" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/AmendmentRequestResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/SunHotelsAPIDAOs/NonStaticXMLAPISoap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="7" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBookingsController/BookPrebookController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/FrontEndAPIServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11419">
+          <caret line="2369" column="126" lean-forward="false" selection-start-line="2369" selection-start-column="103" selection-end-line="2369" selection-end-column="126" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/ProjectProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="50" lean-forward="false" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBFrontEndAPI/ATBHotelsSearchThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1315">
+          <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Updates/ATBDBUpdates/HotelBedsDBUpdates/UpdateHotelBedsDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="140" column="23" lean-forward="false" selection-start-line="140" selection-start-column="23" selection-end-line="140" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/HotelDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/RoomtypeBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-833">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonLog/PrebookLogBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1478">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIJSONs/ATBAPIJSONs/Product/DestinationCategory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIJSONs/ATBAPIJSONs/Product/Categories.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1923,26 +1723,171 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/ApiUsrSearchLogBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/DestinationDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="29" column="16" lean-forward="false" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/APIJSONs/ATBAPIJSONs/Hotel/Accommodation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="e#219#220#0" expanded="false" />
+            <element signature="e#257#258#0" expanded="false" />
+            <element signature="e#316#317#0" expanded="false" />
+            <element signature="e#370#371#0" expanded="false" />
+            <element signature="e#414#415#0" expanded="false" />
+            <element signature="e#454#455#0" expanded="false" />
+            <element signature="e#520#521#0" expanded="false" />
+            <element signature="e#578#579#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/target/ATBHolidays_Viator_Integration/WEB-INF/lib/mysql-connector-java-6.0.5.jar!/com/mysql/cj/core/exceptions/CJCommunicationsException.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="12" lean-forward="true" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/ApiUsrSearchLogDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-379">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ATBLogDBHibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="209" lean-forward="false" selection-start-line="22" selection-start-column="209" selection-end-line="22" selection-end-column="209" />
+          <folding>
+            <element signature="e#1173#1178#0" expanded="true" />
+            <element signature="e#1196#1201#0" expanded="true" />
+            <element signature="e#1219#1224#0" expanded="true" />
+            <marker date="1535790722776" expanded="true" signature="1278:1334" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DAOs/ATBDBDAOs/KalitaonHotelDAOs/AccommodationsDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/target/classes/SunHotels.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/ATBDBHibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="8" />
+        <state relative-caret-position="318">
+          <caret line="23" column="199" lean-forward="false" selection-start-line="23" selection-start-column="199" selection-end-line="23" selection-end-column="199" />
+          <folding>
+            <element signature="e#1163#1168#0" expanded="true" />
+            <element signature="e#1186#1191#0" expanded="true" />
+            <element signature="e#1209#1214#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/target/classes/ATBDBHibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/target/classes/ATBLogDBHibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ATBSysDBHibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="24" column="204" lean-forward="false" selection-start-line="24" selection-start-column="204" selection-end-line="24" selection-end-column="204" />
+          <folding>
+            <element signature="e#1163#1168#0" expanded="true" />
+            <element signature="e#1186#1191#0" expanded="true" />
+            <element signature="e#1209#1214#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/target/classes/ATBSysDBHibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="24" column="44" lean-forward="true" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Controller/ATBAPIController/HotelBedsSearchThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4948">
+          <caret line="390" column="10" lean-forward="false" selection-start-line="390" selection-start-column="10" selection-end-line="390" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper/CurrencyConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="39" column="78" lean-forward="false" selection-start-line="39" selection-start-column="78" selection-end-line="39" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/AdminController/AdminController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="105" column="33" lean-forward="false" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Beans/ATBDBBeans/KalitaonHotel/DestinationBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="62" lean-forward="false" selection-start-line="8" selection-start-column="62" selection-end-line="8" selection-end-column="62" />
+        <state relative-caret-position="118">
+          <caret line="169" column="41" lean-forward="false" selection-start-line="169" selection-start-column="22" selection-end-line="169" selection-end-column="41" />
           <folding />
         </state>
       </provider>

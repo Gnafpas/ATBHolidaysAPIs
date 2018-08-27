@@ -383,7 +383,7 @@ public class HotelBedsSearchThread implements Runnable {
                             prepareResponseTimeElapsed = System.currentTimeMillis() - prepareResponseTimeElapsed;
                         }else{
                             if (availabilityAPIJSON == null)
-                                errLogger.info("Communication Error in hoteldetailed Search sunhotels request");
+                                errLogger.info("Communication Error in hoteldetailed Search hotelbeds request");
                             else if (availabilityAPIJSON.getError() != null) {
                                 error=availabilityAPIJSON.getError().getMessage();
                                 errorType=availabilityAPIJSON.getError().getCode();

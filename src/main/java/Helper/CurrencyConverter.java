@@ -37,7 +37,7 @@ public class CurrencyConverter {
 
 
         if(from.equals("EUR")) {
-            if (System.currentTimeMillis() - lastupdateForEUR >  1000*60 || lastcurrencyJSONForEUR == null) {
+            if (System.currentTimeMillis() - lastupdateForEUR >  1000*60*60*24 || lastcurrencyJSONForEUR == null) {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
                     ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
@@ -61,7 +61,7 @@ public class CurrencyConverter {
                     return new BigDecimal(exhangeRate * amount);
             }
         }else if(from.equals("USD")){
-            if (System.currentTimeMillis() - lastupdateForUSD >  1000*60 || lastcurrencyJSONForUSD == null) {
+            if (System.currentTimeMillis() - lastupdateForUSD >  1000*60*60*24 || lastcurrencyJSONForUSD == null) {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
                     ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
@@ -85,7 +85,7 @@ public class CurrencyConverter {
                     return new BigDecimal(exhangeRate * amount);
             }
         }else if(from.equals("TRY")){
-            if (System.currentTimeMillis() - lastupdateForTRY >  1000*60 || lastcurrencyJSONForTRY == null) {
+            if (System.currentTimeMillis() - lastupdateForTRY >  1000*60*60*24 || lastcurrencyJSONForTRY == null) {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
                     ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(ProjectProperties.requestTimeOut);
