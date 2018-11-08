@@ -10,7 +10,7 @@
     <artifactId>1.0</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>ATBHolidays_Viator_Integration</name>
+    <name>ATB Holidays_Viator_Integration</name>
     <description>Demo project</description>
 
 

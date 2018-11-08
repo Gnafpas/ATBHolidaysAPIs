@@ -11,6 +11,9 @@ import DAOs.ATBDBDAOs.KalitaonSysDAOs.CityCodeDAO;
 import DAOs.ATBDBDAOs.KalitaonSysDAOs.CountryCodeDAO;
 import DAOs.GoogleAPIDAOs.HereAPIDAO;
 import DAOs.HotelBedsAPIDAOs.HotelAPIDAO;
+import DAOs.SunHotelsAPIDAOs.DestinationList;
+import DAOs.SunHotelsAPIDAOs.NonStaticXMLAPI;
+import DAOs.SunHotelsAPIDAOs.NonStaticXMLAPISoap;
 import DAOs.TourCMSAPIDAOs.RateLimitStatus;
 import DAOs.TravelGateXDAOs.CurlRequest;
 import DAOs.TravelGateXDAOs.StaticContentDAOs;
@@ -466,7 +469,7 @@ public class AdminController {
 
 
     @RequestMapping("/temp")
-    public ResponseAPIJSON temp() {
+    public String temp() {
 
 //        try {
 //            GregorianCalendar gc = new GregorianCalendar(2018, 02, 10);
@@ -509,7 +512,14 @@ public class AdminController {
 //
 //        }
    //     UpdateTravelXGateDB.test();
-        return StaticContentDAOs.search("2018-08-15","2018-08-16","\\\"23\\\"","US","{ age: 30 }","USD");
+        System.out.print("4:");
+        NonStaticXMLAPI nonStaticXMLAPI = new NonStaticXMLAPI();
+        NonStaticXMLAPISoap nonStaticXMLAPISoap = nonStaticXMLAPI.getNonStaticXMLAPISoap();
+        DestinationList destinationList = nonStaticXMLAPISoap.getDestinations(ProjectProperties.sunhotelsUsername,
+                ProjectProperties.sunhotelspass, "English",
+                "KBL", "", "", "");
+        System.out.print("5:"+ destinationList.getDestinations().getDestination().size());
+        return "ok";//StaticContentDAOs.search("2018-08-15","2018-08-16","\\\"23\\\"","US","{ age: 30 }","USD");
     }
 
 
