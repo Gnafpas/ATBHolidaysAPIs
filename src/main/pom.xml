@@ -52,15 +52,13 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.5</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.9.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -69,8 +67,8 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
-            <version>5.2.12.Final</version>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.3.6.Final</version>
         </dependency>
         <dependency>
             <groupId>c3p0</groupId>
@@ -92,8 +90,15 @@
             <artifactId>httpclient</artifactId>
             <version>4.3.6</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>mysql-connector-java-6.0.5</groupId>
+            <artifactId>mysql-connector-java-6.0.5</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/src/lib/mysql-connector-java-6.0.5.jar</systemPath>
+        </dependency>
+        
+        
 
 
     </dependencies>
