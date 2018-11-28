@@ -107,7 +107,7 @@
     </properties>
 
     <build>
-        <finalName>ATBHolidays_Viator_Integration</finalName>
+        <finalName>testService</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
