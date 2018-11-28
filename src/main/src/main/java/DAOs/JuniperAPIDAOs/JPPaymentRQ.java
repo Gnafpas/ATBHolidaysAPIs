@@ -1,0 +1,201 @@
+
+package DAOs.JuniperAPIDAOs;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for JP_PaymentRQ complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="JP_PaymentRQ">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="Login" type="{http://www.juniper.es/webservice/2007/}JP_Login" minOccurs="0"/>
+ *         &lt;element name="PaymentRequest" type="{http://www.juniper.es/webservice/2007/}JP_PaymentRequest" minOccurs="0"/>
+ *         &lt;element name="RestrictedOptions" type="{http://www.juniper.es/webservice/2007/}JP_RestrictedOptions" minOccurs="0"/>
+ *         &lt;element name="ExtraParams" type="{http://www.juniper.es/webservice/2007/}ArrayOfJP_RequiredField" minOccurs="0"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="Version" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="Language" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "JP_PaymentRQ", propOrder = {
+    "login",
+    "paymentRequest",
+    "restrictedOptions",
+    "extraParams"
+})
+public class JPPaymentRQ {
+
+    @XmlElement(name = "Login")
+    protected JPLogin login;
+    @XmlElement(name = "PaymentRequest")
+    protected JPPaymentRequest paymentRequest;
+    @XmlElement(name = "RestrictedOptions")
+    protected JPRestrictedOptions restrictedOptions;
+    @XmlElement(name = "ExtraParams")
+    protected ArrayOfJPRequiredField extraParams;
+    @XmlAttribute(name = "Version")
+    protected String version;
+    @XmlAttribute(name = "Language")
+    protected String language;
+
+    /**
+     * Gets the value of the login property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JPLogin }
+     *     
+     */
+    public JPLogin getLogin() {
+        return login;
+    }
+
+    /**
+     * Sets the value of the login property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JPLogin }
+     *     
+     */
+    public void setLogin(JPLogin value) {
+        this.login = value;
+    }
+
+    /**
+     * Gets the value of the paymentRequest property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JPPaymentRequest }
+     *     
+     */
+    public JPPaymentRequest getPaymentRequest() {
+        return paymentRequest;
+    }
+
+    /**
+     * Sets the value of the paymentRequest property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JPPaymentRequest }
+     *     
+     */
+    public void setPaymentRequest(JPPaymentRequest value) {
+        this.paymentRequest = value;
+    }
+
+    /**
+     * Gets the value of the restrictedOptions property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JPRestrictedOptions }
+     *     
+     */
+    public JPRestrictedOptions getRestrictedOptions() {
+        return restrictedOptions;
+    }
+
+    /**
+     * Sets the value of the restrictedOptions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JPRestrictedOptions }
+     *     
+     */
+    public void setRestrictedOptions(JPRestrictedOptions value) {
+        this.restrictedOptions = value;
+    }
+
+    /**
+     * Gets the value of the extraParams property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ArrayOfJPRequiredField }
+     *     
+     */
+    public ArrayOfJPRequiredField getExtraParams() {
+        return extraParams;
+    }
+
+    /**
+     * Sets the value of the extraParams property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ArrayOfJPRequiredField }
+     *     
+     */
+    public void setExtraParams(ArrayOfJPRequiredField value) {
+        this.extraParams = value;
+    }
+
+    /**
+     * Gets the value of the version property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * Sets the value of the version property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVersion(String value) {
+        this.version = value;
+    }
+
+    /**
+     * Gets the value of the language property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Sets the value of the language property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLanguage(String value) {
+        this.language = value;
+    }
+
+}
